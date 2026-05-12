@@ -23,5 +23,4 @@ Currently expanding skills in:
 - Security frameworks
 
 ## Resume
-
-[Download My Resume](./Charlene_Luequee_Resume.pdf)
+[View My Resume](https://github.com/YOUR-USERNAME/YOUR-REPO/blob/main/resume.pdf)
