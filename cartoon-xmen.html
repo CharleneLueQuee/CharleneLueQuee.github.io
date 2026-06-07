@@ -1,0 +1,809 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>X-Men '97 | Security+ SY0-701 Study Hub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&display=swap');
+:root{
+  --bg:#0A0010;--bg2:#110020;--surface:#1A0030;--nav:#07000F;
+  --accent:#FFD700;--accent2:#CC0000;--accent3:#006BB6;
+  --text:#F0E6FF;--muted:#9980BB;--border:rgba(255,215,0,.2);
+  --card-bg:#160028;--green:#39FF14;--lblue:#00BFFF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}
+h1,h2,h3,.hero-title{font-family:'Bangers',cursive;letter-spacing:1px}
+.tnl{color:rgba(255,230,100,.8);font-size:.78rem;padding:4px 10px;border-radius:6px;transition:background .2s;white-space:nowrap;text-decoration:none!important}
+.tnl:hover{background:rgba(255,215,0,.15);color:#FFD700}
+.cnd{position:relative;display:inline-block}
+.cnb{background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.3);color:rgba(255,215,0,.85);font-size:.78rem;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:'Nunito',sans-serif;transition:all .2s;white-space:nowrap}
+.cnb:hover{background:rgba(255,215,0,.22);color:#FFD700}
+.cnm{display:none;position:absolute;top:calc(100%+4px);left:0;background:#07000F;border:1px solid rgba(255,215,0,.25);border-radius:10px;min-width:240px;z-index:300;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.8)}
+.cnm a{display:block;padding:9px 14px;font-size:.79rem;color:rgba(255,230,100,.75);border-bottom:1px solid rgba(255,215,0,.08);transition:background .15s;text-decoration:none!important}
+.cnm a:last-child{border-bottom:none}
+.cnm a:hover{background:rgba(255,215,0,.1);color:#FFD700}
+.jbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.jbtn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:16px;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none!important;display:inline-block}
+.jbtn:hover{border-color:var(--accent);color:var(--accent)}
+.ps{padding:30px 20px;max-width:960px;margin:0 auto}
+.sec-hd{margin-bottom:18px}
+.sec-hd h2{font-size:1.5rem;font-weight:800;color:var(--accent);font-family:'Bangers',cursive;letter-spacing:1px;display:flex;align-items:center;gap:8px;margin-bottom:4px;text-shadow:0 0 14px rgba(255,215,0,.4)}
+.sec-hd p{color:var(--muted);font-size:.82rem}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;padding:15px}
+.card-red{border-left:4px solid var(--accent2)}
+.card-gold{border-left:4px solid var(--accent)}
+.card-blue{border-left:4px solid var(--accent3)}
+.tag{display:inline-block;background:rgba(255,215,0,.12);border:1px solid rgba(255,215,0,.3);color:var(--accent);padding:3px 10px;border-radius:12px;font-size:.7rem;font-weight:700;margin:2px}
+.acc-item{background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.acc-hd{width:100%;background:transparent;border:none;color:var(--text);padding:13px 16px;text-align:left;cursor:pointer;font-family:'Nunito',sans-serif;font-size:.9rem;font-weight:800;display:flex;justify-content:space-between;align-items:center;transition:background .2s}
+.acc-hd:hover{background:rgba(255,215,0,.06)}
+.acc-hd.open{color:var(--accent)}
+.acc-body{display:none;padding:0 16px 14px;font-size:.82rem;color:var(--muted);line-height:1.7}
+.acc-body.open{display:block}
+.acc-arrow{transition:transform .3s;font-size:.75rem;color:var(--accent)}
+.acc-hd.open .acc-arrow{transform:rotate(180deg)}
+.mq-opt{display:flex;align-items:center;gap:8px;padding:7px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s;font-size:.82rem;color:var(--text);line-height:1.4;margin-bottom:5px}
+.mq-opt:hover{border-color:var(--accent)}
+.mq-opt.mq-correct{border-color:#39FF14;background:rgba(57,255,20,.1);color:#39FF14;font-weight:700}
+.mq-opt.mq-wrong{border-color:#ff4466;background:rgba(255,68,102,.1);color:#ff4466;font-weight:700}
+.mq-opt.mq-disabled{cursor:default;opacity:.7}
+.mq-exp{margin-top:8px;background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:8px 12px;font-size:.78rem;color:var(--muted);line-height:1.6;display:none}
+.fc-wrap{background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px}
+.fc-lrow{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.fc-lb{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:6px 12px;font-size:.74rem;text-align:center;min-width:64px;color:var(--muted)}
+.fc-lb span{display:block;font-size:1.2rem;font-weight:800;line-height:1.2}
+.fc-lb1 span{color:#FF6B9D}.fc-lb2 span{color:#FF8C00}.fc-lb3 span{color:#FFD700}.fc-lb4 span{color:#00BFFF}.fc-lb5 span{color:#39FF14}
+.fc-stats{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.fc-stat{background:var(--surface);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;text-align:center;min-width:68px}
+.fc-snum{font-size:1.3rem;font-weight:800}
+.fc-slbl{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.fc-toolbar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.fc-tbtn{padding:5px 13px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;font-size:.79rem;font-weight:700;background:var(--surface);color:var(--text);font-family:'Nunito',sans-serif;transition:all .2s}
+.fc-tbtn:hover{border-color:var(--accent);color:var(--accent)}
+.fc-tbtn.active{background:var(--accent);color:#000;border-color:var(--accent)}
+.fc-counter{text-align:center;font-size:.8rem;color:var(--muted);margin-bottom:5px}
+.fc-pbar{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:12px}
+.fc-pfill{height:100%;border-radius:3px;background:var(--accent);transition:width .35s}
+.flashcard{perspective:1200px;cursor:pointer;height:210px;margin-bottom:12px}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flashcard.flipped .card-inner{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;flex-direction:column;border:2px solid}
+.card-front{border-color:rgba(255,215,0,.3);background:var(--surface)}
+.card-front::before{content:'QUESTION';position:absolute;top:10px;left:12px;font-size:.63rem;letter-spacing:1.5px;color:var(--muted);font-weight:800;font-family:'Nunito',sans-serif}
+.card-back{border-color:var(--accent);background:rgba(255,215,0,.07);transform:rotateY(180deg)}
+.card-back::before{content:'ANSWER';position:absolute;top:10px;left:12px;font-size:.63rem;letter-spacing:1.5px;color:var(--accent);font-weight:800;font-family:'Nunito',sans-serif}
+.card-front p,.card-back p{font-size:.9rem;line-height:1.55}
+.card-back p{color:#FFD700}
+.card-hint{position:absolute;bottom:10px;font-size:.66rem;color:var(--muted)}
+.card-boxind{position:absolute;top:10px;right:12px;font-size:.66rem;font-weight:700;padding:2px 8px;border-radius:8px}
+.card-controls{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+.answer-btns{display:none}
+.btn{padding:7px 14px;border-radius:8px;border:none;cursor:pointer;font-size:.8rem;font-weight:800;transition:all .2s;font-family:'Nunito',sans-serif}
+.btn:hover{transform:translateY(-1px)}
+.btn-flip{background:var(--accent);color:#000}
+.btn-again{background:rgba(255,68,102,.15);color:#ff4466;border:1.5px solid rgba(255,68,102,.4)}
+.btn-good{background:rgba(57,255,20,.15);color:#39FF14;border:1.5px solid rgba(57,255,20,.4)}
+.btn-easy{background:rgba(0,191,255,.15);color:#00BFFF;border:1.5px solid rgba(0,191,255,.4)}
+.btn-skip{background:var(--surface);color:var(--muted);border:1.5px solid var(--border)}
+.done-screen{display:none;text-align:center;padding:20px}
+.score-big{font-size:2.4rem;font-weight:900;line-height:1;margin-bottom:4px}
+.empty-msg{display:none;text-align:center;padding:20px;color:var(--muted)}
+.quiz-wrap{background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;padding:20px;margin-bottom:20px}
+.qz-c{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s;font-size:.84rem;color:var(--text);line-height:1.5;margin-bottom:6px}
+.qz-c:hover{border-color:var(--accent)}
+.qz-c.qc{border-color:#39FF14;background:rgba(57,255,20,.1);color:#39FF14;font-weight:700}
+.qz-c.qw{border-color:#ff4466;background:rgba(255,68,102,.1);color:#ff4466;font-weight:700}
+.qz-exp{margin-top:8px;background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:8px 12px;font-size:.78rem;color:var(--muted);line-height:1.6;display:none}
+.adv-scene{background:var(--card-bg);border:2px solid var(--border);border-radius:14px;padding:16px;margin-bottom:10px;display:none}
+.adv-scene.active{display:block}
+.adv-scene h4{font-family:'Bangers',cursive;font-size:1.15rem;color:var(--accent);margin-bottom:8px;letter-spacing:1px}
+.adv-choice{display:flex;align-items:flex-start;gap:8px;padding:9px 13px;border-radius:9px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s;font-size:.84rem;color:var(--text);line-height:1.5;margin-bottom:6px;font-weight:600}
+.adv-choice:hover{border-color:var(--accent2);background:rgba(204,0,0,.08)}
+.adv-choice.correct{border-color:#39FF14;background:rgba(57,255,20,.1);color:#39FF14}
+.adv-choice.wrong{border-color:#ff4466;background:rgba(255,68,102,.1);color:#ff4466}
+.role-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;text-align:center}
+.role-emoji{font-size:2rem;margin-bottom:6px}
+.role-name{font-family:'Bangers',cursive;font-size:1.1rem;color:var(--accent);letter-spacing:1px;margin-bottom:2px}
+.role-badge{display:inline-block;background:rgba(204,0,0,.2);border:1px solid var(--accent2);color:var(--accent2);padding:2px 9px;border-radius:10px;font-size:.65rem;font-weight:700;margin-bottom:6px}
+.role-desc{font-size:.77rem;color:var(--muted);line-height:1.55}
+.ir-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;border-top:3px solid var(--accent)}
+.ir-phase{font-family:'Bangers',cursive;font-size:1.05rem;color:var(--accent);letter-spacing:1px;margin-bottom:4px}
+.ir-tag{display:inline-block;background:rgba(255,215,0,.1);border:1px solid rgba(255,215,0,.3);color:var(--accent);padding:2px 8px;border-radius:8px;font-size:.64rem;font-weight:700;margin-bottom:6px}
+.ir-desc{font-size:.78rem;color:var(--muted);line-height:1.6}
+.sound-toggle{position:fixed;bottom:20px;right:20px;z-index:500;background:var(--nav);border:1.5px solid var(--border);border-radius:50%;width:44px;height:44px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1.1rem;box-shadow:0 4px 14px rgba(0,0,0,.6);transition:all .2s}
+.sound-toggle:hover{border-color:var(--accent);transform:scale(1.08)}
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;font-size:1.2rem;opacity:.08;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(100vh) rotate(0deg);opacity:.08}100%{transform:translateY(-120px) rotate(360deg);opacity:0}}
+.confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;animation:confettiFall linear forwards;z-index:999;pointer-events:none}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.note-card{background:var(--card-bg);border:1.5px solid var(--border);border-left:4px solid var(--accent2);border-radius:0 12px 12px 0;padding:12px 16px;margin-bottom:10px}
+.note-card h4{font-size:.86rem;color:var(--accent);margin-bottom:5px;font-family:'Bangers',cursive;letter-spacing:.5px}
+.note-card p{font-size:.79rem;color:var(--muted);line-height:1.65}
+.link-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:11px;padding:12px 14px;display:flex;align-items:center;gap:10px;transition:all .2s;text-decoration:none;color:inherit}
+.link-card:hover{border-color:var(--accent);transform:translateY(-1px)}
+.qblock{background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;margin-top:14px}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,#CC0000,#FFD700);color:#000;padding:4px 16px;border-radius:20px;font-size:.72rem;font-weight:800;letter-spacing:.8px;margin-bottom:12px;font-family:'Nunito',sans-serif}
+.mn-letter{color:var(--accent);font-weight:900;font-size:1.05rem;font-family:'Bangers',cursive}
+@media(max-width:600px){.flashcard{height:200px}.card-front p,.card-back p{font-size:.84rem}}
+</style>
+</head>
+<body>
+<div id="particles"></div>
+<button class="sound-toggle" id="soundToggle" title="Toggle Sound" onclick="toggleSound()">🔇</button>
+
+<!-- NAV -->
+<nav style="background:var(--nav);display:flex;align-items:center;padding:10px 20px;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.8);border-bottom:2px solid rgba(255,215,0,.15)">
+  <div style="font-size:1rem;font-weight:900;color:var(--accent);white-space:nowrap;font-family:'Bangers',cursive;letter-spacing:1px">⚡ <span style="color:#fff;font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem">Security+ Hub</span></div>
+  <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-left:auto">
+    <a href="https://charleneluequeue.github.io/" class="tnl">🏠 Portfolio</a>
+    <a href="security-notes.html" class="tnl">📚 Study Hub</a>
+    <a href="#flashcards" class="tnl">🃏 Flashcards</a>
+    <div class="cnd">
+      <button class="cnb" onclick="toggleCN(this)">🎭 All Cartoons ▾</button>
+      <div class="cnm">
+        <a href="cartoon-spongebob.html">🧽 SpongeBob SquarePants</a>
+        <a href="cartoon-ben10.html">⌚ Ben 10</a>
+        <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+        <a href="cartoon-avatar.html">🌊 Avatar: The Last Airbender</a>
+        <a href="cartoon-knd.html">🏠 Codename: Kids Next Door</a>
+        <a href="cartoon-xmen.html" style="color:#FFD700;font-weight:800">⚡ X-Men '97</a>
+        <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+        <a href="cartoon-futurama.html">🤖 Futurama</a>
+        <a href="cartoon-danny.html">👻 Danny Phantom</a>
+        <a href="cartoon-fairyodd.html">🌟 The Fairly OddParents</a>
+        <a href="cartoon-magicbus.html">🚌 The Magic School Bus</a>
+        <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+        <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+        <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+        <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero" style="background:linear-gradient(180deg,#1A0035 0%,#0A0010 100%);border-bottom:2px solid rgba(255,215,0,.25);padding:40px 20px 30px;text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;font-size:12rem;opacity:.04;top:-20px;right:-20px;pointer-events:none;font-family:'Bangers',cursive">⚡</div>
+  <div style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,#CC0000,#FFD700);display:inline-flex;align-items:center;justify-content:center;font-size:3.5rem;margin-bottom:16px;box-shadow:0 0 30px rgba(255,215,0,.4),0 0 60px rgba(204,0,0,.3)">⚡</div>
+  <div class="hero-badge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <h1 style="font-family:'Bangers',cursive;font-size:2.6rem;color:#FFD700;letter-spacing:2px;text-shadow:0 0 20px rgba(255,215,0,.5),2px 2px 0 #CC0000;margin-bottom:8px">X-MEN '97 Security+ Study Hub</h1>
+  <p style="font-size:.88rem;color:var(--muted);max-width:640px;margin:0 auto;line-height:1.7">Welcome to Xavier's Institute for Security Excellence — where mutant powers map to CompTIA Security+ SY0-701 domains. From Professor X's governance to Wolverine's penetration testing, all five domains are covered.</p>
+</div>
+
+<!-- JUMP BAR -->
+<div class="jbar" id="jumpbar">
+  <a href="#topics" class="jbtn">📋 Topics</a>
+  <a href="#domains" class="jbtn">🧬 Domains</a>
+  <a href="#characters" class="jbtn">🦸 Characters</a>
+  <a href="#analogies" class="jbtn">🎭 Analogies</a>
+  <a href="#notes" class="jbtn">📖 Study Notes</a>
+  <a href="#ir-lifecycle" class="jbtn">🚨 IR Lifecycle</a>
+  <a href="#detection" class="jbtn">🔍 Detection</a>
+  <a href="#roles" class="jbtn">👥 Roles</a>
+  <a href="#reporting" class="jbtn">📊 Reporting</a>
+  <a href="#post-incident" class="jbtn">📝 Post-Incident</a>
+  <a href="#adventure" class="jbtn">⚔️ Adventure</a>
+  <a href="#links" class="jbtn">🔗 Links</a>
+  <a href="#flashcards" class="jbtn">🃏 Flashcards</a>
+  <a href="#quiz" class="jbtn">🧠 Quiz</a>
+</div>
+
+<!-- TOPICS -->
+<hr style="border:none;border-top:1px solid var(--border)" id="topics">
+<div class="ps">
+  <div class="sec-hd"><h2>📋 Topics Covered</h2><p>All five SY0-701 domains — click to expand.</p></div>
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAcc(this)"><span>🔒 Domain 1: General Security Concepts (12%)</span><span class="acc-arrow">▾</span></button><div class="acc-body"><p style="margin-bottom:8px;font-weight:700;color:var(--text)">Objectives: 1.1 · 1.2 · 1.3 · 1.4</p><div><span class="tag">CIA Triad</span><span class="tag">Zero Trust</span><span class="tag">AAA</span><span class="tag">Non-repudiation</span><span class="tag">PKI</span><span class="tag">Symmetric Encryption</span><span class="tag">Asymmetric Encryption</span><span class="tag">Hashing/Salting</span><span class="tag">Digital Signatures</span><span class="tag">Honeypots</span><span class="tag">Change Management</span><span class="tag">Security Controls</span><span class="tag">Physical Security</span><span class="tag">Gap Analysis</span></div></div></div>
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAcc(this)"><span>⚠️ Domain 2: Threats, Vulnerabilities & Mitigations (22%)</span><span class="acc-arrow">▾</span></button><div class="acc-body"><p style="margin-bottom:8px;font-weight:700;color:var(--text)">Objectives: 2.1 · 2.2 · 2.3 · 2.4 · 2.5</p><div><span class="tag">Threat Actors</span><span class="tag">Nation-State</span><span class="tag">Insider Threat</span><span class="tag">Social Engineering</span><span class="tag">Phishing/Vishing</span><span class="tag">Ransomware</span><span class="tag">DDoS</span><span class="tag">SQLi/XSS</span><span class="tag">Zero-Day</span><span class="tag">Buffer Overflow</span><span class="tag">Patching</span><span class="tag">Least Privilege</span><span class="tag">Hardening</span><span class="tag">IoCs</span></div></div></div>
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAcc(this)"><span>🏗️ Domain 3: Security Architecture (18%)</span><span class="acc-arrow">▾</span></button><div class="acc-body"><p style="margin-bottom:8px;font-weight:700;color:var(--text)">Objectives: 3.1 · 3.2 · 3.3 · 3.4</p><div><span class="tag">Cloud Models</span><span class="tag">Segmentation</span><span class="tag">VPN/SASE</span><span class="tag">NGFW/WAF</span><span class="tag">Zero Trust</span><span class="tag">Microservices</span><span class="tag">IaC</span><span class="tag">Data Classification</span><span class="tag">Backup/Recovery</span><span class="tag">HA/Resilience</span><span class="tag">Hot/Cold/Warm Sites</span><span class="tag">Containerization</span></div></div></div>
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAcc(this)"><span>⚙️ Domain 4: Security Operations (28%)</span><span class="acc-arrow">▾</span></button><div class="acc-body"><p style="margin-bottom:8px;font-weight:700;color:var(--text)">Objectives: 4.1–4.9</p><div><span class="tag">SIEM</span><span class="tag">EDR/XDR</span><span class="tag">Incident Response</span><span class="tag">IR Lifecycle</span><span class="tag">Digital Forensics</span><span class="tag">Chain of Custody</span><span class="tag">Vulnerability Mgmt</span><span class="tag">MFA</span><span class="tag">IAM</span><span class="tag">SSO/SAML</span><span class="tag">SOAR</span><span class="tag">Threat Hunting</span><span class="tag">Log Analysis</span></div></div></div>
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAcc(this)"><span>📜 Domain 5: Security Program Management & Oversight (20%)</span><span class="acc-arrow">▾</span></button><div class="acc-body"><p style="margin-bottom:8px;font-weight:700;color:var(--text)">Objectives: 5.1–5.6</p><div><span class="tag">Governance</span><span class="tag">Risk Management</span><span class="tag">SLE/ALE/ARO</span><span class="tag">Risk Register</span><span class="tag">Third-Party Risk</span><span class="tag">Compliance</span><span class="tag">GDPR/HIPAA/PCI DSS</span><span class="tag">Audits</span><span class="tag">Pen Testing</span><span class="tag">Security Awareness</span><span class="tag">BCP/DRP</span><span class="tag">RTO/RPO</span></div></div></div>
+</div>
+
+<!-- DOMAIN STUDY GUIDE -->
+<hr style="border:none;border-top:1px solid var(--border)" id="domains">
+<div class="ps">
+  <div class="sec-hd"><h2>🧬 Domain Study Guide — X-Men Mnemonics</h2><p>One mnemonic per domain. Click a domain — others close automatically.</p></div>
+
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAccGroup(this,'mg')"><span>🔒 D1: General Security — <span style="color:var(--accent)">STORM</span></span><span class="acc-arrow">▾</span></button>
+  <div class="acc-body" data-group="mg">
+    <p style="margin-bottom:10px"><span class="mn-letter">S</span>ecurity Controls · <span class="mn-letter">T</span>ypes of controls · <span class="mn-letter">O</span>pen Public Ledger · <span class="mn-letter">R</span>oot of Trust · <span class="mn-letter">M</span>FA</p>
+    <ul style="margin-bottom:12px;padding-left:18px"><li>Storm <strong>controls the environment</strong> — security controls shape your security posture (technical, managerial, operational, physical)</li><li>Her layered powers = <strong>defense-in-depth</strong></li><li>Storm uses precision — CIA Triad balances Confidentiality, Integrity, Availability</li></ul>
+    <p style="color:var(--text);font-weight:700;margin-bottom:6px">🧪 Quick Check:</p>
+    <div id="mq1">
+      <div class="mq-opt" onclick="mqAnswer(this,'mq1',false)">A. Symmetric encryption uses two different keys</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq1',true)">B. A honeypot is a deception technology used to lure attackers</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq1',false)">C. Zero Trust means all internal traffic is automatically trusted</div>
+      <div class="mq-exp" id="mq1-exp">💡 Honeypots are intentionally vulnerable decoy systems. Zero Trust = never trust, always verify — even internal traffic requires verification.</div>
+    </div>
+  </div></div>
+
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAccGroup(this,'mg')"><span>⚠️ D2: Threats — <span style="color:var(--accent)">MAGNETO</span></span><span class="acc-arrow">▾</span></button>
+  <div class="acc-body" data-group="mg">
+    <p style="margin-bottom:10px"><span class="mn-letter">M</span>alware types · <span class="mn-letter">A</span>ttack vectors · <span class="mn-letter">G</span>ap exploitation · <span class="mn-letter">N</span>ation-state threats · <span class="mn-letter">E</span>scalation of privilege · <span class="mn-letter">T</span>hreat actors · <span class="mn-letter">O</span>SINT</p>
+    <ul style="margin-bottom:12px;padding-left:18px"><li>Magneto = <strong>ultimate insider threat</strong> — insider knowledge, sophisticated, motivated</li><li>Represents <strong>APT</strong> — Advanced Persistent Threat: persistent, well-funded, targeted</li><li>Metal manipulation = <strong>supply chain attack</strong> — compromising infrastructure everyone relies on</li></ul>
+    <p style="color:var(--text);font-weight:700;margin-bottom:6px">🧪 Quick Check:</p>
+    <div id="mq2">
+      <div class="mq-opt" onclick="mqAnswer(this,'mq2',false)">A. Phishing exclusively uses phone calls</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq2',false)">B. Ransomware always destroys data permanently</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq2',true)">C. A nation-state actor typically has significant resources and advanced capabilities</div>
+      <div class="mq-exp" id="mq2-exp">💡 Nation-state actors are government-sponsored with vast resources. Phone phishing = vishing. Ransomware encrypts (doesn't destroy) data for ransom.</div>
+    </div>
+  </div></div>
+
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAccGroup(this,'mg')"><span>🏗️ D3: Architecture — <span style="color:var(--accent)">XAVIER</span></span><span class="acc-arrow">▾</span></button>
+  <div class="acc-body" data-group="mg">
+    <p style="margin-bottom:10px"><span class="mn-letter">X</span>ero Trust Architecture · <span class="mn-letter">A</span>ir-gap isolation · <span class="mn-letter">V</span>irtualization · <span class="mn-letter">I</span>nfrastructure as Code · <span class="mn-letter">E</span>ncryption · <span class="mn-letter">R</span>esilience & HA</p>
+    <ul style="margin-bottom:12px;padding-left:18px"><li>Xavier's school is <strong>segmented</strong> — different areas for different trust levels</li><li>Cerebro is <strong>air-gapped</strong> — most sensitive systems isolated</li><li>Xavier plans for <strong>resilience</strong> — redundant teams, backup plans, continuity of mission</li></ul>
+    <p style="color:var(--text);font-weight:700;margin-bottom:6px">🧪 Quick Check:</p>
+    <div id="mq3">
+      <div class="mq-opt" onclick="mqAnswer(this,'mq3',true)">A. A hot site has real-time data replication and can take over instantly</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq3',false)">B. A cold site has all hardware pre-installed and ready to use</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq3',false)">C. SASE combines SD-WAN with on-premises security controls only</div>
+      <div class="mq-exp" id="mq3-exp">💡 Hot site = fully operational with real-time sync. Cold site = empty facility. SASE = SD-WAN + cloud-delivered security (not on-premises only).</div>
+    </div>
+  </div></div>
+
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAccGroup(this,'mg')"><span>⚙️ D4: Operations — <span style="color:var(--accent)">CYCLOPS</span></span><span class="acc-arrow">▾</span></button>
+  <div class="acc-body" data-group="mg">
+    <p style="margin-bottom:10px"><span class="mn-letter">C</span>hain of custody · <span class="mn-letter">Y</span>our IR plan · <span class="mn-letter">C</span>ontinuous monitoring · <span class="mn-letter">L</span>og analysis/SIEM · <span class="mn-letter">O</span>rchestration (SOAR) · <span class="mn-letter">P</span>en testing · <span class="mn-letter">S</span>SO/IAM</p>
+    <ul style="margin-bottom:12px;padding-left:18px"><li>Cyclops has <strong>precise vision</strong> — SIEM provides precise visibility into all events</li><li>He enforces <strong>every rule</strong> — Security Ops = continuous enforcement, no exceptions</li><li>His optic blasts have <strong>containment protocols</strong> — just like IR containment stops threats spreading</li></ul>
+    <p style="color:var(--text);font-weight:700;margin-bottom:6px">🧪 Quick Check:</p>
+    <div id="mq4">
+      <div class="mq-opt" onclick="mqAnswer(this,'mq4',false)">A. The first step in IR is containment</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq4',true)">B. Preparation is the first phase of the IR lifecycle</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq4',false)">C. Lessons learned occurs before recovery</div>
+      <div class="mq-exp" id="mq4-exp">💡 IR lifecycle: Preparation → Detection → Analysis → Containment → Eradication → Recovery → Lessons Learned. Preparation comes first — before any incident.</div>
+    </div>
+  </div></div>
+
+  <div class="acc-item"><button class="acc-hd" onclick="toggleAccGroup(this,'mg')"><span>📜 D5: Governance — <span style="color:var(--accent)">ROGUE</span></span><span class="acc-arrow">▾</span></button>
+  <div class="acc-body" data-group="mg">
+    <p style="margin-bottom:10px"><span class="mn-letter">R</span>isk management · <span class="mn-letter">O</span>versight & governance · <span class="mn-letter">G</span>DPR/HIPAA/PCI compliance · <span class="mn-letter">U</span>ser awareness training · <span class="mn-letter">E</span>xternal audits</p>
+    <ul style="margin-bottom:12px;padding-left:18px"><li>Rogue can't control absorbed powers — like <strong>inherited third-party risk</strong></li><li>She needs strict boundaries — exactly like <strong>data governance</strong> and access controls</li><li>Every power has risk — like every <strong>vendor</strong> expanding your attack surface</li></ul>
+    <p style="color:var(--text);font-weight:700;margin-bottom:6px">🧪 Quick Check:</p>
+    <div id="mq5">
+      <div class="mq-opt" onclick="mqAnswer(this,'mq5',false)">A. ALE = Asset Value x Exposure Factor</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq5',false)">B. Risk transfer means accepting risk without controls</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq5',true)">C. ALE = SLE x ARO (Annual Loss Expectancy = Single Loss Expectancy x Annualized Rate of Occurrence)</div>
+      <div class="mq-exp" id="mq5-exp">💡 SLE = Asset Value x Exposure Factor. ALE = SLE x ARO. Risk transfer = shifting risk to a third party (insurance). Risk acceptance = knowingly accepting the risk.</div>
+    </div>
+  </div></div>
+</div>
+
+<!-- CHARACTER MAPPING -->
+<hr style="border:none;border-top:1px solid var(--border)" id="characters">
+<div class="ps">
+  <div class="sec-hd"><h2>🦸 Character Security Mapping</h2><p>Every X-Men '97 character represents a real security role.</p></div>
+  <div class="cgrid">
+    <div class="role-card"><div class="role-emoji">🧠</div><div class="role-name">Professor Xavier</div><div class="role-badge">CISO / Governance Lead</div><div class="role-desc">Sets organizational security strategy, defines acceptable use policies, manages risk appetite, and provides executive oversight. Xavier IS the CISO — vision, authority, and final accountability.</div></div>
+    <div class="role-card"><div class="role-emoji">👁️</div><div class="role-name">Cyclops</div><div class="role-badge">SOC Lead / Compliance Officer</div><div class="role-desc">Enforces every rule with precision, manages incident response, ensures policies are followed without exception. No ambiguity — Cyclops runs operations by the book.</div></div>
+    <div class="role-card"><div class="role-emoji">🌪️</div><div class="role-name">Storm</div><div class="role-badge">Risk Analyst</div><div class="role-desc">Controls weather but never tries to stop every storm — models risk tolerance and appetite. She accepts some risk is unavoidable and manages it strategically rather than reactively.</div></div>
+    <div class="role-card"><div class="role-emoji">🐺</div><div class="role-name">Wolverine</div><div class="role-badge">Penetration Tester / Red Team</div><div class="role-desc">Probes every vulnerability, operates independently, reports what's exploitable. Wolverine = your offensive security professional — known, partially-known, or black-box environments.</div></div>
+    <div class="role-card"><div class="role-emoji">🦾</div><div class="role-name">Magneto</div><div class="role-badge">Insider Threat / APT Actor</div><div class="role-desc">Former ally with inside knowledge, genuine motivation, and sophisticated capabilities. Insider access + technical capability + ideological justification = APT-level risk.</div></div>
+    <div class="role-card"><div class="role-emoji">🤖</div><div class="role-name">The Sentinels</div><div class="role-badge">Automation Gone Wrong</div><div class="role-desc">Designed to protect but became an existential threat through unchecked automation and governance failure. The lesson: AI/automation needs human oversight and defined boundaries.</div></div>
+    <div class="role-card"><div class="role-emoji">🌀</div><div class="role-name">Rogue</div><div class="role-badge">Third-Party Risk / Data Privacy</div><div class="role-desc">Absorbs powers involuntarily — can't control inherited risk. Like vendor management: each new relationship expands capability AND attack surface.</div></div>
+    <div class="role-card"><div class="role-emoji">🔵</div><div class="role-name">Beast</div><div class="role-badge">Security Engineer / Blue Team</div><div class="role-desc">Brilliant analyst who designs defensive systems, implements security architecture, and performs technical analysis. Beast = your defensive security engineer — methodical, thorough, science-driven.</div></div>
+    <div class="role-card"><div class="role-emoji">💠</div><div class="role-name">Jean Grey</div><div class="role-badge">Threat Intelligence Analyst</div><div class="role-desc">Reads minds to gather intelligence before threats materialize. Jean Grey = threat hunting and OSINT — proactively identifying adversary intent before an attack launches.</div></div>
+    <div class="role-card"><div class="role-emoji">🔧</div><div class="role-name">Forge</div><div class="role-badge">Security Architect</div><div class="role-desc">Builds the tools and infrastructure the X-Men rely on. Forge = your security architect — designing secure systems, managing hardware supply chain, ensuring tools meet requirements.</div></div>
+    <div class="role-card"><div class="role-emoji">⚡</div><div class="role-name">Gambit</div><div class="role-badge">Social Engineer / Red Team Op</div><div class="role-desc">Uses charm, deception, and precision timing. Gambit = social engineering specialist — phishing, vishing, pretexting, and business email compromise simulations.</div></div>
+    <div class="role-card"><div class="role-emoji">🔮</div><div class="role-name">Morph</div><div class="role-badge">Polymorphic Malware / Spoofing</div><div class="role-desc">Shapeshifts to impersonate anyone. Morph = polymorphic malware that changes form to evade detection, or brand impersonation attacks that look legitimate to bypass security controls.</div></div>
+  </div>
+</div>
+
+<!-- ANALOGIES -->
+<hr style="border:none;border-top:1px solid var(--border)" id="analogies">
+<div class="ps">
+  <div class="sec-hd"><h2>🎭 Deep-Dive Security Analogies</h2><p>X-Men '97 scenarios mapped to Security+ exam concepts.</p></div>
+  <div class="cgrid">
+    <div class="card card-red"><div style="font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Scenario 1</div><div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:4px">Sentinel Attack on Genosha</div><div style="font-size:.64rem;color:var(--muted);margin-bottom:8px;font-weight:700">→ DDoS / Catastrophic Incident</div><div style="font-size:.8rem;color:var(--muted);line-height:1.6">The Sentinels overwhelm Genosha's defenses with coordinated simultaneous strikes — exactly like an amplified DDoS. No single defender can stop the volume. Defense requires layered countermeasures: rate limiting, scrubbing centers, and IR playbooks activated before the attack peaks.</div></div>
+    <div class="card card-gold"><div style="font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Scenario 2</div><div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:4px">Morph Impersonating Cyclops</div><div style="font-size:.64rem;color:var(--muted);margin-bottom:8px;font-weight:700">→ Identity Spoofing / MFA Bypass</div><div style="font-size:.8rem;color:var(--muted);line-height:1.6">Morph perfectly replicates appearance and voice — like a credential-based identity attack. Single-factor (appearance only) = impersonation succeeds. MFA (something you know + have + are) breaks Morph-style attacks. Zero Trust verifies identity regardless of how legitimate someone looks.</div></div>
+    <div class="card card-blue"><div style="font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Scenario 3</div><div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:4px">Xavier's Cerebro Getting Hacked</div><div style="font-size:.64rem;color:var(--muted);margin-bottom:8px;font-weight:700">→ Critical Infrastructure / Privilege Escalation</div><div style="font-size:.8rem;color:var(--muted);line-height:1.6">Cerebro = highest-value target, gaining access = God-mode privilege escalation. Defenses: air-gapping, need-to-know access, PAM, just-in-time permissions, and strict monitoring of every admin-level action. The most sensitive systems require the most layered protections.</div></div>
+    <div class="card card-red"><div style="font-size:.65rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--accent);margin-bottom:4px">Scenario 4</div><div style="font-size:.78rem;font-weight:700;color:var(--text);margin-bottom:4px">Wolverine Testing X-Mansion Security</div><div style="font-size:.64rem;color:var(--muted);margin-bottom:8px;font-weight:700">→ Penetration Testing / Red Team</div><div style="font-size:.8rem;color:var(--muted);line-height:1.6">Wolverine probes every room, lock, and guard rotation. Known floor plan = white-box test. Surprise assessment = black-box. Both generate actionable vulnerability reports. Defined scope + rules of engagement + final report = structured pen testing per Domain 5.5.</div></div>
+  </div>
+</div>
+
+<!-- STUDY NOTES -->
+<hr style="border:none;border-top:1px solid var(--border)" id="notes">
+<div class="ps">
+  <div class="sec-hd"><h2>📖 Study Notes — High-Frequency Exam Topics</h2><p>The concepts most likely to appear on your SY0-701 exam.</p></div>
+  <div class="note-card"><h4>📋 Risk Formulas</h4><p><strong>SLE = Asset Value x Exposure Factor.</strong> $10M mansion x 40% EF = $4M SLE. <strong>ALE = SLE x ARO.</strong> Sentinels attack twice/year (ARO=2): ALE = $8M/year. ARO of 0.25 = once every 4 years. Know these formulas cold — quantitative risk questions appear often.</p></div>
+  <div class="note-card"><h4>🔐 Authentication Factors — MFA the X-Men Way</h4><p><strong>Something you know:</strong> Xavier's mental password. <strong>Something you have:</strong> Cyclops's visor (hardware token). <strong>Something you are:</strong> Jean Grey's biometric brainwave scan. <strong>Somewhere you are:</strong> geolocation to X-Mansion. True MFA requires 2+ DIFFERENT factor types — two passwords = single-factor.</p></div>
+  <div class="note-card"><h4>🏛️ Governance Documents Hierarchy</h4><p><strong>Policy</strong> = high-level intent (mandatory). <strong>Standard</strong> = mandatory rules (specific requirements). <strong>Procedure</strong> = step-by-step how-to (mandatory). <strong>Guideline</strong> = recommended best practices (optional). Only policies, standards, and procedures are mandatory.</p></div>
+  <div class="note-card"><h4>🌐 Encryption: Asymmetric vs Symmetric</h4><p><strong>Asymmetric (PKI):</strong> Public key encrypts, private key decrypts. Slow but good for key exchange and digital signatures. <strong>Symmetric:</strong> Same key encrypts and decrypts. Fast — great for bulk data encryption. In practice: asymmetric exchanges the symmetric key, then symmetric does the heavy lifting.</p></div>
+  <div class="note-card"><h4>📊 IR Lifecycle — PDACREL</h4><p><strong>Preparation → Detection → Analysis → Containment → Eradication → Recovery → Lessons Learned.</strong> Xavier PREPARES. Cerebro DETECTS. Beast ANALYZES. Cyclops CONTAINS. Storm ERADICATES. Wolverine's healing = RECOVERY. Xavier writes LESSONS LEARNED.</p></div>
+</div>
+
+<!-- IR LIFECYCLE -->
+<hr style="border:none;border-top:1px solid var(--border)" id="ir-lifecycle">
+<div class="ps">
+  <div class="sec-hd"><h2>🚨 Incident Response Lifecycle</h2><p>Domain 4.8 — The complete IR process with X-Men at each phase.</p></div>
+  <div class="cgrid">
+    <div class="ir-card"><div class="ir-phase">1️⃣ Preparation</div><div class="ir-tag">Domain 4.8 · Pre-Incident</div><div class="ir-desc">Xavier builds teams, creates playbooks, deploys Cerebro for monitoring, and trains X-Men before any attack. Preparation = policies, procedures, tools, and training established BEFORE an incident. Tabletop exercises and simulations happen here.</div></div>
+    <div class="ir-card"><div class="ir-phase">2️⃣ Detection &amp; Analysis</div><div class="ir-tag">Domain 4.8 · Identify Threats</div><div class="ir-desc">Cerebro (SIEM) detects anomalous signatures. Beast analyzes logs and packet captures. Jean Grey hunts for threat actor intent. Detection = identifying something is wrong. Analysis = confirming it's real (not a false positive) and understanding scope.</div></div>
+    <div class="ir-card"><div class="ir-phase">3️⃣ Containment</div><div class="ir-tag">Domain 4.8 · Stop the Spread</div><div class="ir-desc">Cyclops isolates affected sectors. Forge quarantines compromised systems. Containment = stopping spread without destroying evidence. Short-term containment first (isolation), then long-term (patch/segment) while maintaining forensic integrity.</div></div>
+    <div class="ir-card"><div class="ir-phase">4️⃣ Eradication &amp; Recovery</div><div class="ir-tag">Domain 4.8 · Remove &amp; Restore</div><div class="ir-desc">Storm removes Sentinel presence. Wolverine's healing factor = system restoration to baseline. Eradication = removing root cause. Recovery = restoring systems to validated clean state and confirming normal operation resumes.</div></div>
+    <div class="ir-card"><div class="ir-phase">5️⃣ Lessons Learned</div><div class="ir-tag">Domain 4.8 · Post-Incident</div><div class="ir-desc">Xavier convenes full team to review what happened, what worked, what failed. Update playbooks, improve defenses, brief all X-Men. Document timeline, evaluate response, update procedures, and train to prevent recurrence.</div></div>
+  </div>
+</div>
+
+<!-- DETECTION DEEP DIVE -->
+<hr style="border:none;border-top:1px solid var(--border)" id="detection">
+<div class="ps">
+  <div class="sec-hd"><h2>🔍 Detection Deep Dive</h2><p>Domain 4.4 — Security alerting, monitoring tools, and indicators of compromise.</p></div>
+  <div class="cgrid" style="margin-bottom:16px">
+    <div class="card card-gold"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">Cerebro = SIEM</h4><p style="font-size:.8rem;color:var(--muted);line-height:1.6">SIEM aggregates logs from all sources, correlates events, and fires alerts. Like Cerebro detecting every mutant worldwide and flagging anomalies in real-time. Requires tuning to reduce false positives.</p></div>
+    <div class="card card-red"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">Jean Grey = Threat Intel</h4><p style="font-size:.8rem;color:var(--muted);line-height:1.6">Threat feeds (OSINT, ISACs, dark web) provide intelligence about emerging threats before they hit. Jean proactively reads threat actors' minds — exactly like threat intel feeds inform defenses before an attack.</p></div>
+    <div class="card card-blue"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">Beast = Vulnerability Scanner</h4><p style="font-size:.8rem;color:var(--muted);line-height:1.6">Regular vulnerability scanning (CVE tracking, CVSS scoring) identifies weaknesses before attackers exploit them. Beast methodically catalogs every weakness and prioritizes fixes by impact score.</p></div>
+    <div class="card card-gold"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">Indicators of Compromise (IoCs)</h4><p style="font-size:.8rem;color:var(--muted);line-height:1.6">Account lockouts, impossible travel (NY and Tokyo in 1 hour), resource spikes, out-of-cycle logging, and missing logs all indicate compromise. These are Domain 2.4 exam targets — know them all.</p></div>
+  </div>
+  <div class="qblock"><p style="font-weight:700;color:var(--text);margin-bottom:8px;font-family:'Bangers',cursive;font-size:1.05rem">🧪 Detection Quick Check</p>
+    <div id="mq-det">
+      <div class="mq-opt" onclick="mqAnswer(this,'mq-det',false)">A. SIEM generates and enforces firewall rules automatically</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq-det',false)">B. A false negative means a real threat was incorrectly flagged as an alert</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq-det',true)">C. A false negative means a real threat was missed and NOT alerted on</div>
+      <div class="mq-exp" id="mq-det-exp">💡 SIEM aggregates/correlates — it doesn't enforce (that's a firewall/IPS). False positive = alert fires on legitimate activity. False negative = real attack goes undetected. False negatives are more dangerous in security ops.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ROLES & RESPONSIBILITIES -->
+<hr style="border:none;border-top:1px solid var(--border)" id="roles">
+<div class="ps">
+  <div class="sec-hd"><h2>👥 Roles &amp; Responsibilities</h2><p>Security governance roles — Domain 5.1 exam targets.</p></div>
+  <div class="cgrid" style="margin-bottom:16px">
+    <div class="card"><div style="font-size:.65rem;font-weight:800;letter-spacing:1px;color:var(--accent2);margin-bottom:4px">DATA OWNER</div><div style="font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:4px">Professor Xavier</div><div style="font-size:.78rem;color:var(--muted);line-height:1.55">Executive accountable for data — defines classification, approves access, bears ultimate responsibility. Xavier decides what's secret and who can know.</div></div>
+    <div class="card"><div style="font-size:.65rem;font-weight:800;letter-spacing:1px;color:var(--accent2);margin-bottom:4px">DATA CUSTODIAN</div><div style="font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:4px">Beast</div><div style="font-size:.78rem;color:var(--muted);line-height:1.55">Implements and maintains technical security controls per the owner's requirements. Beast manages Cerebro's technical security — encryption, backups, access logs — as directed by Xavier.</div></div>
+    <div class="card"><div style="font-size:.65rem;font-weight:800;letter-spacing:1px;color:var(--accent2);margin-bottom:4px">DATA CONTROLLER (GDPR)</div><div style="font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:4px">Xavier's School</div><div style="font-size:.78rem;color:var(--muted);line-height:1.55">Determines WHY and HOW personal data is processed. The organization itself — decides purpose and means of processing, bears full legal GDPR responsibility.</div></div>
+    <div class="card"><div style="font-size:.65rem;font-weight:800;letter-spacing:1px;color:var(--accent2);margin-bottom:4px">DATA PROCESSOR (GDPR)</div><div style="font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:4px">Forge's Tech Company</div><div style="font-size:.78rem;color:var(--muted);line-height:1.55">Processes data on behalf of the controller. A third-party vendor processes X-Man personal data as directed. Must follow controller instructions and sign Data Processing Agreements.</div></div>
+  </div>
+  <div class="qblock"><p style="font-weight:700;color:var(--text);margin-bottom:8px;font-family:'Bangers',cursive;font-size:1.05rem">🧪 Roles Quick Check</p>
+    <div id="mq-roles">
+      <div class="mq-opt" onclick="mqAnswer(this,'mq-roles',false)">A. The data custodian decides how data is classified</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq-roles',true)">B. The data owner is responsible for classifying data and approving access</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq-roles',false)">C. The data processor determines the purpose of data collection</div>
+      <div class="mq-exp" id="mq-roles-exp">💡 Data Owner = classifies and grants access (executive). Data Custodian = technical controls implementation. Data Processor (GDPR) = third party that follows controller instructions — they don't decide.</div>
+    </div>
+  </div>
+</div>
+
+<!-- REPORTING -->
+<hr style="border:none;border-top:1px solid var(--border)" id="reporting">
+<div class="ps">
+  <div class="sec-hd"><h2>📊 Reporting Requirements</h2><p>Internal and external reporting timelines — these numbers appear on the exam.</p></div>
+  <div class="cgrid" style="margin-bottom:16px">
+    <div class="card card-gold"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">Internal Reporting</h4><p style="font-size:.79rem;color:var(--muted);line-height:1.65"><strong>Immediate:</strong> Alert SOC/CISO on detection. <strong>Ongoing:</strong> Status updates at defined intervals during active incidents. <strong>Post-incident:</strong> Full lessons-learned report within defined SLA (typically 72h–30 days). Xavier gets a report after every mission.</p></div>
+    <div class="card card-red"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">External / Regulatory</h4><p style="font-size:.79rem;color:var(--muted);line-height:1.65"><strong>GDPR:</strong> 72 hours to supervisory authority. <strong>HIPAA:</strong> 60 days (500+ individuals = HHS + media). <strong>PCI DSS:</strong> Immediately to card brands. <strong>SEC:</strong> 4 business days for material breaches. Know the timelines — they appear on the exam.</p></div>
+    <div class="card card-blue"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">Digital Forensics</h4><p style="font-size:.79rem;color:var(--muted);line-height:1.65"><strong>Legal Hold:</strong> Preserve all relevant data when litigation is anticipated. <strong>Chain of Custody:</strong> Document every person who handles evidence. <strong>Order of Volatility:</strong> RAM first, then swap, then disk, then remote logs.</p></div>
+  </div>
+  <div class="qblock"><p style="font-weight:700;color:var(--text);margin-bottom:8px;font-family:'Bangers',cursive;font-size:1.05rem">🧪 Reporting Quick Check</p>
+    <div id="mq-rep">
+      <div class="mq-opt" onclick="mqAnswer(this,'mq-rep',false)">A. GDPR requires breach notification within 24 hours</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq-rep',true)">B. GDPR requires breach notification to a supervisory authority within 72 hours of discovery</div>
+      <div class="mq-opt" onclick="mqAnswer(this,'mq-rep',false)">C. HIPAA requires notification within 24 hours for all breaches</div>
+      <div class="mq-exp" id="mq-rep-exp">💡 GDPR = 72 hours to supervisory authority. HIPAA = 60 days for 500+ individuals (HHS + media). Know these numbers — they frequently appear on the SY0-701 exam.</div>
+    </div>
+  </div>
+</div>
+
+<!-- POST-INCIDENT -->
+<hr style="border:none;border-top:1px solid var(--border)" id="post-incident">
+<div class="ps">
+  <div class="sec-hd"><h2>📝 Post-Incident Activity</h2><p>After the X-Men win — lessons learned, metrics, and training updates.</p></div>
+  <div class="cgrid">
+    <div class="card card-gold"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">Lessons Learned Report</h4><p style="font-size:.79rem;color:var(--muted);line-height:1.65">Xavier gathers every X-Man for post-mission debrief. Document: timeline, detection, response actions, what worked, what failed, root cause, recommended changes. Conduct within 72 hours while details are fresh. This report drives playbook updates and defensive improvements.</p></div>
+    <div class="card card-red"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">Key Security Metrics</h4><p style="font-size:.79rem;color:var(--muted);line-height:1.65"><strong>MTTD</strong> — Mean Time to Detect. <strong>MTTR</strong> — Mean Time to Respond/Recover. <strong>MTBF</strong> — Mean Time Between Failures. <strong>RTO</strong> — Recovery Time Objective. <strong>RPO</strong> — Recovery Point Objective. Track metrics across incidents to measure team improvement.</p></div>
+    <div class="card card-blue"><h4 style="color:var(--accent);margin-bottom:6px;font-family:'Bangers',cursive;font-size:1.05rem">Training Updates</h4><p style="font-size:.79rem;color:var(--muted);line-height:1.65">Every incident reveals training gaps. Update security awareness training, revise phishing simulation campaigns, conduct new tabletop exercises for similar scenarios. The Sentinel attack changed X-Man training protocols permanently — turn pain into preparedness.</p></div>
+  </div>
+</div>
+
+<!-- ADVENTURE -->
+<hr style="border:none;border-top:1px solid var(--border)" id="adventure">
+<div class="ps">
+  <div class="sec-hd"><h2>⚔️ Interactive Adventure — Sentinel Incident Response</h2><p>Guide the X-Men through a full IR lifecycle. Wrong answers say "Try again!" — answer correctly to advance.</p></div>
+  <div id="adv-container">
+    <div class="adv-scene active" id="adv-scene-1">
+      <h4>🔴 Scene 1: Detection — Cerebro Alarm</h4>
+      <p style="font-size:.83rem;color:var(--muted);margin-bottom:12px;line-height:1.6">Cerebro is screaming. Dozens of Sentinel signatures converging on Genosha. Beast confirms: NOT a false positive — attack is real. What is the FIRST correct action?</p>
+      <div class="adv-choice" data-correct="false" data-scene="1">🚫 Immediately deploy all X-Men to Genosha without briefing</div>
+      <div class="adv-choice" data-correct="true" data-scene="1">✅ Activate the IR plan: notify Xavier (CISO), escalate to the full team, confirm scope</div>
+      <div class="adv-choice" data-correct="false" data-scene="1">🚫 Shut down Cerebro to stop the noise</div>
+      <div id="adv-feedback-1" style="display:none;margin-top:8px;font-size:.8rem;padding:8px 12px;border-radius:8px"></div>
+    </div>
+    <div class="adv-scene" id="adv-scene-2">
+      <h4>🟡 Scene 2: Containment — Sentinels Breach the Perimeter</h4>
+      <p style="font-size:.83rem;color:var(--muted);margin-bottom:12px;line-height:1.6">Sentinels have breached Genosha and are actively attacking. Cyclops must CONTAIN damage before it spreads to Xavier's School. What is the correct containment strategy?</p>
+      <div class="adv-choice" data-correct="false" data-scene="2">🚫 Eradicate all Sentinels immediately without preserving any evidence</div>
+      <div class="adv-choice" data-correct="false" data-scene="2">🚫 Wait to see if the Sentinels leave on their own</div>
+      <div class="adv-choice" data-correct="true" data-scene="2">✅ Isolate affected zones, preserve forensic evidence, prevent spread while mounting defense</div>
+      <div id="adv-feedback-2" style="display:none;margin-top:8px;font-size:.8rem;padding:8px 12px;border-radius:8px"></div>
+    </div>
+    <div class="adv-scene" id="adv-scene-3">
+      <h4>🟠 Scene 3: Eradication — Remove the Root Cause</h4>
+      <p style="font-size:.83rem;color:var(--muted);margin-bottom:12px;line-height:1.6">Sentinels contained but their C2 signal is still active. Storm must eradicate the SOURCE. What defines proper eradication?</p>
+      <div class="adv-choice" data-correct="false" data-scene="3">🚫 Restore systems from backup without finding how they were compromised</div>
+      <div class="adv-choice" data-correct="true" data-scene="3">✅ Identify and eliminate root cause (C2 controller), patch the exploited vuln, verify threat fully removed</div>
+      <div class="adv-choice" data-correct="false" data-scene="3">🚫 Skip to recovery immediately to restore service ASAP</div>
+      <div id="adv-feedback-3" style="display:none;margin-top:8px;font-size:.8rem;padding:8px 12px;border-radius:8px"></div>
+    </div>
+    <div class="adv-scene" id="adv-scene-4">
+      <h4>🟢 Scene 4: Lessons Learned — The Post-Mission Debrief</h4>
+      <p style="font-size:.83rem;color:var(--muted);margin-bottom:12px;line-height:1.6">Sentinels gone. Recovery complete. Xavier assembles every X-Man. What MUST happen in Lessons Learned?</p>
+      <div class="adv-choice" data-correct="false" data-scene="4">🚫 Classify the incident as closed and move on with no documentation</div>
+      <div class="adv-choice" data-correct="false" data-scene="4">🚫 Only brief team leaders, not the full team</div>
+      <div class="adv-choice" data-correct="true" data-scene="4">✅ Document full timeline, evaluate response, update playbooks, and train the full team on what changed</div>
+      <div id="adv-feedback-4" style="display:none;margin-top:8px;font-size:.8rem;padding:8px 12px;border-radius:8px"></div>
+    </div>
+    <div class="adv-scene" id="adv-finale" style="text-align:center;padding:24px;background:linear-gradient(135deg,rgba(255,215,0,.08),rgba(204,0,0,.08));border:2px solid var(--accent)">
+      <div style="font-size:3rem;margin-bottom:10px">🏆</div>
+      <h4 style="font-size:1.4rem;color:var(--accent);margin-bottom:8px;font-family:'Bangers',cursive;letter-spacing:1px">Mission Complete, X-Men!</h4>
+      <p style="font-size:.84rem;color:var(--muted);margin-bottom:14px;line-height:1.7">You guided the X-Men through all four IR phases:</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px">
+        <span class="tag" style="background:rgba(57,255,20,.12);border-color:rgba(57,255,20,.4);color:#39FF14">✅ Detection</span>
+        <span class="tag" style="background:rgba(57,255,20,.12);border-color:rgba(57,255,20,.4);color:#39FF14">✅ Containment</span>
+        <span class="tag" style="background:rgba(57,255,20,.12);border-color:rgba(57,255,20,.4);color:#39FF14">✅ Eradication</span>
+        <span class="tag" style="background:rgba(57,255,20,.12);border-color:rgba(57,255,20,.4);color:#39FF14">✅ Lessons Learned</span>
+      </div>
+      <button onclick="resetAdventure()" style="background:var(--accent);color:#000;padding:8px 20px;border-radius:8px;border:none;cursor:pointer;font-weight:800;font-family:'Nunito',sans-serif">🔄 Play Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- STUDY LINKS -->
+<hr style="border:none;border-top:1px solid var(--border)" id="links">
+<div class="ps">
+  <div class="sec-hd"><h2>🔗 Study Links &amp; Resources</h2><p>Everything you need to pass the SY0-701.</p></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:9px">
+    <a href="CompTIA-Security-Plus-SY0-701-Exam-Objectives.pdf" target="_blank" class="link-card"><div style="font-size:1.6rem;flex-shrink:0">📄</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block;margin-bottom:2px">Exam Objectives PDF</span><span style="font-size:.69rem;color:var(--muted)">Official CompTIA SY0-701 blueprint (activates on GitHub)</span></div></a>
+    <a href="CompTIA_Security_SY0-701_Study_Guide.pdf" target="_blank" class="link-card"><div style="font-size:1.6rem;flex-shrink:0">📘</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block;margin-bottom:2px">Study Guide PDF</span><span style="font-size:.69rem;color:var(--muted)">Full SY0-701 study guide (activates on GitHub)</span></div></a>
+    <a href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank" class="link-card"><div style="font-size:1.6rem;flex-shrink:0">🎬</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block;margin-bottom:2px">Professor Messer</span><span style="font-size:.69rem;color:var(--muted)">Free SY0-701 video training course</span></div></a>
+    <a href="https://amzn.to/4nVi25Y" target="_blank" class="link-card"><div style="font-size:1.6rem;flex-shrink:0">📚</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block;margin-bottom:2px">CompTIA Security+ Book</span><span style="font-size:.69rem;color:var(--muted)">Sybex SY0-701 Study Guide (affiliate)</span></div></a>
+    <a href="https://quizlet.com/search?query=comptia+security+plus+sy0-701&type=sets" target="_blank" class="link-card"><div style="font-size:1.6rem;flex-shrink:0">🃏</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block;margin-bottom:2px">Quizlet Flashcards</span><span style="font-size:.69rem;color:var(--muted)">Community SY0-701 study sets</span></div></a>
+    <a href="security-notes.html" class="link-card"><div style="font-size:1.6rem;flex-shrink:0">🛡️</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block;margin-bottom:2px">Main Study Hub</span><span style="font-size:.69rem;color:var(--muted)">Full Security+ notes &amp; all cartoon pages</span></div></a>
+  </div>
+</div>
+
+<!-- FLASHCARDS -->
+<hr style="border:none;border-top:1px solid var(--border)" id="flashcards">
+<div class="ps">
+  <div class="sec-hd"><h2>🃏 Leitner Flashcard Deck — All 5 Domains</h2><p>65 cards covering all five exam domains. Progress saves automatically. ⌨️ Space=flip · 1=Again · 2=Got It · 3=Easy · S=Skip</p></div>
+  <div class="fc-wrap">
+    <div style="margin-bottom:10px"><h3 style="font-family:'Bangers',cursive;font-size:1.2rem;color:var(--accent);letter-spacing:1px">⚡ X-Men '97 Flashcard Deck</h3><p style="font-size:.76rem;color:var(--muted)">65 cards · All 5 domains · Leitner spaced repetition</p></div>
+    <div class="fc-lrow">
+      <div class="fc-lb fc-lb1"><span id="fc-lb1">0</span>Box 1<br><small>Daily</small></div>
+      <div class="fc-lb fc-lb2"><span id="fc-lb2">0</span>Box 2<br><small>2 days</small></div>
+      <div class="fc-lb fc-lb3"><span id="fc-lb3">0</span>Box 3<br><small>4 days</small></div>
+      <div class="fc-lb fc-lb4"><span id="fc-lb4">0</span>Box 4<br><small>8 days</small></div>
+      <div class="fc-lb fc-lb5"><span id="fc-lb5">0</span>Box 5<br><small>Mastered ✨</small></div>
+    </div>
+    <div class="fc-stats">
+      <div class="fc-stat"><div class="fc-snum" id="fc-total" style="color:var(--accent)">65</div><div class="fc-slbl">Total</div></div>
+      <div class="fc-stat"><div class="fc-snum" id="fc-learning" style="color:#FF6B9D">0</div><div class="fc-slbl">Learning</div></div>
+      <div class="fc-stat"><div class="fc-snum" id="fc-reviewing" style="color:var(--accent)">0</div><div class="fc-slbl">Reviewing</div></div>
+      <div class="fc-stat"><div class="fc-snum" id="fc-mastered" style="color:#39FF14">0</div><div class="fc-slbl">Mastered</div></div>
+    </div>
+    <div class="fc-toolbar">
+      <button class="fc-tbtn active" id="fc-btn-due" onclick="fcDue()">📋 Due Cards</button>
+      <button class="fc-tbtn" id="fc-btn-all" onclick="fcAll()">🔀 All Cards</button>
+      <button class="fc-tbtn" onclick="fcRestart()">🔄 Restart Session</button>
+      <button class="fc-tbtn" onclick="fcResetAll()">⚠️ Reset All Progress</button>
+    </div>
+    <div id="fc-main">
+      <div class="fc-counter" id="fc-counter"></div>
+      <div class="fc-pbar"><div class="fc-pfill" id="fc-fill" style="width:0%"></div></div>
+      <div class="flashcard" id="fc-card" onclick="fcFlip()">
+        <div class="card-inner">
+          <div class="card-front"><div class="card-boxind" id="fc-boxind"></div><p id="fc-q">Loading...</p><span class="card-hint">Click or press Space to reveal</span></div>
+          <div class="card-back"><p id="fc-a"></p></div>
+        </div>
+      </div>
+      <div class="empty-msg" id="fc-empty"><div style="font-size:2rem">🎉</div><p>All caught up! Switch to All Cards to keep drilling.</p></div>
+      <div class="card-controls">
+        <button class="btn btn-flip" id="fc-flipbtn" onclick="fcFlip()">👁️ Reveal Answer</button>
+      </div>
+      <div class="card-controls answer-btns" id="fc-ansbtn">
+        <button class="btn btn-again" onclick="fcGrade('again')">❌ Again (1)</button>
+        <button class="btn btn-good" onclick="fcGrade('good')">✅ Got It (2)</button>
+        <button class="btn btn-easy" onclick="fcGrade('easy')">⚡ Easy (3)</button>
+        <button class="btn btn-skip" onclick="fcSkip()">⏭️ Skip (S)</button>
+      </div>
+    </div>
+    <div class="done-screen" id="fc-done">
+      <div style="font-size:2.5rem">🏆</div>
+      <h3 style="font-family:'Bangers',cursive;font-size:1.4rem;color:var(--accent);margin-bottom:6px">Session Complete!</h3>
+      <div class="score-big" id="fc-score" style="color:var(--accent)"></div>
+      <p id="fc-scoredet" style="color:var(--muted);margin-bottom:12px"></p>
+      <button class="btn btn-flip" onclick="fcRestart()">🔄 Study Again</button>
+    </div>
+    <div style="text-align:center;font-size:.69rem;color:var(--muted);margin-top:10px;padding-top:8px;border-top:1px solid var(--border)">⌨️ Space = flip · 1 = Again · 2 = Got It · 3 = Easy · S = Skip</div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<hr style="border:none;border-top:1px solid var(--border)" id="quiz">
+<div class="ps">
+  <div class="sec-hd"><h2>🧠 10-Question Exam Quiz</h2><p>One question per domain area. Personalized missed-topic feedback. Retake resets cleanly — no page reload needed.</p></div>
+  <div class="quiz-wrap">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:14px">
+      <h3 style="font-family:'Bangers',cursive;font-size:1.2rem;color:var(--accent);letter-spacing:1px">⚡ X-Men '97 Security+ Quiz</h3>
+      <span id="quiz-meta" style="font-size:.76rem;color:var(--muted);font-weight:700"></span>
+    </div>
+    <div id="quiz-body"></div>
+    <div id="quiz-nav" style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+      <button id="quiz-submit-btn" onclick="quizSubmit()" style="background:var(--accent);color:#000;padding:6px 16px;border-radius:8px;border:none;cursor:pointer;font-size:.8rem;font-weight:800;font-family:'Nunito',sans-serif;display:none">Check Answer</button>
+      <button id="quiz-next-btn" onclick="quizNext()" style="background:var(--surface);color:var(--text);padding:6px 16px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;font-size:.8rem;font-weight:800;font-family:'Nunito',sans-serif;display:none">Next →</button>
+    </div>
+    <div id="quiz-final" style="display:none;text-align:center;padding:20px 0">
+      <div id="quiz-final-score" style="font-size:3rem;font-weight:900;color:var(--accent)"></div>
+      <p id="quiz-final-detail" style="color:var(--muted);margin-bottom:6px"></p>
+      <div id="quiz-missed-topics" style="margin-bottom:14px;text-align:left"></div>
+      <button onclick="quizReset()" style="background:var(--accent);color:#000;padding:8px 20px;border-radius:8px;border:none;cursor:pointer;font-weight:800;font-family:'Nunito',sans-serif">🔄 Retake Quiz</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:var(--nav);padding:26px 20px;text-align:center;color:rgba(255,255,255,.38);font-size:.73rem;margin-top:40px;border-top:2px solid rgba(255,215,0,.15)">
+  <p>🛡️ <a href="security-notes.html" style="color:var(--accent)">Study Hub</a> &nbsp;·&nbsp; <a href="https://charleneluequeue.github.io/" style="color:var(--accent)">Portfolio</a> &nbsp;·&nbsp; Built by Charlene LueQuee</p>
+  <p style="margin-top:4px;font-size:.7rem">X-Men '97 characters are property of Marvel Entertainment — used for educational analogy purposes only. No affiliation with Marvel or Disney.</p>
+  <div style="margin-top:10px;display:inline-block;background:rgba(255,215,0,.06);border:1px solid rgba(255,215,0,.15);border-radius:6px;padding:5px 16px;font-size:.67rem;letter-spacing:.5px">&copy; 2025 Charlene LueQuee &nbsp;·&nbsp; All Rights Reserved</div>
+</footer>
+<script>
+// ── PARTICLES ──
+(function(){
+  var c=document.getElementById('particles'),e=['⚡','X','🦸','🔒','⚠️','🛡️'];
+  for(var i=0;i<18;i++){var p=document.createElement('div');p.className='particle';p.textContent=e[i%e.length];p.style.left=Math.random()*100+'vw';p.style.animationDuration=(14+Math.random()*20)+'s';p.style.animationDelay=-(Math.random()*20)+'s';p.style.fontSize=(0.9+Math.random()*1.2)+'rem';c.appendChild(p);}
+})();
+
+// ── SOUND ──
+var soundOn=false;
+function toggleSound(){soundOn=!soundOn;document.getElementById('soundToggle').textContent=soundOn?'🔊':'🔇';}
+function playTone(f,d,t){if(!soundOn)return;try{var A=window.AudioContext||window.webkitAudioContext;if(!A)return;var ctx=new A(),o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(0.15,ctx.currentTime);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+d);o.start();o.stop(ctx.currentTime+d);}catch(e){}}
+function playCorrect(){playTone(523,.12);setTimeout(function(){playTone(659,.12);},120);setTimeout(function(){playTone(784,.2);},240);}
+function playWrong(){playTone(220,.25,'sawtooth');}
+function playVictory(){[523,587,659,784,880].forEach(function(n,i){setTimeout(function(){playTone(n,.18);},i*100);});}
+
+// ── CONFETTI ──
+function launchConfetti(){
+  var cl=['#FFD700','#CC0000','#006BB6','#39FF14','#FF6B9D','#00BFFF'];
+  for(var i=0;i<60;i++){var c=document.createElement('div');c.className='confetti-piece';c.style.left=Math.random()*100+'vw';c.style.top='-10px';c.style.background=cl[Math.floor(Math.random()*cl.length)];c.style.animationDuration=(1.5+Math.random()*2)+'s';c.style.animationDelay=Math.random()*.8+'s';document.body.appendChild(c);setTimeout(function(el){el.remove();},3500,c);}
+}
+
+// ── NAV DROPDOWN ──
+function toggleCN(btn){var m=btn.nextElementSibling,vis=m.style.display==='block';document.querySelectorAll('.cnm').forEach(function(x){x.style.display='none';});if(!vis)m.style.display='block';}
+document.addEventListener('click',function(e){if(!e.target.closest('.cnd'))document.querySelectorAll('.cnm').forEach(function(m){m.style.display='none';});});
+
+// ── SMOOTH SCROLL ──
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  });
+});
+
+// ── ACCORDIONS ──
+function toggleAcc(btn){var body=btn.nextElementSibling,isOpen=btn.classList.contains('open');btn.parentElement.parentElement.querySelectorAll('.acc-hd').forEach(function(b){b.classList.remove('open');b.nextElementSibling.classList.remove('open');});if(!isOpen){btn.classList.add('open');body.classList.add('open');}}
+function toggleAccGroup(btn,g){var body=btn.nextElementSibling,isOpen=btn.classList.contains('open');document.querySelectorAll('.acc-body[data-group="'+g+'"]').forEach(function(b){b.classList.remove('open');b.previousElementSibling.classList.remove('open');});if(!isOpen){btn.classList.add('open');body.classList.add('open');}}
+
+// ── MINI QUIZZES ──
+function mqAnswer(el,id,correct){var c=document.getElementById(id);if(c.dataset.done)return;c.dataset.done='1';c.querySelectorAll('.mq-opt').forEach(function(o){o.classList.add('mq-disabled');});if(correct){el.classList.add('mq-correct');playCorrect();}else{el.classList.add('mq-wrong');playWrong();}var exp=document.getElementById(id+'-exp');if(exp)exp.style.display='block';}
+
+// ── ADVENTURE ──
+function advAnswer(el,scene,correct){
+  var fb=document.getElementById('adv-feedback-'+scene);
+  var choices=el.parentElement.querySelectorAll('.adv-choice');
+  if(el.dataset.locked)return;
+  if(correct){
+    choices.forEach(function(c){c.dataset.locked='1';});
+    el.classList.add('correct');
+    fb.style.cssText='display:block;background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.3);color:#39FF14';
+    fb.textContent='Correct! Moving to next phase...';
+    playCorrect();
+    setTimeout(function(){advNext(scene);},1200);
+  } else {
+    el.classList.add('wrong');
+    fb.style.cssText='display:block;background:rgba(255,68,102,.1);border:1px solid rgba(255,68,102,.3);color:#ff4466';
+    fb.textContent='Try the other option!';
+    playWrong();
+    setTimeout(function(){el.classList.remove('wrong');fb.style.display='none';},1500);
+  }
+}
+function advNext(scene){
+  document.getElementById('adv-scene-'+scene).classList.remove('active');
+  var next=document.getElementById('adv-scene-'+(scene+1))||document.getElementById('adv-finale');
+  next.classList.add('active');
+  if(next.id==='adv-finale'){launchConfetti();playVictory();}
+}
+function resetAdventure(){
+  document.querySelectorAll('.adv-scene').forEach(function(s){s.classList.remove('active');});
+  document.getElementById('adv-scene-1').classList.add('active');
+  document.querySelectorAll('.adv-choice').forEach(function(c){c.classList.remove('correct','wrong');delete c.dataset.locked;});
+  document.querySelectorAll('[id^="adv-feedback-"]').forEach(function(f){f.style.display='none';});
+}
+// Wire adventure clicks
+document.querySelectorAll('.adv-choice').forEach(function(c){
+  c.addEventListener('click',function(){
+    var scene=parseInt(c.dataset.scene),correct=c.dataset.correct==='true';
+    advAnswer(c,scene,correct);
+  });
+});
+
+// ── FLASHCARDS ──
+var FC_CARDS=[
+  {q:"What are the three components of the CIA Triad?",a:"Confidentiality, Integrity, and Availability — the three core pillars of information security."},
+  {q:"What is non-repudiation?",a:"The assurance that someone cannot deny the validity of their signature or action. Digital signatures provide non-repudiation."},
+  {q:"What does AAA stand for in security?",a:"Authentication (verify identity), Authorization (grant/deny access), Accounting (log/audit activity)."},
+  {q:"What is Zero Trust architecture?",a:"Never trust, always verify — no user or system is trusted by default, regardless of network location."},
+  {q:"Symmetric vs Asymmetric encryption?",a:"Symmetric = same key for encrypt/decrypt (fast, bulk data). Asymmetric = public/private key pair (slow, key exchange and signatures)."},
+  {q:"What is a honeypot?",a:"A decoy system designed to attract attackers — used to detect intrusion attempts and study attack techniques."},
+  {q:"What is hashing?",a:"A one-way function producing a fixed-length digest. Any change to input changes the hash. Used to verify data integrity."},
+  {q:"What is salting?",a:"Adding random data to a password before hashing — prevents rainbow table attacks. Each password gets a unique salt."},
+  {q:"Name the six types of security controls.",a:"Preventive, Deterrent, Detective, Corrective, Compensating, and Directive."},
+  {q:"What is Gap Analysis?",a:"Comparing current security posture to a desired target state to identify missing controls."},
+  {q:"What is Key Escrow?",a:"A third party holds a copy of the encryption key for recovery purposes — common in government/compliance contexts."},
+  {q:"What is steganography?",a:"Hiding secret data inside ordinary files (images, audio) — security through obscurity / obfuscation."},
+  {q:"What is a PKI (Public Key Infrastructure)?",a:"A framework of policies, hardware, software, and procedures to manage digital certificates and public-key encryption."},
+  {q:"What are the four categories of security controls?",a:"Technical, Managerial, Operational, and Physical."},
+  {q:"What is a digital signature?",a:"An asymmetric crypto technique that provides authentication, integrity, and non-repudiation. Signed with private key, verified with public key."},
+  {q:"What are the main types of threat actors?",a:"Nation-state, Unskilled attacker (script kiddie), Hacktivist, Insider threat, Organized crime, Shadow IT."},
+  {q:"Phishing vs Vishing vs Smishing?",a:"Phishing = email. Vishing = voice call. Smishing = SMS/text. All are social engineering attacks."},
+  {q:"What is a zero-day vulnerability?",a:"A software flaw unknown to the vendor with no available patch — highly dangerous because there's no ready defense."},
+  {q:"What is ransomware?",a:"Malware that encrypts victim files and demands payment for the decryption key."},
+  {q:"What is a DDoS attack?",a:"Distributed Denial-of-Service — uses a botnet to flood a target with traffic, overwhelming it and denying service to legitimate users."},
+  {q:"What is SQL injection (SQLi)?",a:"Injecting malicious SQL code into input fields to manipulate database queries — can expose, modify, or delete data."},
+  {q:"What is cross-site scripting (XSS)?",a:"Injecting malicious scripts into web pages viewed by other users — steals session cookies, credentials, or performs actions as the victim."},
+  {q:"What is an insider threat?",a:"A threat from within the organization — employees, contractors, or partners with legitimate access who cause harm (intentionally or not)."},
+  {q:"What is a watering hole attack?",a:"Infecting a website frequently visited by the target group — waiting for victims to come to you."},
+  {q:"What is typosquatting?",a:"Registering domains similar to legitimate ones (e.g. googel.com) to trick users who mistype URLs — brand impersonation."},
+  {q:"What is a supply chain attack?",a:"Compromising a target by attacking a less-secure element in their supply chain — hardware, software, or service providers. SolarWinds is the classic example."},
+  {q:"What is the difference between IaaS, PaaS, and SaaS?",a:"IaaS = you manage above hypervisor. PaaS = you manage apps and data. SaaS = you only manage user access — provider handles everything else."},
+  {q:"Hot site vs Cold site vs Warm site?",a:"Hot = fully operational, real-time sync, instant failover. Cold = empty facility. Warm = hardware ready, data restored from backup."},
+  {q:"What is the shared responsibility model?",a:"Cloud provider secures the infrastructure; customer secures their data, configurations, and access management. Split depends on IaaS/PaaS/SaaS."},
+  {q:"What is network segmentation?",a:"Dividing a network into isolated zones to contain breaches, limit lateral movement, and reduce attack surface."},
+  {q:"What is SASE?",a:"Secure Access Service Edge — cloud-delivered security combining SD-WAN, CASB, ZTNA, and SWG. Security follows users and devices everywhere."},
+  {q:"RTO vs RPO?",a:"RTO = maximum acceptable downtime (how quickly you must restore). RPO = maximum acceptable data loss measured in time (how old your backups can be)."},
+  {q:"What is Infrastructure as Code (IaC)?",a:"Defining and provisioning infrastructure through code — enables consistent, auditable, reproducible deployments."},
+  {q:"What is the IR lifecycle?",a:"Preparation → Detection → Analysis → Containment → Eradication → Recovery → Lessons Learned."},
+  {q:"What is SIEM?",a:"Security Information and Event Management — aggregates logs from all sources, correlates events, and generates alerts for security operations."},
+  {q:"EDR vs XDR?",a:"EDR (Endpoint Detection and Response) monitors endpoints only. XDR adds network, cloud, and identity telemetry for broader threat visibility."},
+  {q:"What is Chain of Custody?",a:"A chronological record of everyone who collected, handled, or possessed digital evidence — essential for legal admissibility."},
+  {q:"Order of Volatility in forensics?",a:"CPU registers/cache → RAM → Swap/pagefile → Network connections → Running processes → Disk → Remote/archived logs."},
+  {q:"What is SOAR?",a:"Security Orchestration, Automation, and Response — automates repetitive security tasks and coordinates response across multiple tools."},
+  {q:"MFA factors?",a:"Something you know (password/PIN), something you have (token/card), something you are (biometrics), somewhere you are (geolocation)."},
+  {q:"What is SSO?",a:"Single Sign-On — one login for multiple applications. Protocols: SAML (federated), OAuth 2.0 (authorization), LDAP."},
+  {q:"What is CVSS?",a:"Common Vulnerability Scoring System — a 0-10 score rating vulnerability severity. 9.0-10.0 = Critical, 7.0-8.9 = High, 4.0-6.9 = Medium."},
+  {q:"What is least privilege?",a:"Users should have only the minimum access required for their job — nothing more. Reduces blast radius if accounts are compromised."},
+  {q:"What is a tabletop exercise?",a:"A discussion-based IR simulation where team members verbally walk through their response — no actual systems involved."},
+  {q:"What is threat hunting?",a:"Proactively searching through networks and systems for indicators of threats that have evaded automated detection tools."},
+  {q:"What is Legal Hold?",a:"A directive to preserve all potentially relevant electronic data when litigation is anticipated — suspends normal data deletion."},
+  {q:"What is PAM (Privileged Access Management)?",a:"Tools and processes to control, monitor, and secure privileged account access — includes password vaulting, just-in-time access, and session recording."},
+  {q:"What is SLE?",a:"Single Loss Expectancy = Asset Value × Exposure Factor. Example: $1M asset with 30% EF = $300,000 SLE."},
+  {q:"What is ALE?",a:"Annual Loss Expectancy = SLE × ARO. If SLE=$300K and attack happens twice/year: ALE = $600,000."},
+  {q:"Four risk management strategies?",a:"Transfer (insurance), Accept (formally approve the risk), Avoid (stop the activity), Mitigate (implement controls to reduce risk)."},
+  {q:"What is a Risk Register?",a:"A document tracking all identified risks — includes description, likelihood, impact, owner, controls, and residual risk."},
+  {q:"Risk appetite vs Risk tolerance?",a:"Risk appetite = strategic level of risk the organization accepts (board-level). Risk tolerance = acceptable variance from that threshold (operational level)."},
+  {q:"GDPR breach notification timeline?",a:"72 hours to notify the supervisory authority after discovering a breach that poses risk to individuals' rights."},
+  {q:"HIPAA breach notification requirement?",a:"Notify affected individuals within 60 days. 500+ individuals: also notify HHS and local media simultaneously."},
+  {q:"SLA vs MOU vs MOA vs NDA?",a:"SLA = performance guarantees. MOU = mutual intent (non-binding). MOA = binding agreement. NDA = confidentiality commitment."},
+  {q:"What is a right-to-audit clause?",a:"A contractual provision giving an organization the legal right to audit a vendor's security controls at any time."},
+  {q:"NIST Cybersecurity Framework five functions?",a:"Identify, Protect, Detect, Respond, Recover."},
+  {q:"Data Controller vs Data Processor (GDPR)?",a:"Controller = decides WHY and HOW data is processed (full legal responsibility). Processor = processes on controller's behalf per their instructions."},
+  {q:"What is BIA (Business Impact Analysis)?",a:"Identifies critical business functions and quantifies the financial, operational, and reputational impact if they are disrupted."},
+  {q:"BCP vs DRP?",a:"BCP (Business Continuity Plan) = keeping the entire business running during a disaster. DRP (Disaster Recovery Plan) = restoring IT systems specifically."},
+  {q:"Due diligence vs Due care?",a:"Due diligence = researching and investigating before taking action (vendor assessment). Due care = ongoing actions taken after to maintain security."},
+  {q:"What is a false positive vs false negative?",a:"False positive = alert fires on legitimate activity (no real threat). False negative = real attack goes undetected (no alert fires). False negatives are more dangerous."},
+  {q:"What is the data owner role?",a:"Executive responsible for classifying data and approving who has access. Bears ultimate accountability for data protection."},
+  {q:"What is the data custodian role?",a:"Implements and maintains technical security controls per the data owner's requirements — manages encryption, backups, and access logs."},
+  {q:"What is PCI DSS?",a:"Payment Card Industry Data Security Standard — mandatory security requirements for any organization that stores, processes, or transmits cardholder data."},
+  {q:"What is multi-factor authentication (MFA)?",a:"Requiring two or more different factor types to authenticate. Two passwords = single-factor. Password + token = true MFA."}
+];
+var FC_SK='ltr_xmen',FC_IV=[0,1,2,4,8,999];
+var fcSt,fcDu=[],fcPo=0,fcCo=0,fcTo=0,fcFl=false,fcAl=false,fcSn=1;
+var fcBC=['','#FF6B9D','#FF8C00','#FFD700','#00BFFF','#39FF14'];
+var fcBBg=['','rgba(255,107,157,.15)','rgba(255,140,0,.15)','rgba(255,215,0,.1)','rgba(0,191,255,.1)','rgba(57,255,20,.1)'];
+function fcLS(){try{var r=localStorage.getItem(FC_SK);if(r)return JSON.parse(r);}catch(e){}var s={};FC_CARDS.forEach(function(_,i){s[i]={box:1};});return s;}
+function fcSV(){try{localStorage.setItem(FC_SK,JSON.stringify(fcSt));}catch(e){}}
+function fcGetDue(){var d=[];Object.keys(fcSt).forEach(function(i){var b=fcSt[i].box;if(b===5)return;if(b===1||fcSn%FC_IV[b]===0)d.push(+i);});for(var i=d.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=d[i];d[i]=d[j];d[j]=t;}return d;}
+function fcEl(id){return document.getElementById('fc-'+id);}
+function fcRender(){
+  if(fcPo>=fcDu.length){fcDoneScreen();return;}
+  var i=fcDu[fcPo],b=fcSt[i].box;
+  fcEl('q').textContent=FC_CARDS[i].q;
+  fcEl('a').textContent=FC_CARDS[i].a;
+  var bi=fcEl('boxind');bi.textContent='Box '+b;bi.style.background=fcBBg[b];bi.style.color=fcBC[b];bi.style.border='1px solid '+fcBC[b]+'66';
+  var card=fcEl('card');if(card.classList.contains('flipped'))card.classList.remove('flipped');
+  fcFl=false;fcEl('ansbtn').style.display='none';fcEl('flipbtn').style.display='block';
+  fcEl('counter').textContent='Card '+(fcPo+1)+' of '+fcDu.length;
+  fcEl('fill').style.width=(fcPo/fcDu.length*100)+'%';
+  fcEl('empty').style.display='none';fcEl('card').style.display='block';
+  fcUpdateStats();
+}
+function fcFlip(){if(!fcFl){fcEl('card').classList.add('flipped');fcFl=true;fcEl('ansbtn').style.display='flex';fcEl('flipbtn').style.display='none';}}
+function fcGrade(g){var i=fcDu[fcPo];fcTo++;if(g!=='again')fcCo++;if(g==='again')fcSt[i].box=1;else if(g==='good')fcSt[i].box=Math.min(fcSt[i].box+1,5);else if(g==='easy')fcSt[i].box=Math.min(fcSt[i].box+2,5);if(g!=='again')playCorrect();else playWrong();fcSV();fcPo++;fcRender();}
+function fcSkip(){fcPo++;fcRender();}
+function fcDue(){fcAl=false;fcEl('btn-due').classList.add('active');fcEl('btn-all').classList.remove('active');fcRestart();}
+function fcAll(){fcAl=true;fcEl('btn-all').classList.add('active');fcEl('btn-due').classList.remove('active');fcRestart();}
+function fcRestart(){
+  fcCo=0;fcTo=0;fcPo=0;fcFl=false;
+  fcEl('done').style.display='none';fcEl('main').style.display='block';
+  if(fcAl){fcDu=FC_CARDS.map(function(_,i){return i;});for(var i=fcDu.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=fcDu[i];fcDu[i]=fcDu[j];fcDu[j]=t;}}
+  else{fcDu=fcGetDue();}
+  if(fcDu.length===0){fcEl('counter').textContent='All caught up!';fcEl('card').style.display='none';fcEl('flipbtn').style.display='none';fcEl('empty').style.display='block';}
+  else{fcRender();}
+}
+function fcResetAll(){if(!confirm('Reset all flashcard progress?'))return;try{localStorage.removeItem(FC_SK);}catch(e){}fcSt=fcLS();fcAl=false;fcEl('btn-due').classList.add('active');fcEl('btn-all').classList.remove('active');fcRestart();}
+function fcDoneScreen(){fcEl('main').style.display='none';fcEl('done').style.display='block';var p=fcTo>0?Math.round(fcCo/fcTo*100):0;fcEl('score').textContent=p+'%';fcEl('scoredet').textContent=fcCo+' correct out of '+fcTo+' answered';if(p===100){launchConfetti();playVictory();}fcUpdateStats();}
+function fcUpdateStats(){var c=[0,0,0,0,0,0];Object.values(fcSt).forEach(function(s){c[s.box]++;});fcEl('total').textContent=FC_CARDS.length;fcEl('learning').textContent=c[1]+c[2];fcEl('reviewing').textContent=c[3]+c[4];fcEl('mastered').textContent=c[5];for(var b=1;b<=5;b++){var e=document.getElementById('fc-lb'+b);if(e)e.textContent=c[b];}}
+// Init flashcards
+fcSt=fcLS();try{fcSn=parseInt(localStorage.getItem(FC_SK+'_sn')||'0')+1;localStorage.setItem(FC_SK+'_sn',fcSn);}catch(e){fcSn=1;}
+fcDu=fcGetDue();if(fcDu.length===0)fcDu=FC_CARDS.map(function(_,i){return i;});
+fcRender();
+// Keyboard shortcuts
+document.addEventListener('keydown',function(e){
+  var main=document.getElementById('fc-main');if(!main||main.style.display==='none')return;
+  var tag=document.activeElement.tagName;if(tag==='INPUT'||tag==='TEXTAREA'||tag==='BUTTON')return;
+  if(e.key===' '||e.key==='f'){e.preventDefault();fcFlip();}
+  if(e.key==='1')fcGrade('again');if(e.key==='2')fcGrade('good');if(e.key==='3')fcGrade('easy');if(e.key==='s'||e.key==='S')fcSkip();
+});
+
+// ── QUIZ ──
+var QUIZ_Q=[
+  {q:"Xavier's School ($5M value) has 30% exposure to Sentinel attacks occurring once per year. What is the ALE?",choices:["$1,500,000","$5,000,000","$150,000","$500,000"],a:0,domain:"D5: Risk Management",exp:"SLE = $5M × 30% = $1.5M. ALE = SLE × ARO = $1.5M × 1 = $1,500,000 per year."},
+  {q:"Magneto uses insider knowledge and a sophisticated, persistent campaign against the X-Men. Which threat actor category best describes him?",choices:["Unskilled attacker","Nation-state actor","Motivated insider threat / APT actor","Hacktivist"],a:2,domain:"D2: Threats & Actors",exp:"Magneto has insider knowledge, ideological motivation, and high capability — the hallmarks of an APT or motivated insider threat."},
+  {q:"The X-Mansion uses 'never trust, always verify' — even internal X-Men must authenticate every time they access Cerebro. This is called:",choices:["Defense in depth","Zero Trust Architecture","DMZ","Role-Based Access Control"],a:1,domain:"D3: Security Architecture",exp:"Zero Trust = never trust based on network location. Always verify identity regardless of whether the user is internal or external."},
+  {q:"After a Sentinel breach, Cyclops FIRST isolates compromised sectors and preserves evidence before removing the threat. Which IR phase is this?",choices:["Eradication","Lessons Learned","Containment","Recovery"],a:2,domain:"D4: Incident Response",exp:"Containment = stopping the spread and preserving forensic evidence. Eradication comes AFTER — when you remove the root cause."},
+  {q:"Xavier wants all X-Men to use a unique random value appended to their passwords before hashing to defeat rainbow table attacks. This technique is called:",choices:["Key stretching","Tokenization","Salting","Steganography"],a:2,domain:"D1: Cryptography",exp:"Salting adds a unique random value per password before hashing. Identical passwords produce different hashes, defeating rainbow table attacks."},
+  {q:"Beast discovers the X-Mansion HVAC system is on the same network as Cerebro. To fix this, he proposes putting them on separate isolated network segments. This is called:",choices:["Virtualization","Air-gapping","Network Segmentation","Containerization"],a:2,domain:"D3: Architecture",exp:"Network segmentation divides the network into isolated zones. Air-gapping = zero network connection at all. HVAC and Cerebro need separate segments."},
+  {q:"GDPR requires data breach notification to a supervisory authority within how many hours?",choices:["24 hours","48 hours","72 hours","7 days"],a:2,domain:"D5: Compliance (GDPR)",exp:"GDPR Article 33 requires notifying the supervisory authority within 72 hours of discovering a breach that poses risk to individuals."},
+  {q:"Jean Grey reads an attacker's mind BEFORE they launch an attack — proactively identifying threat actor intent. In security, this is called:",choices:["Incident Response","Penetration Testing","Threat Hunting / Threat Intelligence","Vulnerability Scanning"],a:2,domain:"D4: Threat Hunting",exp:"Threat hunting proactively searches for indicators of compromise before automated tools detect them. Threat intelligence provides adversary context."},
+  {q:"Wolverine tests X-Mansion security with FULL knowledge of the building layout, access codes, and guard schedules. This pen test type is called:",choices:["Black-box (unknown environment)","White-box (known environment)","Gray-box (partially known)","Red team exercise"],a:1,domain:"D5: Penetration Testing",exp:"White-box = tester has full knowledge. Black-box = no prior knowledge. Gray-box = partial knowledge. All are valid pen test types per objective 5.5."},
+  {q:"Rogue's power absorption is uncontrolled — she inherits both capabilities AND risks from everyone she touches. In security, this best represents:",choices:["Insider threat","Zero-day vulnerability","Third-party / supply chain risk","Social engineering"],a:2,domain:"D5: Third-Party Risk",exp:"Every third-party vendor adds their risk to your attack surface. Third-party risk management (vendor assessments, SLAs, right-to-audit) addresses this."}
+];
+var qCur=0,qScore=0,qAnswered=false,qMissed=[];
+function quizRender(){
+  var q=QUIZ_Q[qCur];
+  document.getElementById('quiz-meta').textContent='Question '+(qCur+1)+' of '+QUIZ_Q.length+' · '+q.domain;
+  var html='<p style="font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:12px;line-height:1.55">'+q.q+'</p>';
+  q.choices.forEach(function(c,i){html+='<label class="qz-c" id="qzc'+i+'"><input type="radio" name="qzrad" value="'+i+'" onchange="document.getElementById(\'quiz-submit-btn\').style.display=\'inline-block\'"> '+c+'</label>';});
+  html+='<div class="qz-exp" id="qz-exp" style="display:none">💡 '+q.exp+'</div>';
+  document.getElementById('quiz-body').innerHTML=html;
+  qAnswered=false;
+  document.getElementById('quiz-submit-btn').style.display='none';
+  document.getElementById('quiz-next-btn').style.display='none';
+  document.getElementById('quiz-final').style.display='none';
+  document.getElementById('quiz-body').style.display='block';
+  document.getElementById('quiz-nav').style.display='flex';
+}
+function quizSubmit(){
+  if(qAnswered)return;
+  var sel=document.querySelector('input[name="qzrad"]:checked');if(!sel)return;
+  qAnswered=true;var chosen=parseInt(sel.value),q=QUIZ_Q[qCur];
+  for(var i=0;i<q.choices.length;i++){var lbl=document.getElementById('qzc'+i);if(i===q.a)lbl.classList.add('qc');else if(i===chosen&&chosen!==q.a)lbl.classList.add('qw');lbl.querySelector('input').disabled=true;}
+  if(chosen===q.a){qScore++;playCorrect();}else{playWrong();qMissed.push(q.domain);}
+  document.getElementById('qz-exp').style.display='block';
+  document.getElementById('quiz-submit-btn').style.display='none';
+  if(qCur<QUIZ_Q.length-1){document.getElementById('quiz-next-btn').style.display='inline-block';}
+  else{setTimeout(quizFinish,600);}
+}
+function quizNext(){qCur++;quizRender();}
+function quizFinish(){
+  document.getElementById('quiz-body').style.display='none';document.getElementById('quiz-nav').style.display='none';
+  document.getElementById('quiz-final').style.display='block';
+  var pct=Math.round(qScore/QUIZ_Q.length*100);
+  document.getElementById('quiz-final-score').textContent=pct+'%';
+  document.getElementById('quiz-final-detail').textContent=qScore+' of '+QUIZ_Q.length+' correct';
+  var missedHtml='';
+  if(qMissed.length>0){missedHtml='<p style="font-size:.8rem;color:var(--muted);margin-bottom:6px;font-weight:700">📖 Review these topics:</p>';[...new Set(qMissed)].forEach(function(t){missedHtml+='<span class="tag" style="background:rgba(255,68,102,.1);border-color:rgba(255,68,102,.4);color:#ff4466">'+t+'</span> ';});}
+  else{missedHtml='<p style="color:#39FF14;font-size:.84rem;font-weight:700">🎉 Perfect score — you know your X-Men security!</p>';}
+  document.getElementById('quiz-missed-topics').innerHTML=missedHtml;
+  document.getElementById('quiz-meta').textContent='';
+  if(pct===100){launchConfetti();playVictory();}
+}
+function quizReset(){qCur=0;qScore=0;qAnswered=false;qMissed=[];quizRender();}
+quizRender();
+</script>
+</body>
+</html>
