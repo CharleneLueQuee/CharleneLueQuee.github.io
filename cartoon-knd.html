@@ -1,0 +1,1527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Codename: Kids Next Door – Security+ SY0-701 Study Hub</title>
+<style>
+:root {
+  --knd-yellow:      #FFEB3B;
+  --knd-yellow-dark: #FBC02D;
+  --knd-red:         #D32F2F;
+  --knd-red-light:   #EF5350;
+  --knd-green:       #2E7D32;
+  --knd-green-light: #43A047;
+  --knd-blue:        #1565C0;
+  --knd-blue-light:  #1E88E5;
+  --knd-wood:        #6D4C41;
+  --knd-wood-light:  #8D6E63;
+  --knd-black:       #0A0A0A;
+  --knd-dark:        #111827;
+  --knd-panel:       rgba(15,23,42,0.97);
+  --text-main:       #F5F5F5;
+  --border-gold:     rgba(255,235,59,0.6);
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:"Segoe UI",system-ui,sans-serif;
+  color:var(--text-main);
+  background:#0A0A0A;
+  background-image:
+    radial-gradient(ellipse at top, #1A0A00 0%, #0A0A0A 55%),
+    repeating-linear-gradient(0deg,transparent,transparent 40px,rgba(255,235,59,0.015) 40px,rgba(255,235,59,0.015) 41px),
+    repeating-linear-gradient(90deg,transparent,transparent 40px,rgba(211,47,47,0.015) 40px,rgba(211,47,47,0.015) 41px);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* ── PARTICLES ─────────────────────────────────── */
+.particle{
+  position:fixed;
+  pointer-events:none;
+  font-size:22px;
+  opacity:0.18;
+  animation:floatUp linear infinite;
+  z-index:0;
+  user-select:none;
+}
+@keyframes floatUp{
+  0%{transform:translateY(105vh) rotate(0deg);}
+  100%{transform:translateY(-10vh) rotate(360deg);}
+}
+
+/* ── STICKY NAV ─────────────────────────────────── */
+nav{
+  position:sticky;
+  top:0;
+  z-index:900;
+  background:linear-gradient(90deg,#0A0A0A,#1A0500,#0A0A0A);
+  border-bottom:3px solid var(--knd-yellow);
+  padding:0 16px;
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:6px;
+  min-height:52px;
+  box-shadow:0 4px 20px rgba(255,235,59,0.25);
+}
+.nav-brand{
+  color:var(--knd-yellow);
+  font-weight:900;
+  font-size:15px;
+  text-shadow:0 0 8px rgba(255,235,59,0.8);
+  text-decoration:none;
+  margin-right:6px;
+  letter-spacing:.04em;
+}
+.nav-link{
+  color:#E5E7EB;
+  text-decoration:none;
+  font-weight:700;
+  font-size:12px;
+  padding:4px 10px;
+  border-radius:999px;
+  border:2px solid rgba(255,235,59,0.4);
+  transition:all .2s;
+  white-space:nowrap;
+}
+.nav-link:hover{
+  background:rgba(255,235,59,0.15);
+  border-color:var(--knd-yellow);
+  color:var(--knd-yellow);
+  transform:translateY(-1px);
+  box-shadow:0 0 10px rgba(255,235,59,0.4);
+}
+.nav-dropdown{position:relative;display:inline-block;}
+.nav-dropdown-btn{
+  color:#E5E7EB;
+  font-weight:700;
+  font-size:12px;
+  padding:4px 10px;
+  border-radius:999px;
+  border:2px solid rgba(211,47,47,0.6);
+  background:rgba(211,47,47,0.15);
+  cursor:pointer;
+  transition:all .2s;
+}
+.nav-dropdown-btn:hover{background:rgba(211,47,47,0.35);border-color:var(--knd-red-light);color:#fff;}
+.nav-dropdown-menu{
+  display:none;
+  position:absolute;
+  top:calc(100% + 6px);
+  left:0;
+  background:#111827;
+  border:2px solid var(--knd-yellow);
+  border-radius:12px;
+  padding:8px 0;
+  min-width:230px;
+  z-index:999;
+  box-shadow:0 8px 24px rgba(0,0,0,0.9);
+}
+.nav-dropdown:hover .nav-dropdown-menu{display:block;}
+.nav-dropdown-menu a{
+  display:block;
+  padding:7px 16px;
+  color:#E5E7EB;
+  text-decoration:none;
+  font-size:13px;
+  transition:background .15s;
+}
+.nav-dropdown-menu a:hover{background:rgba(255,235,59,0.12);color:var(--knd-yellow);}
+
+/* ── SOUND TOGGLE ───────────────────────────────── */
+#sound-toggle{
+  position:fixed;
+  right:16px;bottom:16px;
+  z-index:1200;
+  background:#111827;
+  border:2px solid var(--knd-yellow);
+  border-radius:999px;
+  padding:8px 14px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:700;
+  color:var(--knd-yellow);
+  box-shadow:0 4px 14px rgba(255,235,59,0.3);
+  transition:all .2s;
+}
+#sound-toggle:hover{box-shadow:0 0 16px rgba(255,235,59,0.6);}
+
+/* ── SECTION WRAPPER ────────────────────────────── */
+.section{
+  background:var(--knd-panel);
+  border-radius:18px;
+  padding:26px 24px;
+  margin:28px auto;
+  width:92%;
+  max-width:990px;
+  border:2px solid rgba(255,235,59,0.25);
+  box-shadow:0 6px 30px rgba(0,0,0,0.8);
+  position:relative;
+  z-index:1;
+}
+.section::before{
+  content:"";
+  position:absolute;
+  inset:-5px;
+  border-radius:22px;
+  border:2px dashed rgba(255,235,59,0.18);
+  pointer-events:none;
+}
+
+h1,h2,h3{color:var(--knd-yellow);letter-spacing:.03em;}
+h1{text-shadow:0 0 16px rgba(255,235,59,0.9);font-size:clamp(1.4rem,4vw,2.2rem);}
+h2{margin-bottom:14px;}
+h3{font-size:1.05rem;margin-bottom:8px;}
+p{line-height:1.65;margin-bottom:10px;}
+a{color:var(--knd-blue-light);}
+ul{padding-left:20px;line-height:1.75;}
+
+/* ── HERO ───────────────────────────────────────── */
+.hero-wrap{text-align:center;padding:10px 0 4px;}
+.hero-icon{
+  width:130px;height:130px;
+  border-radius:50%;
+  background:radial-gradient(circle at 30% 25%,#FFEB3B,#FBC02D,#D32F2F);
+  border:6px solid var(--knd-green-light);
+  box-shadow:0 0 40px rgba(255,235,59,0.8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:60px;
+  margin:0 auto 16px;
+  animation:heroPulse 3s ease-in-out infinite;
+}
+@keyframes heroPulse{0%,100%{box-shadow:0 0 30px rgba(255,235,59,0.6);}50%{box-shadow:0 0 55px rgba(255,235,59,1);}}
+.hero-badge{
+  display:inline-block;
+  background:linear-gradient(90deg,#D32F2F,#1565C0,#2E7D32);
+  color:#fff;
+  font-weight:800;
+  font-size:13px;
+  padding:6px 18px;
+  border-radius:999px;
+  letter-spacing:.04em;
+  margin:10px 0 16px;
+  box-shadow:0 2px 12px rgba(0,0,0,0.6);
+}
+
+/* ── JUMP BAR ───────────────────────────────────── */
+.jump-bar{
+  display:flex;flex-wrap:wrap;gap:8px;
+  justify-content:center;
+  padding:10px 0;
+}
+.jump-btn{
+  background:rgba(255,235,59,0.08);
+  border:2px solid rgba(255,235,59,0.35);
+  border-radius:999px;
+  padding:5px 13px;
+  color:var(--knd-yellow);
+  text-decoration:none;
+  font-size:12px;
+  font-weight:700;
+  transition:all .2s;
+  cursor:pointer;
+}
+.jump-btn:hover{background:rgba(255,235,59,0.2);border-color:var(--knd-yellow);box-shadow:0 0 10px rgba(255,235,59,0.4);}
+
+/* ── TAGS / BADGES ──────────────────────────────── */
+.tag{
+  display:inline-block;
+  padding:2px 9px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:700;
+  margin:2px;
+}
+.tag-d1{background:#1565C0;color:#E3F2FD;}
+.tag-d2{background:#D32F2F;color:#FFEBEE;}
+.tag-d3{background:#2E7D32;color:#E8F5E9;}
+.tag-d4{background:#4527A0;color:#EDE7F6;}
+.tag-d5{background:#E65100;color:#FFF3E0;}
+.tag-green{background:rgba(46,125,50,0.3);color:#A5D6A7;border:1px solid rgba(67,160,71,0.5);}
+
+/* ── ACCORDION ──────────────────────────────────── */
+.accordion{
+  border-radius:14px;
+  overflow:hidden;
+  margin-bottom:10px;
+  border:2px solid rgba(255,235,59,0.2);
+  background:rgba(15,23,42,0.9);
+}
+.accordion-header{
+  padding:11px 16px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  font-weight:800;
+  color:var(--knd-yellow);
+  user-select:none;
+}
+.acc-d1 .accordion-header{background:linear-gradient(90deg,rgba(21,101,192,0.55),rgba(21,101,192,0.2));}
+.acc-d2 .accordion-header{background:linear-gradient(90deg,rgba(211,47,47,0.55),rgba(211,47,47,0.2));}
+.acc-d3 .accordion-header{background:linear-gradient(90deg,rgba(46,125,50,0.55),rgba(46,125,50,0.2));}
+.acc-d4 .accordion-header{background:linear-gradient(90deg,rgba(69,39,160,0.55),rgba(69,39,160,0.2));}
+.acc-d5 .accordion-header{background:linear-gradient(90deg,rgba(230,81,0,0.55),rgba(230,81,0,0.2));}
+.toggle-icon{font-size:16px;transition:transform .25s;}
+.accordion-content{
+  max-height:0;
+  overflow:hidden;
+  transition:max-height .3s ease-out;
+  padding:0 16px;
+}
+.accordion-content-inner{padding:14px 0;}
+
+/* ── CARD GRIDS ─────────────────────────────────── */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:16px;
+  margin-top:12px;
+}
+.card{
+  background:rgba(26,37,47,0.95);
+  border-radius:14px;
+  padding:16px;
+  border:2px solid rgba(255,235,59,0.2);
+  transition:transform .2s,box-shadow .2s;
+}
+.card:hover{transform:translateY(-3px) rotate(-0.4deg);box-shadow:0 8px 24px rgba(255,235,59,0.15);}
+.card-char{font-size:28px;margin-bottom:8px;}
+.card-title{font-weight:800;color:var(--knd-yellow);margin-bottom:4px;}
+.card-role{font-size:12px;color:#93C5FD;font-weight:700;margin-bottom:6px;}
+
+/* ── PHASE CARDS (IR) ───────────────────────────── */
+.phase-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;margin-top:12px;}
+.phase-card{
+  background:rgba(26,37,47,0.95);
+  border-radius:12px;
+  padding:14px 12px;
+  text-align:center;
+  border:2px solid rgba(255,235,59,0.15);
+}
+.phase-icon{font-size:30px;margin-bottom:6px;}
+.phase-title{font-weight:800;color:var(--knd-yellow);font-size:13px;margin-bottom:4px;}
+.phase-tag{font-size:10px;background:rgba(255,235,59,0.1);color:#FDE68A;border-radius:999px;padding:2px 8px;display:inline-block;margin-top:4px;}
+
+/* ── MINI QUIZ ──────────────────────────────────── */
+.quiz-q{margin-top:14px;font-weight:800;color:#93C5FD;margin-bottom:6px;font-size:14px;}
+.quiz-opt{
+  background:rgba(15,23,42,0.9);
+  padding:8px 12px;
+  border-radius:10px;
+  margin:4px 0;
+  border:2px solid rgba(148,163,184,0.35);
+  cursor:pointer;
+  transition:all .15s;
+  font-size:13px;
+}
+.quiz-opt:hover:not(.answered){background:rgba(46,125,50,0.18);border-color:var(--knd-green-light);}
+.mini-correct{background:rgba(46,125,50,0.55)!important;border-color:#43A047!important;}
+.mini-wrong{background:rgba(211,47,47,0.45)!important;border-color:#EF5350!important;}
+.correct-anim{background:rgba(46,125,50,0.7)!important;border-color:#43A047!important;animation:correctPulse .4s;}
+.incorrect-anim{background:rgba(211,47,47,0.6)!important;border-color:#EF5350!important;animation:wrongShake .4s;}
+@keyframes correctPulse{0%{transform:scale(1);}50%{transform:scale(1.03);}100%{transform:scale(1);}}
+@keyframes wrongShake{0%{transform:translateX(0);}25%{transform:translateX(-4px);}75%{transform:translateX(4px);}100%{transform:translateX(0);}}
+
+/* ── MAIN QUIZ SECTION ──────────────────────────── */
+.quiz-section{margin-top:12px;}
+.quiz-main-q{font-weight:800;color:#FACC15;margin:18px 0 8px;font-size:15px;}
+
+/* ── ADVENTURE ──────────────────────────────────── */
+.adventure-scene{
+  background:rgba(26,37,47,0.95);
+  border-radius:14px;
+  padding:18px;
+  margin:12px 0;
+  border:2px solid rgba(255,235,59,0.2);
+}
+.adventure-scene.hidden{display:none;}
+.adv-title{font-weight:900;color:var(--knd-yellow);font-size:15px;margin-bottom:8px;}
+.adv-choice{
+  background:rgba(21,101,192,0.2);
+  border:2px solid rgba(30,136,229,0.4);
+  border-radius:10px;
+  padding:9px 14px;
+  margin:6px 0;
+  cursor:pointer;
+  font-size:13px;
+  transition:all .2s;
+}
+.adv-choice:hover{background:rgba(21,101,192,0.4);border-color:var(--knd-blue-light);}
+.adv-choice.adventure-picked{background:rgba(46,125,50,0.45);border-color:#43A047;pointer-events:none;}
+.adv-choice.adventure-wrong{background:rgba(211,47,47,0.35);border-color:#EF5350;}
+.finale-box{
+  background:linear-gradient(135deg,rgba(255,235,59,0.12),rgba(46,125,50,0.12));
+  border:2px solid var(--knd-yellow);
+  border-radius:14px;
+  padding:20px;
+  text-align:center;
+  margin-top:14px;
+}
+
+/* ── LEITNER FLASHCARDS ─────────────────────────── */
+.flashcard-wrap{
+  background:linear-gradient(135deg,#6D4C41,#8D6E63);
+  border-radius:16px;
+  padding:20px 18px;
+  border:3px solid var(--knd-yellow-dark);
+  box-shadow:0 6px 20px rgba(0,0,0,0.8);
+  min-height:160px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.fc-tags{margin-bottom:8px;}
+.fc-question{font-weight:800;color:var(--knd-yellow);font-size:15px;line-height:1.5;}
+.fc-answer{
+  margin-top:10px;
+  padding-top:10px;
+  border-top:1px dashed rgba(255,235,59,0.5);
+  color:#FFF8E1;
+  font-size:14px;
+  line-height:1.6;
+  display:none;
+}
+.fc-controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+.fc-btn{
+  padding:8px 16px;
+  border-radius:999px;
+  border:none;
+  cursor:pointer;
+  font-weight:700;
+  font-size:13px;
+  transition:all .2s;
+}
+.fc-btn:hover{transform:translateY(-1px);}
+.fc-show{background:var(--knd-yellow);color:#000;}
+.fc-next{background:#1565C0;color:#E3F2FD;}
+.fc-hard{background:#D32F2F;color:#FFEBEE;}
+.fc-easy{background:#2E7D32;color:#E8F5E9;}
+.fc-skip{background:#424242;color:#E5E7EB;}
+.fc-reset{background:#111827;color:var(--knd-yellow);border:1px solid rgba(255,235,59,0.4);}
+.fc-info{margin-top:12px;font-size:13px;color:#94A3B8;}
+.fc-progress{
+  display:flex;gap:8px;margin:12px 0 6px;flex-wrap:wrap;
+}
+.fc-box-stat{
+  flex:1;min-width:80px;
+  background:rgba(15,23,42,0.8);
+  border-radius:10px;
+  padding:6px 10px;
+  text-align:center;
+  font-size:12px;
+  border:1px solid rgba(255,235,59,0.15);
+}
+.fc-box-stat span{display:block;font-size:18px;font-weight:800;color:var(--knd-yellow);}
+
+/* ── STUDY LINKS ────────────────────────────────── */
+.link-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:12px;}
+.link-card{
+  background:rgba(26,37,47,0.95);
+  border-radius:12px;
+  padding:14px;
+  border:2px solid rgba(255,235,59,0.2);
+  text-align:center;
+  text-decoration:none;
+  color:var(--knd-yellow);
+  font-weight:700;
+  font-size:13px;
+  transition:all .2s;
+  display:block;
+}
+.link-card:hover{background:rgba(255,235,59,0.1);border-color:var(--knd-yellow);transform:translateY(-2px);box-shadow:0 6px 18px rgba(255,235,59,0.2);}
+.link-icon{font-size:26px;margin-bottom:6px;}
+
+/* ── STUDY NOTES ────────────────────────────────── */
+.note-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:12px;}
+.note-card{
+  background:rgba(26,37,47,0.95);
+  border-radius:12px;
+  padding:16px;
+  border-left:4px solid var(--knd-yellow);
+}
+.note-title{font-weight:800;color:var(--knd-yellow);margin-bottom:6px;}
+
+/* ── RETAKE BTN ─────────────────────────────────── */
+.retake-btn{
+  background:var(--knd-yellow);
+  color:#000;
+  border:none;
+  border-radius:999px;
+  padding:10px 24px;
+  font-weight:800;
+  cursor:pointer;
+  font-size:14px;
+  margin-top:14px;
+  transition:all .2s;
+}
+.retake-btn:hover{transform:scale(1.05);box-shadow:0 0 16px rgba(255,235,59,0.6);}
+
+/* ── CONFETTI ───────────────────────────────────── */
+.confetti{
+  position:fixed;
+  top:-10px;
+  width:10px;height:10px;
+  opacity:0;
+  border-radius:2px;
+  animation:confettiFall ease-in forwards;
+  z-index:9999;
+  pointer-events:none;
+}
+@keyframes confettiFall{
+  0%{opacity:1;transform:translateY(0) rotate(0deg);}
+  100%{opacity:0;transform:translateY(105vh) rotate(720deg);}
+}
+
+.hidden{display:none;}
+footer{text-align:center;padding:20px;color:#6B7280;font-size:12px;position:relative;z-index:1;}
+footer a{color:#9CA3AF;}
+</style>
+</head>
+<body>
+
+<!-- ═══ PARTICLES ═══ -->
+<div id="particles-container"></div>
+
+<!-- ═══ STICKY NAV ═══ -->
+<nav>
+  <a href="https://charleneluequeue.github.io/" class="nav-brand">🏠 Portfolio</a>
+  <a href="#hero" class="nav-link">🏡 Hub</a>
+  <a href="#domains" class="nav-link">📚 Domains</a>
+  <a href="#characters" class="nav-link">🕵️ Chars</a>
+  <a href="#analogies" class="nav-link">🔍 Analogies</a>
+  <a href="#ir" class="nav-link">🚨 IR</a>
+  <a href="#adventure" class="nav-link">🎮 Adventure</a>
+  <a href="#flashcards" class="nav-link">🃏 Flashcards</a>
+  <a href="#quiz" class="nav-link">✅ Quiz</a>
+  <div class="nav-dropdown">
+    <button class="nav-dropdown-btn">📺 All Pages ▾</button>
+    <div class="nav-dropdown-menu">
+      <a href="cartoon-knd.html">🪵 KND</a>
+      <a href="cartoon-spongebob.html">🧽 SpongeBob</a>
+      <a href="cartoon-ben10.html">⌚ Ben 10</a>
+      <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+      <a href="cartoon-avatar.html">🌊 Avatar</a>
+      <a href="cartoon-xmen.html">⚡ X-Men</a>
+      <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+      <a href="cartoon-futurama.html">🚀 Futurama</a>
+      <a href="cartoon-danny.html">👻 Danny Phantom</a>
+      <a href="cartoon-fairyodd.html">🧚 Fairly OddParents</a>
+      <a href="cartoon-magicbus.html">🚌 Magic School Bus</a>
+      <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+      <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+      <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+      <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ SOUND TOGGLE ═══ -->
+<button id="sound-toggle" onclick="toggleSound()">🔇 Sound: OFF</button>
+
+<!-- ═══ HERO ═══ -->
+<div class="section" id="hero">
+  <div class="hero-wrap">
+    <div class="hero-icon">🪵</div>
+    <h1>Codename: Kids Next Door</h1>
+    <div class="hero-badge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+    <p style="max-width:680px;margin:0 auto;">Sector V's Treehouse isn't just a clubhouse — it's a zero-trust security operations center run by five elite child operatives defending the world against adult tyranny. Every gadget, every mission, every access code maps perfectly to CompTIA Security+ SY0-701 concepts across all five domains.</p>
+  </div>
+</div>
+
+<!-- ═══ JUMP BAR ═══ -->
+<div class="section" style="padding:14px 24px;">
+  <div class="jump-bar">
+    <a class="jump-btn" href="#domains">📚 Topics Covered</a>
+    <a class="jump-btn" href="#mnemonic">🧠 Domain Mnemonics</a>
+    <a class="jump-btn" href="#characters">🕵️ Character Mapping</a>
+    <a class="jump-btn" href="#analogies">🔍 Deep-Dive Analogies</a>
+    <a class="jump-btn" href="#notes">📝 Study Notes</a>
+    <a class="jump-btn" href="#ir">🚨 Incident Response</a>
+    <a class="jump-btn" href="#detection">🔎 Detection Deep Dive</a>
+    <a class="jump-btn" href="#roles">👥 Roles & Responsibilities</a>
+    <a class="jump-btn" href="#reporting">📋 Reporting Requirements</a>
+    <a class="jump-btn" href="#postir">🎓 Post-Incident Activity</a>
+    <a class="jump-btn" href="#adventure">🎮 Interactive Adventure</a>
+    <a class="jump-btn" href="#links">🔗 Study Links</a>
+    <a class="jump-btn" href="#flashcards">🃏 Leitner Flashcards</a>
+    <a class="jump-btn" href="#quiz">✅ 10-Question Quiz</a>
+  </div>
+</div>
+
+<!-- ═══ SECTION 4: TOPICS COVERED ═══ -->
+<div class="section" id="domains">
+  <h2>📚 Topics Covered — All 5 Domains</h2>
+
+  <!-- D1 -->
+  <div class="accordion acc-d1" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🔵 Domain 1 · General Security Concepts (12%)</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content">
+      <div class="accordion-content-inner">
+        <p><strong>1.1</strong> Security controls (technical, managerial, operational, physical; preventive, deterrent, detective, corrective, compensating, directive)</p>
+        <p><strong>1.2</strong> CIA Triad · Non-repudiation · AAA · Gap analysis · Zero Trust (Control Plane, Data Plane, Adaptive Identity, Policy Engine, Policy Administrator, Policy Enforcement Point) · Physical security · Deception tech</p>
+        <p><strong>1.3</strong> Change management (approval, impact analysis, backout plan, version control)</p>
+        <p><strong>1.4</strong> Cryptography (PKI, symmetric/asymmetric, hashing, salting, digital signatures, blockchain, certificates, key management)</p>
+        <div style="margin-top:10px;">
+          <span class="tag tag-green">CIA Triad</span><span class="tag tag-green">Zero Trust</span><span class="tag tag-green">Authentication</span><span class="tag tag-green">Cryptography</span><span class="tag tag-green">PKI</span><span class="tag tag-green">Physical Security</span><span class="tag tag-green">Change Management</span><span class="tag tag-green">Non-repudiation</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D2 -->
+  <div class="accordion acc-d2" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🔴 Domain 2 · Threats, Vulnerabilities & Mitigations (22%)</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content">
+      <div class="accordion-content-inner">
+        <p><strong>2.1</strong> Threat actors (nation-state, hacktivist, insider, organized crime) & motivations</p>
+        <p><strong>2.2</strong> Attack vectors (phishing, vishing, smishing, BEC, watering hole, typosquatting, removable device, supply chain)</p>
+        <p><strong>2.3</strong> Vulnerabilities (buffer overflow, SQL injection, XSS, zero-day, misconfigurations, VM escape, hardware/firmware)</p>
+        <p><strong>2.4</strong> Indicators of malicious activity (ransomware, DDoS, on-path, credential replay, injection)</p>
+        <p><strong>2.5</strong> Mitigation (segmentation, least privilege, patching, encryption, application allow lists, hardening)</p>
+        <div style="margin-top:10px;">
+          <span class="tag tag-green">Phishing</span><span class="tag tag-green">Ransomware</span><span class="tag tag-green">DDoS</span><span class="tag tag-green">Social Engineering</span><span class="tag tag-green">Zero-Day</span><span class="tag tag-green">SQL Injection</span><span class="tag tag-green">Threat Actors</span><span class="tag tag-green">Hardening</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D3 -->
+  <div class="accordion acc-d3" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🟢 Domain 3 · Security Architecture (18%)</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content">
+      <div class="accordion-content-inner">
+        <p><strong>3.1</strong> Architecture models (cloud, IaC, microservices, containerization, SDN, ICS/SCADA, on-prem vs cloud)</p>
+        <p><strong>3.2</strong> Secure enterprise infrastructure (DMZ, VPN, SASE, SD-WAN, firewalls, IDS/IPS, jump servers, proxy, load balancer)</p>
+        <p><strong>3.3</strong> Data protection (classification, encryption, masking, tokenization, data states)</p>
+        <p><strong>3.4</strong> Resilience & recovery (HA, backups, RTO/RPO, hot/warm/cold sites, tabletop exercises)</p>
+        <div style="margin-top:10px;">
+          <span class="tag tag-green">DMZ</span><span class="tag tag-green">VPN / ZTNA</span><span class="tag tag-green">Firewall Types</span><span class="tag tag-green">Segmentation</span><span class="tag tag-green">Cloud Security</span><span class="tag tag-green">Data Classification</span><span class="tag tag-green">RTO / RPO</span><span class="tag tag-green">Backups</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D4 -->
+  <div class="accordion acc-d4" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🟣 Domain 4 · Security Operations (28%)</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content">
+      <div class="accordion-content-inner">
+        <p><strong>4.1</strong> Security techniques (hardening, MDM, wireless security, WPA3, application security, sandboxing)</p>
+        <p><strong>4.2</strong> Asset management (procurement, classification, inventory, sanitization, decommissioning)</p>
+        <p><strong>4.3</strong> Vulnerability management (CVSS, CVE, threat feeds, pen testing, bug bounty)</p>
+        <p><strong>4.4</strong> Monitoring & alerting (SIEM, DLP, SNMP, NetFlow, EDR/XDR, log aggregation)</p>
+        <p><strong>4.5</strong> Enhanced security (firewall rules, IDS/IPS, DNS filtering, email security DMARC/DKIM/SPF)</p>
+        <p><strong>4.6</strong> IAM (SSO, LDAP, SAML, OAuth, MFA, PAM, least privilege, RBAC)</p>
+        <p><strong>4.7</strong> Automation & orchestration (SOAR, scripting, API integrations)</p>
+        <p><strong>4.8</strong> Incident response (Preparation → Detection → Containment → Eradication → Recovery → Lessons Learned)</p>
+        <p><strong>4.9</strong> Forensics (chain of custody, legal hold, e-discovery, log data, packet captures)</p>
+        <div style="margin-top:10px;">
+          <span class="tag tag-green">SIEM</span><span class="tag tag-green">MFA</span><span class="tag tag-green">RBAC</span><span class="tag tag-green">Incident Response</span><span class="tag tag-green">Chain of Custody</span><span class="tag tag-green">Vulnerability Mgmt</span><span class="tag tag-green">SOAR</span><span class="tag tag-green">EDR/XDR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- D5 -->
+  <div class="accordion acc-d5" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🟠 Domain 5 · Security Program Management & Oversight (20%)</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content">
+      <div class="accordion-content-inner">
+        <p><strong>5.1</strong> Security governance (policies, standards, procedures, guidelines, governance structures, roles)</p>
+        <p><strong>5.2</strong> Risk management (risk identification, analysis — qualitative/quantitative, SLE/ALE/ARO, risk register, risk appetite)</p>
+        <p><strong>5.3</strong> Third-party risk (vendor assessment, SLAs, MOUs, NDAs, supply chain analysis)</p>
+        <p><strong>5.4</strong> Compliance (reporting, monitoring, privacy — GDPR, data retention, right to be forgotten)</p>
+        <p><strong>5.5</strong> Audits & assessments (pen testing types, internal/external audits, attestation)</p>
+        <p><strong>5.6</strong> Security awareness (phishing campaigns, anomalous behavior, insider threat training)</p>
+        <div style="margin-top:10px;">
+          <span class="tag tag-green">Risk Management</span><span class="tag tag-green">SLA / NDA</span><span class="tag tag-green">GDPR</span><span class="tag tag-green">AUP</span><span class="tag tag-green">Pen Testing</span><span class="tag tag-green">Security Awareness</span><span class="tag tag-green">Governance</span><span class="tag tag-green">BIA</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 5: DOMAIN MNEMONICS ═══ -->
+<div class="section" id="mnemonic">
+  <h2>🧠 Domain Study Guide — KND Mnemonics</h2>
+
+  <!-- D1 mnemonic: NUMBUH -->
+  <div class="accordion acc-d1" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🔵 D1 — "NUMBUH" · General Security Concepts</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content"><div class="accordion-content-inner">
+      <p style="font-size:15px;"><strong style="color:var(--knd-yellow);">N</strong>on-repudiation · <strong style="color:var(--knd-yellow);">U</strong>ser authentication (AAA) · <strong style="color:var(--knd-yellow);">M</strong>anage controls · <strong style="color:var(--knd-yellow);">B</strong>lockchain & crypto · <strong style="color:var(--knd-yellow);">U</strong>pdate via change management · <strong style="color:var(--knd-yellow);">H</strong>arden with Zero Trust</p>
+      <h3 style="margin-top:14px;">Control Types</h3>
+      <ul><li>Preventive – Treehouse access locks (stop threats before entry)</li><li>Detective – Numbuh 5's surveillance feeds (identify incidents)</li><li>Corrective – Emergency repairs after Father's attacks</li><li>Compensating – Backup ladders when elevators fail</li></ul>
+      <h3>Zero Trust in Sector V</h3>
+      <ul><li>Control Plane: Global KND Computer = Policy Engine + Policy Administrator making access decisions</li><li>Data Plane: Laser grids & trap doors = Policy Enforcement Points blocking unauthorized movement</li><li>Adaptive Identity: Numbuh 1 re-authenticates every room — no implicit trust inside the Treehouse</li><li>Threat Scope Reduction: Breach of one room can't spread — operative isolation by design</li></ul>
+      <h3>Cryptography Quick Notes</h3>
+      <ul><li>Asymmetric: Numbuh 2's lock-and-key gadget (public lock, private key)</li><li>Hashing: Fingerprint of mission files — any change = different hash</li><li>PKI: KND Certificate Authority vouches for operative identities</li></ul>
+      <div class="quiz-q">Mini Quiz: What Zero Trust component decides if access is granted?</div>
+      <div class="quiz-opt" onclick="miniQ(this,true)">A. Policy Engine</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">B. Policy Enforcement Point</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">C. Data Plane</div>
+    </div></div>
+  </div>
+
+  <!-- D2 mnemonic: FATHER -->
+  <div class="accordion acc-d2" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🔴 D2 — "FATHER" · Threats, Vulnerabilities & Mitigations</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content"><div class="accordion-content-inner">
+      <p style="font-size:15px;"><strong style="color:var(--knd-yellow);">F</strong>ishing (phishing) attacks · <strong style="color:var(--knd-yellow);">A</strong>dversarial threat actors · <strong style="color:var(--knd-yellow);">T</strong>rojan & malware · <strong style="color:var(--knd-yellow);">H</strong>ardening defenses · <strong style="color:var(--knd-yellow);">E</strong>xploit zero-days · <strong style="color:var(--knd-yellow);">R</strong>econ & social engineering</p>
+      <h3 style="margin-top:14px;">Threat Actor Types</h3>
+      <ul><li>Father = Nation-state actor (high resources, persistent, motivated by control)</li><li>Delightful Children = Organized crime (coordinated, well-funded, patient)</li><li>Adult street gangs = Hacktivist (ideological, disruptive)</li><li>Rogue operative = Insider threat (legitimate access, malicious intent)</li></ul>
+      <h3>Attack Vectors</h3>
+      <ul><li>Phishing: Fake Moon Base messages requesting operative credentials</li><li>Social Engineering: Adults posing as candy inspectors to gain Treehouse entry</li><li>Supply Chain: Compromised 2x4 tech from untrusted vendors</li><li>Removable Device: USB drives left near the Treehouse by Father's agents</li></ul>
+      <h3>Mitigation Techniques</h3>
+      <ul><li>Segmentation: Separate rooms = blast radius reduction</li><li>Patch management: Regular upgrades to 2x4 technology firmware</li><li>Application allow list: Only approved gadgets may run on Treehouse systems</li><li>Least privilege: Rookies can't access command center files</li></ul>
+      <div class="quiz-q">Mini Quiz: Father sending fake KND emails to steal operative passwords is called?</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">A. Watering hole attack</div>
+      <div class="quiz-opt" onclick="miniQ(this,true)">B. Phishing</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">C. Vishing</div>
+    </div></div>
+  </div>
+
+  <!-- D3 mnemonic: TREEHOUSE -->
+  <div class="accordion acc-d3" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🟢 D3 — "TREEHOUSE" · Security Architecture</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content"><div class="accordion-content-inner">
+      <p style="font-size:15px;"><strong style="color:var(--knd-yellow);">T</strong>ransport security (VPN/TLS) · <strong style="color:var(--knd-yellow);">R</strong>edundancy & HA · <strong style="color:var(--knd-yellow);">E</strong>ncryption of data · <strong style="color:var(--knd-yellow);">E</strong>nvironments (cloud/on-prem) · <strong style="color:var(--knd-yellow);">H</strong>igh availability sites · <strong style="color:var(--knd-yellow);">O</strong>rchestration (IaC/SDN) · <strong style="color:var(--knd-yellow);">U</strong>ser segmentation zones · <strong style="color:var(--knd-yellow);">S</strong>ecure DMZ · <strong style="color:var(--knd-yellow);">E</strong>radication design (fail-closed)</p>
+      <h3 style="margin-top:14px;">Site Recovery Types</h3>
+      <ul><li>Hot site: Second Treehouse fully operational, mirror of primary (can switch in minutes)</li><li>Warm site: Partially equipped backup base (needs hours to activate)</li><li>Cold site: Empty treehouse shell — just the location (days to set up)</li></ul>
+      <h3>Network Security Zones</h3>
+      <ul><li>Screened subnet (DMZ): Neutral zone where KND meets other factions safely</li><li>Trusted zone: Command center — only verified operatives with proper clearance</li><li>Untrusted zone: The outside world — Father's domain</li></ul>
+      <h3>Data States</h3>
+      <ul><li>Data at rest: Mission files in the Treehouse vault — encrypt them</li><li>Data in transit: Radio transmissions — use TLS/IPSec tunneling</li><li>Data in use: When Numbuh 5 reads mission files — RAM protection needed</li></ul>
+      <div class="quiz-q">Mini Quiz: A secondary Treehouse fully ready to take over operations immediately is a what?</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">A. Cold site</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">B. Warm site</div>
+      <div class="quiz-opt" onclick="miniQ(this,true)">C. Hot site</div>
+    </div></div>
+  </div>
+
+  <!-- D4 mnemonic: SECTOR -->
+  <div class="accordion acc-d4" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🟣 D4 — "SECTOR" · Security Operations</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content"><div class="accordion-content-inner">
+      <p style="font-size:15px;"><strong style="color:var(--knd-yellow);">S</strong>IEM & log aggregation · <strong style="color:var(--knd-yellow);">E</strong>DR/XDR endpoint defense · <strong style="color:var(--knd-yellow);">C</strong>hain of custody (forensics) · <strong style="color:var(--knd-yellow);">T</strong>hreat hunting & vuln scans · <strong style="color:var(--knd-yellow);">O</strong>rchestration (SOAR/automation) · <strong style="color:var(--knd-yellow);">R</strong>esponse lifecycle (IR phases)</p>
+      <h3 style="margin-top:14px;">Identity & Access Management</h3>
+      <ul><li>MFA: Something you know (code) + something you have (KND badge) + something you are (retinal scan)</li><li>RBAC: Numbuh 1 = CISO role, Numbuh 4 = physical security role — different permissions</li><li>SSO: One Moon Base login unlocks all sector resources (via SAML)</li><li>PAM: Just-in-time access to decommission files — no standing privilege</li></ul>
+      <h3>Monitoring Tools</h3>
+      <ul><li>SIEM: Numbuh 5's central intel board correlating all Treehouse event logs</li><li>NetFlow: Tracking all network conversations in and out of the Treehouse</li><li>DLP: Preventing mission blueprints from being emailed to Father</li><li>EDR: Real-time monitoring of every operative's terminal for anomalies</li></ul>
+      <h3>Automation & Orchestration</h3>
+      <ul><li>SOAR: Automated response — alert fires → system locks → ticket created, all without human click</li><li>Guard rails: Preventing operatives from misconfiguring the Treehouse network</li><li>API integrations: 2x4 tech talking to Moon Base systems via secure API</li></ul>
+      <div class="quiz-q">Mini Quiz: Numbuh 5 uses a system that correlates logs from all Treehouse sensors. This is a?</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">A. DLP system</div>
+      <div class="quiz-opt" onclick="miniQ(this,true)">B. SIEM</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">C. NetFlow collector</div>
+    </div></div>
+  </div>
+
+  <!-- D5 mnemonic: KNDGOV -->
+  <div class="accordion acc-d5" data-accordion>
+    <div class="accordion-header" onclick="toggleAcc(this)">
+      <span>🟠 D5 — "KND GOV" · Security Program Management</span>
+      <span class="toggle-icon">➕</span>
+    </div>
+    <div class="accordion-content"><div class="accordion-content-inner">
+      <p style="font-size:15px;"><strong style="color:var(--knd-yellow);">K</strong>ey risk indicators & register · <strong style="color:var(--knd-yellow);">N</strong>DAs & vendor agreements · <strong style="color:var(--knd-yellow);">D</strong>ue diligence (third-party) · <strong style="color:var(--knd-yellow);">G</strong>overnance & policies · <strong style="color:var(--knd-yellow);">O</strong>versight & compliance · <strong style="color:var(--knd-yellow);">V</strong>ulnerability reporting & audits</p>
+      <h3 style="margin-top:14px;">Risk Management</h3>
+      <ul><li>SLE: Single candy store raid = $500 loss in candy reserves</li><li>ARO: Father attacks twice a year on average</li><li>ALE = SLE × ARO = $500 × 2 = $1,000 annual expected loss</li><li>Risk appetite: KND tolerates minor prank attacks but not decommissioning threats</li></ul>
+      <h3>Vendor & Third-Party Risk</h3>
+      <ul><li>SLA: Other sectors must respond to distress calls within 15 minutes</li><li>MOU: Mutual understanding with other kid factions on territory</li><li>NDA: Operatives can't reveal Treehouse location after decommissioning</li><li>Right-to-audit: KND can inspect allied sectors' security posture</li></ul>
+      <h3>Security Awareness</h3>
+      <ul><li>Phishing simulation: Send fake "free candy" emails to test operative vigilance</li><li>Insider threat training: Even best friends can be turned by the Delightful Children</li><li>Acceptable Use Policy: No personal gadgets on the Treehouse network</li></ul>
+      <div class="quiz-q">Mini Quiz: The document that defines acceptable behavior on KND computer systems is called?</div>
+      <div class="quiz-opt" onclick="miniQ(this,true)">A. Acceptable Use Policy (AUP)</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">B. Service Level Agreement (SLA)</div>
+      <div class="quiz-opt" onclick="miniQ(this,false)">C. Risk Register</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 6: CHARACTER MAPPING ═══ -->
+<div class="section" id="characters">
+  <h2>🕵️ Character Security Mapping</h2>
+  <div class="card-grid">
+    <div class="card"><div class="card-char">👦</div><div class="card-title">Numbuh 1 (Nigel Uno)</div><div class="card-role">CISO / Mission Commander</div><p>Numbuh 1 sets Sector V's security policies, defines acceptable use rules, and enforces Zero Trust across all operations. He represents governance, risk appetite, and overall security program leadership — always demanding "verify before you trust."</p></div>
+    <div class="card"><div class="card-char">✈️</div><div class="card-title">Numbuh 2 (Hoagie Gilligan)</div><div class="card-role">Security Architect / Engineer</div><p>The gadget engineer who designs secure 2x4 technology from the ground up. Numbuh 2 represents secure design principles, vulnerability management, and cryptographic implementation — building defense in depth into every piece of equipment.</p></div>
+    <div class="card"><div class="card-char">🌸</div><div class="card-title">Numbuh 3 (Kuki Sanban)</div><div class="card-role">Availability & Continuity Manager</div><p>Numbuh 3 ensures systems stay up and morale stays high — mapping to business continuity, disaster recovery, and high availability planning. She maintains backup systems, ensures RTO/RPO objectives are met, and keeps operations running after incidents.</p></div>
+    <div class="card"><div class="card-char">🥊</div><div class="card-title">Numbuh 4 (Wally Beetles)</div><div class="card-role">Physical Security Officer</div><p>The first line of physical defense — Numbuh 4 represents access control vestibules, bollards, security guards, fencing, and brute-force detection. His aggressive response style maps to active physical security controls and corrective actions against intruders.</p></div>
+    <div class="card"><div class="card-char">🕵🏽‍♀️</div><div class="card-title">Numbuh 5 (Abby Lincoln)</div><div class="card-role">Threat Intel / SOC Analyst / IR Lead</div><p>Numbuh 5 handles threat intelligence, incident detection, containment, and forensic analysis. She represents SIEM monitoring, chain of custody, threat hunting, and the cool-headed analysis needed during active incidents — the calm in every Sector V storm.</p></div>
+    <div class="card"><div class="card-char">🔥</div><div class="card-title">Father</div><div class="card-role">Nation-State Threat Actor / APT</div><p>Father is the ultimate Advanced Persistent Threat — highly resourced, motivated, and relentless. He represents external threat actors, sophisticated attack campaigns, and the need for robust threat scope reduction and continuous monitoring to detect his activities.</p></div>
+    <div class="card"><div class="card-char">😈</div><div class="card-title">Delightful Children From Down The Lane</div><div class="card-role">Organized Threat Group / Insider Threat Proxy</div><p>The Delightful Children represent coordinated, organized attackers who exploit trust relationships. They map to organized crime, supply chain attacks, and social engineering campaigns — always working through trusted channels to maximize damage.</p></div>
+    <div class="card"><div class="card-char">🌙</div><div class="card-title">Moon Base / Global KND Command</div><div class="card-role">Enterprise Security Operations Center / Policy Authority</div><p>Moon Base is the centralized Policy Engine and Policy Administrator in the Zero Trust architecture. It represents the cloud-based governance layer — handling decommissioning authority, sector authorization, and global policy enforcement across all KND sectors.</p></div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 7: DEEP-DIVE ANALOGIES ═══ -->
+<div class="section" id="analogies">
+  <h2>🔍 Deep-Dive Analogies</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">🏠 Treehouse Access Control → Zero Trust Architecture</div>
+      <p style="margin-top:8px;font-size:13px;">Even inside the Treehouse, Numbuh 1 must re-authenticate to enter new rooms and access specific gadgets. This perfectly illustrates Zero Trust: location inside the network grants no implicit privilege. The Control Plane (Global KND Computer) evaluates every access request, while the Data Plane (laser grids, locked hatches) enforces the decision at the Policy Enforcement Point. No "castle and moat" — just continuous verification.</p>
+      <div style="margin-top:8px;"><span class="tag tag-d1">Domain 1.2</span><span class="tag tag-green">Zero Trust</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🍬 Candy Supply Chain → Third-Party Risk Management</div>
+      <p style="margin-top:8px;font-size:13px;">KND operatives receiving candy from unknown suppliers represent third-party risk. Father could compromise the candy vendor (supply chain attack), injecting malicious ingredients before delivery. This maps directly to vendor assessment, right-to-audit clauses, and supply chain analysis in Domain 5 — you must assess every vendor's security posture before trusting their products in your environment.</p>
+      <div style="margin-top:8px;"><span class="tag tag-d5">Domain 5.3</span><span class="tag tag-green">Supply Chain</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">📡 Numbuh 5's Intel Board → SIEM & Threat Hunting</div>
+      <p style="margin-top:8px;font-size:13px;">Numbuh 5 aggregates reports from all sectors, correlates patterns, and proactively hunts for Father's agents before attacks occur. This mirrors SIEM log aggregation and correlation, threat hunting using behavioral analytics, and OSINT-driven intelligence gathering. Her practice of reviewing historical data to spot anomalies reflects Domain 4.4's security alerting and monitoring concepts.</p>
+      <div style="margin-top:8px;"><span class="tag tag-d4">Domain 4.4</span><span class="tag tag-green">SIEM</span><span class="tag tag-green">Threat Hunting</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🪵 Treehouse Rebuild After Attack → Incident Response Lifecycle</div>
+      <p style="margin-top:8px;font-size:13px;">After Father destroys a Treehouse wing, Sector V follows the full IR lifecycle: Preparation (backup plans existed), Detection (Numbuh 5 spotted the breach), Containment (sealed off compromised rooms), Eradication (removed all enemy devices), Recovery (rebuilt from blueprints), and Lessons Learned (updated patrol procedures). This real-world IR flow maps precisely to Domain 4.8's process steps.</p>
+      <div style="margin-top:8px;"><span class="tag tag-d4">Domain 4.8</span><span class="tag tag-green">Incident Response</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🛡️ 2x4 Tech Blueprint → Change Management & Version Control</div>
+      <p style="margin-top:8px;font-size:13px;">Every gadget upgrade Numbuh 2 makes must go through Numbuh 1's approval process, with a backout plan in case the new tech fails in the field. This maps directly to Domain 1.3 change management: approval process, impact analysis, maintenance windows, backout plans, and version control for all technical changes to the Treehouse systems.</p>
+      <div style="margin-top:8px;"><span class="tag tag-d1">Domain 1.3</span><span class="tag tag-green">Change Management</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔐 Decommissioning Ceremonies → Data Sanitization & Off-boarding</div>
+      <p style="margin-top:8px;font-size:13px;">KND decommissioning — where operatives lose their memories of KND upon turning 13 — represents secure off-boarding and data sanitization. Former operatives can't retain classified KND knowledge (data), mirroring Domain 4.2's disposal/decommissioning requirements: sanitization, destruction, and certification that sensitive data is unrecoverable after an operative leaves the organization.</p>
+      <div style="margin-top:8px;"><span class="tag tag-d4">Domain 4.2</span><span class="tag tag-green">Decommissioning</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 8: STUDY NOTES ═══ -->
+<div class="section" id="notes">
+  <h2>📝 High-Frequency Exam Study Notes</h2>
+  <div class="note-cards">
+    <div class="note-card">
+      <div class="note-title">🎯 Zero Trust — Must Know</div>
+      <p style="font-size:13px;">Control Plane = Policy Engine + Policy Administrator (the decision makers). Data Plane = Policy Enforcement Points (the enforcers). Adaptive identity means authenticating based on context, not just credentials. Implicit trust zones are eliminated — being "on the network" grants nothing.</p>
+    </div>
+    <div class="note-card">
+      <div class="note-title">⚡ IR Phase Order — Memorize This</div>
+      <p style="font-size:13px;"><strong>P-D-A-C-E-R-L:</strong> Preparation → Detection → Analysis → Containment → Eradication → Recovery → Lessons Learned. The exam loves testing which phase comes where. Lessons Learned is always LAST. Containment comes BEFORE eradication.</p>
+    </div>
+    <div class="note-card">
+      <div class="note-title">🔐 MFA Factor Types</div>
+      <p style="font-size:13px;">Something you <strong>know</strong> (password, PIN) + something you <strong>have</strong> (token, smart card) + something you <strong>are</strong> (biometric) + somewhere you <strong>are</strong> (geolocation). Two different factor TYPES = MFA. Two passwords = NOT MFA.</p>
+    </div>
+    <div class="note-card">
+      <div class="note-title">📊 Risk Math — ALE Formula</div>
+      <p style="font-size:13px;"><strong>SLE</strong> = Asset Value × Exposure Factor. <strong>ALE</strong> = SLE × ARO (Annual Rate of Occurrence). <strong>MTTR</strong> = how long to recover. <strong>MTBF</strong> = how long between failures. RTO = how quickly you must recover. RPO = how much data loss is acceptable.</p>
+    </div>
+    <div class="note-card">
+      <div class="note-title">🌐 Firewall Types — Quick Reference</div>
+      <p style="font-size:13px;"><strong>Packet filter</strong>: Layer 3/4, IP/port rules. <strong>Stateful</strong>: Tracks connection state. <strong>NGFW</strong>: Layer 7, application-aware, IPS built in. <strong>WAF</strong>: HTTP/HTTPS application attacks (XSS, SQLi). <strong>UTM</strong>: All-in-one security appliance.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 9: INCIDENT RESPONSE LIFECYCLE ═══ -->
+<div class="section" id="ir">
+  <h2>🚨 Incident Response Lifecycle — Domain 4.8</h2>
+  <p>When Father launches an attack on the Treehouse, Sector V follows the full NIST IR lifecycle. Every phase is a Domain 4.8 exam objective.</p>
+  <div class="phase-cards">
+    <div class="phase-card">
+      <div class="phase-icon">📋</div>
+      <div class="phase-title">1. Preparation</div>
+      <p style="font-size:12px;">Numbuh 1 creates IR plans, trains operatives, maintains gadget inventories, and runs tabletop exercises before any attack occurs.</p>
+      <span class="phase-tag">Domain 4.8</span>
+    </div>
+    <div class="phase-card">
+      <div class="phase-icon">🔍</div>
+      <div class="phase-title">2. Detection & Analysis</div>
+      <p style="font-size:12px;">Numbuh 5 identifies suspicious activity via SIEM alerts, anomalous log entries, and threat intelligence feeds indicating Father's movement.</p>
+      <span class="phase-tag">Domain 4.8</span>
+    </div>
+    <div class="phase-card">
+      <div class="phase-icon">🛑</div>
+      <div class="phase-title">3. Containment</div>
+      <p style="font-size:12px;">Sector V seals compromised rooms, isolates affected systems, and prevents lateral movement — stopping the spread without full eradication yet.</p>
+      <span class="phase-tag">Domain 4.8</span>
+    </div>
+    <div class="phase-card">
+      <div class="phase-icon">🧹</div>
+      <div class="phase-title">4. Eradication & Recovery</div>
+      <p style="font-size:12px;">All enemy devices removed, backdoors eliminated, systems restored from clean backups, and operations returned to normal verified state.</p>
+      <span class="phase-tag">Domain 4.8</span>
+    </div>
+    <div class="phase-card">
+      <div class="phase-icon">📖</div>
+      <div class="phase-title">5. Lessons Learned</div>
+      <p style="font-size:12px;">Sector V debriefs, documents what happened, updates procedures, and improves defenses so the same attack cannot succeed again.</p>
+      <span class="phase-tag">Domain 4.8</span>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 10: DETECTION DEEP DIVE ═══ -->
+<div class="section" id="detection">
+  <h2>🔎 Detection Deep Dive — Domain 4.4</h2>
+  <p>Effective detection means knowing what to look for, where to look, and how to respond when alerts fire. Numbuh 5 is Sector V's detection specialist.</p>
+  <ul>
+    <li><strong>Log Aggregation:</strong> Centralizing all Treehouse sensor, console, and network logs into one SIEM for correlation</li>
+    <li><strong>Alert Tuning:</strong> Reducing false positives so real Father attacks aren't buried in noise — critical for SOC efficiency</li>
+    <li><strong>Indicators of Compromise (IoC):</strong> Account lockouts, impossible travel (operative in two sectors simultaneously), out-of-cycle logging, missing logs</li>
+    <li><strong>NetFlow:</strong> Tracking all traffic flows — unusual outbound connections to Father's domain are flagged</li>
+    <li><strong>User Behavior Analytics:</strong> Numbuh 5 notices when an operative accesses files outside their normal pattern — insider threat detection</li>
+    <li><strong>Vulnerability Scanners:</strong> Regular sweeps of Treehouse systems to catch misconfigurations before Father does</li>
+  </ul>
+
+  <div class="quiz-q">Detection Mini Quiz: An operative suddenly accesses mission files at 3 AM from an unknown location. Which IoC category does this represent?</div>
+  <div class="quiz-opt" onclick="miniQ(this,false)">A. Resource consumption</div>
+  <div class="quiz-opt" onclick="miniQ(this,true)">B. Impossible travel / anomalous behavior</div>
+  <div class="quiz-opt" onclick="miniQ(this,false)">C. Out-of-cycle logging</div>
+</div>
+
+<!-- ═══ SECTION 11: ROLES & RESPONSIBILITIES ═══ -->
+<div class="section" id="roles">
+  <h2>👥 Roles & Responsibilities — Domain 5.1</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">📌 Data Owner</div>
+      <p style="font-size:13px;">Numbuh 1 — responsible for classifying mission data and deciding who can access it. Accountable for data assets at the mission level.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🔧 Data Custodian/Steward</div>
+      <p style="font-size:13px;">Numbuh 2 — implements technical controls to protect data per Numbuh 1's classification. Manages backups and technical safeguards.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⚙️ Data Processor</div>
+      <p style="font-size:13px;">The Treehouse computer systems that process mission data on behalf of Sector V — processes data but doesn't determine its purpose or use.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🌐 Data Controller</div>
+      <p style="font-size:13px;">Global KND Moon Base — determines the purposes and means of processing all operative personal data across sectors worldwide.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🔒 Privacy Officer (DPO)</div>
+      <p style="font-size:13px;">Numbuh 5 — ensures KND operations comply with privacy regulations (GDPR equivalent), manages data subject rights, and oversees data retention policies.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🛡️ Security Operations</div>
+      <p style="font-size:13px;">All five Sector V members collectively — executing daily security monitoring, responding to incidents, and maintaining Treehouse defenses per established procedures.</p>
+    </div>
+  </div>
+
+  <div class="quiz-q">Roles Mini Quiz: Who is accountable for classifying and authorizing access to KND mission data?</div>
+  <div class="quiz-opt" onclick="miniQ(this,true)">A. Data Owner (Numbuh 1)</div>
+  <div class="quiz-opt" onclick="miniQ(this,false)">B. Data Custodian (Numbuh 2)</div>
+  <div class="quiz-opt" onclick="miniQ(this,false)">C. Data Processor (Treehouse Computer)</div>
+</div>
+
+<!-- ═══ SECTION 12: REPORTING REQUIREMENTS ═══ -->
+<div class="section" id="reporting">
+  <h2>📋 Reporting Requirements — Domains 4.8 & 5.4</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-title">🏠 Internal Reporting</div>
+      <p style="font-size:13px;">Incidents reported upward within Sector V chain of command immediately upon detection. Numbuh 1 notifies Moon Base within defined SLA timeframes. Internal reports include root cause analysis, containment status, and preliminary impact assessment.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">🌍 External Reporting</div>
+      <p style="font-size:13px;">Breaches affecting other sectors or partner factions require external notification. Regulatory equivalents (like GDPR breach notification within 72 hours) must be met. External reports go to regulatory authorities, affected parties, and law enforcement if criminal activity is involved.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">⏱️ Reporting Timelines</div>
+      <p style="font-size:13px;">GDPR: 72 hours to notify supervisory authority. HIPAA: 60 days for breach notification. Many regulations require immediate notification for critical infrastructure. Sector V must define these timelines in their IR plan before incidents occur — not during.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">📁 Compliance Reporting</div>
+      <p style="font-size:13px;">Regular attestation reports to Moon Base confirming Sector V's security controls are effective. Includes internal audit results, vulnerability scan reports, and evidence of training completion — demonstrating ongoing compliance rather than point-in-time snapshots.</p>
+    </div>
+  </div>
+
+  <div class="quiz-q">Reporting Mini Quiz: Under GDPR, how long do organizations have to report a personal data breach to the supervisory authority?</div>
+  <div class="quiz-opt" onclick="miniQ(this,false)">A. 24 hours</div>
+  <div class="quiz-opt" onclick="miniQ(this,true)">B. 72 hours</div>
+  <div class="quiz-opt" onclick="miniQ(this,false)">C. 7 days</div>
+</div>
+
+<!-- ═══ SECTION 13: POST-INCIDENT ACTIVITY ═══ -->
+<div class="section" id="postir">
+  <h2>🎓 Post-Incident Activity — Lessons Learned</h2>
+  <p>After every Father attack, Sector V conducts a formal post-incident review — the most important and most exam-tested phase of IR.</p>
+  <ul style="line-height:2;">
+    <li><strong>Lessons Learned Meeting:</strong> All operatives debrief within 2 weeks of incident closure</li>
+    <li><strong>Root Cause Analysis:</strong> Identify the original vulnerability Father exploited — not just symptoms</li>
+    <li><strong>Metrics Review:</strong> MTTR, MTBF, and alert-to-containment time measured against SLA targets</li>
+    <li><strong>Policy & Procedure Updates:</strong> Patch IR playbooks based on what didn't work</li>
+    <li><strong>Training Adjustments:</strong> Update operative training to address gaps revealed during the incident</li>
+    <li><strong>Evidence Archiving:</strong> All forensic evidence preserved per retention policy for potential legal proceedings</li>
+    <li><strong>After-Action Report:</strong> Formal document shared with Moon Base and relevant sectors for global KND improvement</li>
+  </ul>
+</div>
+
+<!-- ═══ SECTION 14: INTERACTIVE ADVENTURE ═══ -->
+<div class="section" id="adventure">
+  <h2>🎮 Interactive Adventure — Operation: SECURE TREEHOUSE</h2>
+  <p>Sector V is under attack! Walk through the full Incident Response lifecycle with your operatives. Every choice matters. Wrong answers can be re-tried — "Try the other option!"</p>
+
+  <!-- Scene 1: Detection -->
+  <div class="adventure-scene" id="adv-scene1">
+    <div class="adv-title">🔍 Scene 1: Detection — "Something's Wrong in the Treehouse"</div>
+    <p>Numbuh 5 notices unusual login attempts to the mission briefing room at 3 AM. The SIEM shows 47 failed attempts from an unknown IP. This is an indicator of:</p>
+    <div class="adv-choice" onclick="advChoice(this,'adv-scene2')">A. Brute force attack — escalate to Numbuh 1 immediately and log everything ✅</div>
+    <div class="adv-choice" onclick="advWrong(this)">B. Normal maintenance traffic — ignore it and go back to sleep</div>
+    <div class="adv-choice" onclick="advWrong(this)">C. Delete the logs to keep things clean</div>
+  </div>
+
+  <!-- Scene 2: Containment -->
+  <div class="adventure-scene hidden" id="adv-scene2">
+    <div class="adv-title">🛑 Scene 2: Containment — "Father's Inside!"</div>
+    <p>Numbuh 1 confirms Father has breached the outer defenses and is attempting lateral movement into the gadget lab. What's the FIRST containment action?</p>
+    <div class="adv-choice" onclick="advWrong(this)">A. Immediately wipe all systems to stop him</div>
+    <div class="adv-choice" onclick="advChoice(this,'adv-scene3')">B. Isolate the compromised segment — seal the hatches and cut network access to the gadget lab ✅</div>
+    <div class="adv-choice" onclick="advWrong(this)">C. Negotiate with Father — maybe he just wants candy</div>
+  </div>
+
+  <!-- Scene 3: Eradication -->
+  <div class="adventure-scene hidden" id="adv-scene3">
+    <div class="adv-title">🧹 Scene 3: Eradication — "Clear the Treehouse"</div>
+    <p>Containment successful! Father has been expelled. Now Numbuh 2 must ensure no backdoors remain. Which eradication action is MOST important?</p>
+    <div class="adv-choice" onclick="advWrong(this)">A. Just change the passwords and call it done</div>
+    <div class="adv-choice" onclick="advWrong(this)">B. Reopen all systems immediately — the mission can't wait</div>
+    <div class="adv-choice" onclick="advChoice(this,'adv-scene4')">C. Conduct a full system scan, remove all Father-planted malware, patch the exploited vulnerability, and verify integrity ✅</div>
+  </div>
+
+  <!-- Scene 4: Lessons Learned -->
+  <div class="adventure-scene hidden" id="adv-scene4">
+    <div class="adv-title">📖 Scene 4: Lessons Learned — "Never Again"</div>
+    <p>Treehouse restored and operational! Now Sector V meets to debrief. Numbuh 1 asks: "What do we update FIRST?" What's the best answer?</p>
+    <div class="adv-choice" onclick="advWrong(this)">A. Nothing — we handled it fine, let's move on</div>
+    <div class="adv-choice" onclick="advChoice(this,'adv-finale')">B. Update the IR playbook with timeline gaps found, patch the root-cause vulnerability, retrain operatives on brute-force detection ✅</div>
+    <div class="adv-choice" onclick="advWrong(this)">C. Decommission Numbuh 5 for missing the initial alert</div>
+  </div>
+
+  <!-- Finale -->
+  <div class="adventure-scene hidden" id="adv-finale">
+    <div class="finale-box">
+      <div style="font-size:50px;margin-bottom:10px;">🏆</div>
+      <h3 style="color:var(--knd-yellow);margin-bottom:8px;">MISSION ACCOMPLISHED — SECTOR V SECURE!</h3>
+      <p>You successfully completed the full IR lifecycle:</p>
+      <p><span class="tag tag-d4">Detection & Analysis</span> <span class="tag tag-d4">Containment</span> <span class="tag tag-d4">Eradication & Recovery</span> <span class="tag tag-d4">Lessons Learned</span></p>
+      <p style="margin-top:12px;">Father has been repelled. Numbuh 1 commends your Security+ knowledge. The Treehouse lives another day — until the exam!</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SECTION 15: STUDY LINKS ═══ -->
+<div class="section" id="links">
+  <h2>🔗 Study Resources</h2>
+  <div class="link-cards">
+    <a class="link-card" href="security-notes.html">
+      <div class="link-icon">📄</div>
+      Security Notes Hub<br><small style="font-weight:400;color:#94A3B8;">Local study page</small>
+    </a>
+    <a class="link-card" href="KND_FullPDF.html" target="_blank">
+      <div class="link-icon">📘</div>
+      KND Full Study Guide<br><small style="font-weight:400;color:#94A3B8;">Activates on GitHub upload</small>
+    </a>
+    <a class="link-card" href="CompTIA-Security-SY0-701-Exam-Objectives-1.pdf" target="_blank">
+      <div class="link-icon">📋</div>
+      Official Exam Objectives<br><small style="font-weight:400;color:#94A3B8;">SY0-701 PDF</small>
+    </a>
+    <a class="link-card" href="https://amzn.to/4nVi25Y" target="_blank">
+      <div class="link-icon">📚</div>
+      Study Book (Amazon)<br><small style="font-weight:400;color:#94A3B8;">Recommended prep book</small>
+    </a>
+    <a class="link-card" href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank">
+      <div class="link-icon">🎓</div>
+      Professor Messer<br><small style="font-weight:400;color:#94A3B8;">Free SY0-701 videos</small>
+    </a>
+    <a class="link-card" href="https://quizlet.com/search?query=CompTIA+Security%2B+SY0-701&type=sets" target="_blank">
+      <div class="link-icon">🃏</div>
+      Quizlet Search<br><small style="font-weight:400;color:#94A3B8;">Community flashcards</small>
+    </a>
+  </div>
+</div>
+
+<!-- ═══ SECTION 16: LEITNER FLASHCARDS ═══ -->
+<div class="section" id="flashcards">
+  <h2>🃏 Leitner Flashcard System — Sector V Training Deck</h2>
+  <p style="font-size:13px;color:#94A3B8;">Keyboard: <kbd style="background:#374151;padding:1px 5px;border-radius:4px;">Space</kbd>=Flip &nbsp; <kbd style="background:#374151;padding:1px 5px;border-radius:4px;">1</kbd>=Again &nbsp; <kbd style="background:#374151;padding:1px 5px;border-radius:4px;">2</kbd>=Got It &nbsp; <kbd style="background:#374151;padding:1px 5px;border-radius:4px;">3</kbd>=Easy &nbsp; <kbd style="background:#374151;padding:1px 5px;border-radius:4px;">S</kbd>=Skip</p>
+  <div class="fc-progress">
+    <div class="fc-box-stat"><span id="fc-b1">0</span>Box 1<br>Hard</div>
+    <div class="fc-box-stat"><span id="fc-b2">0</span>Box 2<br>Medium</div>
+    <div class="fc-box-stat"><span id="fc-b3">0</span>Box 3<br>Easy</div>
+    <div class="fc-box-stat"><span id="fc-b4">0</span>Box 4<br>Mastered</div>
+    <div class="fc-box-stat"><span id="fc-b5">0</span>Box 5<br>Done ✅</div>
+  </div>
+  <div class="flashcard-wrap" id="fc-card">
+    <div class="fc-tags" id="fc-tags"></div>
+    <div class="fc-question" id="fc-q">Loading Sector V training deck...</div>
+    <div class="fc-answer" id="fc-a"></div>
+  </div>
+  <div class="fc-controls">
+    <button class="fc-btn fc-show" onclick="fcFlip()">👁 Show Answer</button>
+    <button class="fc-btn fc-next" onclick="fcNext()">⏭ Next</button>
+    <button class="fc-btn fc-hard" onclick="fcMark(1)">❌ Again (Box 1)</button>
+    <button class="fc-btn fc-easy" onclick="fcMark(2)">✅ Got It (Box 2)</button>
+    <button class="fc-btn fc-easy" style="background:#6D4C41;" onclick="fcMark(3)">⭐ Easy (Box 3)</button>
+    <button class="fc-btn fc-skip" onclick="fcSkip()">⏩ Skip</button>
+    <button class="fc-btn fc-reset" onclick="fcReset()">🔄 Reset Deck</button>
+  </div>
+  <div class="fc-info" id="fc-info"></div>
+</div>
+
+<!-- ═══ SECTION 17: 10-QUESTION QUIZ ═══ -->
+<div class="section" id="quiz">
+  <h2>✅ 10-Question Security+ Quiz — All Domains</h2>
+  <p>Test your knowledge across all five domains. Auto-reset available after completion. Wrong answers show personalized topic feedback.</p>
+  <div class="quiz-section">
+    <div class="quiz-main-q">1. In Zero Trust, which component makes the access decision?</div>
+    <div class="quiz-opt" data-orig="A. Policy Engine" onclick="mainQ(this,true,'Zero Trust – Control Plane')">A. Policy Engine</div>
+    <div class="quiz-opt" data-orig="B. Policy Enforcement Point" onclick="mainQ(this,false,'Zero Trust – Control Plane')">B. Policy Enforcement Point</div>
+    <div class="quiz-opt" data-orig="C. Data Plane" onclick="mainQ(this,false,'Zero Trust – Control Plane')">C. Data Plane</div>
+
+    <div class="quiz-main-q">2. Father sends emails pretending to be from Moon Base to steal operative credentials. This is?</div>
+    <div class="quiz-opt" data-orig="A. Vishing" onclick="mainQ(this,false,'Phishing vs Social Engineering')">A. Vishing</div>
+    <div class="quiz-opt" data-orig="B. Phishing" onclick="mainQ(this,true,'Phishing vs Social Engineering')">B. Phishing</div>
+    <div class="quiz-opt" data-orig="C. Watering hole" onclick="mainQ(this,false,'Phishing vs Social Engineering')">C. Watering hole</div>
+
+    <div class="quiz-main-q">3. Sector V has a fully operational secondary Treehouse that can take over in minutes. This is a?</div>
+    <div class="quiz-opt" data-orig="A. Cold site" onclick="mainQ(this,false,'Site Recovery Types')">A. Cold site</div>
+    <div class="quiz-opt" data-orig="B. Warm site" onclick="mainQ(this,false,'Site Recovery Types')">B. Warm site</div>
+    <div class="quiz-opt" data-orig="C. Hot site" onclick="mainQ(this,true,'Site Recovery Types')">C. Hot site</div>
+
+    <div class="quiz-main-q">4. Numbuh 5 aggregates logs from all Treehouse systems and correlates alerts. She is using a?</div>
+    <div class="quiz-opt" data-orig="A. DLP system" onclick="mainQ(this,false,'SIEM vs DLP')">A. DLP system</div>
+    <div class="quiz-opt" data-orig="B. SIEM" onclick="mainQ(this,true,'SIEM vs DLP')">B. SIEM</div>
+    <div class="quiz-opt" data-orig="C. Vulnerability scanner" onclick="mainQ(this,false,'SIEM vs DLP')">C. Vulnerability scanner</div>
+
+    <div class="quiz-main-q">5. Sector V computes ALE for Father's attacks: SLE=$5,000, ARO=2. What is the ALE?</div>
+    <div class="quiz-opt" data-orig="A. $5,000" onclick="mainQ(this,false,'Risk Math – ALE')">A. $5,000</div>
+    <div class="quiz-opt" data-orig="B. $10,000" onclick="mainQ(this,true,'Risk Math – ALE')">B. $10,000</div>
+    <div class="quiz-opt" data-orig="C. $2,500" onclick="mainQ(this,false,'Risk Math – ALE')">C. $2,500</div>
+
+    <div class="quiz-main-q">6. Which IR phase comes immediately AFTER eradication?</div>
+    <div class="quiz-opt" data-orig="A. Containment" onclick="mainQ(this,false,'IR Phase Order')">A. Containment</div>
+    <div class="quiz-opt" data-orig="B. Recovery" onclick="mainQ(this,true,'IR Phase Order')">B. Recovery</div>
+    <div class="quiz-opt" data-orig="C. Lessons Learned" onclick="mainQ(this,false,'IR Phase Order')">C. Lessons Learned</div>
+
+    <div class="quiz-main-q">7. Numbuh 4 uses password + badge + fingerprint to access the armory. This is?</div>
+    <div class="quiz-opt" data-orig="A. Single sign-on" onclick="mainQ(this,false,'MFA Factor Types')">A. Single sign-on</div>
+    <div class="quiz-opt" data-orig="B. Multi-factor authentication" onclick="mainQ(this,true,'MFA Factor Types')">B. Multi-factor authentication</div>
+    <div class="quiz-opt" data-orig="C. Role-based access control" onclick="mainQ(this,false,'MFA Factor Types')">C. Role-based access control</div>
+
+    <div class="quiz-main-q">8. A firewall that inspects HTTP application traffic and blocks SQL injection is a?</div>
+    <div class="quiz-opt" data-orig="A. Packet-filtering firewall" onclick="mainQ(this,false,'Firewall Types')">A. Packet-filtering firewall</div>
+    <div class="quiz-opt" data-orig="B. Web Application Firewall (WAF)" onclick="mainQ(this,true,'Firewall Types')">B. Web Application Firewall (WAF)</div>
+    <div class="quiz-opt" data-orig="C. Stateful firewall" onclick="mainQ(this,false,'Firewall Types')">C. Stateful firewall</div>
+
+    <div class="quiz-main-q">9. "Operatives must not share access codes" is best described as a?</div>
+    <div class="quiz-opt" data-orig="A. Guideline" onclick="mainQ(this,false,'Policy vs Guideline')">A. Guideline</div>
+    <div class="quiz-opt" data-orig="B. Policy" onclick="mainQ(this,true,'Policy vs Guideline')">B. Policy</div>
+    <div class="quiz-opt" data-orig="C. Procedure" onclick="mainQ(this,false,'Policy vs Guideline')">C. Procedure</div>
+
+    <div class="quiz-main-q">10. GDPR requires breach notification to the supervisory authority within how many hours?</div>
+    <div class="quiz-opt" data-orig="A. 24 hours" onclick="mainQ(this,false,'GDPR Reporting')">A. 24 hours</div>
+    <div class="quiz-opt" data-orig="B. 48 hours" onclick="mainQ(this,false,'GDPR Reporting')">B. 48 hours</div>
+    <div class="quiz-opt" data-orig="C. 72 hours" onclick="mainQ(this,true,'GDPR Reporting')">C. 72 hours</div>
+  </div>
+
+  <!-- Results -->
+  <div id="quiz-results" class="hidden" style="margin-top:20px;background:rgba(26,37,47,0.95);border-radius:14px;padding:20px;border:2px solid var(--knd-yellow);">
+    <h3>📊 Mission Debrief</h3>
+    <p id="quiz-score" style="font-size:20px;font-weight:800;"></p>
+    <pre id="quiz-advice" style="white-space:pre-wrap;font-size:14px;color:#CBD5E1;margin-top:10px;"></pre>
+    <button class="retake-btn" onclick="retakeQuiz()">🔁 Retake Quiz</button>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p><a href="security-notes.html">Security Notes</a> · <a href="https://charleneluequeue.github.io/" target="_blank">Portfolio</a></p>
+  <p style="margin-top:6px;">© 2025 KND Security+ Study Hub · Codename: Kids Next Door characters are property of Cartoon Network. Used for educational purposes only.</p>
+</footer>
+
+<!-- ═══════════════ JAVASCRIPT ═══════════════ -->
+<script>
+/* ── PARTICLES ─────────────────────────────────────────── */
+(function(){
+  const emojis = ['🪵','🔑','🛡️','⚠️','🔐','📡'];
+  const cont = document.getElementById('particles-container');
+  function spawn(){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    p.style.left = (Math.random()*100)+'vw';
+    const dur = 18 + Math.random()*14;
+    p.style.animationDuration = dur+'s';
+    p.style.fontSize = (16+Math.random()*14)+'px';
+    cont.appendChild(p);
+    setTimeout(()=>p.remove(), dur*1000);
+  }
+  for(let i=0;i<6;i++) setTimeout(spawn, i*600);
+  setInterval(spawn, 3000);
+})();
+
+/* ── SOUND (Web Audio, no external URLs) ───────────────── */
+let soundEnabled = false;
+let audioCtx = null;
+
+function getAudioCtx(){
+  if(!audioCtx) audioCtx = new (window.AudioContext||window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playTone(freq, dur, type='sine', vol=0.18){
+  if(!soundEnabled) return;
+  try{
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    gain.gain.setValueAtTime(vol, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime+dur);
+    osc.start(); osc.stop(ctx.currentTime+dur);
+  }catch(e){}
+}
+
+function playCorrect(){
+  playTone(523,0.12); setTimeout(()=>playTone(659,0.12),120); setTimeout(()=>playTone(784,0.2),240);
+}
+function playWrong(){
+  playTone(200,0.15,'sawtooth'); setTimeout(()=>playTone(160,0.2,'sawtooth'),180);
+}
+function playVictory(){
+  [523,587,659,698,784].forEach((f,i)=>setTimeout(()=>playTone(f,0.18),i*100));
+}
+
+function toggleSound(){
+  soundEnabled = !soundEnabled;
+  document.getElementById('sound-toggle').textContent = soundEnabled ? '🔊 Sound: ON' : '🔇 Sound: OFF';
+  if(soundEnabled){ try{ getAudioCtx().resume(); }catch(e){} }
+}
+
+/* ── ACCORDION ─────────────────────────────────────────── */
+function toggleAcc(header){
+  const acc = header.parentElement;
+  const content = acc.querySelector('.accordion-content');
+  const icon = header.querySelector('.toggle-icon');
+  const isOpen = content.style.maxHeight && content.style.maxHeight !== '0px';
+  document.querySelectorAll('[data-accordion]').forEach(a=>{
+    a.querySelector('.accordion-content').style.maxHeight = null;
+    a.querySelector('.toggle-icon').textContent = '➕';
+  });
+  if(!isOpen){
+    content.style.maxHeight = content.scrollHeight + 'px';
+    icon.textContent = '➖';
+  }
+}
+
+/* ── MINI QUIZZES ──────────────────────────────────────── */
+function miniQ(el, correct){
+  if(el.classList.contains('answered')) return;
+  el.parentElement.querySelectorAll('.quiz-opt').forEach(o=>o.classList.add('answered'));
+  if(correct){
+    el.classList.add('mini-correct');
+    el.innerHTML += ' ✔ Correct!';
+    playCorrect();
+  } else {
+    el.classList.add('mini-wrong');
+    el.innerHTML += ' ✖ Try the other option!';
+    playWrong();
+    // Allow retry on wrong
+    setTimeout(()=>{
+      el.parentElement.querySelectorAll('.quiz-opt').forEach(o=>o.classList.remove('answered'));
+      el.classList.remove('mini-wrong');
+      el.innerHTML = el.innerHTML.replace(' ✖ Try the other option!','');
+    },1200);
+  }
+}
+
+/* ── ADVENTURE ─────────────────────────────────────────── */
+function advChoice(el, nextId){
+  el.classList.add('adventure-picked');
+  el.parentElement.querySelectorAll('.adv-choice').forEach(c=>c.style.pointerEvents='none');
+  playCorrect();
+  if(nextId){
+    const next = document.getElementById(nextId);
+    if(next){ next.classList.remove('hidden'); setTimeout(()=>next.scrollIntoView({behavior:'smooth',block:'start'}),300); }
+    if(nextId==='adv-finale') launchConfetti();
+  }
+}
+
+function advWrong(el){
+  el.classList.add('adventure-wrong');
+  el.innerHTML += ' ✖ Try the other option!';
+  playWrong();
+  setTimeout(()=>{
+    el.classList.remove('adventure-wrong');
+    el.innerHTML = el.innerHTML.replace(' ✖ Try the other option!','');
+  },1400);
+}
+
+/* ── CONFETTI ──────────────────────────────────────────── */
+function launchConfetti(){
+  const colors=['#FFEB3B','#D32F2F','#2E7D32','#1565C0','#FFFFFF','#FBC02D'];
+  for(let i=0;i<100;i++){
+    const c=document.createElement('div');
+    c.className='confetti';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDuration=(2+Math.random()*2)+'s';
+    c.style.width=c.style.height=(8+Math.random()*8)+'px';
+    c.style.borderRadius=Math.random()>0.5?'50%':'2px';
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),3500);
+  }
+  playVictory();
+}
+
+/* ── MAIN QUIZ ─────────────────────────────────────────── */
+let qScore=0, qAnswered=0, qWrong=[];
+const Q_TOTAL=10;
+
+function mainQ(el, correct, topic){
+  if(el.classList.contains('answered')) return;
+  el.parentElement.querySelectorAll('.quiz-opt').forEach(o=>o.classList.add('answered'));
+  if(correct){
+    el.classList.add('correct-anim');
+    el.innerHTML += ' ✔ Correct!';
+    qScore++; playCorrect();
+  } else {
+    el.classList.add('incorrect-anim');
+    el.innerHTML += ' ✖ Incorrect';
+    qWrong.push(topic); playWrong();
+  }
+  qAnswered++;
+  if(qAnswered===Q_TOTAL) setTimeout(showQuizResults,600);
+}
+
+function showQuizResults(){
+  const box=document.getElementById('quiz-results');
+  box.classList.remove('hidden');
+  document.getElementById('quiz-score').textContent='Score: '+qScore+' / '+Q_TOTAL;
+  let advice='';
+  if(qScore===Q_TOTAL){
+    advice='🎉 PERFECT SCORE! Sector V mission accomplished! You are cleared for the exam!';
+    launchConfetti();
+  } else if(qScore>=8){
+    advice='✅ Great job, operative! Review these topics:\n'+qWrong.map(t=>'• '+t).join('\n');
+  } else {
+    advice='📚 Keep studying! Focus on:\n'+qWrong.map(t=>'• '+t).join('\n');
+  }
+  document.getElementById('quiz-advice').textContent=advice;
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function retakeQuiz(){
+  qScore=0; qAnswered=0; qWrong=[];
+  document.querySelectorAll('.quiz-opt').forEach(o=>{
+    o.classList.remove('answered','correct-anim','incorrect-anim','mini-correct','mini-wrong');
+    if(o.dataset.orig) o.textContent=o.dataset.orig;
+  });
+  document.getElementById('quiz-results').classList.add('hidden');
+  document.getElementById('quiz').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── LEITNER FLASHCARDS ────────────────────────────────── */
+const FC_KEY = 'ltr_cartoon-knd';
+
+const FC_CARDS = [
+  // Domain 1
+  {q:"CIA Triad – CONFIDENTIALITY in KND terms?",a:"Keeping Treehouse location, mission plans, and operative identities secret. Confidentiality prevents unauthorized access to data.",d:1,tags:["D1","CIA Triad"]},
+  {q:"CIA Triad – INTEGRITY in KND terms?",a:"Ensuring mission files aren't altered by Father's agents. Integrity prevents unauthorized changes to data.",d:1,tags:["D1","CIA Triad"]},
+  {q:"CIA Triad – AVAILABILITY in KND terms?",a:"Treehouse systems and 2x4 tech must be ready for missions. Availability ensures systems remain accessible when needed.",d:1,tags:["D1","CIA Triad"]},
+  {q:"What is NON-REPUDIATION? KND example?",a:"Numbuh 1 can't deny issuing a mission order because it was logged, recorded, and signed. Non-repudiation = actions can't be denied later.",d:1,tags:["D1","Non-repudiation"]},
+  {q:"Zero Trust – what is the CONTROL PLANE?",a:"The brain of Zero Trust: Policy Engine (decides access) + Policy Administrator (enforces decisions). The Global KND Computer is the Control Plane.",d:1,tags:["D1","Zero Trust"]},
+  {q:"Zero Trust – what is the DATA PLANE?",a:"Where Policy Enforcement Points (laser grids, trap doors) physically block or allow access based on Control Plane decisions.",d:1,tags:["D1","Zero Trust"]},
+  {q:"What is ADAPTIVE IDENTITY in Zero Trust?",a:"Authentication adapts to context — location, time, device. Numbuh 1 must re-verify when accessing each new Treehouse room even if already inside.",d:1,tags:["D1","Zero Trust"]},
+  {q:"PREVENTIVE vs DETECTIVE vs CORRECTIVE controls?",a:"Preventive: stops attacks before they happen (locks). Detective: identifies attacks occurring (SIEM alerts). Corrective: fixes damage after (patching, recovery).",d:1,tags:["D1","Controls"]},
+  {q:"What is a COMPENSATING control?",a:"An alternative control when the primary can't be implemented. Backup rope ladder when the elevator is broken.",d:1,tags:["D1","Controls"]},
+  {q:"Symmetric vs Asymmetric encryption?",a:"Symmetric: same key to encrypt/decrypt (fast, shared secret). Asymmetric: public key encrypts, private key decrypts (PKI). Numbuh 2's lock-and-key gadget = asymmetric.",d:1,tags:["D1","Cryptography"]},
+  {q:"What is HASHING? How does it differ from encryption?",a:"Hashing is one-way — creates a fixed-length fingerprint. Cannot be reversed. Used to verify file integrity, not to protect data confidentiality.",d:1,tags:["D1","Cryptography"]},
+  {q:"What is SALTING and why is it used?",a:"Adding random data before hashing to prevent rainbow table attacks. Even identical passwords produce different hashes when salted.",d:1,tags:["D1","Cryptography"]},
+  {q:"What is a CERTIFICATE AUTHORITY (CA)?",a:"A trusted entity that issues digital certificates verifying identity. Global KND Moon Base acts as the CA vouching for operative identities.",d:1,tags:["D1","PKI"]},
+  {q:"Change Management: what is a BACKOUT PLAN?",a:"A documented plan to reverse a change if it fails. Before Numbuh 2 upgrades the Treehouse OS, he must have a plan to roll back.",d:1,tags:["D1","Change Management"]},
+  // Domain 2
+  {q:"FATHER threat actor type in Security+ terms?",a:"Advanced Persistent Threat (APT) / Nation-state actor. High resources, persistent, skilled, motivated by control and disruption of kid operations.",d:2,tags:["D2","Threat Actors"]},
+  {q:"INSIDER THREAT — KND example?",a:"An operative bribed by Father leaking Treehouse access codes. Insider threats misuse legitimate access maliciously or accidentally.",d:2,tags:["D2","Insider Threat"]},
+  {q:"PHISHING vs VISHING vs SMISHING?",a:"Phishing: deceptive email. Vishing: deceptive voice call. Smishing: deceptive SMS. Father uses all three to social-engineer KND operatives.",d:2,tags:["D2","Social Engineering"]},
+  {q:"What is a WATERING HOLE attack?",a:"Compromising a website operatives frequently visit (like the KND candy store site) to infect them on their next visit.",d:2,tags:["D2","Attack Vectors"]},
+  {q:"SUPPLY CHAIN attack — KND example?",a:"Father compromises the 2x4 tech manufacturer, inserting malware before gadgets arrive at the Treehouse. Trust the hardware? Verify first.",d:2,tags:["D2","Supply Chain"]},
+  {q:"What is a ZERO-DAY vulnerability?",a:"A flaw unknown to the vendor/defender. Father exploiting an unpatched Treehouse system no one knew was vulnerable.",d:2,tags:["D2","Vulnerabilities"]},
+  {q:"SQL INJECTION — simple explanation?",a:"Injecting malicious SQL commands into input fields to access unauthorized database data. Entering '; DROP TABLE operatives;-- into KND login form.",d:2,tags:["D2","Web Attacks"]},
+  {q:"What is CROSS-SITE SCRIPTING (XSS)?",a:"Injecting malicious scripts into a trusted website that execute in victims' browsers. Father injects scripts into the KND portal to steal session cookies.",d:2,tags:["D2","Web Attacks"]},
+  {q:"DDoS — KND analogy?",a:"Father sends 1,000 fake distress calls simultaneously, overwhelming Sector V's response capacity. DDoS = flooding to deny legitimate service.",d:2,tags:["D2","Network Attacks"]},
+  {q:"Difference: VIRUS vs WORM vs TROJAN?",a:"Virus: needs host file. Worm: self-replicates across network without host. Trojan: disguises as legitimate software. All infect the Treehouse differently.",d:2,tags:["D2","Malware"]},
+  {q:"What is RANSOMWARE?",a:"Malware that encrypts files and demands payment for decryption key. Father encrypts all Treehouse mission files demanding candy in return.",d:2,tags:["D2","Malware"]},
+  {q:"LEAST PRIVILEGE principle?",a:"Operatives only get the minimum access needed for their role. Numbuh 4 can access the armory but not mission briefing files.",d:2,tags:["D2","Mitigations"]},
+  {q:"What is NETWORK SEGMENTATION as a mitigation?",a:"Dividing the network into zones so a breach in one area can't spread to others. Father breaching the lounge can't reach the command center.",d:2,tags:["D2","Mitigations"]},
+  // Domain 3
+  {q:"Hot vs Warm vs Cold disaster recovery sites?",a:"Hot: fully operational mirror, failover in minutes. Warm: partially equipped, hours to activate. Cold: empty shell, days to set up.",d:3,tags:["D3","Recovery Sites"]},
+  {q:"RTO vs RPO — what's the difference?",a:"RTO: how quickly systems must be restored after outage. RPO: how much data loss is acceptable (how old can the backup be?).",d:3,tags:["D3","Recovery Objectives"]},
+  {q:"What is a DMZ (screened subnet)?",a:"A buffer network zone between the internet and internal network. KND's neutral meeting area — not the command center, not the outside world.",d:3,tags:["D3","Network Architecture"]},
+  {q:"ZTNA vs traditional VPN?",a:"VPN gives access to the whole network. ZTNA grants access only to specific applications needed. Principle of least privilege at network level.",d:3,tags:["D3","Remote Access"]},
+  {q:"What is SASE (Secure Access Service Edge)?",a:"Cloud-delivered security combining SD-WAN with security services (CASB, ZTNA, FWaaS). Moon Base delivering security to all sector Treehouses via cloud.",d:3,tags:["D3","Architecture"]},
+  {q:"Data at rest vs in transit vs in use?",a:"At rest: stored in Treehouse vault (encrypt it). In transit: transmitted over radio (TLS/IPSec). In use: loaded in operative memory (RAM protection).",d:3,tags:["D3","Data Protection"]},
+  {q:"What is DATA CLASSIFICATION?",a:"Categorizing data by sensitivity. KND levels: Public (recruiting posters), Private (operative names), Confidential (Treehouse blueprints), Restricted (decommission codes).",d:3,tags:["D3","Data Classification"]},
+  {q:"What is HIGH AVAILABILITY (HA)?",a:"Designing systems to minimize downtime. Load balancing + redundant systems so if one Treehouse fails, operations continue without interruption.",d:3,tags:["D3","Resilience"]},
+  {q:"Infrastructure as Code (IaC)?",a:"Defining infrastructure through code/configuration files rather than manual setup. Numbuh 2 scripts the entire Treehouse network rebuild in 60 seconds.",d:3,tags:["D3","Architecture"]},
+  {q:"What is TOKENIZATION?",a:"Replacing sensitive data with a non-sensitive token. Storing a token instead of Numbuh 1's real KND ID in the database — real data stays in a secure vault.",d:3,tags:["D3","Data Protection"]},
+  // Domain 4
+  {q:"IR Phase order — spell it out?",a:"Preparation → Detection → Analysis → Containment → Eradication → Recovery → Lessons Learned. PDACREL. Containment BEFORE eradication. Lessons Learned is LAST.",d:4,tags:["D4","IR Phases"]},
+  {q:"What is CHAIN OF CUSTODY in forensics?",a:"Documented record of who handled evidence, when, and how. Numbuh 5 logs every piece of Father's equipment she collects to ensure legal admissibility.",d:4,tags:["D4","Forensics"]},
+  {q:"LEGAL HOLD — what does it mean?",a:"Preserving all relevant data when litigation is anticipated or ongoing. KND must freeze deletion of logs when a case against Father goes to court.",d:4,tags:["D4","Forensics"]},
+  {q:"MFA: three factor types with examples?",a:"Something you KNOW (password). Something you HAVE (smart card, token). Something you ARE (fingerprint, retinal scan). Two DIFFERENT types = MFA.",d:4,tags:["D4","IAM"]},
+  {q:"RBAC vs ABAC vs MAC vs DAC?",a:"RBAC: role determines access. ABAC: attributes determine access. MAC: system-enforced classification labels. DAC: owner controls who gets access.",d:4,tags:["D4","Access Control"]},
+  {q:"What is JUST-IN-TIME (JIT) access?",a:"Temporary elevated permissions granted only when needed, automatically revoked after. Numbuh 5 gets admin access for 1 hour for investigation only.",d:4,tags:["D4","PAM"]},
+  {q:"SIEM vs SOAR — what's the difference?",a:"SIEM: collects, correlates, and alerts on log data (detection). SOAR: automates response to those alerts (response/orchestration). SIEM finds it, SOAR fixes it.",d:4,tags:["D4","Operations"]},
+  {q:"What is EDR / XDR?",a:"EDR: Endpoint Detection & Response — monitors individual devices. XDR: Extended Detection & Response — correlates across endpoints, network, and cloud.",d:4,tags:["D4","Monitoring"]},
+  {q:"What is a VULNERABILITY SCAN vs PEN TEST?",a:"Vuln scan: automated, finds known weaknesses, non-invasive. Pen test: simulated attack by skilled tester, exploits vulnerabilities to prove impact.",d:4,tags:["D4","Vulnerability Mgmt"]},
+  {q:"CVSS — what is it?",a:"Common Vulnerability Scoring System. Rates vulnerabilities 0–10 by severity. Helps KND prioritize which Treehouse vulnerabilities to patch first.",d:4,tags:["D4","Vulnerability Mgmt"]},
+  {q:"What is DLP (Data Loss Prevention)?",a:"Technology preventing sensitive data from leaving the organization. Blocking Numbuh 2 from emailing Treehouse blueprints to an external address.",d:4,tags:["D4","Monitoring"]},
+  {q:"DMARC / DKIM / SPF — email security?",a:"SPF: authorized mail servers for domain. DKIM: cryptographic signature verifying sender. DMARC: policy for how to handle SPF/DKIM failures. Prevents Father impersonating Moon Base.",d:4,tags:["D4","Email Security"]},
+  {q:"What is SANDBOXING?",a:"Running untrusted code in an isolated environment where it can't harm the real system. Testing Father's suspicious candy app in a virtual Treehouse first.",d:4,tags:["D4","App Security"]},
+  {q:"What is a TABLETOP EXERCISE?",a:"Discussion-based simulation where team talks through response to a scenario without actually taking action. Sector V practices what to do if Father attacks — on paper first.",d:4,tags:["D4","IR Training"]},
+  // Domain 5
+  {q:"SLE, ARO, ALE — formulas?",a:"SLE (Single Loss Expectancy) = Asset Value × Exposure Factor. ALE (Annual Loss Expectancy) = SLE × ARO (Annual Rate of Occurrence).",d:5,tags:["D5","Risk Math"]},
+  {q:"What is RISK APPETITE vs RISK TOLERANCE?",a:"Risk appetite: level of risk organization is willing to accept strategically. Risk tolerance: acceptable variance around that level. KND accepts minor prank risks but zero tolerance for decommissioning.",d:5,tags:["D5","Risk Management"]},
+  {q:"4 risk treatment strategies?",a:"Avoid: stop the risky activity. Mitigate: reduce likelihood or impact. Transfer: shift risk (insurance, outsource). Accept: acknowledge and live with it.",d:5,tags:["D5","Risk Treatment"]},
+  {q:"SLA vs MOU vs NDA vs BPA?",a:"SLA: service level commitments. MOU: mutual understanding, no legal obligation. NDA: confidentiality agreement. BPA: business partnership agreement with rights/responsibilities.",d:5,tags:["D5","Agreements"]},
+  {q:"What is a RISK REGISTER?",a:"A document tracking identified risks, their likelihood, impact, owner, and mitigation status. Numbuh 1's list of all known threats to Sector V operations.",d:5,tags:["D5","Risk Management"]},
+  {q:"What is a BIA (Business Impact Analysis)?",a:"Identifies critical operations and the impact of disruption. KND BIA: losing Treehouse command center = critical; losing snack room = low impact.",d:5,tags:["D5","BIA"]},
+  {q:"GDPR key requirements?",a:"Lawful basis for processing, data minimization, right to erasure (right to be forgotten), breach notification within 72 hours, data subject rights.",d:5,tags:["D5","Compliance"]},
+  {q:"What is an Acceptable Use Policy (AUP)?",a:"Defines what users may and may not do with organizational systems. KND AUP: no personal devices on Treehouse network, no sharing access codes.",d:5,tags:["D5","Policies"]},
+  {q:"Security awareness: phishing simulation?",a:"Sending fake phishing emails to employees to test and train them. KND sends fake candy offers — operatives who click get mandatory training.",d:5,tags:["D5","Awareness"]},
+  {q:"Difference: Policy vs Standard vs Procedure vs Guideline?",a:"Policy: high-level mandatory rule. Standard: specific mandatory requirements. Procedure: step-by-step instructions. Guideline: recommended, not mandatory.",d:5,tags:["D5","Governance"]},
+  // Port memorization bonus cards
+  {q:"Port 22 — what protocol?",a:"SSH (Secure Shell) — encrypted remote access. Used by Numbuh 2 to securely manage Treehouse servers remotely.",d:4,tags:["D4","Ports"]},
+  {q:"Port 23 — what protocol and why avoid it?",a:"Telnet — unencrypted remote access. NEVER use in production; all traffic including passwords sent in plaintext. Use SSH (22) instead.",d:4,tags:["D4","Ports"]},
+  {q:"Port 80 vs 443?",a:"80: HTTP (unencrypted web). 443: HTTPS (encrypted web via TLS). Always use 443 for any sensitive web traffic from the Treehouse.",d:4,tags:["D4","Ports"]},
+  {q:"Port 53 — what protocol?",a:"DNS (Domain Name System) — resolves domain names to IP addresses. DNS filtering blocks operatives from reaching Father's malicious domains.",d:4,tags:["D4","Ports"]},
+  {q:"Port 25 / 587 / 465 — email ports?",a:"25: SMTP (server-to-server). 587: SMTP submission (client-to-server, STARTTLS). 465: SMTPS (encrypted). Use 587 or 465 for secure email sending.",d:4,tags:["D4","Ports"]},
+  {q:"Port 3389 — what protocol and risk?",a:"RDP (Remote Desktop Protocol). High-value target for attackers — brute forced frequently. Never expose to internet; use VPN + MFA. Father loves port 3389.",d:4,tags:["D4","Ports"]},
+  {q:"Port 161/162 — what protocol?",a:"SNMP (Simple Network Management Protocol). 161: queries. 162: traps (alerts). Used for network device monitoring. Use SNMPv3 — earlier versions have no encryption.",d:4,tags:["D4","Ports"]},
+  {q:"Port 389 vs 636?",a:"389: LDAP (unencrypted directory access). 636: LDAPS (LDAP over SSL/TLS — encrypted). Always prefer 636 for Active Directory queries.",d:4,tags:["D4","Ports"]},
+];
+
+let fcBoxes = {1:[],2:[],3:[],4:[],5:[]};
+let fcCurrent = null;
+let fcCurrentBox = 1;
+let fcAnswerShown = false;
+
+function fcInit(){
+  const saved = localStorage.getItem(FC_KEY);
+  if(saved){
+    try{ const s=JSON.parse(saved); fcBoxes=s; }catch(e){ fcFreshStart(); }
+  } else { fcFreshStart(); }
+  fcPick();
+  fcUpdateStats();
+}
+
+function fcFreshStart(){
+  fcBoxes={1:[],2:[],3:[],4:[],5:[]};
+  FC_CARDS.forEach((_,i)=>fcBoxes[1].push(i));
+}
+
+function fcPick(){
+  for(let b=1;b<=5;b++){
+    if(b<5 && fcBoxes[b].length>0){ fcCurrentBox=b; break; }
+    if(b===5 && fcBoxes[5].length===FC_CARDS.length){
+      document.getElementById('fc-q').textContent='🎉 All '+FC_CARDS.length+' cards mastered! Sector V training complete!';
+      document.getElementById('fc-a').style.display='none';
+      document.getElementById('fc-tags').innerHTML='';
+      launchConfetti();
+      return;
+    }
+  }
+  const pool = fcBoxes[fcCurrentBox];
+  if(pool.length===0){ fcCurrentBox=1; fcPick(); return; }
+  const idx = pool[Math.floor(Math.random()*pool.length)];
+  fcCurrent = idx;
+  fcAnswerShown = false;
+  const card = FC_CARDS[idx];
+  const tagColors = ['tag-d1','tag-d2','tag-d3','tag-d4','tag-d5'];
+  document.getElementById('fc-tags').innerHTML = card.tags.map(t=>`<span class="tag ${tagColors[card.d-1]}">${t}</span>`).join('');
+  document.getElementById('fc-q').textContent = card.q;
+  document.getElementById('fc-a').textContent = card.a;
+  document.getElementById('fc-a').style.display = 'none';
+  document.getElementById('fc-info').textContent = `Box ${fcCurrentBox} · Card ${FC_CARDS.indexOf(card)+1} of ${FC_CARDS.length} · ${pool.length} remaining in this box`;
+}
+
+function fcFlip(){
+  const a = document.getElementById('fc-a');
+  fcAnswerShown = !fcAnswerShown;
+  a.style.display = fcAnswerShown ? 'block' : 'none';
+}
+
+function fcMark(toBox){
+  if(fcCurrent===null) return;
+  // Remove from current box
+  [1,2,3,4,5].forEach(b=>{
+    const i=fcBoxes[b].indexOf(fcCurrent);
+    if(i>-1) fcBoxes[b].splice(i,1);
+  });
+  const target = Math.min(toBox, 5);
+  fcBoxes[target].push(fcCurrent);
+  localStorage.setItem(FC_KEY, JSON.stringify(fcBoxes));
+  if(target>=4) playCorrect(); else if(toBox===1) playWrong();
+  fcUpdateStats();
+  fcPick();
+}
+
+function fcNext(){ fcPick(); fcUpdateStats(); }
+function fcSkip(){ fcPick(); }
+
+function fcReset(){
+  localStorage.removeItem(FC_KEY);
+  fcFreshStart();
+  fcUpdateStats();
+  fcPick();
+}
+
+function fcUpdateStats(){
+  for(let b=1;b<=5;b++) document.getElementById('fc-b'+b).textContent=fcBoxes[b].length;
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{
+  if(document.activeElement.tagName==='INPUT'||document.activeElement.tagName==='TEXTAREA') return;
+  if(e.code==='Space'){e.preventDefault();fcFlip();}
+  if(e.key==='1') fcMark(1);
+  if(e.key==='2') fcMark(2);
+  if(e.key==='3') fcMark(3);
+  if(e.key==='s'||e.key==='S') fcSkip();
+});
+
+fcInit();
+</script>
+</body>
+</html>

@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Rugrats | Security+ SY0-701 Study Hub</title>
+<style>
+:root{
+  --bg:#FFFDF4; --bg2:#FFF8E7; --surface:#FFF3D0; --nav:#2D0A6E;
+  --accent:#9966CC; --accent2:#F57C13; --text:#1A0040; --muted:#6B4F8C;
+  --border:rgba(153,102,204,.35); --card-bg:#FFFFFF;
+  --rp-yellow:#FFE600; --rp-purple:#9966CC; --rp-orange:#F57C13;
+  --rp-teal:#84E1E3; --rp-pink:#F191F2; --rp-green:#A3F6A4; --rp-peach:#FFBD86;
+  --rp-dark:#2D0A6E;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Comic Sans MS','Chalkboard SE',cursive,sans-serif;line-height:1.6;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+
+/* NAV */
+.tnl{color:rgba(255,255,255,.85);font-size:.78rem;padding:4px 10px;border-radius:6px;transition:background .2s;white-space:nowrap;text-decoration:none!important}
+.tnl:hover{background:rgba(255,230,0,.2);color:#FFE600}
+.cnd{position:relative;display:inline-block}
+.cnb{background:rgba(255,255,255,.15);border:1.5px solid rgba(255,230,0,.5);color:#FFE600;font-size:.78rem;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.cnb:hover{background:rgba(255,230,0,.2)}
+.cnm{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#2D0A6E;border:2px solid #F57C13;border-radius:10px;min-width:240px;z-index:300;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.5)}
+.cnm a{display:block;padding:9px 14px;font-size:.79rem;color:#FFF8E7;border-bottom:1px solid rgba(255,230,0,.15);transition:background .15s;text-decoration:none!important}
+.cnm a:last-child{border-bottom:none}
+.cnm a:hover{background:rgba(245,124,19,.3);color:#FFE600}
+
+/* JUMP BAR */
+.jbar{background:#FFF3D0;border-bottom:3px solid #F57C13;padding:8px 16px;display:flex;gap:5px;flex-wrap:wrap;justify-content:center;position:sticky;top:52px;z-index:150}
+.jbtn{background:#fff;border:2px solid #9966CC;color:#9966CC;padding:4px 12px;border-radius:16px;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none!important;display:inline-block;font-family:inherit}
+.jbtn:hover{border-color:#F57C13;color:#F57C13;background:#FFF3D0}
+
+/* LAYOUT */
+.ps{padding:30px 20px;max-width:960px;margin:0 auto}
+.pdiv{border:none;border-top:3px dashed rgba(153,102,204,.3)}
+.sec-hd{margin-bottom:16px}
+.sec-hd h2{font-size:1.25rem;font-weight:800;color:var(--text);margin-bottom:3px}
+.sec-hd p{color:var(--muted);font-size:.82rem}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:12px}
+.card{background:#fff;border:2px solid rgba(153,102,204,.4);border-radius:14px;padding:16px;box-shadow:2px 3px 0 rgba(153,102,204,.15)}
+.tag{background:#F3E8FF;border:2px solid #9966CC;padding:4px 11px;border-radius:16px;font-size:.76rem;color:#2D0A6E;font-weight:700;display:inline-block;margin:3px 2px}
+.tag-g{background:rgba(163,246,164,.25);border-color:#4CAF50;color:#1B5E20}
+
+/* ACCORDION */
+.acc{border-radius:12px;overflow:hidden;margin-bottom:9px;border:2px solid #9966CC;background:#fff}
+.acc-hdr{padding:11px 14px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-weight:800;color:#fff;background:linear-gradient(90deg,#9966CC,#F57C13);font-size:.92rem;user-select:none}
+.acc-hdr:hover{background:linear-gradient(90deg,#7744AA,#D4660F)}
+.acc-icon{font-size:16px;transition:transform .2s}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.acc-inner{padding:14px}
+.acc-inner h3{color:#9966CC;font-size:1rem;margin:10px 0 5px;font-weight:800}
+.acc-inner h4{color:#F57C13;font-size:.9rem;margin:8px 0 4px;font-weight:700}
+.acc-inner ul{padding-left:18px;font-size:.87rem;color:var(--text)}
+.acc-inner li{margin-bottom:4px}
+.acc-inner b{color:#F57C13}
+.mnemonic{background:linear-gradient(135deg,#F3E8FF,#FFF3D0);border:2px solid #9966CC;border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.mnemonic p{font-size:1.05rem;font-weight:900;color:#9966CC;letter-spacing:1px}
+
+/* MINI QUIZ */
+.quiz-q{margin-top:12px;margin-bottom:5px;font-weight:800;color:#2D0A6E;font-size:.88rem}
+.quiz-opt{background:#FFF8E7;padding:8px 10px;border-radius:10px;margin:4px 0;border:2px solid rgba(153,102,204,.35);cursor:pointer;transition:all .15s;font-size:.84rem;font-family:inherit;display:block;width:100%;text-align:left;color:var(--text)}
+.quiz-opt:hover:not(.answered){background:#F3E8FF;transform:translateY(-1px);border-color:#9966CC}
+.mini-correct{background:rgba(163,246,164,.6)!important;border-color:#4CAF50!important;animation:pulse .35s;color:#1B5E20!important}
+.mini-wrong{background:rgba(251,113,133,.2)!important;border-color:#E53935!important;animation:shake .35s;color:#B71C1C!important}
+
+/* MAIN QUIZ */
+.main-q{margin-top:14px;margin-bottom:6px;font-weight:800;color:#2D0A6E;font-size:.92rem}
+.main-opt{background:#FFF8E7;padding:9px 12px;border-radius:10px;margin:4px 0;border:2px solid rgba(153,102,204,.35);cursor:pointer;transition:all .15s;font-size:.86rem;font-family:inherit;display:block;width:100%;text-align:left;color:var(--text)}
+.main-opt:hover:not(.answered){background:#F3E8FF;transform:translateY(-1px);border-color:#9966CC}
+.correct-anim{background:rgba(163,246,164,.6)!important;border-color:#4CAF50!important;color:#1B5E20!important;animation:pulse .4s}
+.incorrect-anim{background:rgba(251,113,133,.2)!important;border-color:#E53935!important;color:#B71C1C!important;animation:shake .4s}
+.retake-btn{display:inline-block;margin-top:10px;padding:9px 18px;border-radius:999px;border:none;background:#F57C13;color:#fff;font-weight:800;cursor:pointer;font-size:.9rem;font-family:inherit;box-shadow:0 3px 10px rgba(245,124,19,.4);transition:transform .15s}
+.retake-btn:hover{transform:translateY(-2px)}
+
+/* IR */
+.ir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(172px,1fr));gap:10px}
+.ir-card{background:#fff;border:2px solid #9966CC;border-radius:12px;padding:14px;text-align:center;box-shadow:2px 3px 0 rgba(153,102,204,.2)}
+.ir-card h4{color:#9966CC;font-size:.86rem;margin-bottom:6px;font-weight:800}
+.exam-tag{display:inline-block;background:#F3E8FF;border:1px solid #9966CC;border-radius:8px;padding:2px 8px;font-size:.65rem;color:#9966CC;font-weight:700;margin-top:6px}
+
+/* ADVENTURE */
+.scene-box{background:#fff;border:2px solid #9966CC;border-radius:12px;padding:18px;margin-bottom:8px}
+.scene-box h3{color:#9966CC;font-weight:800;margin-bottom:8px}
+.choice{background:#FFF8E7;padding:11px 14px;border-radius:12px;margin:8px 0;border:2px solid rgba(153,102,204,.4);cursor:pointer;transition:all .15s;font-size:.87rem;font-family:inherit;display:block;width:100%;text-align:left;color:var(--text)}
+.choice:hover:not(.adv-picked):not(.adv-wrong){background:#F3E8FF;transform:translateY(-1px);border-color:#9966CC}
+.adv-picked{background:rgba(163,246,164,.4)!important;border-color:#4CAF50!important;color:#1B5E20!important}
+.adv-wrong{background:rgba(251,113,133,.2)!important;border-color:#E53935!important;color:#B71C1C!important}
+
+/* NOTE CARDS */
+.note-card{background:#fff;border:2px solid rgba(153,102,204,.35);border-radius:12px;padding:16px;border-left:5px solid #F57C13;box-shadow:2px 3px 0 rgba(153,102,204,.15)}
+.note-card h4{color:#9966CC;font-size:.92rem;margin-bottom:6px;font-weight:800}
+.note-card ul{padding-left:16px;font-size:.82rem;color:var(--text)}
+
+/* STUDY LINKS */
+.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:11px}
+.link-card{background:#fff;border:2px solid rgba(153,102,204,.4);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:8px}
+.link-card h4{color:#9966CC;font-size:.9rem;font-weight:800}
+.link-card p{font-size:.78rem;color:var(--muted);flex:1}
+.link-btn{display:inline-block;background:#9966CC;border:none;border-radius:8px;padding:6px 12px;font-size:.78rem;color:#fff;font-weight:700;text-align:center;cursor:pointer;transition:all .2s;text-decoration:none!important}
+.link-btn:hover{background:#7744AA;transform:translateY(-1px)}
+
+/* FLASHCARDS */
+.fc-wrap{background:#fff;border:2px solid #9966CC;border-radius:14px;padding:18px;margin-bottom:20px}
+.flashcard{perspective:1200px;cursor:pointer;height:200px;margin-bottom:10px}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flashcard.flipped .card-inner{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;flex-direction:column;border:2px solid rgba(153,102,204,.4)}
+.card-front{background:linear-gradient(135deg,#FFF8E7,#FFF3D0)}
+.card-back{background:linear-gradient(135deg,#9966CC,#7744AA);transform:rotateY(180deg)}
+.card-front::before{content:'❓ QUESTION';position:absolute;top:9px;left:12px;font-size:.6rem;letter-spacing:1.5px;color:#9966CC;font-weight:700}
+.card-back::before{content:'✅ ANSWER';position:absolute;top:9px;left:12px;font-size:.6rem;letter-spacing:1.5px;font-weight:700;color:#FFE600}
+.card-front p{font-size:.88rem;line-height:1.55;color:#1A0040}
+.card-back p{font-size:.88rem;line-height:1.55;color:#fff}
+.card-hint{position:absolute;bottom:8px;font-size:.62rem;color:#9966CC}
+.cbi{position:absolute;top:9px;right:12px;font-size:.62rem;font-weight:700;padding:2px 7px;border-radius:6px}
+.card-counter{text-align:center;font-size:.75rem;color:var(--muted);margin-bottom:4px}
+.progress-bar{height:6px;background:rgba(153,102,204,.2);border-radius:3px;overflow:hidden;margin-bottom:10px}
+.progress-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#9966CC,#F57C13);transition:width .35s}
+.fc-lrow{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin:10px 0 8px}
+.fc-lbox{background:#FFF3D0;border:2px solid rgba(153,102,204,.35);border-radius:8px;padding:5px 9px;font-size:.68rem;text-align:center;min-width:58px;color:var(--muted)}
+.fc-lbox span{display:block;font-size:1rem;font-weight:800;line-height:1.2}
+.fc-l1 span{color:#E53935}.fc-l2 span{color:#F57C13}.fc-l3 span{color:#9966CC}.fc-l4 span{color:#00ACC1}.fc-l5 span{color:#43A047}
+.fc-srow{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
+.fc-stat{background:#FFF3D0;border:2px solid rgba(153,102,204,.35);border-radius:8px;padding:6px 12px;text-align:center;min-width:62px}
+.fc-snum{font-size:1.1rem;font-weight:800;color:#9966CC}.fc-slbl{font-size:.62rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.fc-toolbar{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:10px}
+.fc-tbtn{padding:5px 12px;border-radius:7px;border:2px solid #9966CC;cursor:pointer;font-size:.74rem;font-weight:700;background:#fff;color:#9966CC;font-family:inherit;transition:all .2s}
+.fc-tbtn:hover{border-color:#F57C13;color:#F57C13}
+.fc-tbtn.active{background:#9966CC;color:#fff;border-color:#9966CC}
+.btn{padding:7px 14px;border-radius:8px;border:none;cursor:pointer;font-size:.8rem;font-weight:700;transition:all .2s;font-family:inherit}
+.btn:hover{transform:translateY(-1px)}
+.btn-again{background:rgba(229,57,53,.1);color:#C62828;border:2px solid rgba(229,57,53,.4)}
+.btn-good{background:rgba(67,160,71,.1);color:#2E7D32;border:2px solid rgba(67,160,71,.4)}
+.btn-easy{background:rgba(0,172,193,.1);color:#00838F;border:2px solid rgba(0,172,193,.4)}
+.btn-skip{background:#FFF3D0;color:var(--muted);border:2px solid rgba(153,102,204,.3)}
+.btn-flip{padding:8px 20px;border-radius:8px;border:2px solid #9966CC;cursor:pointer;font-size:.84rem;font-weight:700;transition:all .2s;font-family:inherit;background:#F3E8FF;color:#9966CC}
+.btn-flip:hover{background:#E8D5FF}
+.ans-btns{display:none}
+.cc{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+.done-screen{display:none;text-align:center;padding:24px 10px}
+.score-big{font-size:2.6rem;font-weight:900;line-height:1;margin-bottom:4px;color:#9966CC}
+.qz-c{display:flex;align-items:flex-start;gap:8px;padding:7px 11px;border-radius:7px;border:2px solid rgba(153,102,204,.35);background:#FFF8E7;cursor:pointer;transition:all .2s;font-size:.8rem;color:var(--text);line-height:1.5;margin-bottom:5px;font-family:inherit}
+.qz-c:hover{border-color:#9966CC;background:#F3E8FF}
+.qz-c.qc{border-color:#43A047;background:rgba(67,160,71,.1);color:#1B5E20;font-weight:700}
+.qz-c.qw{border-color:#E53935;background:rgba(229,57,53,.1);color:#B71C1C;font-weight:700}
+.qz-exp{margin-top:7px;background:#FFF3D0;border-left:4px solid #F57C13;border-radius:0 7px 7px 0;padding:7px 11px;font-size:.76rem;color:var(--muted);line-height:1.6;display:none}
+.hidden{display:none!important}
+.hero-badge{display:inline-block;background:linear-gradient(90deg,#9966CC,#F57C13);color:#fff;padding:5px 18px;border-radius:20px;font-size:.74rem;font-weight:800;letter-spacing:.8px;margin-bottom:12px;box-shadow:0 2px 8px rgba(153,102,204,.4)}
+.particle{position:fixed;pointer-events:none;z-index:0;animation:floatUp 22s ease-in-out forwards;font-size:22px;line-height:1;user-select:none}
+@keyframes floatUp{0%{transform:translateY(0) scale(.7) rotate(0);opacity:.25}40%{transform:translateY(-40vh) scale(1) rotate(15deg);opacity:.5}80%{transform:translateY(-85vh) scale(.9) rotate(-8deg);opacity:.25}100%{transform:translateY(-115vh) scale(.8) rotate(20deg);opacity:0}}
+.confetti-p{position:fixed;width:9px;height:9px;top:-10px;z-index:2000;animation:fall 2.6s linear forwards;border-radius:2px}
+@keyframes fall{to{transform:translateY(115vh) rotate(360deg);opacity:0}}
+@keyframes pulse{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+code{background:rgba(153,102,204,.15);padding:2px 6px;border-radius:4px;font-size:.88em;color:#9966CC}
+@media(max-width:600px){.flashcard{height:175px}.card-front p,.card-back p{font-size:.82rem}.ps{padding:18px 12px}.ir-grid{grid-template-columns:1fr 1fr}}
+</style>
+<script>
+function toggleCN(btn){var m=btn.nextElementSibling;m.style.display=m.style.display==='block'?'none':'block';}
+document.addEventListener('click',function(e){if(!e.target.closest('.cnd'))document.querySelectorAll('.cnm').forEach(function(m){m.style.display='none';});});
+</script>
+</head>
+<body>
+
+<!-- ══ 1. STICKY NAV ══ -->
+<nav style="background:#2D0A6E;display:flex;align-items:center;padding:10px 20px;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:200;box-shadow:0 3px 16px rgba(45,10,110,.5);border-bottom:3px solid #F57C13">
+  <div style="font-size:.95rem;font-weight:800;color:#FFE600;white-space:nowrap">🛡️ <span style="color:#fff;font-weight:400">Security+ Hub</span></div>
+  <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-left:auto">
+    <a href="https://charleneluequeue.github.io/" class="tnl">🏠 Portfolio</a>
+    <a href="security-notes.html" class="tnl">📚 Study Hub</a>
+    <a href="#flashcards" class="tnl">🃏 Flashcards</a>
+    <div class="cnd">
+      <button class="cnb" onclick="toggleCN(this)">🎭 All Cartoons ▾</button>
+      <div class="cnm">
+        <a href="cartoon-spongebob.html">🧽 SpongeBob SquarePants</a>
+        <a href="cartoon-ben10.html">⌚ Ben 10</a>
+        <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+        <a href="cartoon-avatar.html">🌊 Avatar: The Last Airbender</a>
+        <a href="cartoon-knd.html">🏠 Codename: Kids Next Door</a>
+        <a href="cartoon-xmen.html">⚡ X-Men '97</a>
+        <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+        <a href="cartoon-futurama.html">🤖 Futurama</a>
+        <a href="cartoon-danny.html">👻 Danny Phantom</a>
+        <a href="cartoon-fairyodd.html">🌟 The Fairly OddParents</a>
+        <a href="cartoon-magicbus.html">🚌 The Magic School Bus</a>
+        <a href="cartoon-rugrats.html" style="color:#FFE600;font-weight:800">🍼 Rugrats</a>
+        <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+        <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+        <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ 2. HERO ══ -->
+<div id="top" style="background:linear-gradient(135deg,#FFF3D0 0%,#F3E8FF 50%,#FFF8E7 100%);border-bottom:4px solid #F57C13;padding:42px 20px 34px;text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;font-size:9rem;opacity:.07;top:-10px;right:-10px;pointer-events:none;transform:rotate(12deg)">🍼</div>
+  <div style="position:absolute;font-size:7rem;opacity:.06;bottom:-10px;left:-10px;pointer-events:none;transform:rotate(-10deg)">🦖</div>
+  <div class="hero-badge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <div style="display:inline-flex;align-items:center;justify-content:center;width:96px;height:96px;border-radius:50%;background:linear-gradient(135deg,#9966CC,#F57C13);box-shadow:0 0 30px rgba(153,102,204,.6),4px 4px 0 rgba(45,10,110,.3);margin-bottom:16px;font-size:3.2rem">🍼</div>
+  <h1 style="font-size:2rem;font-weight:900;color:#9966CC;text-shadow:3px 3px 0px #F57C13;margin-bottom:10px;letter-spacing:-0.5px">Rugrats Security+ SY0‑701</h1>
+  <p style="color:#6B4F8C;max-width:600px;margin:0 auto 6px;font-size:.9rem;font-weight:600">The entire SY0-701 exam universe reimagined in the Rugrats playpen — Tommy, Chuckie, Angelica and the crew walking you through every Security+ domain.</p>
+  <p style="color:#9966CC;max-width:600px;margin:6px auto 0;font-size:.85rem">CIA triad to incident response, governance to OSI model — all explained in baby-logic that actually sticks! 🦖✨</p>
+  <div style="margin-top:14px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+    <a href="#domain-guide" style="background:#9966CC;color:#fff;padding:7px 18px;border-radius:999px;font-size:.82rem;font-weight:800;text-decoration:none;box-shadow:0 3px 8px rgba(153,102,204,.4)">🧠 Study Domains</a>
+    <a href="#flashcards" style="background:#F57C13;color:#fff;padding:7px 18px;border-radius:999px;font-size:.82rem;font-weight:800;text-decoration:none;box-shadow:0 3px 8px rgba(245,124,19,.4)">🃏 Flashcards</a>
+    <a href="#adventure" style="background:#FFE600;color:#2D0A6E;padding:7px 18px;border-radius:999px;font-size:.82rem;font-weight:800;text-decoration:none;box-shadow:0 3px 8px rgba(255,230,0,.4)">🦖 Adventure</a>
+  </div>
+</div>
+
+<!-- ══ 3. JUMP BAR ══ -->
+<div class="jbar">
+  <a href="#topics" class="jbtn">📋 Topics</a>
+  <a href="#domain-guide" class="jbtn">🧠 Study Guide</a>
+  <a href="#characters" class="jbtn">🍼 Characters</a>
+  <a href="#analogies" class="jbtn">🎭 Analogies</a>
+  <a href="#notes" class="jbtn">📖 Notes</a>
+  <a href="#ir" class="jbtn">🚨 IR Lifecycle</a>
+  <a href="#detection" class="jbtn">🔍 Detection</a>
+  <a href="#roles" class="jbtn">👥 Roles</a>
+  <a href="#reporting" class="jbtn">📢 Reporting</a>
+  <a href="#post-ir" class="jbtn">📊 Post-IR</a>
+  <a href="#adventure" class="jbtn">🦖 Adventure</a>
+  <a href="#links" class="jbtn">🔗 Links</a>
+  <a href="#flashcards" class="jbtn">🃏 Flashcards</a>
+  <a href="#quiz" class="jbtn">🧠 Quiz</a>
+</div>
+
+<!-- ══ 4. TOPICS COVERED ══ -->
+<hr class="pdiv" id="topics">
+<div class="ps">
+  <div class="sec-hd"><h2>📋 Topics Covered</h2><p>SY0-701 objectives explored through Rugrats — all 5 domains, full exam coverage.</p></div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">
+    <span class="tag tag-g">1.1 Security Controls</span><span class="tag tag-g">1.2 Threat Actors</span><span class="tag tag-g">1.3 Cryptography</span><span class="tag tag-g">1.4 Authentication</span>
+    <span class="tag tag-g">2.1 Malware &amp; Attacks</span><span class="tag tag-g">2.2 Social Engineering</span><span class="tag tag-g">2.3 Vulnerabilities</span><span class="tag tag-g">2.4 Mitigations</span>
+    <span class="tag tag-g">3.1 Network Architecture</span><span class="tag tag-g">3.2 Secure Design</span><span class="tag tag-g">3.3 Cloud Security</span><span class="tag tag-g">3.4 Virtualization</span>
+    <span class="tag tag-g">4.1 IR Lifecycle</span><span class="tag tag-g">4.2 Monitoring &amp; SIEM</span><span class="tag tag-g">4.3 Identity &amp; Access</span><span class="tag tag-g">4.8 Incident Response</span>
+    <span class="tag tag-g">5.1 Governance &amp; Policy</span><span class="tag tag-g">5.2 Risk Management</span><span class="tag tag-g">5.3 Compliance</span><span class="tag tag-g">5.4 Data Roles</span>
+    <span class="tag tag-g">OSI Model All 7 Layers</span><span class="tag tag-g">Acceptable Use Policy</span><span class="tag tag-g">Data Owner/Custodian</span>
+    <span class="tag tag-g">Change Management</span><span class="tag tag-g">Legacy Systems</span><span class="tag tag-g">Privacy &amp; PII</span><span class="tag tag-g">Vendor Oversight</span>
+    <span class="tag tag-g">Chain of Custody</span><span class="tag tag-g">GDPR / HIPAA / PCI</span><span class="tag tag-g">Security Awareness</span>
+  </div>
+</div>
+
+<!-- ══ 5. DOMAIN STUDY GUIDE ══ -->
+<hr class="pdiv" id="domain-guide">
+<div class="ps">
+  <div class="sec-hd"><h2>🧠 Domain Study Guide</h2><p>5 mnemonic-powered accordions · One open at a time · Each with bullet notes and an inline mini quiz.</p></div>
+
+  <div class="acc" data-acc>
+    <div class="acc-hdr" onclick="toggleAcc(this)"><span>🍼 Domain 1 · General Security Concepts — <em>REPTAR</em></span><span class="acc-icon">➕</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <div class="mnemonic"><p>R · E · P · T · A · R</p></div>
+      <ul style="color:#2D0A6E;font-weight:700;margin-bottom:12px">
+        <li><b>R</b>isks identified — Threat Modeling &amp; CIA Triad</li>
+        <li><b>E</b>ncryption protects data — Symmetric, Asymmetric, Hashing</li>
+        <li><b>P</b>hysical controls — Crib rails, baby gates, Spike</li>
+        <li><b>T</b>hreat actors categorized — Insider vs External, Nation-State, etc.</li>
+        <li><b>A</b>uthentication verifies identity — MFA, biometrics, tokens</li>
+        <li><b>R</b>ules govern behavior — Policies, standards, CIA Triad</li>
+      </ul>
+      <h3>CIA Triad — Rugrats Style</h3>
+      <ul>
+        <li><b>Confidentiality:</b> Angelica reading Tommy's cookie map without permission = data breach. Fix: encryption, ACLs, need-to-know.</li>
+        <li><b>Integrity:</b> Angelica swapping the labels on Phil and Lil's food jars = data tampered. Fix: hashing (SHA-256), digital signatures.</li>
+        <li><b>Availability:</b> Stu's invention crashes the whole house power grid = DoS. Fix: redundancy, backups, failover, UPS.</li>
+      </ul>
+      <h3>Security Controls</h3>
+      <ul>
+        <li><b>Administrative:</b> House rules — "no going outside alone." Policies, procedures, training.</li>
+        <li><b>Technical:</b> Baby monitor, door locks, firewall, encryption, MFA.</li>
+        <li><b>Physical:</b> Crib rails, baby gates, cameras, Spike guarding the yard.</li>
+        <li><b>Preventive:</b> Baby gate (stops it before it happens).</li>
+        <li><b>Detective:</b> Baby monitor catches it happening.</li>
+        <li><b>Corrective:</b> Stu fixes the broken toy after the incident.</li>
+      </ul>
+      <h3>Threat Actors &amp; Motivations</h3>
+      <ul>
+        <li><b>Angelica:</b> Insider threat — privileged access + selfish motives. Motivated by power, cookies, and control.</li>
+        <li><b>Daycare kids:</b> External/script kiddie threats — curious, sometimes destructive, opportunistic.</li>
+        <li><b>Stu (accidental):</b> Unintentional insider — misconfiguration, invents things that break everything.</li>
+        <li><b>Nation-state equiv.:</b> The toy company that secretly collects baby data — APT with long-term objectives.</li>
+      </ul>
+      <div class="quiz-q">Angelica reads Tommy's secret cookie map without permission. Which CIA pillar is violated?</div>
+      <button class="quiz-opt" onclick="miniQ(this,true)">A. Confidentiality</button>
+      <button class="quiz-opt" onclick="miniQ(this,false)">B. Integrity</button>
+      <button class="quiz-opt" onclick="miniQ(this,false)">C. Availability</button>
+    </div></div>
+  </div>
+
+  <div class="acc" data-acc>
+    <div class="acc-hdr" onclick="toggleAcc(this)"><span>⚠️ Domain 2 · Threats &amp; Mitigations — <em>CHUCKIE</em></span><span class="acc-icon">➕</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <div class="mnemonic"><p>C · H · U · C · K · I · E</p></div>
+      <ul style="color:#2D0A6E;font-weight:700;margin-bottom:12px">
+        <li><b>C</b>onfirm threat type — Phishing, Malware, Social Engineering</li>
+        <li><b>H</b>arden systems — Patch, disable unused services, baseline configs</li>
+        <li><b>U</b>ser training required — Security awareness programs</li>
+        <li><b>C</b>ontrols applied — Compensating, corrective, preventive</li>
+        <li><b>K</b>nown CVEs patched promptly</li>
+        <li><b>I</b>ntrusion detection in place — IDS, IPS, SIEM</li>
+        <li><b>E</b>xposure minimized — Attack surface reduction</li>
+      </ul>
+      <h3>Common Threat Types</h3>
+      <ul>
+        <li><b>Malware:</b> A "bad Reptar toy" that looks fun but destroys everything inside.</li>
+        <li><b>Phishing:</b> Angelica sends a fake note pretending to be from Stu to steal credentials.</li>
+        <li><b>Ransomware:</b> Angelica locks ALL toys and demands 10 cookies to unlock. Fix: offline backups, immutable storage.</li>
+        <li><b>Social Engineering:</b> "A grown-up told me you have to give me your cookies." Exploiting trust.</li>
+        <li><b>Supply Chain Attack:</b> The toy factory ships Reptar dolls with hidden malware pre-installed.</li>
+        <li><b>DDoS:</b> All the neighborhood kids swarm one toy at once — Angelica organized it.</li>
+      </ul>
+      <h3>Vulnerabilities</h3>
+      <ul>
+        <li><b>Unpatched:</b> Stu's ancient computer — no updates since 1992. Every old CVE is still wide open.</li>
+        <li><b>Weak credentials:</b> "dil123" on the baby monitor; default router password never changed.</li>
+        <li><b>Misconfiguration:</b> Baby gate left open, unused Telnet port still enabled.</li>
+        <li><b>Zero-day:</b> A hidden flaw in Stu's invention nobody found — no patch exists yet.</li>
+      </ul>
+      <h3>Mitigations</h3>
+      <ul>
+        <li><b>Patching:</b> Stu finally updates all systems on a regular schedule.</li>
+        <li><b>Hardening:</b> Lock cabinets, disable unused services, close open ports, change defaults.</li>
+        <li><b>Awareness training:</b> Teaching the babies "Don't believe Angelica — she lies."</li>
+        <li><b>MFA:</b> Requiring Tommy's face + secret knock + toy token to unlock the cookie jar.</li>
+      </ul>
+      <div class="quiz-q">Angelica tricks Tommy into handing over the TV remote. What type of attack is this?</div>
+      <button class="quiz-opt" onclick="miniQ(this,false)">A. Malware injection</button>
+      <button class="quiz-opt" onclick="miniQ(this,true)">B. Social engineering</button>
+      <button class="quiz-opt" onclick="miniQ(this,false)">C. Denial of service</button>
+    </div></div>
+  </div>
+
+  <div class="acc" data-acc>
+    <div class="acc-hdr" onclick="toggleAcc(this)"><span>🏛️ Domain 3 · Security Architecture — <em>TOMMY</em></span><span class="acc-icon">➕</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <div class="mnemonic"><p>T · O · M · M · Y</p></div>
+      <ul style="color:#2D0A6E;font-weight:700;margin-bottom:12px">
+        <li><b>T</b>rust zones separate networks — DMZ, VLANs, microsegmentation</li>
+        <li><b>O</b>nce patched, rescan for configuration drift</li>
+        <li><b>M</b>inimum privilege for every account</li>
+        <li><b>M</b>ulti-layer defense in depth — no single point of failure</li>
+        <li><b>Y</b>our secure defaults matter — lock it down from day one</li>
+      </ul>
+      <h3>Network Segmentation</h3>
+      <ul>
+        <li><b>DMZ:</b> The front porch — between trusted internal and untrusted external network.</li>
+        <li><b>VLANs:</b> Virtual playpens inside the same house, logically isolated from each other.</li>
+        <li><b>Microsegmentation:</b> Each toy gets its own isolated network bubble — fine-grained control.</li>
+        <li><b>Zero Trust:</b> Even Tommy must verify who he is every time, even at home. Never trust, always verify.</li>
+      </ul>
+      <h3>Secure Design Principles</h3>
+      <ul>
+        <li><b>Least privilege:</b> Babies don't get car keys. Tommy can only access his own toys.</li>
+        <li><b>Defense in depth:</b> Crib + gate + locked door + Spike outside. If one layer fails, others hold.</li>
+        <li><b>Secure by default:</b> All outlets covered, screws tightened — baseline security from the start.</li>
+        <li><b>Separation of duties:</b> One baby holds the cookie, another counts them — no single point of control.</li>
+      </ul>
+      <h3>Cloud &amp; Virtualization</h3>
+      <ul>
+        <li><b>IaaS:</b> Renting the warehouse — you manage everything inside it.</li>
+        <li><b>PaaS:</b> Renting the shelving system — provider manages infrastructure, you manage apps.</li>
+        <li><b>SaaS:</b> Renting the toys themselves — fully managed service.</li>
+        <li><b>Shared Responsibility:</b> Cloud provider secures the building; you lock your toy chest inside it.</li>
+      </ul>
+      <div class="quiz-q">Which security design principle is "babies don't get access to car keys"?</div>
+      <button class="quiz-opt" onclick="miniQ(this,true)">A. Least privilege</button>
+      <button class="quiz-opt" onclick="miniQ(this,false)">B. Obfuscation</button>
+      <button class="quiz-opt" onclick="miniQ(this,false)">C. Non-repudiation</button>
+    </div></div>
+  </div>
+
+  <div class="acc" data-acc>
+    <div class="acc-hdr" onclick="toggleAcc(this)"><span>🔧 Domain 4 · Security Operations — <em>SPIKE</em></span><span class="acc-icon">➕</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <div class="mnemonic"><p>S · P · I · K · E</p></div>
+      <ul style="color:#2D0A6E;font-weight:700;margin-bottom:12px">
+        <li><b>S</b>IEM aggregates all logs — the ultimate baby monitor</li>
+        <li><b>P</b>atching closes known holes on a regular schedule</li>
+        <li><b>I</b>ncident Response — Prepare, Detect, Contain, Eradicate, Learn</li>
+        <li><b>K</b>ey management and cryptographic operations</li>
+        <li><b>E</b>DR and IDS/IPS watching for threats 24/7</li>
+      </ul>
+      <h3>Monitoring &amp; Logging</h3>
+      <ul>
+        <li><b>SIEM:</b> The Pickles' baby monitor aggregates ALL events — logs, alerts, correlations in one place.</li>
+        <li><b>IDS (Spike barking):</b> Detects and alerts. Passive — does not block the threat.</li>
+        <li><b>IPS (Spike biting):</b> Detects AND blocks inline. Active prevention.</li>
+        <li><b>Log retention:</b> Stu saves 90 days of security footage for compliance and forensics.</li>
+        <li><b>IOC:</b> Cookie crumbs on the floor — evidence the attack already happened.</li>
+        <li><b>IOA:</b> Watching Angelica sneak toward the jar right now — attack in progress.</li>
+      </ul>
+      <h3>Identity &amp; Access Management</h3>
+      <ul>
+        <li><b>Authentication (AAA):</b> Proving who you are — Tommy's face + secret knock + toy token = MFA.</li>
+        <li><b>Authorization:</b> What you're allowed to do. Tommy cannot drive Stu's car.</li>
+        <li><b>Accounting:</b> Logging everything Tommy did once authenticated — audit trail.</li>
+        <li><b>PAM:</b> Privileged Access Management — Angelica's admin rights are monitored 24/7.</li>
+      </ul>
+      <h3>Vulnerability Management</h3>
+      <ul>
+        <li><b>Scanning:</b> Automated checklist through every room of the Pickles house.</li>
+        <li><b>Penetration testing:</b> Hiring someone to BE Angelica and see how far they actually get.</li>
+        <li><b>Tabletop exercise:</b> Talking through "what if Angelica strikes again?" without live systems.</li>
+      </ul>
+      <div class="quiz-q">Spike barks and the camera shows an intruder at the door. Which IR phase is this?</div>
+      <button class="quiz-opt" onclick="miniQ(this,false)">A. Preparation</button>
+      <button class="quiz-opt" onclick="miniQ(this,true)">B. Detection &amp; Analysis</button>
+      <button class="quiz-opt" onclick="miniQ(this,false)">C. Lessons Learned</button>
+    </div></div>
+  </div>
+
+  <div class="acc" data-acc>
+    <div class="acc-hdr" onclick="toggleAcc(this)"><span>📋 Domain 5 · Governance &amp; Risk — <em>ANGELICA</em></span><span class="acc-icon">➕</span></div>
+    <div class="acc-body"><div class="acc-inner">
+      <div class="mnemonic"><p>A · N · G · E · L · I · C · A</p></div>
+      <ul style="color:#2D0A6E;font-weight:700;margin-bottom:12px">
+        <li><b>A</b>udit and compliance requirements</li>
+        <li><b>N</b>on-repudiation through logging and digital signatures</li>
+        <li><b>G</b>overnance frameworks — NIST, ISO 27001, CIS Controls</li>
+        <li><b>E</b>xposure quantified through risk assessments</li>
+        <li><b>L</b>egal &amp; regulatory requirements — GDPR, HIPAA, PCI DSS</li>
+        <li><b>I</b>ncident reporting obligations and timelines</li>
+        <li><b>C</b>ompliance monitoring and enforcement programs</li>
+        <li><b>A</b>cceptable Use Policies — enforced with zero exceptions</li>
+      </ul>
+      <h3>Policy Hierarchy</h3>
+      <ul>
+        <li><b>Policy:</b> "No going outside alone" — high-level management direction. The WHAT.</li>
+        <li><b>Standard:</b> All outlets must have covers — enforceable baseline. The HOW MUCH.</li>
+        <li><b>Procedure:</b> Step-by-step: if baby cries, check diaper, then feed, then call pediatrician. The HOW.</li>
+        <li><b>Guideline:</b> "Try to keep nap schedules consistent" — a recommendation, not mandatory.</li>
+        <li><b>AUP:</b> No climbing the TV, no spitting food, no pulling Spike's ears — the acceptable use policy.</li>
+      </ul>
+      <h3>Data Roles</h3>
+      <ul>
+        <li><b>Data Owner (Tommy):</b> Accountable, decides purpose and access. Makes the rules.</li>
+        <li><b>Data Custodian (Stu):</b> Implements and manages the storage and protection controls.</li>
+        <li><b>Data Processor (factory):</b> Processes data on the owner's behalf per contract.</li>
+        <li><b>Data Steward:</b> Day-to-day quality, accuracy, and labeling of the data.</li>
+      </ul>
+      <h3>Risk Management</h3>
+      <ul>
+        <li><b>Identify:</b> Stairs, sharp corners, small toys — what could go wrong? (Chuckie's specialty.)</li>
+        <li><b>Assess:</b> Qualitative (High/Med/Low) or Quantitative ($ impact × likelihood).</li>
+        <li><b>Treat:</b> Avoid · Reduce · Transfer (insurance) · Accept residual risk.</li>
+        <li><b>Residual risk:</b> What remains after all controls are applied. Always exists.</li>
+      </ul>
+      <div class="quiz-q">"No going outside alone" is best described as what type of governance document?</div>
+      <button class="quiz-opt" onclick="miniQ(this,true)">A. Policy</button>
+      <button class="quiz-opt" onclick="miniQ(this,false)">B. Procedure</button>
+      <button class="quiz-opt" onclick="miniQ(this,false)">C. Guideline</button>
+    </div></div>
+  </div>
+</div>
+
+<!-- ══ 6. CHARACTER MAPPING ══ -->
+<hr class="pdiv" id="characters">
+<div class="ps">
+  <div class="sec-hd"><h2>🍼 Character Mapping</h2><p>Every Rugrats character mapped to a Security+ role with exam context.</p></div>
+  <div class="cgrid">
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:5px">🍼</div><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">Tommy Pickles</h4><span class="tag" style="margin-bottom:8px">Data Owner / CISO</span><p style="font-size:.82rem;color:var(--muted)">Sets the mission, makes the rules, accountable when things go sideways. Tommy owns the data, sets the risk appetite, and answers to the board (the parents).</p></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:5px">😰</div><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">Chuckie Finster</h4><span class="tag" style="margin-bottom:8px">Risk Analyst / CRA</span><p style="font-size:.82rem;color:var(--muted)">Always worried, always cataloguing threats. Chuckie performs threat modeling before every adventure — identifies, assesses, and rates every possible risk.</p></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:5px">😈</div><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">Angelica Pickles</h4><span class="tag" style="margin-bottom:8px">Threat Actor / Insider</span><p style="font-size:.82rem;color:var(--muted)">Privileged access, selfish motives, manipulation as standard procedure. The quintessential insider threat — also models perfect compliance enforcement when it suits her.</p></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:5px">🗣️</div><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">Susie Carmichael</h4><span class="tag" style="margin-bottom:8px">Security Engineer / SOC Analyst</span><p style="font-size:.82rem;color:var(--muted)">Voice of reason, calls out Angelica's manipulations, builds the controls that work. Susie monitors alerts all day and escalates real threats immediately.</p></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:5px">🔧</div><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">Stu Pickles</h4><span class="tag" style="margin-bottom:8px">Data Custodian / Sys Admin</span><p style="font-size:.82rem;color:var(--muted)">Builds and maintains all systems. Implements controls Tommy sets but doesn't own the data. Occasionally introduces accidental vulnerabilities through "inventions."</p></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:5px">👩‍⚕️</div><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">Didi Pickles</h4><span class="tag" style="margin-bottom:8px">Compliance Officer / DPO</span><p style="font-size:.82rem;color:var(--muted)">Ensures the household meets all regulatory requirements. Documents policies, conducts internal audits, and monitors GDPR / HIPAA compliance.</p></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:5px">👴</div><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">Grandpa Lou</h4><span class="tag" style="margin-bottom:8px">Legacy System</span><p style="font-size:.82rem;color:var(--muted)">Too old to patch, too embedded to replace. Grandpa Lou represents every end-of-life system that can't receive updates — compensating controls (network isolation, enhanced monitoring) are mandatory.</p></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:5px">🐕</div><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">Spike</h4><span class="tag" style="margin-bottom:8px">Physical Security / IDS</span><p style="font-size:.82rem;color:var(--muted)">Guards the perimeter, barks at intruders, alerts the family. The physical security layer and intrusion detection system — reliable, reactive, loud.</p></div>
+    <div class="card"><div style="font-size:1.5rem;margin-bottom:5px">🦖</div><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">Reptar</h4><span class="tag" style="margin-bottom:8px">Firewall / IPS</span><p style="font-size:.82rem;color:var(--muted)">Stomps through the city blocking bad packets. The heroic firewall and IPS — inspects traffic, denies threats, and defends the network perimeter with maximum enthusiasm.</p></div>
+  </div>
+</div>
+
+<!-- ══ 7. DEEP-DIVE ANALOGIES ══ -->
+<hr class="pdiv" id="analogies">
+<div class="ps">
+  <div class="sec-hd"><h2>🎭 Deep-Dive Analogies</h2><p>Rugrats scenarios that map directly to Security+ exam concepts. Four sections per card.</p></div>
+  <div class="cgrid">
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">🍪 Cookie Map Heist</h4><span class="tag tag-g" style="margin-bottom:8px">CIA — Confidentiality</span><p style="font-size:.82rem;color:var(--muted)">Angelica reads Tommy's secret cookie map without permission. Unauthorized data access. Fix: access controls, encryption at rest, need-to-know, role-based access control.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">🏷️ Label Swap Prank</h4><span class="tag tag-g" style="margin-bottom:8px">CIA — Integrity Violation</span><p style="font-size:.82rem;color:var(--muted)">Angelica swaps the labels on Phil and Lil's food jars. Data no longer accurately represents reality. Fix: SHA-256 hashing, digital signatures, tamper-evident logging.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">⚡ Stu's Power Crash</h4><span class="tag tag-g" style="margin-bottom:8px">CIA — Availability / DoS</span><p style="font-size:.82rem;color:var(--muted)">Stu plugs in his invention and crashes the whole house grid — nobody can access anything. Models DoS/DDoS. Fix: redundancy, circuit breakers, load balancing, UPS.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">👴 Never-Patched Lou</h4><span class="tag tag-g" style="margin-bottom:8px">Legacy System / Unpatched CVE</span><p style="font-size:.82rem;color:var(--muted)">Grandpa Lou's 1963 TV has no patches and full of exploits. Legacy = can't be patched, can't be replaced. Compensating controls: network isolation, enhanced monitoring, WAF in front.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">🎭 "A Grown-Up Said So"</h4><span class="tag tag-g" style="margin-bottom:8px">Phishing / Pretexting</span><p style="font-size:.82rem;color:var(--muted)">Angelica impersonates authority to manipulate babies into giving up their cookies. Defense: out-of-band verification, question unusual requests, security awareness training.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">🏠 Crib → Gate → Spike</h4><span class="tag tag-g" style="margin-bottom:8px">Defense in Depth</span><p style="font-size:.82rem;color:var(--muted)">Multiple overlapping controls: crib keeps babies in, gate blocks the hall, door locks rooms, Spike guards the yard. Each layer independent — if one fails, others hold.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">🧸 Fake Cookie Contract</h4><span class="tag tag-g" style="margin-bottom:8px">Non-Repudiation / Digital Signatures</span><p style="font-size:.82rem;color:var(--muted)">Angelica made Tommy sign a contract — he can't deny agreeing. Non-repudiation: the ability to prove an action occurred. Achieved via digital signatures and timestamped audit logs.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:4px">🚚 Reptar Toy Factory</h4><span class="tag tag-g" style="margin-bottom:8px">Supply Chain Attack</span><p style="font-size:.82rem;color:var(--muted)">A bad actor compromises Reptar dolls at the factory before delivery. The product looks legitimate but arrives pre-infected. Fix: vendor vetting, SBOM, code signing, integrity verification.</p></div>
+  </div>
+</div>
+
+<!-- ══ 8. STUDY NOTES ══ -->
+<hr class="pdiv" id="notes">
+<div class="ps">
+  <div class="sec-hd"><h2>📖 High-Frequency Study Notes</h2><p>The exam topics that come up over and over — memorize these.</p></div>
+  <div class="cgrid">
+    <div class="note-card"><h4>🔐 CIA Triad</h4><ul><li><b>Confidentiality:</b> Data only seen by authorized (encryption, ACLs, MFA)</li><li><b>Integrity:</b> Data not altered without auth (SHA-256, digital signatures)</li><li><b>Availability:</b> Systems up when needed (redundancy, backups, RAID)</li><li>Tommy = CIA champion. Angelica = CIA violator.</li></ul></div>
+    <div class="note-card"><h4>👤 Data Roles</h4><ul><li><b>Owner:</b> Accountable, sets purpose (Tommy makes the rules)</li><li><b>Custodian:</b> Implements controls (Stu builds the system)</li><li><b>Processor:</b> Handles data on owner's behalf (the toy factory)</li><li><b>Steward:</b> Day-to-day quality and accuracy management</li><li><b>DPO:</b> Data Protection Officer — GDPR compliance role (Didi)</li></ul></div>
+    <div class="note-card"><h4>🚨 IR Lifecycle (D4.8)</h4><ul><li>1. Preparation → 2. Detection &amp; Analysis → 3. Containment</li><li>→ 4. Eradication &amp; Recovery → 5. Lessons Learned</li><li><b>Containment:</b> Stop spread (move babies from glass)</li><li><b>Eradication:</b> Remove root cause (clean ALL the glass)</li><li><b>Lessons Learned:</b> Update policy to prevent recurrence</li></ul></div>
+    <div class="note-card"><h4>🌐 OSI Model — All 7 Layers</h4><ul><li>L7 App = Tommy's Toy Box (HTTP, DNS, SMTP)</li><li>L6 Presentation = Angelica's Translator (TLS, encoding)</li><li>L5 Session = Playdate Manager (NetBIOS, SQL sessions)</li><li>L4 Transport = Toy Truck (TCP reliable / UDP fast)</li><li>L3 Network = Reptar's Map (IP, ICMP, routing)</li><li>L2 Data Link = Playpen Gate (MAC, ARP, switches)</li><li>L1 Physical = Crib Bars (cables, signals, NIC)</li></ul></div>
+    <div class="note-card"><h4>⚠️ Must-Know Threat Types</h4><ul><li><b>Phishing/Vishing/Smishing:</b> Fake grown-up in disguise</li><li><b>Ransomware:</b> All toys locked, 10 cookies demanded</li><li><b>SQL Injection:</b> Sneaking a command through the toy slot (L7)</li><li><b>DDoS:</b> All neighborhood kids attack one toy at once</li><li><b>Insider threat:</b> Angelica — legit access + bad intent</li><li><b>Zero-day:</b> Flaw in Stu's invention with no fix yet</li></ul></div>
+  </div>
+</div>
+
+<!-- ══ 9. IR LIFECYCLE ══ -->
+<hr class="pdiv" id="ir">
+<div class="ps">
+  <div class="sec-hd"><h2>🚨 Incident Response Lifecycle</h2><p>Domain 4.8 — The 5 phases, Rugrats edition. These are guaranteed exam topics.</p></div>
+  <div class="ir-grid">
+    <div class="ir-card"><div style="font-size:2rem;margin-bottom:4px">1️⃣</div><h4>Preparation</h4><p style="font-size:.78rem;color:var(--muted)">House rules posted. Baby gates installed. Spike trained. Emergency numbers on the fridge. IR plan written before any incident occurs.</p><div class="exam-tag">D4.8 — Preparation</div></div>
+    <div class="ir-card"><div style="font-size:2rem;margin-bottom:4px">2️⃣</div><h4>Detection &amp; Analysis</h4><p style="font-size:.78rem;color:var(--muted)">A crash. Spike barks. SIEM fires an alert. Identify WHAT happened, HOW bad it is, and WHO is affected. Triage and prioritize.</p><div class="exam-tag">D4.8 — Detection</div></div>
+    <div class="ir-card"><div style="font-size:2rem;margin-bottom:4px">3️⃣</div><h4>Containment</h4><p style="font-size:.78rem;color:var(--muted)">Move babies away from broken glass. Stop the bleeding. Isolate affected systems. Prevent lateral movement. Two types: short-term (quick) and long-term (stable).</p><div class="exam-tag">D4.8 — Containment</div></div>
+    <div class="ir-card"><div style="font-size:2rem;margin-bottom:4px">4️⃣</div><h4>Eradication &amp; Recovery</h4><p style="font-size:.78rem;color:var(--muted)">Clean up ALL the glass. Find and remove root cause. Patch. Restore from clean backups. Verify systems are clean before reconnecting.</p><div class="exam-tag">D4.8 — Eradication</div></div>
+    <div class="ir-card"><div style="font-size:2rem;margin-bottom:4px">5️⃣</div><h4>Lessons Learned</h4><p style="font-size:.78rem;color:var(--muted)">"No more running with toys near the table." Document timeline, root cause, what worked, what didn't. Update policies, playbooks, and training.</p><div class="exam-tag">D4.8 — Post-Incident</div></div>
+  </div>
+</div>
+
+<!-- ══ 10. DETECTION DEEP DIVE ══ -->
+<hr class="pdiv" id="detection">
+<div class="ps">
+  <div class="sec-hd"><h2>🔍 Detection Deep Dive</h2><p>Key detection and monitoring concepts — high-frequency exam topics.</p></div>
+  <div class="cgrid" style="margin-bottom:16px">
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">🔔 SIEM</h4><p style="font-size:.83rem;color:var(--muted)">Security Information &amp; Event Management. The Pickles' baby monitor — aggregates ALL logs in one place, correlates events across sources, creates alerts when patterns emerge.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">🐕 IDS vs IPS</h4><p style="font-size:.83rem;color:var(--muted)"><b>IDS</b> = Spike barking — detects and alerts only (passive monitoring). <b>IPS</b> = Spike biting — detects AND blocks inline (active prevention). IPS is deployed inline; IDS is out-of-band.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">📋 Log Analysis</h4><p style="font-size:.83rem;color:var(--muted)">Stu reviews security footage after a cookie goes missing. Logs tell the full story — who accessed what, from where, and when. Essential for forensics and chain of custody.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">🎯 IOC vs IOA</h4><p style="font-size:.83rem;color:var(--muted)"><b>IOC</b>: Indicator of Compromise — cookie crumbs (evidence AFTER the attack). <b>IOA</b>: Indicator of Attack — watching Angelica sneak toward the jar right NOW (attack in progress).</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">📊 False Pos vs False Neg</h4><p style="font-size:.83rem;color:var(--muted)"><b>False Positive:</b> Spike barks at the mailman every day — alert with no real threat. <b>False Negative:</b> Spike sleeps while Angelica sneaks in — real attack missed entirely. Both are dangerous.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">🕵️ Threat Hunting</h4><p style="font-size:.83rem;color:var(--muted)">Proactively searching for hidden threats before they alert. Tommy searching the house for Angelica's hidden cookie stashes — not waiting for an alarm, actively hunting.</p></div>
+  </div>
+  <div class="quiz-q">Spike barks every time the mailman approaches, even though the mailman is not a threat. In security, this is called:</div>
+  <button class="quiz-opt" onclick="miniQ(this,false)">A. True positive — real threat detected correctly</button>
+  <button class="quiz-opt" onclick="miniQ(this,true)">B. False positive — alert triggered with no real threat</button>
+  <button class="quiz-opt" onclick="miniQ(this,false)">C. False negative — real attack missed entirely</button>
+</div>
+
+<!-- ══ 11. ROLES & RESPONSIBILITIES ══ -->
+<hr class="pdiv" id="roles">
+<div class="ps">
+  <div class="sec-hd"><h2>👥 Roles &amp; Responsibilities</h2><p>Security roles defined and mapped to the Rugrats cast.</p></div>
+  <div class="cgrid" style="margin-bottom:16px">
+    <div class="card"><span class="tag" style="margin-bottom:6px">CISO</span><p style="font-size:.83rem;color:var(--muted)"><b>Tommy:</b> Sets security direction, owns risk appetite, reports to board. Ultimate accountability.</p></div>
+    <div class="card"><span class="tag" style="margin-bottom:6px">SOC Analyst</span><p style="font-size:.83rem;color:var(--muted)"><b>Susie:</b> Monitors SIEM alerts, triages incidents, escalates real threats, hunts anomalies 24/7.</p></div>
+    <div class="card"><span class="tag" style="margin-bottom:6px">Risk Analyst</span><p style="font-size:.83rem;color:var(--muted)"><b>Chuckie:</b> Quantifies risk probability and impact, builds risk registers, recommends treatments.</p></div>
+    <div class="card"><span class="tag" style="margin-bottom:6px">Threat Actor</span><p style="font-size:.83rem;color:var(--muted)"><b>Angelica:</b> Motivated insider — knows the environment, exploits trust, bypasses controls through manipulation and privilege abuse.</p></div>
+    <div class="card"><span class="tag" style="margin-bottom:6px">Sys Admin / Custodian</span><p style="font-size:.83rem;color:var(--muted)"><b>Stu:</b> Manages infrastructure, applies patches, implements technical controls directed by the data owner.</p></div>
+    <div class="card"><span class="tag" style="margin-bottom:6px">Compliance Officer / DPO</span><p style="font-size:.83rem;color:var(--muted)"><b>Didi:</b> Ensures regulatory compliance (GDPR, HIPAA), documents policies, conducts internal audits, manages data privacy obligations.</p></div>
+  </div>
+  <div class="quiz-q">Stu applies patches and maintains the server. Tommy decides what data is stored and why. What roles do they hold?</div>
+  <button class="quiz-opt" onclick="miniQ(this,false)">A. Both are data owners</button>
+  <button class="quiz-opt" onclick="miniQ(this,true)">B. Stu = custodian, Tommy = owner</button>
+  <button class="quiz-opt" onclick="miniQ(this,false)">C. Stu = processor, Tommy = custodian</button>
+</div>
+
+<!-- ══ 12. REPORTING REQUIREMENTS ══ -->
+<hr class="pdiv" id="reporting">
+<div class="ps">
+  <div class="sec-hd"><h2>📢 Reporting Requirements</h2><p>Internal and external incident reporting obligations — timelines are exam-tested.</p></div>
+  <div class="cgrid" style="margin-bottom:16px">
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">🏠 Internal Reporting</h4><ul style="font-size:.82rem;color:var(--muted);padding-left:16px"><li>Notify management immediately on detection</li><li>Escalate to CISO if critical systems/data affected</li><li>Create incident ticket within 1 hour</li><li>Tommy tells the grown-ups the moment Angelica steals something important — no hiding it</li></ul></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">🏛️ External — GDPR</h4><ul style="font-size:.82rem;color:var(--muted);padding-left:16px"><li><b>72 hours</b> to notify supervisory authority from discovery</li><li>"Without undue delay" to notify affected individuals</li><li>Applies to any personal data of EU residents</li><li>Telling the European toy safety board AND the parents</li></ul></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">🏥 External — HIPAA</h4><ul style="font-size:.82rem;color:var(--muted);padding-left:16px"><li>Small breaches (&lt;500): annual HHS report</li><li>Large breaches (&gt;500 individuals): <b>60 days</b></li><li>Notify HHS, media (if &gt;500 in a state), affected individuals</li></ul></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">📋 Chain of Custody</h4><ul style="font-size:.82rem;color:var(--muted);padding-left:16px"><li>Document who had evidence, when, and how it was handled</li><li>Essential for legal proceedings and court admissibility</li><li>Angelica's fingerprints on the cookie jar — documented properly to prove she did it</li><li>Evidence CANNOT be modified — integrity above all</li></ul></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">⏱️ Key Timelines Summary</h4><ul style="font-size:.82rem;color:var(--muted);padding-left:16px"><li>GDPR supervisory authority: <b>72 hours</b></li><li>GDPR individuals: without undue delay</li><li>HIPAA large breach: <b>60 days</b></li><li>PCI DSS: immediately notify card brands</li><li>SEC material breach: <b>4 business days</b></li></ul></div>
+  </div>
+  <div class="quiz-q">Under GDPR, how long do you have to notify the supervisory authority after discovering a personal data breach?</div>
+  <button class="quiz-opt" onclick="miniQ(this,false)">A. 24 hours</button>
+  <button class="quiz-opt" onclick="miniQ(this,true)">B. 72 hours</button>
+  <button class="quiz-opt" onclick="miniQ(this,false)">C. 30 days</button>
+</div>
+
+<!-- ══ 13. POST-INCIDENT ACTIVITY ══ -->
+<hr class="pdiv" id="post-ir">
+<div class="ps">
+  <div class="sec-hd"><h2>📊 Post-Incident Activity</h2><p>What happens after containment — how security actually improves over time.</p></div>
+  <div class="cgrid">
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">📝 Lessons Learned Meeting</h4><p style="font-size:.82rem;color:var(--muted)">Entire team reviews what happened, what worked, what didn't. Root cause analysis to prevent recurrence. Tommy calls a playgroup meeting after every Angelica incident — mandatory post-mortem.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">📈 Metrics &amp; KPIs</h4><p style="font-size:.82rem;color:var(--muted)">Track <b>MTTD</b> (Mean Time to Detect), <b>MTTR</b> (Mean Time to Recover), false positive rate, and number of repeat incidents. Did security posture actually improve?</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">🎓 Awareness Training Update</h4><p style="font-size:.82rem;color:var(--muted)">After Angelica tricks the babies again, update training with new attack scenarios. Security awareness must evolve with the threat landscape — not a one-time checkbox.</p></div>
+    <div class="card"><h4 style="color:#9966CC;font-weight:800;margin-bottom:6px">🔄 Policy &amp; Control Updates</h4><p style="font-size:.82rem;color:var(--muted)">Add "no cookies left unattended" policy after the heist. Close the vulnerability that was exploited. Update playbooks, runbooks, and IR procedures based on findings.</p></div>
+  </div>
+</div>
+
+<!-- ══ 14. INTERACTIVE ADVENTURE ══ -->
+<hr class="pdiv" id="adventure">
+<div class="ps">
+  <div class="sec-hd"><h2>🦖 Interactive Adventure: Reptar vs. The Firewall</h2><p>5 scenes + finale. Wrong answers say "Try the other option!" and do not advance. Finale triggers confetti!</p></div>
+  <div style="background:#fff;border:2px solid #9966CC;border-radius:14px;padding:20px">
+    <p style="color:var(--muted);font-size:.85rem;margin-bottom:16px">Angelica has launched a full OSI-layer attack on the toy network. Reptar — the city's heroic firewall — must stop her at each layer. Help Reptar make the right call at every step!</p>
+
+    <div class="scene-box" id="adv-s1">
+      <h3>Scene 1 — Angelica's Web App Attack (Layer 7)</h3>
+      <p style="font-size:.85rem;margin-bottom:12px">Angelica finds Tommy's web app and injects malicious SQL commands through the login form. Which OSI layer is she attacking?</p>
+      <button class="choice" onclick="advChoice(this,'adv-s2',true)">🧠 Layer 7 — Application (HTTP, web apps, SQL injection)</button>
+      <button class="choice" onclick="advChoice(this,null,false)">🧱 Layer 1 — Physical (cables and wires)</button>
+    </div>
+
+    <div class="scene-box hidden" id="adv-s2">
+      <h3>Scene 2 — Reptar's City Map (Layer 3)</h3>
+      <p style="font-size:.85rem;margin-bottom:12px">Reptar needs to find WHERE Angelica's attack packets are coming from. Which device routes traffic based on IP addresses?</p>
+      <button class="choice" onclick="advChoice(this,'adv-s3',true)">🦖 A router — uses IP addresses (Layer 3 Network)</button>
+      <button class="choice" onclick="advChoice(this,null,false)">🧸 A stuffed animal — definitely not a network device</button>
+    </div>
+
+    <div class="scene-box hidden" id="adv-s3">
+      <h3>Scene 3 — Toy Delivery Truck (Layer 4)</h3>
+      <p style="font-size:.85rem;margin-bottom:12px">Reptar inspects the trucks carrying Angelica's packets. Which Layer 4 protocol guarantees reliable, ordered delivery?</p>
+      <button class="choice" onclick="advChoice(this,'adv-s4',true)">🚚 TCP — ensures every byte arrives in order (Layer 4 Transport)</button>
+      <button class="choice" onclick="advChoice(this,null,false)">🍼 Baby monitor signal — wrong layer entirely!</button>
+    </div>
+
+    <div class="scene-box hidden" id="adv-s4">
+      <h3>Scene 4 — Playpen Gate (Layer 2)</h3>
+      <p style="font-size:.85rem;margin-bottom:12px">Reptar sees thousands of fake MAC addresses flooding the switch's table, causing it to fail open and broadcast everything. What attack is this?</p>
+      <button class="choice" onclick="advChoice(this,'adv-s5',true)">🧸 MAC flooding — overflows the switch's CAM table (Layer 2)</button>
+      <button class="choice" onclick="advChoice(this,null,false)">🧹 Just tidying up the playpen — not a network attack</button>
+    </div>
+
+    <div class="scene-box hidden" id="adv-s5">
+      <h3>Scene 5 — Crib Bars &amp; Wires (Layer 1)</h3>
+      <p style="font-size:.85rem;margin-bottom:12px">Angelica physically cuts a network cable to take the server offline. Which OSI layer does a physical cable cut affect directly?</p>
+      <button class="choice" onclick="advChoice(this,'adv-fin',true)">🍼 Layer 1 — Physical (cables, signals, hardware)</button>
+      <button class="choice" onclick="advChoice(this,null,false)">🦖 Layer 7 — Application (too high up)</button>
+    </div>
+
+    <div class="hidden" id="adv-fin" style="background:linear-gradient(135deg,#FFF3D0,#F3E8FF);border-radius:12px;padding:22px;margin-top:8px;border:3px solid #9966CC;text-align:center">
+      <div style="font-size:2.5rem;margin-bottom:8px">⭐🦖⭐</div>
+      <h2 style="color:#9966CC;margin-bottom:10px;font-size:1.3rem">Adventure Complete — Reptar Saved the Network!</h2>
+      <p style="font-size:.88rem;margin-bottom:12px;color:var(--text)">You walked Reptar through all 5 IR phases via the OSI model:</p>
+      <ul style="font-size:.85rem;color:var(--muted);padding-left:18px;margin-bottom:14px;text-align:left;display:inline-block">
+        <li>🔍 <b>Detection:</b> Layer 7 SQL injection identified</li>
+        <li>🛑 <b>Containment:</b> Layer 3 routing blocked Angelica's source IP</li>
+        <li>🚚 <b>Analysis:</b> Layer 4 TCP connections inspected</li>
+        <li>🔐 <b>Eradication:</b> Layer 2 MAC flooding neutralized</li>
+        <li>🍼 <b>Recovery:</b> Layer 1 cable repaired, network restored</li>
+      </ul>
+      <div>
+        <button class="retake-btn" onclick="launchConfetti();playKazoo()">🎊 Celebrate!</button>
+        <button class="retake-btn" style="margin-left:10px;background:#9966CC" onclick="resetAdv()">🔁 Play Again</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 15. STUDY LINKS ══ -->
+<hr class="pdiv" id="links">
+<div class="ps">
+  <div class="sec-hd"><h2>🔗 Study Resources</h2><p>Everything you need to pass Security+ SY0-701.</p></div>
+  <div class="link-grid">
+    <div class="link-card"><h4>📄 Rugrats Full PDF</h4><p>Complete Rugrats Security+ study guide — all 5 domains. Available after GitHub upload.</p><a href="Rugrats_FullPDF.html" class="link-btn">📥 Open Guide</a></div>
+    <div class="link-card"><h4>📄 Rugrats OSI Guide</h4><p>Deep OSI model dive with the full Reptar vs. The Firewall adventure.</p><a href="Rugrats_1.html" class="link-btn">📥 OSI Deep Dive</a></div>
+    <div class="link-card"><h4>📋 Official Objectives</h4><p>CompTIA's official SY0-701 exam objectives — the definitive blueprint for what's tested.</p><a href="https://comptia.org/certifications/security" target="_blank" class="link-btn">🔗 CompTIA PDF</a></div>
+    <div class="link-card"><h4>📚 Study Guide Book</h4><p>Top-rated Security+ study guide. Affiliate link helps support this hub.</p><a href="https://amzn.to/4nVi25Y" target="_blank" class="link-btn">📦 Amazon Book</a></div>
+    <div class="link-card"><h4>🎥 Professor Messer</h4><p>Free SY0-701 video course — the gold standard free resource for Security+ prep.</p><a href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank" class="link-btn">▶️ Free Videos</a></div>
+    <div class="link-card"><h4>🃏 Quizlet Decks</h4><p>Community Security+ SY0-701 flashcard decks to supplement your study.</p><a href="https://quizlet.com/search?query=security+SY0-701&type=sets" target="_blank" class="link-btn">🔍 Search Quizlet</a></div>
+  </div>
+</div>
+
+<!-- ══ 16. LEITNER FLASHCARDS ══ -->
+<hr class="pdiv" id="flashcards">
+<div class="ps">
+  <div class="sec-hd"><h2>🃏 Leitner Flashcards</h2><p>60+ cards · All 5 domains · Spaced repetition · <code>Space</code> flip · <code>1</code> Again · <code>2</code> Got It · <code>3</code> Easy · <code>S</code> Skip</p></div>
+  <div class="fc-wrap">
+    <h3 style="font-size:.96rem;font-weight:800;color:var(--text);margin-bottom:3px">🍼 Rugrats Security+ Deck</h3>
+    <p style="font-size:.73rem;color:var(--muted);margin-bottom:10px">Progress saved automatically in your browser · Reset anytime</p>
+    <div class="fc-lrow">
+      <div class="fc-lbox fc-l1">Box 1<span id="fc-rugrats-cards-lb1">0</span></div>
+      <div class="fc-lbox fc-l2">Box 2<span id="fc-rugrats-cards-lb2">0</span></div>
+      <div class="fc-lbox fc-l3">Box 3<span id="fc-rugrats-cards-lb3">0</span></div>
+      <div class="fc-lbox fc-l4">Box 4<span id="fc-rugrats-cards-lb4">0</span></div>
+      <div class="fc-lbox fc-l5">Box 5<span id="fc-rugrats-cards-lb5">0</span></div>
+    </div>
+    <div class="fc-srow">
+      <div class="fc-stat"><div class="fc-snum" id="fc-rugrats-cards-total">0</div><div class="fc-slbl">Total</div></div>
+      <div class="fc-stat"><div class="fc-snum" id="fc-rugrats-cards-learning">0</div><div class="fc-slbl">Learning</div></div>
+      <div class="fc-stat"><div class="fc-snum" id="fc-rugrats-cards-reviewing">0</div><div class="fc-slbl">Reviewing</div></div>
+      <div class="fc-stat"><div class="fc-snum" id="fc-rugrats-cards-mastered">0</div><div class="fc-slbl">Mastered</div></div>
+    </div>
+    <div class="fc-toolbar">
+      <button class="fc-tbtn active" id="fc-rugrats-cards-btn-due" onclick="fcDueCards()">📋 Due Cards</button>
+      <button class="fc-tbtn" id="fc-rugrats-cards-btn-all" onclick="fcAllCards()">📦 All Cards</button>
+      <button class="fc-tbtn" onclick="fcResetDeck()">🗑️ Reset Progress</button>
+    </div>
+    <div id="fc-rugrats-cards-main">
+      <div class="card-counter" id="fc-rugrats-cards-counter"></div>
+      <div class="progress-bar"><div class="progress-fill" id="fc-rugrats-cards-fill" style="width:0%"></div></div>
+      <div class="flashcard" id="fc-rugrats-cards-card" onclick="fcFlipCard()">
+        <div class="card-inner" id="fc-rugrats-cards-inner">
+          <div class="card-front"><p id="fc-rugrats-cards-q"></p><span class="cbi" id="fc-rugrats-cards-boxind"></span><span class="card-hint">Click or press Space to flip</span></div>
+          <div class="card-back"><p id="fc-rugrats-cards-a"></p></div>
+        </div>
+      </div>
+      <div class="cc"><button class="btn-flip" id="fc-rugrats-cards-flipbtn" onclick="fcFlipCard()">🔄 Flip Card</button></div>
+      <div class="cc ans-btns" id="fc-rugrats-cards-ansbtn">
+        <button class="btn btn-again" onclick="fcGradeCard('again')">1 Again</button>
+        <button class="btn btn-good" onclick="fcGradeCard('good')">2 Got It</button>
+        <button class="btn btn-easy" onclick="fcGradeCard('easy')">3 Easy</button>
+        <button class="btn btn-skip" onclick="fcSkipCard()">S Skip</button>
+      </div>
+      <div id="fc-rugrats-cards-empty" style="display:none;text-align:center;padding:24px;color:var(--muted);font-size:.9rem">🎉 All caught up! Come back tomorrow for your next review.</div>
+    </div>
+    <div class="done-screen" id="fc-rugrats-cards-done">
+      <div class="score-big" id="fc-rugrats-cards-score"></div>
+      <p style="color:var(--muted);font-size:.85rem" id="fc-rugrats-cards-scoredet"></p>
+      <button class="retake-btn" onclick="fcRestartDeck()" style="margin-top:12px">🔁 Study Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 17. 10-QUESTION QUIZ ══ -->
+<hr class="pdiv" id="quiz">
+<div class="ps">
+  <div class="sec-hd"><h2>🧠 Knowledge Quiz</h2><p>10 exam-style questions · All 5 domains · Personalized missed-topic feedback · Resets without page reload · Confetti on 100%!</p></div>
+
+  <div style="background:#fff;border:2px solid #9966CC;border-radius:14px;padding:22px;margin-bottom:20px">
+    <h3 style="font-size:1rem;font-weight:800;color:#9966CC;margin-bottom:14px">🍼 Rugrats Security+ Quiz — 10 Questions</h3>
+    <div id="mq-body">
+      <div class="main-q">1. Angelica reads Tommy's secret cookie map without permission. Which CIA pillar is violated?</div>
+      <button class="main-opt" data-orig="A. Confidentiality" onclick="mainQ(this,true,'CIA — Confidentiality')">A. Confidentiality</button>
+      <button class="main-opt" data-orig="B. Integrity" onclick="mainQ(this,false,'CIA — Confidentiality')">B. Integrity</button>
+      <button class="main-opt" data-orig="C. Availability" onclick="mainQ(this,false,'CIA — Confidentiality')">C. Availability</button>
+
+      <div class="main-q">2. A MAC flooding attack directly targets which OSI layer?</div>
+      <button class="main-opt" data-orig="A. Layer 2 — Data Link" onclick="mainQ(this,true,'OSI Layer 2 — Data Link')">A. Layer 2 — Data Link</button>
+      <button class="main-opt" data-orig="B. Layer 3 — Network" onclick="mainQ(this,false,'OSI Layer 2 — Data Link')">B. Layer 3 — Network</button>
+      <button class="main-opt" data-orig="C. Layer 5 — Session" onclick="mainQ(this,false,'OSI Layer 2 — Data Link')">C. Layer 5 — Session</button>
+
+      <div class="main-q">3. "Babies don't get access to car keys" represents which security principle?</div>
+      <button class="main-opt" data-orig="A. Least Privilege" onclick="mainQ(this,true,'Least Privilege')">A. Least Privilege</button>
+      <button class="main-opt" data-orig="B. Obfuscation" onclick="mainQ(this,false,'Least Privilege')">B. Obfuscation</button>
+      <button class="main-opt" data-orig="C. Availability" onclick="mainQ(this,false,'Least Privilege')">C. Availability</button>
+
+      <div class="main-q">4. A physical cable is cut. Which OSI layer is directly affected?</div>
+      <button class="main-opt" data-orig="A. Layer 1 — Physical" onclick="mainQ(this,true,'OSI Layer 1 — Physical')">A. Layer 1 — Physical</button>
+      <button class="main-opt" data-orig="B. Layer 7 — Application" onclick="mainQ(this,false,'OSI Layer 1 — Physical')">B. Layer 7 — Application</button>
+      <button class="main-opt" data-orig="C. Layer 6 — Presentation" onclick="mainQ(this,false,'OSI Layer 1 — Physical')">C. Layer 6 — Presentation</button>
+
+      <div class="main-q">5. Angelica tricks Tommy into handing over the TV remote. What type of attack is this?</div>
+      <button class="main-opt" data-orig="A. Social Engineering" onclick="mainQ(this,true,'Social Engineering')">A. Social Engineering</button>
+      <button class="main-opt" data-orig="B. Malware injection" onclick="mainQ(this,false,'Social Engineering')">B. Malware injection</button>
+      <button class="main-opt" data-orig="C. Patch management failure" onclick="mainQ(this,false,'Social Engineering')">C. Patch management failure</button>
+
+      <div class="main-q">6. Tommy decides what data is stored and why. Stu implements the storage system. What are their roles?</div>
+      <button class="main-opt" data-orig="A. Tommy = owner, Stu = custodian" onclick="mainQ(this,true,'Data Roles — Owner vs Custodian')">A. Tommy = owner, Stu = custodian</button>
+      <button class="main-opt" data-orig="B. Tommy = custodian, Stu = owner" onclick="mainQ(this,false,'Data Roles — Owner vs Custodian')">B. Tommy = custodian, Stu = owner</button>
+      <button class="main-opt" data-orig="C. Both are data processors" onclick="mainQ(this,false,'Data Roles — Owner vs Custodian')">C. Both are data processors</button>
+
+      <div class="main-q">7. Moving babies away from broken glass immediately is which IR phase?</div>
+      <button class="main-opt" data-orig="A. Containment" onclick="mainQ(this,true,'IR — Containment')">A. Containment</button>
+      <button class="main-opt" data-orig="B. Preparation" onclick="mainQ(this,false,'IR — Containment')">B. Preparation</button>
+      <button class="main-opt" data-orig="C. Eradication" onclick="mainQ(this,false,'IR — Containment')">C. Eradication</button>
+
+      <div class="main-q">8. A SQL injection attack targets which OSI layer?</div>
+      <button class="main-opt" data-orig="A. Layer 7 — Application" onclick="mainQ(this,true,'OSI Layer 7 — Application')">A. Layer 7 — Application</button>
+      <button class="main-opt" data-orig="B. Layer 4 — Transport" onclick="mainQ(this,false,'OSI Layer 7 — Application')">B. Layer 4 — Transport</button>
+      <button class="main-opt" data-orig="C. Layer 2 — Data Link" onclick="mainQ(this,false,'OSI Layer 7 — Application')">C. Layer 2 — Data Link</button>
+
+      <div class="main-q">9. "No going outside alone" is best described as what type of governance document?</div>
+      <button class="main-opt" data-orig="A. Policy" onclick="mainQ(this,true,'Policy vs Procedure vs Guideline')">A. Policy</button>
+      <button class="main-opt" data-orig="B. Procedure" onclick="mainQ(this,false,'Policy vs Procedure vs Guideline')">B. Procedure</button>
+      <button class="main-opt" data-orig="C. Guideline" onclick="mainQ(this,false,'Policy vs Procedure vs Guideline')">C. Guideline</button>
+
+      <div class="main-q">10. Under GDPR, how long do you have to notify the supervisory authority after a personal data breach?</div>
+      <button class="main-opt" data-orig="A. 72 hours" onclick="mainQ(this,true,'GDPR Breach Notification — 72 Hours')">A. 72 hours</button>
+      <button class="main-opt" data-orig="B. 24 hours" onclick="mainQ(this,false,'GDPR Breach Notification — 72 Hours')">B. 24 hours</button>
+      <button class="main-opt" data-orig="C. 30 days" onclick="mainQ(this,false,'GDPR Breach Notification — 72 Hours')">C. 30 days</button>
+    </div>
+    <div id="mq-results" class="hidden" style="background:#FFF3D0;border-radius:12px;padding:18px;margin-top:14px;border:2px solid #9966CC">
+      <h3 style="color:#9966CC;margin-bottom:8px;font-weight:800">📊 Your Results</h3>
+      <p id="mq-score" style="font-size:1.3rem;font-weight:900;margin-bottom:8px;color:#2D0A6E"></p>
+      <pre id="mq-advice" style="white-space:pre-wrap;font-size:.86rem;color:var(--muted)"></pre>
+      <button class="retake-btn" onclick="resetMainQuiz()">🔁 Retake Quiz</button>
+    </div>
+  </div>
+
+  <!-- Advanced Governance Quiz (from original source) -->
+  <div style="background:#fff;border:2px solid #9966CC;border-radius:14px;padding:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;margin-bottom:12px">
+      <h3 style="font-size:.98rem;font-weight:800;color:#9966CC">🏆 Advanced Governance Quiz</h3>
+      <div style="font-size:.72rem;color:var(--muted);font-weight:600" id="qm-rugrats-quiz"></div>
+    </div>
+    <div id="qb-rugrats-quiz"></div>
+    <div id="qn-rugrats-quiz" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+      <button id="qs-rugrats-quiz" onclick="qSubAdv('rugrats-quiz')" style="background:#9966CC;color:#fff;padding:6px 14px;border-radius:7px;border:none;cursor:pointer;font-size:.78rem;font-weight:700;display:none;font-family:inherit">Check Answer</button>
+      <button id="qnx-rugrats-quiz" onclick="qNxtAdv('rugrats-quiz')" style="background:#F57C13;color:#fff;padding:6px 14px;border-radius:7px;border:none;cursor:pointer;font-size:.78rem;font-weight:700;display:none;font-family:inherit">Next →</button>
+      <button id="qr-rugrats-quiz" onclick="qRstAdv('rugrats-quiz')" style="background:#FFF3D0;color:#9966CC;padding:6px 14px;border-radius:7px;border:2px solid #9966CC;cursor:pointer;font-size:.78rem;display:none;font-family:inherit">🔄 Restart</button>
+    </div>
+    <div id="qf-rugrats-quiz" style="text-align:center;padding:16px 0;display:none">
+      <div id="qfs-rugrats-quiz" style="font-size:2.8rem;font-weight:900;color:#9966CC"></div>
+      <p id="qfd-rugrats-quiz" style="color:var(--muted)"></p>
+      <button onclick="qRstAdv()" style="background:#9966CC;color:#fff;padding:6px 14px;border-radius:7px;border:none;cursor:pointer;font-size:.78rem;font-weight:700;margin-top:8px;font-family:inherit">🔄 Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ 18. FOOTER ══ -->
+<footer style="background:#2D0A6E;padding:28px 20px;text-align:center;color:rgba(255,255,255,.55);font-size:.73rem;margin-top:50px;border-top:4px solid #F57C13">
+  <p style="margin-bottom:6px">🛡️ <a href="security-notes.html" style="color:#FFE600;font-weight:700">Study Hub</a> &nbsp;·&nbsp; <a href="https://charleneluequeue.github.io/" style="color:#FFE600;font-weight:700">Portfolio</a> &nbsp;·&nbsp; Built with 🍼 by Charlene LueQuee</p>
+  <p style="font-size:.7rem;color:rgba(255,255,255,.4)">Rugrats characters are property of Klasky-Csupo, Nickelodeon and Paramount Global — used for educational analogy purposes only.</p>
+  <div style="margin-top:10px;display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,230,0,.3);border-radius:6px;padding:5px 16px;font-size:.67rem;letter-spacing:.5px;color:rgba(255,255,255,.5)">&copy; 2025 Charlene LueQuee &nbsp;·&nbsp; All Rights Reserved</div>
+</footer>
+
+<!-- SOUND TOGGLE -->
+<button id="sound-toggle" onclick="toggleSound()" style="position:fixed;right:16px;bottom:16px;z-index:1200;background:#2D0A6E;border-radius:999px;padding:9px 15px;border:2px solid #F57C13;color:#FFE600;font-size:.8rem;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(45,10,110,.6);font-family:inherit">
+  <span id="snd-lbl">🔇 Sound: OFF</span>
+</button>
+
+<script>
+/* ── Sound ── */
+var soundOn=false;
+function toggleSound(){soundOn=!soundOn;document.getElementById('snd-lbl').textContent=soundOn?'🔊 Sound: ON':'🔇 Sound: OFF';}
+function beep(f,d,t){if(!soundOn)return;try{var c=new(window.AudioContext||window.webkitAudioContext)();var o=c.createOscillator();var g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(.35,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.start();o.stop(c.currentTime+d);}catch(e){}}
+function playRattle(){beep(880,.12,'square');}
+function playBonk(){beep(200,.18,'sawtooth');}
+function playKazoo(){[523,659,784,1047].forEach(function(f,i){setTimeout(function(){beep(f,.14);},i*110);});}
+
+/* ── Confetti ── */
+function launchConfetti(){
+  var colors=['#9966CC','#F57C13','#FFE600','#84E1E3','#F191F2','#A3F6A4'];
+  for(var i=0;i<100;i++){
+    var c=document.createElement('div');c.className='confetti-p';
+    c.style.left=Math.random()*100+'vw';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.width=(Math.random()*8+5)+'px';c.style.height=(Math.random()*8+5)+'px';
+    c.style.borderRadius=Math.random()>.5?'50%':'2px';
+    c.style.animationDuration=(Math.random()*2+2)+'s';
+    c.style.animationDelay=(Math.random()*.6)+'s';
+    document.body.appendChild(c);setTimeout(function(){c.remove();},3800);
+  }
+}
+
+/* ── Particles ── */
+function spawnP(){
+  var p=document.createElement('div');p.className='particle';
+  p.textContent=['🍼','🦖','🧸','🍪','🎀','🌟'][Math.floor(Math.random()*6)];
+  p.style.left=Math.random()*94+'vw';p.style.bottom='-30px';
+  var d=Math.random()*14+16;p.style.animationDuration=d+'s';
+  document.body.appendChild(p);setTimeout(function(){p.remove();},d*1000);
+}
+setInterval(spawnP,2800);spawnP();spawnP();
+
+/* ── Accordion ── */
+function toggleAcc(hdr){
+  var body=hdr.nextElementSibling;var icon=hdr.querySelector('.acc-icon');
+  var open=body.style.maxHeight&&body.style.maxHeight!=='0px';
+  document.querySelectorAll('[data-acc]').forEach(function(a){
+    a.querySelector('.acc-body').style.maxHeight=null;
+    a.querySelector('.acc-icon').textContent='➕';
+  });
+  if(!open){body.style.maxHeight=body.scrollHeight+'px';icon.textContent='➖';}
+}
+
+/* ── Mini Quiz ── */
+function miniQ(el,correct){
+  if(el.classList.contains('answered'))return;
+  el.parentElement.querySelectorAll('.quiz-opt').forEach(function(o){o.classList.add('answered');});
+  if(correct){el.classList.add('mini-correct');el.textContent+=' ✔ Correct!';playRattle();}
+  else{el.classList.add('mini-wrong');el.textContent+=' ✖ Wrong';playBonk();}
+}
+
+/* ── Adventure ── */
+function advChoice(el,nextId,correct){
+  if(el.classList.contains('adv-picked')||el.classList.contains('adv-wrong'))return;
+  if(correct){
+    el.classList.add('adv-picked');playRattle();
+    if(nextId){var n=document.getElementById(nextId);if(n){n.classList.remove('hidden');setTimeout(function(){n.scrollIntoView({behavior:'smooth',block:'nearest'});},100);}}
+  } else {
+    el.classList.add('adv-wrong');el.textContent+=' — Try the other option!';playBonk();
+    setTimeout(function(){el.classList.remove('adv-wrong');el.textContent=el.textContent.replace(' — Try the other option!','');},1600);
+  }
+}
+function resetAdv(){
+  ['adv-s2','adv-s3','adv-s4','adv-s5','adv-fin'].forEach(function(id){var e=document.getElementById(id);if(e)e.classList.add('hidden');});
+  document.querySelectorAll('.choice').forEach(function(c){c.classList.remove('adv-picked','adv-wrong');c.textContent=c.textContent.replace(' — Try the other option!','');});
+  document.getElementById('adv-s1').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── Main 10-Q Quiz ── */
+var mS=0,mA=0,mW=[];
+function mainQ(el,correct,topic){
+  if(el.classList.contains('answered'))return;
+  el.parentElement.querySelectorAll('.main-opt').forEach(function(o){o.classList.add('answered');});
+  if(correct){el.classList.add('correct-anim');el.textContent+=' ✔ Correct!';mS++;playRattle();}
+  else{el.classList.add('incorrect-anim');el.textContent+=' ✖ Wrong';mW.push(topic);playBonk();}
+  mA++;if(mA===10)showMQ();
+}
+function showMQ(){
+  var b=document.getElementById('mq-results');b.classList.remove('hidden');
+  document.getElementById('mq-score').textContent='Score: '+mS+' / 10';
+  if(mW.length===0){document.getElementById('mq-advice').textContent='Perfect score! Baby genius confirmed! Reptar is SO proud of you! 🦖✨';launchConfetti();playKazoo();}
+  else{var u=[...new Set(mW)];document.getElementById('mq-advice').textContent='Review these topics:\n'+u.map(function(t){return '• '+t;}).join('\n');}
+  b.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function resetMainQuiz(){
+  mS=0;mA=0;mW=[];
+  document.querySelectorAll('.main-opt').forEach(function(o){
+    o.classList.remove('answered','correct-anim','incorrect-anim');
+    if(o.dataset.orig)o.textContent=o.dataset.orig;
+  });
+  document.getElementById('mq-results').classList.add('hidden');
+  document.getElementById('mq-body').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+/* ── Smooth scroll ── */
+document.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){
+      var id=a.getAttribute('href').slice(1);var t=document.getElementById(id);
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+    });
+  });
+});
+</script>
+
+<script>
+
+(function(){
+var DK='rugrats-cards',C=[{"q": "Which governance document provides high-level statements of an organization's commitment to security?", "a": "Policy"}, {"q": "What is the primary difference between a security 'standard' and a 'procedure'?", "a": "Standards are mandatory rules, while procedures are step-by-step instructions for implementation."}, {"q": "Which specific policy defines the rules for how employees may use company technology and networks?", "a": "Acceptable Use Policy (AUP)"}, {"q": "In the context of security governance, what is the role of a 'Data Owner'?", "a": "A high-level executive responsible for business decisions regarding data and defining its classification."}, {"q": "Which role is responsible for implementing security controls on data based on the requirements set by the owner?", "a": "Data Custodian (or Steward)"}, {"q": "Under GDPR, what term describes the entity that determines the purposes and means of processing personal data?", "a": "Data Controller"}, {"q": "What is the term for an entity that manages or processes data on behalf of a data controller?", "a": "Data Processor"}, {"q": "What is the definition of a 'Data Subject' in privacy regulations?", "a": "The identified or identifiable natural person to whom personal data relates."}, {"q": "What is the formula for calculating Single Loss Expectancy (SLE)?", "a": "$SLE = AV \\times EF$"}, {"q": "In the SLE formula, what does 'AV' represent?", "a": "Asset Value"}, {"q": "In the SLE formula, what does 'EF' represent?", "a": "Exposure Factor (the percentage of asset value lost in a single incident)"}, {"q": "What is the formula for calculating Annualized Loss Expectancy (ALE)?", "a": "$ALE = SLE \\times ARO$"}, {"q": "In the ALE formula, what does 'ARO' represent?", "a": "Annualized Rate of Occurrence (how many times per year a threat is expected to happen)"}, {"q": "What is the difference between quantitative and qualitative risk analysis?", "a": "Quantitative uses dollar amounts and formulas, while qualitative uses subjective ratings like High, Medium, and Low."}, {"q": "Which risk management strategy involves stopping the activity that causes the risk entirely?", "a": "Risk Avoidance"}, {"q": "Purchasing cybersecurity insurance is an example of which risk management strategy?", "a": "Risk Transference (or Transfer)"}, {"q": "Implementing a Next-Generation Firewall (NGFW) to reduce threat levels is an example of which risk strategy?", "a": "Risk Mitigation"}, {"q": "What must occur for 'Risk Acceptance' to be valid in a professional environment?", "a": "The risk must be acknowledged and formally approved by management."}, {"q": "What is 'Residual Risk'?", "a": "The risk that remains after security controls have been applied."}, {"q": "What is 'Inherent Risk'?", "a": "The level of risk that exists before any security controls are implemented."}, {"q": "What is the purpose of a 'Risk Register'?", "a": "To document and track identified risks, their severity, and their assigned owners."}, {"q": "Which metric describes the maximum acceptable amount of time a system can be down after a failure?", "a": "Recovery Time Objective (RTO)"}, {"q": "Which metric describes the maximum acceptable amount of data loss measured in time?", "a": "Recovery Point Objective (RPO)"}, {"q": "What does the metric 'MTBF' represent?", "a": "Mean Time Between Failures (a measure of system reliability)"}, {"q": "What does the metric 'MTTR' represent?", "a": "Mean Time to Repair (or Restore)"}, {"q": "Which type of disaster recovery site is fully equipped and features real-time data replication for near-instant recovery?", "a": "Hot Site"}, {"q": "Which type of disaster recovery site is an empty facility that requires all equipment to be installed before use?", "a": "Cold Site"}, {"q": "How does a 'Warm Site' differ from a 'Hot Site'?", "a": "A warm site has hardware available but requires data to be restored from backups, resulting in longer recovery times."}, {"q": "What is the primary goal of a 'Business Impact Analysis' (BIA)?", "a": "To identify critical business processes and quantify the impact of potential disruptions."}, {"q": "Under GDPR, within how many hours must a data breach be reported to a supervisory authority?", "a": "72 hours"}, {"q": "Which regulation specifically protects the privacy of 'cardholder data'?", "a": "Payment Card Industry Data Security Standard (PCI DSS)"}, {"q": "Which US law regulates the privacy and security of Protected Health Information (PHI)?", "a": "Health Insurance Portability and Accountability Act (HIPAA)"}, {"q": "Which privacy law provides rights specifically to residents of California regarding their personal data?", "a": "California Consumer Privacy Act (CCPA)"}, {"q": "What is the purpose of a 'Service Level Agreement' (SLA)?", "a": "To contractually define minimum performance requirements, such as uptime and throughput, from a service provider."}, {"q": "Which document is a non-binding agreement that outlines mutual expectations between two parties?", "a": "Memorandum of Understanding (MOU)"}, {"q": "What is the function of a 'Statement of Work' (SOW)?", "a": "To provide a detailed list of specific tasks and deliverables for a professional services engagement."}, {"q": "Which legal agreement is used to prevent the disclosure of confidential information shared between parties?", "a": "Non-Disclosure Agreement (NDA)"}, {"q": "What is a 'Master Service Agreement' (MSA)?", "a": "An overall legal document that governs the long-term relationship between a client and a vendor."}, {"q": "What is the purpose of a 'Right to Audit' clause in a vendor contract?", "a": "To ensure the organization has the legal right to periodically review the vendor's security controls."}, {"q": "What are the five functions of the NIST Cybersecurity Framework (CSF)?", "a": "Identify, Protect, Detect, Respond, and Recover."}, {"q": "Which ISO standard provides the requirements for an Information Security Management System (ISMS)?", "a": "ISO 27001"}, {"q": "Which AICPA audit standard focuses on 'Trust Services Criteria' like security, availability, and privacy for service organizations?", "a": "SOC 2"}, {"q": "What is the difference between an 'Internal Audit' and an 'External Audit'?", "a": "Internal audits are conducted by the organization itself for self-assessment, while external audits are performed by independent third parties."}, {"q": "In the Incident Response lifecycle, what is the 'Preparation' phase?", "a": "The phase where the team is built, playbooks are created, and tools are deployed before an incident occurs."}, {"q": "Which Incident Response phase focuses on stopping the spread of an attack and isolating affected systems?", "a": "Containment"}, {"q": "What is the primary goal of the 'Eradication' phase in Incident Response?", "a": "To remove the root cause of the incident, such as deleting malware or closing vulnerabilities."}, {"q": "What occurs during the 'Lessons Learned' phase of Incident Response?", "a": "The team documents the event, evaluates the response effectiveness, and updates playbooks to prevent future occurrences."}, {"q": "What is a 'Tabletop Exercise'?", "a": "A discussion-based drill where personnel walk through their response to a hypothetical security scenario."}, {"q": "What is the difference between an IR 'Playbook' and a 'Runbook'?", "a": "A playbook contains high-level procedures for an incident type, while a runbook contains specific, step-by-step technical actions."}, {"q": "In digital forensics, what does the 'Chain of Custody' document?", "a": "The chronological record of everyone who handled, collected, or possessed a piece of evidence."}, {"q": "What is the 'Order of Volatility' in forensics?", "a": "The priority list for evidence collection, starting with the most perishable data like RAM and ending with logs or backups."}, {"q": "Which data classification level is the highest in the government/military model?", "a": "Top Secret"}, {"q": "What is the commercial equivalent of the 'Secret' data classification label?", "a": "Confidential"}, {"q": "Which term describes the amount of risk an organization is strategically willing to accept?", "a": "Risk Appetite"}, {"q": "Which term describes the operational threshold for acceptable variation around risk appetite?", "a": "Risk Tolerance"}, {"q": "What is 'Personally Identifiable Information' (PII)?", "a": "Any information that can be used to identify a specific individual, such as an SSN or email address."}, {"q": "What is 'Protected Health Information' (PHI)?", "a": "PII that also includes health-related data, such as diagnoses or treatment records."}, {"q": "What is the purpose of 'Data Retention' policies?", "a": "To define how long specific types of data must be kept to meet legal, regulatory, or business requirements."}, {"q": "Under GDPR, what is the 'Right to Erasure' (or Right to be Forgotten)?", "a": "The right for a data subject to request that their personal data be deleted by a controller."}, {"q": "Which compliance framework is mandatory for federal agencies and is based on NIST standards?", "a": "FISMA (Federal Information Security Modernization Act)"}, {"q": "What is the 'Supply Chain Risk'?", "a": "The risk that an organization's security could be compromised through its third-party hardware or software providers."}, {"q": "In a BIA, what is 'Geographic Dispersal'?", "a": "Distributing critical systems across different physical locations to protect against regional disasters."}, {"q": "What is the difference between a 'Business Continuity Plan' (BCP) and a 'Disaster Recovery Plan' (DRP)?", "a": "BCP focuses on maintaining overall business functions, whereas DRP focuses specifically on the technical recovery of IT systems."}, {"q": "What is an 'Attestation' in the context of compliance?", "a": "A formal statement or acknowledgment verifying that an organization meets specific security requirements."}, {"q": "What is the 'Exposure Factor' (EF) in quantitative risk analysis?", "a": "The percentage of loss a specific asset would suffer if a particular threat occurred."}, {"q": "If an asset is worth $\\$100,000$ and a threat would destroy $20\\%$ of it, what is the SLE?", "a": "$\\$20,000$"}, {"q": "If the SLE is $\\$5,000$ and the ARO is $0.5$, what is the ALE?", "a": "$\\$2,500$"}, {"q": "Which security awareness practice involves simulating deceptive emails to train employees on identifying threats?", "a": "Phishing Campaigns"}, {"q": "What is the goal of 'Root Cause Analysis' after an incident?", "a": "To identify the ultimate underlying cause of an event to prevent it from happening again."}, {"q": "What is 'E-discovery'?", "a": "The process of identifying, collecting, and producing electronically stored information (ESI) for legal proceedings."}, {"q": "Which term describes a court order that requires an organization to preserve all data related to a specific legal case?", "a": "Legal Hold"}, {"q": "Which governance structure is often a group of stakeholders that oversees risk management activities?", "a": "Audit Committee (or Risk Committee)"}, {"q": "What is the role of a 'Data Custodian'?", "a": "To manage the technical environment and implement security controls as directed by the data owner."}, {"q": "What is the 'Business Partners Agreement' (BPA)?", "a": "A document that outlines the relationship, expectations, and profit/loss sharing between two businesses."}, {"q": "What does 'Data Sovereignty' refer to?", "a": "The concept that data is subject to the laws and regulations of the country in which it is physically located."}, {"q": "Which incident response phase involves returning systems to their normal operational state and validating their functionality?", "a": "Recovery"}, {"q": "What is the 'Mean Time Between Failures' (MTBF)?", "a": "The average amount of time a repairable system or component functions before it fails."}, {"q": "What is the 'Mean Time to Repair' (MTTR)?", "a": "The average time it takes to restore a failed system or component to service."}, {"q": "In the context of risk response, what is an 'Exemption'?", "a": "A formal, documented approval to deviate from a security policy or standard for a specific period."}, {"q": "What is a 'Gap Analysis'?", "a": "The formal process of comparing an organization's current security posture to its desired target state."}, {"q": "Which agreement type is a formal but non-contractual letter of intent between organizations?", "a": "Memorandum of Understanding (MOU)"}, {"q": "Which agreement type specifically focuses on the legal relationship between business partners, including profit sharing?", "a": "Business Partners Agreement (BPA)"}, {"q": "Which NIST function includes activities like asset management and risk assessment?", "a": "Identify"}, {"q": "Which NIST function involves implementing safeguards like access controls and training?", "a": "Protect"}, {"q": "Which NIST function ensures that security events are spotted in a timely manner through monitoring?", "a": "Detect"}, {"q": "What is the commercial equivalent of the 'Confidential' government data label?", "a": "Private (or Internal)"}, {"q": "What is the commercial equivalent of the 'Unclassified' government data label?", "a": "Public"}, {"q": "Which term describes the process of ensuring that retired equipment has all data permanently removed?", "a": "Sanitization"}, {"q": "What is 'Asset Enumeration'?", "a": "The process of identifying and listing all hardware and software assets within an environment."}, {"q": "In a BIA, what is an 'Impact Analysis'?", "a": "Evaluating the specific consequences (financial, legal, reputational) of a business process failure."}, {"q": "What is the 'Annualized Rate of Occurrence' (ARO) for a threat that happens once every four years?", "a": "$0.25$"}, {"q": "What is the definition of 'Risk Threshold'?", "a": "The level at which a risk becomes unacceptable and requires immediate action or escalation."}, {"q": "Which type of risk appetite is characterized by a willingness to take more risks to achieve strategic goals?", "a": "Expansionary"}, {"q": "Which risk management strategy is chosen when an organization decides the cost of a control exceeds the value of the potential loss?", "a": "Risk Acceptance"}, {"q": "What is the consequence of 'Non-compliance' that involves a government-imposed penalty?", "a": "Fines (or Sanctions)"}, {"q": "What is 'Due Diligence' in vendor management?", "a": "The thorough investigation and verification of a third party's security and financial status before hiring them."}, {"q": "What is 'Due Care'?", "a": "The ongoing practice of maintaining and enforcing security controls to protect an organization's assets."}, {"q": "Which regulation requires a 72-hour breach notification to a supervisory authority?", "a": "GDPR"}, {"q": "What is 'Intellectual Property' (IP)?", "a": "High-value intangible assets like trade secrets, patents, and source code."}, {"q": "In a BCP, what is 'Parallel Processing' testing?", "a": "Running the disaster recovery site and the primary site simultaneously to ensure they produce identical results."}, {"q": "Which role in GDPR determines the purpose and means of processing personal data?", "a": "Data Controller"}, {"q": "Which role in GDPR processes personal data solely on behalf of the controller?", "a": "Data Processor"}, {"q": "What is a 'Service Level Agreement' (SLA) used for?", "a": "To legally define performance metrics like uptime and response time between a service provider and a customer."}, {"q": "Which document outlines the high-level tasks to be completed in a professional services engagement?", "a": "Statement of Work (SOW)"}, {"q": "What is the function of an 'NDA'?", "a": "To protect confidential information shared between two or more parties from unauthorized disclosure."}, {"q": "Which governance term describes a set of mandatory rules for hardware or software configuration?", "a": "Standard"}, {"q": "Which governance term describes the step-by-step actions taken to complete a task?", "a": "Procedure"}, {"q": "What is 'Risk Transfer'?", "a": "The strategy of shifting the potential financial loss from a risk to a third party, such as an insurance company."}, {"q": "What is 'Risk Mitigation'?", "a": "The strategy of implementing security controls to decrease the probability or impact of a threat."}, {"q": "What is 'Risk Avoidance'?", "a": "The strategy of stopping an activity or removing a system entirely to eliminate the associated risk."}, {"q": "In a BIA, what does 'RPO' focus on?", "a": "The acceptable age of data that must be recovered from backups."}],SK='ltr_'+DK,IV=[0,1,2,4,8,999];
+var st,sN,du,po,co,to,fl,al;
+function ls(){try{var r=localStorage.getItem(SK);if(r)return JSON.parse(r);}catch(e){}var s={};C.forEach(function(_,i){s[i]={box:1};}); return s;}
+function sv(){localStorage.setItem(SK,JSON.stringify(st));}
+function gd(){var d=[];Object.keys(st).forEach(function(i){var b=st[i].box;if(b===5)return;if(b===1||sN%IV[b]===0)d.push(+i);});for(var i=d.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=d[i];d[i]=d[j];d[j]=t;}return d;}
+function el(id){return document.getElementById('fc-'+DK+'-'+id);}
+var BC=['','#D4788F','#c75e00','#9B59FF','#6D60AD','#527A4E'],BB=['','rgba(212,120,143,.15)','rgba(199,94,0,.15)','rgba(155,89,255,.12)','rgba(109,96,173,.15)','rgba(82,122,78,.15)'];
+function rn(){if(po>=du.length){dn();return;}var i=du[po],b=st[i].box;el('q').textContent=C[i].q;el('a').textContent=C[i].a;var bi=el('boxind');bi.textContent='Box '+b;bi.style.background=BB[b];bi.style.color=BC[b];bi.style.border='1px solid '+BC[b]+'66';var c=el('card');if(c.classList.contains('flipped'))c.classList.remove('flipped');fl=false;el('ansbtn').style.display='none';el('flipbtn').style.display='block';el('counter').textContent='Card '+(po+1)+' of '+du.length;el('fill').style.width=(po/du.length*100)+'%';us();}
+window.fcFlip=window.fcFlip||function(dk){if(dk!==DK)return;if(!fl){el('card').classList.add('flipped');fl=true;el('ansbtn').style.display='flex';el('flipbtn').style.display='none';}};
+window.fcGrade=window.fcGrade||function(dk,g){if(dk!==DK)return;var i=du[po];to++;if(g!=='again')co++;if(g==='again')st[i].box=1;else if(g==='good')st[i].box=Math.min(st[i].box+1,5);else if(g==='easy')st[i].box=Math.min(st[i].box+2,5);sv();po++;rn();};
+window.fcSkip=window.fcSkip||function(dk){if(dk===DK){po++;rn();}};
+window.fcDue=window.fcDue||function(dk){if(dk!==DK)return;al=false;document.getElementById('fc-'+DK+'-btn-due').classList.add('active');document.getElementById('fc-'+DK+'-btn-all').classList.remove('active');window.fcRestart(dk);};
+window.fcAll=window.fcAll||function(dk){if(dk!==DK)return;al=true;document.getElementById('fc-'+DK+'-btn-all').classList.add('active');document.getElementById('fc-'+DK+'-btn-due').classList.remove('active');window.fcRestart(dk);};
+window.fcRestart=window.fcRestart||function(dk){if(dk!==DK)return;co=0;to=0;po=0;el('done').style.display='none';el('main').style.display='block';if(al){du=[...Array(C.length).keys()];for(var i=du.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=du[i];du[i]=du[j];du[j]=t;}}else du=gd();if(du.length===0){el('counter').textContent='All caught up!';el('card').style.display='none';el('flipbtn').style.display='none';el('empty').style.display='block';}else{el('card').style.display='block';el('flipbtn').style.display='block';el('empty').style.display='none';rn();}};
+window.fcResetAll=window.fcResetAll||function(dk){if(dk!==DK)return;if(!confirm('Reset all progress for this deck?'))return;localStorage.removeItem(SK);localStorage.removeItem(SK+'_s');sN=1;st=ls();al=false;document.getElementById('fc-'+DK+'-btn-due').classList.add('active');document.getElementById('fc-'+DK+'-btn-all').classList.remove('active');window.fcRestart(dk);};
+function dn(){el('main').style.display='none';el('done').style.display='block';var p=to>0?Math.round(co/to*100):0;el('score').textContent=p+'%';el('scoredet').textContent=co+' correct out of '+to+' answered';us();}
+function us(){var c=[0,0,0,0,0,0];Object.values(st).forEach(function(s){c[s.box]++;});el('total').textContent=C.length;el('learning').textContent=c[1]+c[2];el('reviewing').textContent=c[3]+c[4];el('mastered').textContent=c[5];for(var b=1;b<=5;b++){var e=document.getElementById('fc-'+DK+'-lb'+b);if(e)e.textContent=c[b];}}
+document.addEventListener('keydown',function(e){if(!el('main')||el('main').style.display==='none')return;if((e.key===' '||e.key==='f')&&!e.target.matches('input,textarea,button')){e.preventDefault();window.fcFlip(DK);}if(e.key==='1')window.fcGrade(DK,'again');if(e.key==='2')window.fcGrade(DK,'good');if(e.key==='3')window.fcGrade(DK,'easy');if(e.key==='s'&&!e.target.matches('input,textarea'))window.fcSkip(DK);});
+st=ls();sN=parseInt(localStorage.getItem(SK+'_s')||'0')+1;localStorage.setItem(SK+'_s',sN);co=0;to=0;po=0;fl=false;al=false;du=gd();if(du.length===0)du=[...Array(C.length).keys()];rn();us();
+})();
+
+</script>
+
+<script>
+
+(function(){
+var QID='rugrats-quiz',QS=[{"q": "Tommy decides what toys are built and sets the rules for how they're stored. Stu implements the storage system. The toy factory processes the orders. In data governance terms:", "choices": ["Tommy = custodian, Stu = controller, factory = owner", "Tommy = owner/controller, Stu = custodian, factory = processor", "Tommy = processor, Stu = owner, factory = custodian", "All three are data owners"], "answer_idx": 1, "explanation": "Data Owner (Tommy) = decides purpose and is accountable. Data Custodian (Stu) = implements storage/protection controls. Data Processor (factory) = processes data on behalf of the controller."}, {"q": "Angelica enforces the three-chocolate-chip standard with zero exceptions, regardless of context or business impact. She models:", "choices": ["Risk management", "Compliance enforcement / external auditor", "Change management", "Security awareness training"], "answer_idx": 1, "explanation": "Compliance enforcement = ensuring standards are followed exactly as written, with no exceptions. External auditors (Angelica) have authority to enforce and penalize violations regardless of circumstances."}, {"q": "Tommy's Acceptable Use Policy states: no spitting food, no climbing the TV, no pulling the dog's ears. An AUP primarily:", "choices": ["Quantifies financial risk", "Defines acceptable behavior for users of organizational resources", "Establishes encryption standards", "Documents incident response procedures"], "answer_idx": 1, "explanation": "An Acceptable Use Policy (AUP) defines what users are and are not allowed to do with organizational systems and resources \u2014 it's a behavioral policy, not a technical control."}, {"q": "Grandpa Lou is the outdated legacy caretaker system \u2014 can't be upgraded, frequently unreliable, but too embedded to replace. The primary security concern with legacy systems is:", "choices": ["They cost too much", "They cannot be patched and may contain unmitigable vulnerabilities", "They are too slow", "They require MFA"], "answer_idx": 1, "explanation": "Legacy systems often cannot receive security patches due to end-of-life support, creating unmitigable vulnerabilities. Compensating controls (network isolation, monitoring) are required since direct patching isn't possible."}];var cu=0,sc=0,an=false;
+function rn(){var q=QS[cu];document.getElementById('qm-'+QID).textContent='Question '+(cu+1)+' of '+QS.length;var h='<p style="font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:9px;line-height:1.5">'+q.q+'</p>';q.choices.forEach(function(c,i){h+='<label class="qz-c" id="qzc-'+QID+'-'+i+'"><input type="radio" name="qz'+QID+'" value="'+i+'" onchange="qSel(''+QID+'')"><span>'+c+'</span></label>';});if(q.explanation)h+='<div class="qz-exp" id="qze-'+QID+'">💡 '+q.explanation+'</div>';document.getElementById('qb-'+QID).innerHTML=h;an=false;document.getElementById('qs-'+QID).style.display='none';document.getElementById('qnx-'+QID).style.display='none';document.getElementById('qr-'+QID).style.display='none';}
+window.qSelAdv=window.qSelAdv||function(qid){if(qid!==QID||an)return;document.getElementById('qs-'+QID).style.display='inline-block';};
+window.qSubAdv=window.qSubAdv||function(qid){if(qid!==QID||an)return;var q=QS[cu];var sel=document.querySelector('input[name="qz'+QID+'"]:checked');if(!sel)return;an=true;var ch=+sel.value,ok=ch===q.answer_idx;if(ok)sc++;for(var i=0;i<q.choices.length;i++){var l=document.getElementById('qzc-'+QID+'-'+i);if(i===q.answer_idx)l.classList.add('qc');else if(i===ch&&!ok)l.classList.add('qw');var inp=l.querySelector('input');if(inp)inp.disabled=true;}var e=document.getElementById('qze-'+QID);if(e)e.style.display='block';document.getElementById('qs-'+QID).style.display='none';if(cu<QS.length-1)document.getElementById('qnx-'+QID).style.display='inline-block';else{document.getElementById('qr-'+QID).style.display='inline-block';fin();}};
+window.qNxtAdv=window.qNxtAdv||function(qid){if(qid!==QID)return;cu++;rn();};
+window.qRstAdv=window.qRstAdv||function(qid){if(qid!==QID)return;cu=0;sc=0;an=false;document.getElementById('qf-'+QID).style.display='none';document.getElementById('qb-'+QID).style.display='block';document.getElementById('qn-'+QID).style.display='flex';rn();};
+function fin(){document.getElementById('qb-'+QID).style.display='none';document.getElementById('qn-'+QID).style.display='none';document.getElementById('qf-'+QID).style.display='block';var p=Math.round(sc/QS.length*100);document.getElementById('qfs-'+QID).textContent=p+'%';document.getElementById('qfd-'+QID).textContent=sc+' of '+QS.length+' correct';}
+rn();
+})();
+
+</script>
+
+</body>
+</html>

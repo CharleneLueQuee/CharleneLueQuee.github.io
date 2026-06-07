@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Magic School Bus | Security+ Study Hub</title>
+<style>
+/* ═══ BRIGHT MAGIC SCHOOL BUS COLOR SCHEME ═══ */
+:root{
+  --bg:#FFF8E7;
+  --bg2:#FFFDE0;
+  --surface:#FFF3C0;
+  --nav:#E63946;
+  --accent:#E63946;
+  --accent2:#FFD600;
+  --accent3:#0288D1;
+  --text:#1A1200;
+  --muted:#7A5200;
+  --border:rgba(230,57,70,.25);
+  --card-bg:#FFFFFF;
+  --card-border:#FFD600;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.6;min-height:100vh}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+
+/* ═══ NAV ═══ */
+nav{background:var(--nav);display:flex;align-items:center;padding:10px 20px;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:200;box-shadow:0 3px 12px rgba(230,57,70,.4)}
+.tnl{color:rgba(255,255,255,.9);font-size:.78rem;padding:4px 10px;border-radius:6px;transition:background .2s;white-space:nowrap;text-decoration:none!important;font-weight:600}
+.tnl:hover{background:rgba(255,255,255,.2);color:#fff;text-decoration:none!important}
+.cnd{position:relative;display:inline-block}
+.cnb{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.4);color:#fff;font-size:.78rem;padding:5px 11px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap;font-weight:700}
+.cnb:hover{background:rgba(255,255,255,.3)}
+.cnm{display:none;position:absolute;top:calc(100% + 4px);left:0;background:#fff;border:2px solid var(--accent2);border-radius:10px;min-width:240px;z-index:300;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+.cnm a{display:block;padding:9px 14px;font-size:.79rem;color:#333;border-bottom:1px solid #f5f5f5;transition:background .15s;text-decoration:none!important;font-weight:500}
+.cnm a:last-child{border-bottom:none}
+.cnm a:hover{background:#FFF8E7;color:var(--accent)}
+.cnm a.active-page{color:var(--accent);font-weight:800;background:#FFF0F0}
+
+/* ═══ JUMP BAR ═══ */
+.jbar{background:var(--accent2);border-bottom:3px solid var(--accent);padding:8px 16px;display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.jbtn{background:#fff;border:2px solid var(--accent);color:var(--accent);padding:4px 12px;border-radius:16px;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none!important;display:inline-block}
+.jbtn:hover{background:var(--accent);color:#fff}
+
+/* ═══ SECTIONS ═══ */
+.ps{padding:30px 20px;max-width:960px;margin:0 auto}
+.sec-hd h2{font-size:1.25rem;font-weight:900;color:var(--accent);display:flex;align-items:center;gap:8px;margin-bottom:3px}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:11px}
+
+/* ═══ CARDS ═══ */
+.mcard{background:var(--card-bg);border:2px solid var(--card-border);border-left:5px solid var(--accent);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:0 2px 8px rgba(230,57,70,.1)}
+.mcard-title{font-size:.68rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--accent2);background:var(--accent);display:inline-block;padding:2px 8px;border-radius:4px;margin-bottom:4px}
+.mcard-role{font-size:.67rem;color:var(--muted);margin-bottom:6px;font-weight:600}
+.mcard p{font-size:.82rem;color:var(--text);line-height:1.58}
+
+/* ═══ TOPIC TAGS ═══ */
+.tag{display:inline-block;background:var(--accent);color:#fff;padding:3px 10px;border-radius:12px;font-size:.72rem;font-weight:700;margin:2px}
+.tag-blue{background:var(--accent3)}
+.tag-yellow{background:#F4A400;color:#fff}
+.tag-green{background:#2E7D32;color:#fff}
+.tag-purple{background:#6A0DAD;color:#fff}
+
+/* ═══ FLASHCARDS ═══ */
+.fc-wrap{background:var(--card-bg);border:2px solid var(--card-border);border-radius:14px;padding:18px;margin-bottom:20px;box-shadow:0 2px 10px rgba(255,214,0,.3)}
+.flashcard{perspective:1200px;cursor:pointer;height:190px;margin-bottom:10px}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flashcard.flipped .card-inner{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:15px;text-align:center;flex-direction:column;border:2px solid}
+.card-front{background:#FFF8E7;border-color:var(--accent)}
+.card-front::before{content:'❓ QUESTION';position:absolute;top:8px;left:10px;font-size:.58rem;letter-spacing:1.5px;color:var(--muted);font-weight:700}
+.card-back{transform:rotateY(180deg);background:var(--accent);border-color:var(--accent)}
+.card-back::before{content:'✅ ANSWER';position:absolute;top:8px;left:10px;font-size:.58rem;letter-spacing:1.5px;font-weight:700;color:#fff}
+.card-front p{font-size:.85rem;line-height:1.55;color:var(--text)}
+.card-back p{font-size:.85rem;line-height:1.55;color:#fff;font-weight:600}
+.card-hint{position:absolute;bottom:6px;font-size:.6rem;color:var(--muted)}
+.card-box-indicator{position:absolute;top:8px;right:10px;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:5px}
+.card-counter{text-align:center;font-size:.72rem;color:var(--muted);margin-bottom:4px}
+.progress-bar{height:6px;background:rgba(230,57,70,.15);border-radius:3px;overflow:hidden;margin-bottom:9px}
+.progress-fill{height:100%;border-radius:3px;transition:width .35s;background:var(--accent)}
+.fc-lrow{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin:10px 0 8px}
+.fc-lbox{background:var(--surface);border:2px solid var(--card-border);border-radius:7px;padding:5px 8px;font-size:.67rem;text-align:center;min-width:56px;color:var(--muted)}
+.fc-lbox span{display:block;font-size:1rem;font-weight:800;line-height:1.2}
+.fc-l1 span{color:#E63946}.fc-l2 span{color:#FF8F00}.fc-l3 span{color:#0288D1}.fc-l4 span{color:#6A0DAD}.fc-l5 span{color:#2E7D32}
+.stats-bar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:9px}
+.stat-box{background:var(--surface);border:2px solid var(--card-border);border-radius:7px;padding:5px 11px;text-align:center;min-width:60px}
+.num{font-size:1.05rem;font-weight:800}.lbl{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.toolbar{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-bottom:9px}
+.btn-sm{padding:5px 11px;border-radius:6px;border:2px solid var(--border);cursor:pointer;font-size:.72rem;font-weight:700;background:var(--surface);color:var(--muted);font-family:inherit;transition:all .2s}
+.btn-sm:hover{border-color:var(--accent);color:var(--accent);background:#fff}
+.btn-sm.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.card-controls{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
+.answer-btns{display:none}
+.btn{padding:7px 14px;border-radius:7px;border:none;cursor:pointer;font-size:.8rem;font-weight:700;transition:all .2s;font-family:inherit}
+.btn:hover{transform:translateY(-1px)}
+.btn-again{background:rgba(230,57,70,.12);color:#E63946;border:2px solid rgba(230,57,70,.4)}
+.btn-good{background:rgba(46,125,50,.12);color:#2E7D32;border:2px solid rgba(46,125,50,.4)}
+.btn-easy{background:rgba(2,136,209,.12);color:#0288D1;border:2px solid rgba(2,136,209,.4)}
+.btn-skip{background:var(--surface);color:var(--muted);border:2px solid var(--border)}
+.btn-flip{padding:7px 18px;border-radius:7px;border:none;cursor:pointer;font-size:.82rem;font-weight:700;transition:all .2s;font-family:inherit;background:var(--accent);color:#fff}
+.done-screen{display:none;text-align:center;padding:22px 10px}
+.score-big{font-size:2.2rem;font-weight:900;line-height:1;margin-bottom:3px;color:var(--accent)}
+
+/* ═══ QUIZ ═══ */
+.quiz-wrap{background:var(--card-bg);border:2px solid var(--card-border);border-radius:14px;padding:18px;margin-bottom:20px;box-shadow:0 2px 10px rgba(255,214,0,.3)}
+.qz-c{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:8px;border:2px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s;font-size:.82rem;color:var(--text);line-height:1.5;margin-bottom:6px}
+.qz-c:hover{border-color:var(--accent);background:#FFF0F0}
+.qz-c.qc{border-color:#2E7D32;background:rgba(46,125,50,.1);color:#2E7D32;font-weight:700}
+.qz-c.qw{border-color:#E63946;background:rgba(230,57,70,.1);color:#E63946;font-weight:700}
+.qz-exp{margin-top:7px;background:#FFF8E7;border-left:4px solid var(--accent2);border-radius:0 8px 8px 0;padding:8px 12px;font-size:.76rem;color:var(--muted);line-height:1.6;display:none}
+
+/* ═══ PORT GAME ═══ */
+.port-game{background:var(--card-bg);border:3px solid var(--accent2);border-radius:16px;padding:20px;margin-bottom:20px;box-shadow:0 4px 16px rgba(255,214,0,.3)}
+.port-game h3{font-size:1rem;font-weight:900;color:var(--accent);margin-bottom:12px}
+.port-board{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:8px;margin-bottom:14px}
+.port-card-game{background:var(--surface);border:2px solid var(--card-border);border-radius:10px;padding:10px 8px;text-align:center;cursor:pointer;transition:all .25s;font-size:.8rem;font-weight:700;color:var(--text);min-height:70px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px}
+.port-card-game:hover{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 4px 12px rgba(230,57,70,.2)}
+.port-card-game.matched{background:rgba(46,125,50,.15);border-color:#2E7D32;color:#2E7D32;cursor:default}
+.port-card-game.selected{border-color:var(--accent);background:#FFF0F0;transform:scale(1.03)}
+.port-card-game.wrong{border-color:#E63946;background:rgba(230,57,70,.15);animation:shake .3s ease}
+.port-number{font-size:1.3rem;font-weight:900;color:var(--accent)}
+.port-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:10px}
+.port-score-bar{background:var(--surface);border:2px solid var(--card-border);border-radius:8px;padding:6px 14px;font-size:.8rem;font-weight:700;display:flex;gap:14px}
+.port-score-bar span{color:var(--accent)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* ═══ ACCORDION ═══ */
+.acc-item{background:var(--card-bg);border:2px solid var(--card-border);border-radius:12px;margin-bottom:8px;overflow:hidden}
+.acc-hd{padding:12px 16px;cursor:pointer;font-weight:800;font-size:.9rem;color:var(--text);display:flex;align-items:center;justify-content:space-between;background:var(--surface);transition:background .2s}
+.acc-hd:hover{background:var(--accent2);color:var(--text)}
+.acc-hd.open{background:var(--accent);color:#fff}
+.acc-body{display:none;padding:14px 16px;font-size:.82rem;color:var(--muted);line-height:1.65}
+.acc-body.open{display:block}
+
+/* ═══ SOUND TOGGLE ═══ */
+#snd-toggle{position:fixed;bottom:20px;right:20px;background:var(--accent);border:none;border-radius:50%;width:44px;height:44px;cursor:pointer;font-size:1.2rem;z-index:500;box-shadow:0 4px 14px rgba(230,57,70,.4);transition:all .2s;display:flex;align-items:center;justify-content:center}
+#snd-toggle:hover{transform:scale(1.1)}
+
+/* ═══ PARTICLES ═══ */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;font-size:1.4rem;opacity:.12;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(100vh) rotate(0deg);opacity:.12}100%{transform:translateY(-100px) rotate(360deg);opacity:0}}
+
+/* ═══ CONFETTI ═══ */
+.confetti-piece{position:fixed;width:10px;height:10px;border-radius:2px;animation:confettiFall 1.5s ease-in forwards;z-index:9999}
+@keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* ═══ STUDY NOTES ═══ */
+.note-card{background:var(--card-bg);border-left:5px solid var(--accent2);border:2px solid var(--card-border);border-left:5px solid var(--accent);border-radius:0 12px 12px 0;padding:12px 16px;margin-bottom:10px}
+.note-card h4{font-size:.84rem;color:var(--accent);margin-bottom:5px;font-weight:800}
+.note-card div{font-size:.79rem;color:var(--muted);line-height:1.65}
+
+/* ═══ LINKS ═══ */
+.link-card{background:var(--card-bg);border:2px solid var(--card-border);border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:9px;transition:all .2s;text-decoration:none;color:inherit}
+.link-card:hover{border-color:var(--accent);transform:translateY(-1px);box-shadow:0 4px 12px rgba(230,57,70,.15);text-decoration:none}
+
+/* ═══ FOOTER ═══ */
+footer{background:var(--accent);padding:24px 20px;text-align:center;color:rgba(255,255,255,.9);font-size:.73rem;margin-top:48px}
+footer a{color:#FFD600;font-weight:700}
+</style>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<script>
+/* ── PARTICLES ── */
+(function(){
+  var p=document.getElementById('particles'),e=['🚌','🔬','⚗️','🧪','🌍','⚡'];
+  for(var i=0;i<18;i++){
+    var d=document.createElement('div');
+    d.className='particle';
+    d.textContent=e[Math.floor(Math.random()*e.length)];
+    d.style.left=Math.random()*100+'%';
+    d.style.animationDuration=(12+Math.random()*20)+'s';
+    d.style.animationDelay=Math.random()*20+'s';
+    p.appendChild(d);
+  }
+})();
+
+/* ── NAV DROPDOWN ── */
+function toggleCN(btn){var m=btn.nextElementSibling;m.style.display=m.style.display==='block'?'none':'block';}
+document.addEventListener('click',function(e){if(!e.target.closest('.cnd'))document.querySelectorAll('.cnm').forEach(function(m){m.style.display='none';});});
+window.addEventListener('DOMContentLoaded',function(){
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1);var el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}});
+  });
+});
+
+/* ── SOUND ENGINE (embedded tones) ── */
+var SND_ON=false;
+var AudioCtx=window.AudioContext||window.webkitAudioContext;
+var actx=null;
+function getCtx(){if(!actx)actx=new AudioCtx();return actx;}
+function playTone(freq,dur,type,vol){
+  if(!SND_ON)return;
+  try{
+    var c=getCtx(),o=c.createOscillator(),g=c.createGain();
+    o.connect(g);g.connect(c.destination);
+    o.type=type||'sine';o.frequency.value=freq;
+    g.gain.setValueAtTime(vol||0.18,c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dur);
+    o.start();o.stop(c.currentTime+dur);
+  }catch(e){}
+}
+function sndCorrect(){playTone(523,.1,'sine',.2);setTimeout(function(){playTone(659,.1,'sine',.2);},110);setTimeout(function(){playTone(784,.2,'sine',.2);},220);}
+function sndWrong(){playTone(220,.15,'sawtooth',.15);setTimeout(function(){playTone(196,.25,'sawtooth',.12);},160);}
+function sndFlip(){playTone(440,.08,'triangle',.1);}
+function sndVictory(){
+  var notes=[523,587,659,698,784,880];
+  notes.forEach(function(n,i){setTimeout(function(){playTone(n,.18,'sine',.2);},i*90);});
+  setTimeout(function(){playTone(1047,.5,'sine',.25);},notes.length*90);
+}
+function sndBusHonk(){playTone(440,.12,'square',.22);setTimeout(function(){playTone(392,.2,'square',.18);},130);}
+
+document.getElementById('snd-toggle').addEventListener('click',function(){
+  SND_ON=!SND_ON;
+  this.textContent=SND_ON?'🔊':'🔇';
+  if(SND_ON){try{getCtx().resume();}catch(e){} sndBusHonk();}
+});
+
+/* ── CONFETTI ── */
+function launchConfetti(){
+  var colors=['#E63946','#FFD600','#0288D1','#2E7D32','#FF8F00','#6A0DAD'];
+  for(var i=0;i<80;i++){
+    var el=document.createElement('div');
+    el.className='confetti-piece';
+    el.style.left=Math.random()*100+'vw';
+    el.style.top='-10px';
+    el.style.background=colors[Math.floor(Math.random()*colors.length)];
+    el.style.animationDelay=Math.random()*1+'s';
+    el.style.width=(6+Math.random()*10)+'px';
+    el.style.height=(6+Math.random()*10)+'px';
+    document.body.appendChild(el);
+    setTimeout(function(e){return function(){if(e.parentNode)e.parentNode.removeChild(e);};}(el),2500);
+  }
+  sndVictory();
+}
+
+/* ── ACCORDION ── */
+function toggleAcc(el){
+  var body=el.nextElementSibling;
+  var isOpen=el.classList.contains('open');
+  document.querySelectorAll('.acc-hd.open').forEach(function(h){
+    h.classList.remove('open');
+    if(h.nextElementSibling)h.nextElementSibling.classList.remove('open');
+  });
+  if(!isOpen){el.classList.add('open');body.classList.add('open');}
+}
+</script>
+</head>
+<body>
+
+<!-- ═══ SOUND TOGGLE ═══ -->
+<button id="snd-toggle" title="Toggle Sound">🔇</button>
+
+<!-- ═══ NAV ═══ -->
+<nav>
+  <div style="font-size:.92rem;font-weight:900;color:#FFD600;white-space:nowrap">🚌 <span style="color:#fff;font-weight:400">Security+ Hub</span></div>
+  <div style="display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-left:auto">
+    <a href="https://charleneluequeue.github.io/" class="tnl">🏠 Portfolio</a>
+    <a href="security-notes.html" class="tnl">📚 Study Hub</a>
+    <a href="security-notes.html#flashcards" class="tnl">🃏 Flashcards</a>
+    <div class="cnd">
+      <button class="cnb" onclick="toggleCN(this)">🎭 All Cartoons ▾</button>
+      <div class="cnm">
+        <a href="cartoon-spongebob.html">🧽 SpongeBob SquarePants</a>
+        <a href="cartoon-ben10.html">⌚ Ben 10</a>
+        <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+        <a href="cartoon-avatar.html">🌊 Avatar: The Last Airbender</a>
+        <a href="cartoon-knd.html">🏠 Codename: Kids Next Door</a>
+        <a href="cartoon-xmen.html">⚡ X-Men '97</a>
+        <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+        <a href="cartoon-futurama.html">🤖 Futurama</a>
+        <a href="cartoon-danny.html">👻 Danny Phantom</a>
+        <a href="cartoon-fairyodd.html">🌟 The Fairly OddParents</a>
+        <a href="cartoon-magicbus.html" class="active-page">🚌 The Magic School Bus</a>
+        <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+        <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+        <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+        <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<div style="background:linear-gradient(135deg,#E63946 0%,#FF8F00 60%,#FFD600 100%);padding:40px 20px 32px;text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;font-size:9rem;opacity:.08;top:-10px;right:-20px;pointer-events:none">🚌</div>
+  <div style="position:absolute;font-size:5rem;opacity:.07;bottom:-10px;left:10px;pointer-events:none">🔬</div>
+  <div style="display:inline-block;background:#fff;color:var(--accent);padding:4px 16px;border-radius:20px;font-size:.72rem;font-weight:900;letter-spacing:1px;margin-bottom:14px;box-shadow:0 2px 8px rgba(0,0,0,.15)">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <div style="font-size:4rem;margin-bottom:10px;filter:drop-shadow(0 4px 8px rgba(0,0,0,.2))">🚌</div>
+  <h1 style="font-size:1.6rem;font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.25);margin-bottom:8px">The Magic School Bus</h1>
+  <p style="font-size:.9rem;color:rgba(255,255,255,.95);max-width:660px;margin:0 auto;line-height:1.7;font-weight:500">Take chances, make mistakes, get messy — and <em>pass your Security+ exam</em>. Ms. Frizzle teaches risk appetite, Arnold teaches conservative tolerance, Liz teaches SOAR. Every field trip is a Business Impact Analysis. Seatbelts everyone — let's ride!</p>
+</div>
+
+<!-- ═══ JUMP BAR ═══ -->
+<div class="jbar">
+  <a href="#topics" class="jbtn">📋 Topics</a>
+  <a href="#characters" class="jbtn">🎭 Characters</a>
+  <a href="#analogies" class="jbtn">🧩 Analogies</a>
+  <a href="#notes" class="jbtn">📖 Study Notes</a>
+  <a href="#domain-notes" class="jbtn">🎓 Domains</a>
+  <a href="#ir" class="jbtn">🚨 IR Lifecycle</a>
+  <a href="#flashcards" class="jbtn">🃏 Flashcards</a>
+  <a href="#portgame" class="jbtn">🎮 Port Game</a>
+  <a href="#quiz" class="jbtn">🧠 Quiz</a>
+  <a href="#links" class="jbtn">🔗 Links</a>
+</div>
+
+<!-- ═══ TOPICS ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="topics">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>📋 Topics Covered</h2><p style="color:var(--muted);font-size:.82rem">All 5 CompTIA Security+ SY0-701 domains explored through The Magic School Bus.</p></div>
+  <div style="display:flex;flex-wrap:wrap;gap:6px">
+    <span class="tag">Risk Identification</span><span class="tag">Risk Assessment</span><span class="tag">SLE · ALE · ARO</span><span class="tag">Risk Appetite</span><span class="tag">Risk Tolerance</span><span class="tag">BIA · RTO · RPO</span><span class="tag">MTTR · MTBF</span><span class="tag tag-blue">CIA Triad</span><span class="tag tag-blue">Cryptography</span><span class="tag tag-blue">Zero Trust</span><span class="tag tag-blue">PKI</span><span class="tag tag-yellow">Threat Actors</span><span class="tag tag-yellow">Social Engineering</span><span class="tag tag-yellow">Malware</span><span class="tag tag-yellow">Zero-Day</span><span class="tag tag-green">Network Segmentation</span><span class="tag tag-green">Firewalls · IDS/IPS</span><span class="tag tag-green">VPN · SASE</span><span class="tag tag-green">Data Protection</span><span class="tag tag-purple">SIEM · SOAR · EDR</span><span class="tag tag-purple">IAM · MFA</span><span class="tag tag-purple">Incident Response</span><span class="tag tag-purple">Digital Forensics</span>
+  </div>
+</div>
+
+<!-- ═══ CHARACTER MAPPING ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="characters">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>🎭 Character Security Mapping</h2><p style="color:var(--muted);font-size:.82rem">Each character embodies a real security role or concept.</p></div>
+  <div class="cgrid">
+    <div class="mcard"><div class="mcard-title">Ms. Frizzle</div><div class="mcard-role">≈ CISO / Expansionary Risk Appetite</div><p>Drives into volcanoes and shrinks into bloodstreams. She embodies an expansionary risk appetite — accepting extreme risk for maximum innovation and competitive learning. Every CISO must balance bold exploration with responsible governance.</p></div>
+    <div class="mcard"><div class="mcard-title">The Magic School Bus</div><div class="mcard-role">≈ Risk Register / BCP Platform</div><p>Tracks all field trips, maintains emergency protocols, and always gets everyone home. The Bus is your Business Continuity Plan with built-in automated failover — always operational, always resilient.</p></div>
+    <div class="mcard"><div class="mcard-title">Arnold</div><div class="mcard-role">≈ Conservative Risk Tolerance</div><p>Never wanted to go, always the voice of "we should not be doing this." Arnold models conservative risk tolerance — demands quantified risk assessment, documented mitigations, and board approval before any field trip begins.</p></div>
+    <div class="mcard"><div class="mcard-title">Liz the Lizard</div><div class="mcard-role">≈ SOAR Platform</div><p>Automatically activates Bus systems, triggers emergency protocols, and initiates recovery without waiting for human instruction. Liz is your Security Orchestration, Automation, and Response — zero hesitation, zero lag.</p></div>
+    <div class="mcard"><div class="mcard-title">Wanda</div><div class="mcard-role">≈ SOC Analyst / SIEM Operator</div><p>Always watching, always cataloging data and observations. Wanda monitors all systems, aggregates logs from across the field trip, and alerts the team when something anomalous is detected in the environment.</p></div>
+    <div class="mcard"><div class="mcard-title">Carlos</div><div class="mcard-role">≈ Threat Intelligence Analyst</div><p>Analyzes threats, explains attack methods in terrible puns, and provides contextual threat intelligence. Carlos maps indicators of compromise to known threat actors and keeps the team informed about evolving attack techniques.</p></div>
+    <div class="mcard"><div class="mcard-title">Ralphie</div><div class="mcard-role">≈ Vulnerability Scanner / Pen Tester</div><p>Tests every system — usually by breaking something. Ralphie identifies vulnerabilities through active scanning, accidental exploitation, and creative attack simulation. Models the offensive security mindset needed for red team operations.</p></div>
+    <div class="mcard"><div class="mcard-title">Dorothy Ann</div><div class="mcard-role">≈ Compliance Officer / Policy Manager</div><p>Always checking "according to my research" — cross-referencing policies, standards, and documented procedures. Dorothy Ann ensures every field trip meets regulatory requirements, maintains audit trails, and enforces governance frameworks.</p></div>
+  </div>
+</div>
+
+<!-- ═══ ANALOGIES ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="analogies">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>🧩 Deep-Dive Analogies</h2><p style="color:var(--muted);font-size:.82rem">Show scenarios mapped to real security concepts — perfect for exam memory.</p></div>
+  <div class="mcard"><div class="mcard-title">Driving Into a Volcano</div><div class="mcard-role">→ Quantitative Risk Analysis (ALE/SLE)</div><p>The Bus is worth $500K. A volcano incident destroys 60% of it (EF = 0.6), so SLE = $300K. It happens twice per year (ARO = 2), so ALE = $600K/yr. Ms. Frizzle decides the educational ROI exceeds $600K. That's expansionary risk appetite backed by a real quantitative analysis — exactly what the exam tests.</p></div>
+  <div class="mcard"><div class="mcard-title">Getting Stuck in a Cell</div><div class="mcard-role">→ Incident Response Lifecycle</div><p>When the Bus shrinks to cell-size, the class triggers full IR: Preparation (emergency protocols loaded), Detection (Arnold spots the anomaly), Containment (seal the Bus, prevent further miniaturization), Eradication (reverse the shrink ray), Recovery (return to normal size), Lessons Learned (update the "no shrinking near DNA" runbook).</p></div>
+  <div class="mcard"><div class="mcard-title">Ms. Frizzle's Rules for Field Trips</div><div class="mcard-role">→ Security Governance (Policies, Standards, Procedures)</div><p>School policy says "students must be safe." Ms. Frizzle's field trip standards say "Bus must have safety protocols active." The specific procedures are Liz's pre-flight checklist. Policy = high-level intent. Standards = mandatory rules. Procedures = step-by-step actions. Dorothy Ann enforces all three.</p></div>
+  <div class="mcard"><div class="mcard-title">Liz Auto-Piloting the Bus</div><div class="mcard-role">→ SOAR + Zero Trust Architecture</div><p>Liz never trusts any external signal without verification — even Ms. Frizzle's voice command is authenticated. She operates on least privilege (only the minimum controls needed), triggers automated playbooks without human delay, and logs every action for chain-of-custody review afterward. Liz is SOAR + Zero Trust in one lizard.</p></div>
+</div>
+</div>
+
+<!-- ═══ STUDY NOTES ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="notes">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>📖 Study Notes</h2><p style="color:var(--muted);font-size:.82rem">High-frequency exam topics with Magic School Bus memory hooks.</p></div>
+  <div class="note-card"><h4>📊 Risk Formulas (Domain 5.2)</h4><div><strong>SLE = Asset Value × Exposure Factor</strong> — Bus ($500K) × lava damage (60%) = SLE $300K<br><strong>ALE = SLE × ARO</strong> — $300K × 2 lava trips/yr = ALE $600K<br><strong>ARO</strong> = annual rate of occurrence (how often Ms. Frizzle drives into lava). <em>Exam tip: ALE always involves multiplication, never addition.</em></div></div>
+  <div class="note-card"><h4>⚡ Risk Strategies (Domain 5.2)</h4><div><strong>Transfer:</strong> Buy field-trip insurance (shift financial risk to insurer).<br><strong>Accept:</strong> Ms. Frizzle accepts minor shrinkage risk — formally documented.<br><strong>Avoid:</strong> Never go into the black hole (eliminate the activity).<br><strong>Mitigate:</strong> Add seatbelts, helmets, and Liz autopilot (reduce likelihood/impact).</div></div>
+  <div class="note-card"><h4>🏢 Disaster Recovery Site Types (Domain 3.4)</h4><div><strong>Hot site:</strong> Fully operational backup Bus, ready in minutes — highest cost, lowest RTO.<br><strong>Warm site:</strong> Bus in storage, needs data restoration — moderate cost.<br><strong>Cold site:</strong> Empty garage, rebuild everything — lowest cost, highest RTO.<br><strong>Geographic dispersion:</strong> Buses on different continents (protects against regional disasters).</div></div>
+  <div class="note-card"><h4>📋 BIA Key Metrics (Domain 5.2)</h4><div><strong>RTO:</strong> Max downtime before critical harm (Arnold's 2-hour deadline).<br><strong>RPO:</strong> Max data loss by age (how many minutes of lesson notes can we lose?).<br><strong>MTTR:</strong> Average repair time (45 min to fix the Bus engine in the field).<br><strong>MTBF:</strong> Average time between failures (Bus breaks every 3 field trips).</div></div>
+  <div class="note-card"><h4>🔐 Incident Response Phases (Domain 4.8)</h4><div><strong>Preparation → Detection → Analysis → Containment → Eradication → Recovery → Lessons Learned.</strong><br>Memory: <em>Pd-DACREL</em>. The Bus pre-trip checklist = Preparation. Arnold spotting trouble = Detection. Containing the Bus inside a cell = Containment. Reversing the shrink ray = Eradication. Flying home = Recovery. Updating the runbook = Lessons Learned.</div></div>
+</div>
+
+<!-- ═══ DOMAIN NOTES ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="domain-notes">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>🎓 CompTIA Domain Notes</h2><p style="color:var(--muted);font-size:.82rem">Click each domain to expand objective-level notes.</p></div>
+  <div class="acc-item"><div class="acc-hd" onclick="toggleAcc(this)">📘 Domain 1 — General Security Concepts (12%) <span>▾</span></div>
+  <div class="acc-body"><strong>CIA Triad:</strong> Confidentiality (secret field-trip destinations — Arnold shouldn't know in advance), Integrity (Bus navigation data can't be tampered), Availability (Bus must fly when needed).<br><br><strong>Non-repudiation:</strong> Ms. Frizzle's signed permission slips — digital signatures prove she authorized the trip.<br><br><strong>Zero Trust:</strong> Liz verifies every command — even from Ms. Frizzle — before executing. No implicit trust, constant verification.<br><br><strong>Cryptography exam hits:</strong> AES (symmetric), RSA (asymmetric), PKI (certificate authority = the school district), Hashing = verifying lesson notes weren't altered, Salting = adding a student-specific prefix before hashing passwords.</div></div>
+
+  <div class="acc-item"><div class="acc-hd" onclick="toggleAcc(this)">📙 Domain 2 — Threats, Vulnerabilities & Mitigations (22%) <span>▾</span></div>
+  <div class="acc-body"><strong>Threat Actors:</strong> Nation-state (rival alien civilization), Insider threat (a student pressing the wrong button), Hacktivist (angry parent who disagrees with the curriculum).<br><br><strong>Social Engineering:</strong> Someone convincing Arnold to press a button he shouldn't — phishing (fake permission slip), vishing (phone call pretending to be the principal).<br><br><strong>Zero-Day:</strong> A flaw in the Bus's transformation system nobody knew about until it spontaneously turned into a comet.<br><br><strong>Mitigation Techniques:</strong> Patching (Bus firmware updates), Least privilege (only Ms. Frizzle controls the destination), Segmentation (cockpit separated from passenger cabin), Hardening (disable unused Bus features).</div></div>
+
+  <div class="acc-item"><div class="acc-hd" onclick="toggleAcc(this)">📗 Domain 3 — Security Architecture (18%) <span>▾</span></div>
+  <div class="acc-body"><strong>Network Segmentation:</strong> Bus cockpit (admin zone), passenger area (user zone), engine room (OT zone), transformation systems (IoT zone) — each is isolated to limit blast radius.<br><br><strong>Firewall Types:</strong> WAF protects the Bus's web interface, NGFW inspects all traffic at Layer 7, stateful firewall tracks Bus state changes.<br><br><strong>VPN/SASE:</strong> When the Bus goes to space, all communication tunnels back through an encrypted IPSec VPN. SASE merges networking and security for distributed field trips.<br><br><strong>Resilience (3.4):</strong> High availability (Liz backup pilot), Load balancing (two buses for large trips), Backups (lesson notes replicated every 10 min), UPS (solar backup power on the Bus).</div></div>
+
+  <div class="acc-item"><div class="acc-hd" onclick="toggleAcc(this)">📕 Domain 4 — Security Operations (28%) <span>▾</span></div>
+  <div class="acc-body"><strong>SIEM:</strong> Wanda aggregates logs from all Bus systems — engine, navigation, transformation, life support — and correlates events to detect anomalies in real time.<br><br><strong>EDR/XDR:</strong> Continuous monitoring of each student's wristband device, alerting on unexpected behavior (Carlos trying to jam the signal).<br><br><strong>IAM:</strong> Multi-factor auth to start the Bus (something you know: PIN; something you have: Ms. Frizzle's key; something you are: voice biometric). RBAC: only Ms. Frizzle can set the destination.<br><br><strong>Vulnerability Management (4.3):</strong> CVSS scoring applied to Bus vulnerabilities, CVE tracking for known transformation bugs, credentialed scans performed by Ralph on Bus systems nightly.</div></div>
+
+  <div class="acc-item"><div class="acc-hd" onclick="toggleAcc(this)">📓 Domain 5 — Security Program Management (20%) <span>▾</span></div>
+  <div class="acc-body"><strong>Risk Formulas:</strong> SLE = AV × EF | ALE = SLE × ARO. Bus worth $500K × 60% lava destruction × 2 trips/yr = ALE $600K.<br><br><strong>Governance:</strong> Policy (Bus must be safe), Standards (Bus systems must meet NIST baselines), Procedures (Liz's pre-flight checklist), Guidelines (recommended seat assignments for space trips).<br><br><strong>Compliance:</strong> GDPR (student field-trip data), PCI DSS (if trip payments are made), HIPAA (medical info for shrink-into-bloodstream trips). 72-hour breach notification applies to student data exposure.<br><br><strong>Third-Party Risk:</strong> Vendor assessment for Bus component suppliers (right-to-audit clause in all contracts), SLA requires 99.99% Bus availability, NDA covers all field-trip discoveries.</div></div>
+</div>
+
+<!-- ═══ INCIDENT RESPONSE LIFECYCLE ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="ir">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>🚨 Incident Response Lifecycle</h2><p style="color:var(--muted);font-size:.82rem">Domain 4.8 — When the Bus breaks down in outer space…</p></div>
+  <div class="cgrid">
+    <div style="background:#fff;border:2px solid var(--accent);border-radius:12px;padding:14px"><div style="font-size:.65rem;font-weight:800;letter-spacing:1px;color:#fff;background:var(--accent);display:inline-block;padding:2px 8px;border-radius:4px;margin-bottom:6px">PHASE 1 · D4.8</div><h3 style="font-size:.88rem;font-weight:800;color:var(--text);margin-bottom:5px">Preparation</h3><p style="font-size:.77rem;color:var(--muted)">Pre-trip: emergency protocols loaded, Liz trained, runbooks updated, tabletop exercise with the class. Playbooks cover lava, space, and cellular-level incidents. Team is ready before anything happens.</p></div>
+    <div style="background:#fff;border:2px solid var(--accent2);border-radius:12px;padding:14px"><div style="font-size:.65rem;font-weight:800;letter-spacing:1px;color:var(--text);background:var(--accent2);display:inline-block;padding:2px 8px;border-radius:4px;margin-bottom:6px">PHASE 2 · D4.8</div><h3 style="font-size:.88rem;font-weight:800;color:var(--text);margin-bottom:5px">Detection & Analysis</h3><p style="font-size:.77rem;color:var(--muted)">Arnold shouts "I knew I should have stayed home!" — anomaly detected! Wanda pulls SIEM logs, Carlos analyzes the threat vector, Dorothy Ann cross-references the CVE database. Root cause identified.</p></div>
+    <div style="background:#fff;border:2px solid #0288D1;border-radius:12px;padding:14px"><div style="font-size:.65rem;font-weight:800;letter-spacing:1px;color:#fff;background:#0288D1;display:inline-block;padding:2px 8px;border-radius:4px;margin-bottom:6px">PHASE 3 · D4.8</div><h3 style="font-size:.88rem;font-weight:800;color:var(--text);margin-bottom:5px">Containment</h3><p style="font-size:.77rem;color:var(--muted)">Liz seals the Bus, activates isolation mode, and prevents further spread. Short-term containment (stop the shrinking) followed by long-term containment (stable orbit until eradication is complete).</p></div>
+    <div style="background:#fff;border:2px solid #2E7D32;border-radius:12px;padding:14px"><div style="font-size:.65rem;font-weight:800;letter-spacing:1px;color:#fff;background:#2E7D32;display:inline-block;padding:2px 8px;border-radius:4px;margin-bottom:6px">PHASE 4 · D4.8</div><h3 style="font-size:.88rem;font-weight:800;color:var(--text);margin-bottom:5px">Eradication & Recovery</h3><p style="font-size:.77rem;color:var(--muted)">Remove the root cause — reverse the shrink ray, patch the transformation vulnerability. Recovery: validate all systems, restore Bus to normal size, resume the field trip. RTO met: under 2 hours!</p></div>
+    <div style="background:#fff;border:2px solid #6A0DAD;border-radius:12px;padding:14px"><div style="font-size:.65rem;font-weight:800;letter-spacing:1px;color:#fff;background:#6A0DAD;display:inline-block;padding:2px 8px;border-radius:4px;margin-bottom:6px">PHASE 5 · D4.8</div><h3 style="font-size:.88rem;font-weight:800;color:var(--text);margin-bottom:5px">Lessons Learned</h3><p style="font-size:.77rem;color:var(--muted)">Post-incident review: what went wrong, what worked, what needs updating? Dorothy Ann documents everything. Runbooks updated. Ms. Frizzle adds "no shrinking near active enzymes" to the field trip policy.</p></div>
+  </div>
+</div>
+
+<!-- ═══ FLASHCARDS ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="flashcards">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>🃏 Flashcard Deck — All 5 Domains</h2><p style="color:var(--muted);font-size:.82rem">Leitner spaced repetition · 111+ cards · progress saves to your browser.</p></div>
+  <div class="fc-wrap" id="fc-magicbus-cards-wrap">
+    <div style="margin-bottom:8px"><h3 style="font-size:.96rem;font-weight:800;color:var(--accent)">🃏 The Magic School Bus Flashcard Deck</h3><p style="font-size:.76rem;color:var(--muted)">111 cards covering all 5 domains · Leitner Box 1–5 spaced repetition</p></div>
+    <div class="fc-lrow">
+      <div class="fc-lbox fc-l1"><span id="fc-mb-lb1">0</span>Box 1<br><small>Daily</small></div>
+      <div class="fc-lbox fc-l2"><span id="fc-mb-lb2">0</span>Box 2<br><small>Every 2</small></div>
+      <div class="fc-lbox fc-l3"><span id="fc-mb-lb3">0</span>Box 3<br><small>Every 4</small></div>
+      <div class="fc-lbox fc-l4"><span id="fc-mb-lb4">0</span>Box 4<br><small>Every 8</small></div>
+      <div class="fc-lbox fc-l5"><span id="fc-mb-lb5">0</span>Box 5<br><small>Mastered ✨</small></div>
+    </div>
+    <div class="stats-bar">
+      <div class="stat-box"><div class="num" id="fc-mb-total" style="color:var(--accent)">0</div><div class="lbl">Total</div></div>
+      <div class="stat-box"><div class="num" id="fc-mb-learning" style="color:#E63946">0</div><div class="lbl">Learning</div></div>
+      <div class="stat-box"><div class="num" id="fc-mb-reviewing" style="color:#FF8F00">0</div><div class="lbl">Reviewing</div></div>
+      <div class="stat-box"><div class="num" id="fc-mb-mastered" style="color:#2E7D32">0</div><div class="lbl">Mastered</div></div>
+    </div>
+    <div class="toolbar">
+      <button class="btn-sm active" id="fc-mb-btn-due" onclick="fcMBDue()">📋 Due Cards</button>
+      <button class="btn-sm" id="fc-mb-btn-all" onclick="fcMBAll()">🔀 All Cards</button>
+      <button class="btn-sm" onclick="fcMBRestart()">🔄 Restart</button>
+      <button class="btn-sm" onclick="fcMBResetAll()">⚠️ Reset All</button>
+    </div>
+    <div id="fc-mb-main">
+      <div class="card-counter" id="fc-mb-counter"></div>
+      <div class="progress-bar"><div class="progress-fill" id="fc-mb-fill"></div></div>
+      <div class="flashcard" id="fc-mb-card" onclick="fcMBFlip()">
+        <div class="card-inner">
+          <div class="card-front"><div class="card-box-indicator" id="fc-mb-boxind"></div><p id="fc-mb-q"></p><span class="card-hint">Click or press Space to reveal</span></div>
+          <div class="card-back"><p id="fc-mb-a"></p></div>
+        </div>
+      </div>
+      <div id="fc-mb-empty" style="display:none;text-align:center;padding:20px;color:var(--muted)"><div style="font-size:2rem">🎉</div><p>All caught up! Use All Cards to keep drilling.</p></div>
+      <div class="card-controls"><button class="btn-flip" id="fc-mb-flipbtn" onclick="fcMBFlip()">👁️ Reveal Answer</button></div>
+      <div class="card-controls answer-btns" id="fc-mb-ansbtn">
+        <button class="btn btn-again" onclick="fcMBGrade('again')">❌ Again (1)</button>
+        <button class="btn btn-good" onclick="fcMBGrade('good')">✅ Got It (2)</button>
+        <button class="btn btn-easy" onclick="fcMBGrade('easy')">⚡ Easy (3)</button>
+        <button class="btn btn-skip" onclick="fcMBSkip()">⏭️ Skip (S)</button>
+      </div>
+    </div>
+    <div id="fc-mb-done" class="done-screen">
+      <div style="font-size:2rem">🏆</div>
+      <h2 style="font-size:1.3rem;color:var(--text);margin-bottom:5px">Session Complete!</h2>
+      <div class="score-big" id="fc-mb-score"></div>
+      <p id="fc-mb-scoredet" style="color:var(--muted);margin-bottom:12px"></p>
+      <div class="card-controls"><button class="btn-flip" onclick="fcMBRestart()">🔄 Study Again</button></div>
+    </div>
+    <div style="text-align:center;font-size:.68rem;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">⌨️ Space = flip · 1 = Again · 2 = Got It · 3 = Easy · S = Skip</div>
+  </div>
+</div>
+
+<script>
+(function(){
+var DK='magicbus-cards',SK='ltr_magicbus-cards',IV=[0,1,2,4,8,999];
+var C=[
+{q:"CIA Triad – What is CONFIDENTIALITY in Magic School Bus terms?",a:"Keeping field-trip destinations secret so Arnold doesn't panic. Confidentiality protects data from unauthorized access."},
+{q:"CIA Triad – What is INTEGRITY?",a:"Ensuring Bus navigation data isn't altered mid-trip. Integrity prevents unauthorized changes to data."},
+{q:"CIA Triad – What is AVAILABILITY?",a:"Making sure the Bus starts and flies when the class needs it. Availability keeps systems accessible to authorized users."},
+{q:"What does Non-repudiation mean?",a:"Ms. Frizzle's digital signature on permission slips — she can't later deny authorizing the trip. Proof of action."},
+{q:"What is the formula for SLE?",a:"SLE = Asset Value × Exposure Factor. Bus ($500K) × 60% lava damage = SLE $300K."},
+{q:"What is the formula for ALE?",a:"ALE = SLE × ARO. $300K × 2 lava trips/year = ALE $600K per year."},
+{q:"What does ARO stand for and mean?",a:"Annualized Rate of Occurrence — how often a threat happens per year. Ms. Frizzle drives into lava: ARO = 2."},
+{q:"What is Expansionary Risk Appetite?",a:"Willingness to accept high risk for big rewards. Ms. Frizzle drives into volcanoes for educational value — classic expansionary."},
+{q:"What is Conservative Risk Tolerance?",a:"Demanding maximum mitigation before accepting any risk. Arnold demands full safety checks before every field trip."},
+{q:"What does SOAR stand for?",a:"Security Orchestration, Automation, and Response. Liz auto-activates Bus emergency systems without waiting for human input."},
+{q:"What is the difference between RTO and RPO?",a:"RTO = max downtime allowed (Arnold's 2-hr deadline). RPO = max data loss by age (how many lesson minutes can be lost)."},
+{q:"What is MTBF?",a:"Mean Time Between Failures — average time between Bus breakdowns. Reliability metric."},
+{q:"What is MTTR?",a:"Mean Time to Repair — average time to fix a Bus breakdown. Recovery speed metric."},
+{q:"What is a Hot Site?",a:"Fully operational backup Bus ready in minutes — highest cost, lowest RTO."},
+{q:"What is a Cold Site?",a:"Empty garage requiring full rebuild — lowest cost, highest RTO."},
+{q:"What is a Warm Site?",a:"Bus in storage, needs data restoration — moderate cost, moderate RTO."},
+{q:"What does BIA stand for and what does it do?",a:"Business Impact Analysis — identifies critical processes and quantifies the impact of disruptions. Every field trip starts with one."},
+{q:"What are the 4 risk management strategies?",a:"Transfer (insurance), Accept (document it), Avoid (don't go into black holes), Mitigate (add seatbelts/helmets)."},
+{q:"What is Residual Risk?",a:"Risk remaining after controls are applied. Even with seatbelts, some volcano risk remains."},
+{q:"What is Inherent Risk?",a:"Risk before any controls are applied. The Bus with no seatbelts heading toward lava."},
+{q:"What is a Risk Register?",a:"A document tracking all identified risks, severity ratings, owners, and mitigations. Ms. Frizzle's master field-trip risk log."},
+{q:"Which IR phase involves creating playbooks before incidents happen?",a:"Preparation — Ms. Frizzle's pre-trip safety checklist and emergency protocol training."},
+{q:"Which IR phase involves isolating affected systems?",a:"Containment — sealing the Bus when it starts shrinking uncontrollably."},
+{q:"Which IR phase removes the root cause of an incident?",a:"Eradication — reversing the shrink ray and patching the transformation vulnerability."},
+{q:"Which IR phase returns systems to normal operation?",a:"Recovery — Bus restored to full size and field trip resumed."},
+{q:"What happens in Lessons Learned?",a:"Post-incident review, runbook updates, policy changes. Dorothy Ann documents everything; Ms. Frizzle adds 'no shrinking near active enzymes' to policy."},
+{q:"What is a Tabletop Exercise?",a:"Discussion-based IR drill — the class walks through a hypothetical Bus breakdown scenario without actually going on the trip."},
+{q:"What is Chain of Custody in digital forensics?",a:"Documented record of everyone who handled evidence. Like signing out the Bus logs at each stop."},
+{q:"What is the Order of Volatility?",a:"Collect evidence from most volatile first: RAM → running processes → temp files → logs → backups."},
+{q:"What is a Legal Hold?",a:"Court order requiring preservation of all related data. The school can't delete field-trip logs during a lawsuit."},
+{q:"What is E-discovery?",a:"Identifying and producing electronically stored evidence for legal proceedings."},
+{q:"What is the purpose of a Risk Register?",a:"Documents identified risks, likelihood, impact, owner, and mitigation status for ongoing tracking."},
+{q:"What is Data Sovereignty?",a:"Data is subject to laws of the country where it physically resides. Field-trip data stored in another country = foreign laws apply."},
+{q:"What is GDPR's breach notification timeframe?",a:"72 hours to notify a supervisory authority after discovering a breach."},
+{q:"What does PCI DSS protect?",a:"Payment Card Industry Data Security Standard — protects cardholder data during transactions."},
+{q:"What is HIPAA?",a:"Health Insurance Portability and Accountability Act — protects Protected Health Information (PHI)."},
+{q:"What is an SLA?",a:"Service Level Agreement — contractually defines minimum performance (uptime, response time) from a provider."},
+{q:"What is an MOU?",a:"Memorandum of Understanding — non-binding agreement outlining mutual expectations between parties."},
+{q:"What is a Statement of Work (SOW)?",a:"Detailed list of specific tasks and deliverables for a professional engagement."},
+{q:"What is an NDA?",a:"Non-Disclosure Agreement — prevents disclosure of confidential shared information."},
+{q:"What is the Right to Audit clause?",a:"Contractual right to review a vendor's security controls periodically."},
+{q:"What are the 5 NIST CSF functions?",a:"Identify, Protect, Detect, Respond, Recover."},
+{q:"What is ISO 27001?",a:"International standard providing requirements for an Information Security Management System (ISMS)."},
+{q:"What is the difference between a Policy and a Procedure?",a:"Policy = high-level intent ('Bus must be safe'). Procedure = step-by-step actions (Liz's pre-flight checklist)."},
+{q:"What is Data Classification?",a:"Organizing data by sensitivity: Top Secret, Confidential, Internal, Public — determines who can access what."},
+{q:"What is PII?",a:"Personally Identifiable Information — data that can identify a specific individual (SSN, email, biometrics)."},
+{q:"What is PHI?",a:"Protected Health Information — PII plus health-related data (diagnoses, treatment records). Covered by HIPAA."},
+{q:"What is Zero Trust?",a:"Security model assuming no device or user should be trusted by default — even inside the network. Liz verifies every command."},
+{q:"What is the difference between Symmetric and Asymmetric encryption?",a:"Symmetric uses same key to encrypt and decrypt (fast, AES). Asymmetric uses public/private key pair (RSA, PKI)."},
+{q:"What is Hashing used for?",a:"Verifying data integrity — creating a unique fixed-length fingerprint. If lesson notes are altered, the hash changes."},
+{q:"What is Salting in cryptography?",a:"Adding random data to a password before hashing to defend against rainbow table attacks."},
+{q:"What is a Certificate Authority (CA)?",a:"Entity in a PKI that signs digital certificates — like the school district vouching for Ms. Frizzle's credentials."},
+{q:"What is a CRL?",a:"Certificate Revocation List — published by a CA to identify certificates that are no longer valid."},
+{q:"What is OCSP?",a:"Online Certificate Status Protocol — allows real-time checking of certificate validity without downloading the full CRL."},
+{q:"What is a WAF?",a:"Web Application Firewall — protects against Layer 7 attacks like SQL injection and XSS."},
+{q:"What is the difference between IDS and IPS?",a:"IDS = alerts on threats (passive). IPS = actively blocks threats (inline). Wanda is IDS; Liz is IPS."},
+{q:"What is Network Segmentation?",a:"Dividing a network into zones to limit blast radius. Bus cockpit, passenger cabin, and engine room are all separate zones."},
+{q:"What is a DMZ / Screened Subnet?",a:"Network segment housing public-facing servers, buffered between internet and internal network."},
+{q:"What is a Jump Server?",a:"Secured intermediary server used to access protected network segments for management tasks."},
+{q:"What is 802.1X?",a:"IEEE standard for port-based Network Access Control — requires authentication before granting network access."},
+{q:"What is Multi-Factor Authentication (MFA)?",a:"Using two or more factors: something you know (PIN), have (key fob), are (fingerprint), or somewhere you are (location)."},
+{q:"What is RBAC?",a:"Role-Based Access Control — permissions based on job function. Only Ms. Frizzle can set the Bus destination."},
+{q:"What is Least Privilege?",a:"Users get minimum access needed for their job. Students can open windows but can't pilot the Bus."},
+{q:"What is a Honeypot?",a:"Decoy system designed to attract and observe attackers. Like leaving a fake Bus parked outside with bait."},
+{q:"What does SIEM do?",a:"Security Information and Event Management — aggregates and correlates logs from all systems to detect anomalies."},
+{q:"What is EDR?",a:"Endpoint Detection and Response — monitors devices for malicious activity and enables automated response."},
+{q:"What is DLP?",a:"Data Loss Prevention — identifies and prevents unauthorized transfer of sensitive data off the Bus."},
+{q:"What is a Vulnerability Scan?",a:"Automated tool that identifies known vulnerabilities in systems. Ralphie scans Bus systems nightly."},
+{q:"What is CVSS?",a:"Common Vulnerability Scoring System — standardized 0–10 severity score for vulnerabilities."},
+{q:"What is Threat Hunting?",a:"Proactive search for hidden threats that evade automated detection. Carlos manually investigating suspicious Bus behavior."},
+{q:"What is Root Cause Analysis?",a:"Finding the ultimate underlying cause of an incident to prevent recurrence."},
+{q:"What is a Social Engineering attack?",a:"Manipulating people rather than systems — convincing Arnold to press the wrong button by pretending to be Ms. Frizzle."},
+{q:"What is Phishing?",a:"Deceptive emails designed to steal credentials or deliver malware. Fake field-trip permission slip from 'Principal."},
+{q:"What is Vishing?",a:"Voice-based phishing — phone call from someone pretending to be IT support or the principal."},
+{q:"What is Smishing?",a:"SMS-based phishing — text message pretending to be from the school district."},
+{q:"What is a Supply Chain Attack?",a:"Compromising a vendor or supplier to attack the ultimate target. Malicious Bus component from a compromised supplier."},
+{q:"What is a Zero-Day Vulnerability?",a:"Unknown vulnerability being exploited before a patch exists. Bus transformation flaw nobody knew about."},
+{q:"What is Ransomware?",a:"Malware that encrypts data and demands payment for decryption. Bus navigation locked until Bitcoin paid."},
+{q:"What is a Rootkit?",a:"Malware that hides itself deep in the OS, gaining persistent privileged access. Hidden in Bus firmware."},
+{q:"What is a Logic Bomb?",a:"Malicious code that triggers when specific conditions are met. Bus self-destructs when Ralphie says 'BOOM'."},
+{q:"What is a DDoS attack?",a:"Distributed Denial of Service — overwhelming a system with traffic from many sources. Flooding Bus comms with noise."},
+{q:"What is DNS Poisoning?",a:"Corrupting a DNS cache to redirect users to malicious IP addresses. Students sent to wrong field-trip website."},
+{q:"What is SQL Injection?",a:"Inserting malicious SQL code into input fields to manipulate a database. Injecting commands into Bus navigation input."},
+{q:"What is XSS (Cross-Site Scripting)?",a:"Injecting malicious scripts into web pages viewed by other users."},
+{q:"What is an On-Path / MitM attack?",a:"Attacker positions between two parties to intercept/modify communication. Eavesdropping on Bus radio comms."},
+{q:"What is Risk Tolerance?",a:"Operational threshold — acceptable variation around risk appetite. Board approved: tolerate up to 2 lava trips/year max."},
+{q:"What is Risk Appetite?",a:"Strategic amount of risk an organization is willing to accept. Ms. Frizzle: HIGH. Arnold: ZERO."},
+{q:"What is GDPR's 'Right to be Forgotten'?",a:"Data subjects can request deletion of their personal data from a controller's systems."},
+{q:"What is Due Diligence in vendor management?",a:"Thorough investigation of a vendor's security and financial status before engagement."},
+{q:"What is Due Care?",a:"Ongoing practice of maintaining and enforcing security controls — not a one-time activity."},
+{q:"What is an Exposure Factor (EF)?",a:"Percentage of asset value lost in a specific incident. 60% Bus destruction in lava = EF 0.6."},
+{q:"What is Annualized Loss Expectancy (ALE)?",a:"Expected annual financial loss from a threat. ALE = SLE × ARO. The real number the board sees."},
+{q:"What is a Gap Analysis?",a:"Comparing current security posture to desired target state. Where is the Bus vs. where should it be?"},
+{q:"What is a Penetration Test?",a:"Authorized simulated attack to identify real vulnerabilities. Ralphie legally hacking Bus systems to find weaknesses."},
+{q:"What is the difference between a known, partially-known, and unknown pen test?",a:"Known (white box): tester has full info. Partially known (grey box): partial info. Unknown (black box): no prior info."},
+{q:"What is Data Masking?",a:"Obscuring specific data elements so unauthorized users see fake but realistic data."},
+{q:"What is Tokenization?",a:"Replacing sensitive data with a non-sensitive placeholder token. Student SSN replaced with a random token in Bus records."},
+{q:"What is Steganography?",a:"Hiding secret data inside ordinary files — like hiding field-trip coordinates inside a photo of the Bus."},
+{q:"What is Perfect Forward Secrecy (PFS)?",a:"Each session uses a unique key so past sessions stay safe even if long-term keys are compromised."},
+{q:"What is a HSM?",a:"Hardware Security Module — dedicated hardware for secure storage and management of cryptographic keys."},
+{q:"What is a TPM?",a:"Trusted Platform Module — chip on motherboard providing hardware-based cryptography and secure key storage."},
+{q:"What is SASE?",a:"Secure Access Service Edge — merges networking and security into a cloud-delivered service."},
+{q:"What is SD-WAN?",a:"Software-Defined Wide Area Network — uses software to manage WAN connections, often for direct cloud access."},
+{q:"What is Sandboxing?",a:"Running untrusted code in an isolated environment to observe behavior safely. Testing Carlos's pun generator in isolation."},
+{q:"What is Input Validation?",a:"Checking user input before processing to prevent injection attacks. Ms. Frizzle verifies destination coordinates before flying."},
+{q:"What is Code Signing?",a:"Using a digital signature to verify that software comes from a trusted source and hasn't been tampered with."},
+{q:"What is Geolocation in data protection?",a:"Using physical location to restrict or allow data access based on where users or data reside."},
+{q:"What is Platform Diversity?",a:"Using different OS/hardware platforms to ensure a single vulnerability doesn't compromise all systems."},
+{q:"What is the purpose of a Business Continuity Plan (BCP)?",a:"Ensures critical business functions continue during and after a disaster — beyond just IT recovery."},
+{q:"What is a Disaster Recovery Plan (DRP)?",a:"Focuses specifically on restoring IT systems and data after a disaster."},
+{q:"What is an Attestation in compliance?",a:"Formal statement verifying an organization meets specific security requirements."},
+{q:"What is FISMA?",a:"Federal Information Security Modernization Act — mandatory security framework for US federal agencies based on NIST."}
+];
+
+var st,sN,du=[],po=0,co=0,to=0,fl=false,al=false;
+
+function el(id){return document.getElementById('fc-mb-'+id);}
+var BC=['','#E63946','#FF8F00','#0288D1','#6A0DAD','#2E7D32'];
+var BB=['','rgba(230,57,70,.12)','rgba(255,143,0,.12)','rgba(2,136,209,.12)','rgba(106,13,173,.12)','rgba(46,125,50,.12)'];
+
+function ls(){try{var r=localStorage.getItem(SK);if(r)return JSON.parse(r);}catch(e){}var s={};C.forEach(function(_,i){s[i]={box:1};});return s;}
+function sv(){try{localStorage.setItem(SK,JSON.stringify(st));}catch(e){}}
+function gd(){var d=[];Object.keys(st).forEach(function(i){var b=st[i].box;if(b===5)return;if(b===1||sN%[1,1,2,4,8][b-1]===0)d.push(+i);});for(var i=d.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=d[i];d[i]=d[j];d[j]=t;}return d;}
+
+function renderCard(){
+  if(po>=du.length){fcMBDone();return;}
+  var i=du[po],b=st[i].box;
+  el('q').textContent=C[i].q;
+  el('a').textContent=C[i].a;
+  var bi=el('boxind');bi.textContent='Box '+b;bi.style.background=BB[b];bi.style.color=BC[b];bi.style.border='1px solid '+BC[b]+'66';
+  var card=el('card');if(card.classList.contains('flipped'))card.classList.remove('flipped');
+  fl=false;
+  el('ansbtn').style.display='none';el('flipbtn').style.display='block';
+  el('counter').textContent='Card '+(po+1)+' of '+du.length;
+  el('fill').style.width=(po/du.length*100)+'%';
+  updateStats();
+}
+
+window.fcMBFlip=function(){
+  if(!fl){
+    el('card').classList.add('flipped');fl=true;
+    el('ansbtn').style.display='flex';el('flipbtn').style.display='none';
+    sndFlip();
+  }
+};
+window.fcMBGrade=function(g){
+  var i=du[po];to++;
+  if(g!=='again')co++;
+  if(g==='again'){st[i].box=1;sndWrong();}
+  else if(g==='good'){st[i].box=Math.min(st[i].box+1,5);sndCorrect();}
+  else if(g==='easy'){st[i].box=Math.min(st[i].box+2,5);sndCorrect();}
+  sv();po++;renderCard();
+};
+window.fcMBSkip=function(){po++;renderCard();};
+window.fcMBDue=function(){al=false;el('btn-due').classList.add('active');el('btn-all').classList.remove('active');fcMBRestart();};
+window.fcMBAll=function(){al=true;el('btn-all').classList.add('active');el('btn-due').classList.remove('active');fcMBRestart();};
+window.fcMBRestart=function(){
+  co=0;to=0;po=0;fl=false;
+  el('done').style.display='none';el('main').style.display='block';
+  if(al){du=[...Array(C.length).keys()];for(var i=du.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=du[i];du[i]=du[j];du[j]=t;}}
+  else{du=gd();}
+  if(du.length===0){el('counter').textContent='All caught up!';el('card').style.display='none';el('flipbtn').style.display='none';el('empty').style.display='block';}
+  else{el('card').style.display='block';el('flipbtn').style.display='block';el('empty').style.display='none';renderCard();}
+};
+window.fcMBResetAll=function(){if(!confirm('Reset all flashcard progress?'))return;try{localStorage.removeItem(SK);localStorage.removeItem(SK+'_s');}catch(e){}sN=1;st=ls();al=false;el('btn-due').classList.add('active');el('btn-all').classList.remove('active');fcMBRestart();};
+
+function fcMBDone(){
+  el('main').style.display='none';el('done').style.display='block';
+  var p=to>0?Math.round(co/to*100):0;
+  el('score').textContent=p+'%';
+  el('scoredet').textContent=co+' correct out of '+to+' answered';
+  if(p===100)launchConfetti();
+  updateStats();
+}
+
+function updateStats(){
+  var c=[0,0,0,0,0,0];
+  Object.values(st).forEach(function(s){c[s.box]++;});
+  el('total').textContent=C.length;
+  el('learning').textContent=c[1]+c[2];
+  el('reviewing').textContent=c[3]+c[4];
+  el('mastered').textContent=c[5];
+  for(var b=1;b<=5;b++){var e=document.getElementById('fc-mb-lb'+b);if(e)e.textContent=c[b];}
+}
+
+document.addEventListener('keydown',function(e){
+  if(!el('main')||el('main').style.display==='none')return;
+  if((e.key===' '||e.key==='f')&&!e.target.matches('input,textarea,button')){e.preventDefault();fcMBFlip();}
+  if(e.key==='1')fcMBGrade('again');
+  if(e.key==='2')fcMBGrade('good');
+  if(e.key==='3')fcMBGrade('easy');
+  if((e.key==='s'||e.key==='S')&&!e.target.matches('input,textarea'))fcMBSkip();
+});
+
+st=ls();
+try{sN=parseInt(localStorage.getItem(SK+'_s')||'0')+1;localStorage.setItem(SK+'_s',sN);}catch(e){sN=1;}
+du=gd();if(du.length===0)du=[...Array(C.length).keys()];
+renderCard();updateStats();
+})();
+</script>
+
+<!-- ═══ PORT MEMORIZATION GAME ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="portgame">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>🎮 Port Memorization Game</h2><p style="color:var(--muted);font-size:.82rem">Match the port number to its protocol — Ms. Frizzle's Network Field Trip! Click a port, then click its matching protocol.</p></div>
+  <div class="port-game">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+      <h3 style="margin-bottom:0">🚌 Network Port Field Trip</h3>
+      <div class="port-score-bar">
+        <div>Matched: <span id="pg-matched">0</span>/<span id="pg-total">0</span></div>
+        <div>Streak: <span id="pg-streak">0</span> 🔥</div>
+        <div>Score: <span id="pg-score">0</span></div>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">
+      <button class="btn-sm active" id="pg-btn-easy" onclick="pgSetDifficulty('easy')">🟢 Easy (10 pairs)</button>
+      <button class="btn-sm" id="pg-btn-medium" onclick="pgSetDifficulty('medium')">🟡 Medium (15 pairs)</button>
+      <button class="btn-sm" id="pg-btn-hard" onclick="pgSetDifficulty('hard')">🔴 Hard (20 pairs)</button>
+      <button class="btn-sm" onclick="pgNewGame()" style="margin-left:auto">🔄 New Game</button>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+      <div>
+        <div style="font-size:.75rem;font-weight:800;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">🔢 Port Numbers</div>
+        <div id="pg-ports" class="port-board"></div>
+      </div>
+      <div>
+        <div style="font-size:.75rem;font-weight:800;color:var(--accent3);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px">📡 Protocols</div>
+        <div id="pg-protos" class="port-board"></div>
+      </div>
+    </div>
+    <div id="pg-complete" style="display:none;text-align:center;padding:24px;background:#fff;border-radius:12px;margin-top:12px;border:3px solid var(--accent2)">
+      <div style="font-size:3rem">🏆</div>
+      <h3 style="color:var(--accent);font-size:1.2rem;margin:8px 0">Field Trip Complete!</h3>
+      <p style="color:var(--muted)" id="pg-final-msg"></p>
+      <button class="btn-flip" onclick="pgNewGame()" style="margin-top:10px">🚌 New Field Trip</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var ALL_PORTS=[
+  {port:'22',proto:'SSH',desc:'Secure Shell'},
+  {port:'80',proto:'HTTP',desc:'Web (unencrypted)'},
+  {port:'443',proto:'HTTPS',desc:'Web (encrypted)'},
+  {port:'53',proto:'DNS',desc:'Domain Name System'},
+  {port:'21',proto:'FTP',desc:'File Transfer Protocol'},
+  {port:'22',proto:'SFTP',desc:'Secure FTP (via SSH)'},
+  {port:'25',proto:'SMTP',desc:'Email sending'},
+  {port:'110',proto:'POP3',desc:'Email retrieval'},
+  {port:'143',proto:'IMAP',desc:'Email (synced)'},
+  {port:'3389',proto:'RDP',desc:'Remote Desktop'},
+  {port:'389',proto:'LDAP',desc:'Directory (unencrypted)'},
+  {port:'636',proto:'LDAPS',desc:'Directory (encrypted)'},
+  {port:'514',proto:'Syslog',desc:'Centralized logging'},
+  {port:'123',proto:'NTP',desc:'Network Time Protocol'},
+  {port:'161',proto:'SNMP',desc:'Network Management'},
+  {port:'162',proto:'SNMP Trap',desc:'SNMP Notifications'},
+  {port:'1812',proto:'RADIUS Auth',desc:'Authentication'},
+  {port:'1813',proto:'RADIUS Acct',desc:'Accounting'},
+  {port:'49',proto:'TACACS+',desc:'Cisco AAA Protocol'},
+  {port:'3306',proto:'MySQL',desc:'MySQL Database'},
+  {port:'5432',proto:'PostgreSQL',desc:'PostgreSQL Database'},
+  {port:'445',proto:'SMB',desc:'File Sharing (Windows)'},
+  {port:'23',proto:'Telnet',desc:'Unencrypted remote access'},
+  {port:'69',proto:'TFTP',desc:'Trivial FTP'},
+  {port:'67',proto:'DHCP Server',desc:'IP Address Assignment'},
+  {port:'68',proto:'DHCP Client',desc:'IP Address Request'},
+  {port:'179',proto:'BGP',desc:'Border Gateway Protocol'},
+  {port:'88',proto:'Kerberos',desc:'Network Authentication'},
+  {port:'8080',proto:'HTTP Alt',desc:'Alternate HTTP port'},
+  {port:'587',proto:'SMTP (TLS)',desc:'Encrypted email submission'}
+];
+
+// Deduplicate by port number for clean matching
+var UNIQUE_PORTS=[];
+var seen={};
+ALL_PORTS.forEach(function(p){
+  if(!seen[p.port]){seen[p.port]=true;UNIQUE_PORTS.push(p);}
+});
+
+var difficulty='easy',pairs=[],selPort=null,selProto=null,matched=0,streak=0,score=0;
+var counts={easy:10,medium:15,hard:20};
+
+function pgSetDifficulty(d){
+  difficulty=d;
+  ['easy','medium','hard'].forEach(function(x){
+    document.getElementById('pg-btn-'+x).classList.toggle('active',x===d);
+  });
+  pgNewGame();
+}
+window.pgSetDifficulty=pgSetDifficulty;
+
+function pgNewGame(){
+  document.getElementById('pg-complete').style.display='none';
+  var cnt=Math.min(counts[difficulty],UNIQUE_PORTS.length);
+  var shuffled=UNIQUE_PORTS.slice().sort(function(){return Math.random()-.5;});
+  pairs=shuffled.slice(0,cnt);
+  matched=0;streak=0;score=0;selPort=null;selProto=null;
+  document.getElementById('pg-total').textContent=cnt;
+  updatePGStats();
+  renderPGBoards();
+}
+window.pgNewGame=pgNewGame;
+
+function renderPGBoards(){
+  var portItems=pairs.slice().sort(function(){return Math.random()-.5;});
+  var protoItems=pairs.slice().sort(function(){return Math.random()-.5;});
+  var pb=document.getElementById('pg-ports');
+  var prb=document.getElementById('pg-protos');
+  pb.innerHTML='';prb.innerHTML='';
+  portItems.forEach(function(p){
+    var el=document.createElement('div');
+    el.className='port-card-game';
+    el.innerHTML='<div class="port-number">'+p.port+'</div>';
+    el.dataset.id=p.port;el.dataset.type='port';
+    el.addEventListener('click',function(){pgSelect(this,'port');});
+    pb.appendChild(el);
+  });
+  protoItems.forEach(function(p){
+    var el=document.createElement('div');
+    el.className='port-card-game';
+    el.innerHTML='<div style="font-weight:900;color:var(--accent3);font-size:.9rem">'+p.proto+'</div><div style="font-size:.68rem;color:var(--muted)">'+p.desc+'</div>';
+    el.dataset.id=p.port;el.dataset.type='proto';
+    el.addEventListener('click',function(){pgSelect(this,'proto');});
+    prb.appendChild(el);
+  });
+}
+
+function pgSelect(el,type){
+  if(el.classList.contains('matched'))return;
+  if(type==='port'){
+    if(selPort){selPort.classList.remove('selected');}
+    if(selPort===el){selPort=null;return;}
+    selPort=el;el.classList.add('selected');
+  } else {
+    if(selProto){selProto.classList.remove('selected');}
+    if(selProto===el){selProto=null;return;}
+    selProto=el;el.classList.add('selected');
+  }
+  sndFlip();
+  if(selPort&&selProto){checkPGMatch();}
+}
+
+function checkPGMatch(){
+  var pid=selPort.dataset.id,prid=selProto.dataset.id;
+  if(pid===prid){
+    selPort.classList.remove('selected');selProto.classList.remove('selected');
+    selPort.classList.add('matched');selProto.classList.add('matched');
+    matched++;streak++;score+=10+(streak>3?streak*2:0);
+    sndCorrect();
+    updatePGStats();
+    selPort=null;selProto=null;
+    if(matched>=pairs.length)setTimeout(pgComplete,400);
+  } else {
+    selPort.classList.add('wrong');selProto.classList.add('wrong');
+    streak=0;
+    sndWrong();
+    var sp=selPort,sr=selProto;
+    setTimeout(function(){
+      sp.classList.remove('wrong','selected');
+      sr.classList.remove('wrong','selected');
+    },500);
+    selPort=null;selProto=null;
+    updatePGStats();
+  }
+}
+
+function updatePGStats(){
+  document.getElementById('pg-matched').textContent=matched;
+  document.getElementById('pg-streak').textContent=streak;
+  document.getElementById('pg-score').textContent=score;
+}
+
+function pgComplete(){
+  document.getElementById('pg-complete').style.display='block';
+  var msg='You matched all '+pairs.length+' port pairs! Score: '+score+' points. ';
+  if(score>=pairs.length*15)msg+='🚌 Ms. Frizzle says: Outstanding work, class!';
+  else if(score>=pairs.length*10)msg+='👍 Arnold says: OK that was actually impressive.';
+  else msg+='🔬 Wanda says: Keep practicing — review the flashcards!';
+  document.getElementById('pg-final-msg').textContent=msg;
+  launchConfetti();
+}
+
+pgNewGame();
+})();
+</script>
+
+<!-- ═══ QUIZ ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="quiz">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>🧠 Knowledge Quiz — All 5 Domains</h2><p style="color:var(--muted);font-size:.82rem">10 exam-style questions · personalized feedback · retake without reload.</p></div>
+  <div class="quiz-wrap" id="qz-main">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;margin-bottom:12px">
+      <h3 style="font-size:.98rem;font-weight:900;color:var(--accent)">🧠 Magic School Bus Security+ Quiz</h3>
+      <div style="font-size:.72rem;color:var(--muted);font-weight:600" id="qm-main"></div>
+    </div>
+    <div id="qb-main"></div>
+    <div id="qn-main" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+      <button id="qs-main" onclick="qSub()" style="background:var(--accent);color:#fff;padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-size:.8rem;font-weight:800;display:none">✅ Check Answer</button>
+      <button id="qnx-main" onclick="qNxt()" style="background:var(--accent3);color:#fff;padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-size:.8rem;font-weight:800;display:none">Next →</button>
+      <button id="qr-main" onclick="qRst()" style="background:var(--surface);color:var(--muted);padding:7px 16px;border-radius:8px;border:2px solid var(--border);cursor:pointer;font-size:.8rem;display:none">🔄 Restart</button>
+    </div>
+    <div id="qf-main" style="text-align:center;padding:20px 0;display:none">
+      <div id="qfs-main" style="font-size:3rem;font-weight:900;color:var(--accent)"></div>
+      <p id="qfd-main" style="color:var(--muted);margin-bottom:8px"></p>
+      <div id="qfm-main" style="font-size:.8rem;color:var(--muted);margin-bottom:12px;text-align:left;background:var(--surface);border-radius:8px;padding:10px 14px;border:1px solid var(--border)"></div>
+      <button onclick="qRst()" style="background:var(--accent);color:#fff;padding:8px 18px;border-radius:8px;border:none;cursor:pointer;font-size:.82rem;font-weight:800">🔄 Try Again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+var QS=[
+  {d:1,q:"Ms. Frizzle requires that only she can set the Bus destination — students can observe but not control. This BEST demonstrates which security principle?",choices:["Least Privilege","Non-repudiation","Separation of Duties","Defense in Depth"],ai:0,ex:"Least Privilege = users get only the minimum access needed. Only Ms. Frizzle needs destination control; students need read-only access. (Domain 1.2)"},
+  {d:1,q:"The Bus navigation log shows data was altered mid-trip by an unauthorized party. Which pillar of the CIA Triad was violated?",choices:["Confidentiality","Availability","Integrity","Non-repudiation"],ai:2,ex:"Integrity = ensuring data is accurate and unaltered. Unauthorized modification of the nav log = Integrity violation. (Domain 1.2)"},
+  {d:2,q:"Arnold receives a text claiming the school district needs his login credentials to update the Bus software. This BEST describes which attack?",choices:["Watering hole attack","Smishing","Vishing","DNS poisoning"],ai:1,ex:"Smishing = SMS-based phishing. Arnold received a deceptive text message designed to steal credentials. (Domain 2.2)"},
+  {d:2,q:"A threat actor exploits a Bus vulnerability that no patch exists for yet. This is called a:",choices:["Known exploit","Zero-day vulnerability","Logic bomb","Supply chain attack"],ai:1,ex:"Zero-day = vulnerability being exploited before a patch exists. The vendor doesn't even know about it yet. (Domain 2.3)"},
+  {d:3,q:"The Bus cockpit, passenger cabin, and engine room each operate on separate network zones with strict access controls between them. This BEST describes:",choices:["Air gapping","Network segmentation","Load balancing","NAC"],ai:1,ex:"Network segmentation = dividing a network into isolated zones to limit blast radius if one zone is compromised. (Domain 3.2)"},
+  {d:3,q:"When the Bus travels to space, all communications are routed through an encrypted tunnel back to school headquarters. This describes a:",choices:["SASE deployment","VPN with IPSec tunneling","SD-WAN configuration","DMZ placement"],ai:1,ex:"VPN with IPSec = encrypted tunnel protecting data in transit over untrusted networks (space = very untrusted). (Domain 3.2)"},
+  {d:4,q:"Liz automatically detects the Bus is shrinking, triggers isolation mode, and generates an incident ticket — all without human input. This BEST describes:",choices:["SIEM correlation","SOAR automation","EDR containment","DLP enforcement"],ai:1,ex:"SOAR (Security Orchestration, Automation, Response) = automated detection and response without requiring human action. Liz = SOAR. (Domain 4.7)"},
+  {d:4,q:"The Bus is worth $400K. A volcano incident destroys 50% of it. This happens 3 times per year. What is the ALE?",choices:["$200,000","$400,000","$600,000","$1,200,000"],ai:2,ex:"SLE = $400K × 50% = $200K. ALE = SLE × ARO = $200K × 3 = $600K/year. Always: SLE first, then multiply by ARO. (Domain 5.2)"},
+  {d:5,q:"Ms. Frizzle formally documents that taking students into a volcano carries a 15% chance of total Bus loss, and the board has approved proceeding anyway. This represents:",choices:["Risk avoidance","Risk transfer","Risk acceptance","Risk mitigation"],ai:2,ex:"Risk Acceptance = formally acknowledging a risk and choosing to proceed anyway, with documented management approval. (Domain 5.2)"},
+  {d:5,q:"After the Bus breaks down, Arnold says the class cannot be stranded longer than 90 minutes before it causes irreversible learning loss. This 90-minute limit is the:",choices:["RPO","MTBF","RTO","MTTR"],ai:2,ex:"RTO (Recovery Time Objective) = maximum acceptable downtime before unacceptable business impact. Arnold's 90-min deadline = RTO. (Domain 5.2)"}
+];
+
+var cu=0,sc=0,an=false,missed=[];
+
+function rn(){
+  var q=QS[cu];
+  document.getElementById('qm-main').textContent='Question '+(cu+1)+' of '+QS.length+' · Domain '+q.d;
+  var h='<p style="font-size:.88rem;font-weight:800;color:var(--text);margin-bottom:10px;line-height:1.55">'+q.q+'</p>';
+  q.choices.forEach(function(c,i){
+    h+='<label class="qz-c" id="qzc-'+i+'"><input type="radio" name="qzmain" value="'+i+'" onchange="qMainSel()"> <span>'+String.fromCharCode(65+i)+'. '+c+'</span></label>';
+  });
+  h+='<div class="qz-exp" id="qze-main">💡 '+q.ex+'</div>';
+  document.getElementById('qb-main').innerHTML=h;
+  an=false;
+  document.getElementById('qs-main').style.display='none';
+  document.getElementById('qnx-main').style.display='none';
+  document.getElementById('qr-main').style.display='none';
+}
+
+window.qMainSel=function(){if(!an)document.getElementById('qs-main').style.display='inline-block';};
+
+function qSub(){
+  if(an)return;
+  var q=QS[cu];
+  var sel=document.querySelector('input[name="qzmain"]:checked');
+  if(!sel)return;
+  an=true;
+  var ch=+sel.value,ok=ch===q.ai;
+  if(ok){sc++;sndCorrect();}
+  else{missed.push('Domain '+q.d+': '+q.q.substring(0,50)+'…');sndWrong();}
+  for(var i=0;i<q.choices.length;i++){
+    var l=document.getElementById('qzc-'+i);
+    if(i===q.ai)l.classList.add('qc');
+    else if(i===ch&&!ok)l.classList.add('qw');
+    var inp=l.querySelector('input');if(inp)inp.disabled=true;
+  }
+  var e=document.getElementById('qze-main');if(e)e.style.display='block';
+  document.getElementById('qs-main').style.display='none';
+  if(cu<QS.length-1)document.getElementById('qnx-main').style.display='inline-block';
+  else{document.getElementById('qr-main').style.display='inline-block';qFin();}
+}
+window.qSub=qSub;
+
+function qNxt(){cu++;rn();}
+window.qNxt=qNxt;
+
+function qRst(){
+  cu=0;sc=0;an=false;missed=[];
+  document.getElementById('qf-main').style.display='none';
+  document.getElementById('qb-main').style.display='block';
+  document.getElementById('qn-main').style.display='flex';
+  rn();
+}
+window.qRst=qRst;
+
+function qFin(){
+  document.getElementById('qb-main').style.display='none';
+  document.getElementById('qn-main').style.display='none';
+  document.getElementById('qf-main').style.display='block';
+  var p=Math.round(sc/QS.length*100);
+  document.getElementById('qfs-main').textContent=p+'%';
+  document.getElementById('qfd-main').textContent=sc+' of '+QS.length+' correct';
+  var msg='';
+  if(missed.length>0){msg='<strong>Review these topics:</strong><br>'+missed.join('<br>');}
+  else{msg='<strong>🎉 Perfect score! Ms. Frizzle is proud of you!</strong>';}
+  document.getElementById('qfm-main').innerHTML=msg;
+  if(p===100)launchConfetti();
+}
+rn();
+})();
+</script>
+
+<!-- ═══ STUDY LINKS ═══ -->
+<hr style="border:none;border-top:2px solid var(--border)" id="links">
+<div class="ps">
+  <div class="sec-hd" style="margin-bottom:16px"><h2>🔗 Study Links</h2><p style="color:var(--muted);font-size:.82rem">Official resources, books, and study materials.</p></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px">
+    <a href="CompTIA-Security-SY0-701-Exam-Objectives-1.pdf" target="_blank" class="link-card"><div style="font-size:1.5rem">📄</div><div><span style="font-size:.8rem;font-weight:800;color:var(--text);display:block;margin-bottom:1px">Exam Objectives PDF</span><span style="font-size:.69rem;color:var(--muted)">Official CompTIA SY0-701 blueprint</span></div></a>
+    <a href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank" class="link-card"><div style="font-size:1.5rem">🎬</div><div><span style="font-size:.8rem;font-weight:800;color:var(--text);display:block;margin-bottom:1px">Professor Messer</span><span style="font-size:.69rem;color:var(--muted)">Free SY0-701 video course</span></div></a>
+    <a href="https://amzn.to/4nVi25Y" target="_blank" class="link-card"><div style="font-size:1.5rem">📚</div><div><span style="font-size:.8rem;font-weight:800;color:var(--text);display:block;margin-bottom:1px">CompTIA Security+ Kit</span><span style="font-size:.69rem;color:var(--muted)">Sybex SY0-701 Study Guide</span></div></a>
+    <a href="https://quizlet.com/search?query=comptia+security+sy0-701&type=sets" target="_blank" class="link-card"><div style="font-size:1.5rem">🃏</div><div><span style="font-size:.8rem;font-weight:800;color:var(--text);display:block;margin-bottom:1px">Quizlet Search</span><span style="font-size:.69rem;color:var(--muted)">Community SY0-701 sets</span></div></a>
+  </div>
+</div>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <p>🛡️ <a href="security-notes.html">Study Hub</a> &nbsp;·&nbsp; <a href="https://charleneluequeue.github.io/">Portfolio</a> &nbsp;·&nbsp; Built by Charlene LueQuee</p>
+  <p style="margin-top:4px;font-size:.7rem;opacity:.8">The Magic School Bus characters are property of their respective owners — used for educational analogy purposes only.</p>
+  <div style="margin-top:10px;display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);border-radius:6px;padding:5px 16px;font-size:.67rem;letter-spacing:.5px">&copy; 2025 Charlene LueQuee &nbsp;·&nbsp; All Rights Reserved &nbsp;·&nbsp; Unauthorized use prohibited</div>
+</footer>
+</body>
+</html>

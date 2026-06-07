@@ -1,0 +1,1395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gravity Falls – Security+ SY0-701 Study Hub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Nunito:wght@400;700;800;900&display=swap');
+
+:root {
+  --gf-pine:    #1a3a2a;
+  --gf-teal:    #22d3ee;
+  --gf-gold:    #facc15;
+  --gf-mabel:   #e879f9;
+  --gf-mabel2:  #f0abfc;
+  --gf-red:     #f97373;
+  --gf-dipper:  #60a5fa;
+  --gf-ford:    #fde68a;
+  --gf-bill:    #fbbf24;
+  --gf-bg:      #020617;
+  --gf-bg2:     #0f172a;
+  --panel-bg:   rgba(15,23,42,0.96);
+  --border:     rgba(148,163,184,0.5);
+  --text:       #e2e8f0;
+  --text-dim:   #94a3b8;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--gf-bg);
+  color:var(--text);
+  overflow-x:hidden;
+  min-height:100vh;
+}
+
+/* ── Particles ── */
+.particle{
+  position:fixed;pointer-events:none;z-index:500;
+  font-size:28px;
+  will-change:transform,opacity;
+  animation:floatUp 16s ease-in-out infinite;
+}
+@keyframes floatUp{
+  0%{transform:translateY(100vh) rotate(0deg);opacity:0}
+  8%{opacity:.7}
+  50%{opacity:.55}
+  85%{opacity:.4}
+  100%{transform:translateY(-12vh) rotate(360deg);opacity:0}
+}
+
+/* ── Nav ── */
+nav{
+  position:sticky;top:0;z-index:1000;
+  background:rgba(15,23,42,.97);
+  border-bottom:2px solid var(--gf-mabel);
+  padding:8px 16px;
+  display:flex;flex-wrap:wrap;align-items:center;gap:8px;
+  backdrop-filter:blur(12px);
+}
+.nav-brand{
+  font-family:'Cinzel Decorative',serif;
+  font-size:13px;color:var(--gf-mabel);
+  text-decoration:none;margin-right:8px;
+  text-shadow:0 0 10px var(--gf-mabel);
+}
+.nav-link{
+  text-decoration:none;color:var(--text);font-weight:700;font-size:12px;
+  padding:5px 10px;border-radius:999px;
+  border:1.5px solid var(--border);
+  background:rgba(15,23,42,.9);
+  transition:.2s;
+}
+.nav-link:hover{
+  background:rgba(232,121,249,.2);
+  border-color:var(--gf-mabel);
+  transform:translateY(-1px);
+  box-shadow:0 0 8px var(--gf-mabel);
+}
+.nav-dropdown{position:relative}
+.nav-dropdown-menu{
+  display:none;position:absolute;top:110%;left:0;
+  background:var(--gf-bg2);
+  border:1.5px solid var(--gf-mabel);
+  border-radius:12px;min-width:220px;
+  padding:8px 0;z-index:2000;
+  box-shadow:0 8px 24px rgba(0,0,0,.7);
+}
+.nav-dropdown:hover .nav-dropdown-menu{display:block}
+.nav-dropdown-menu a{
+  display:block;padding:7px 16px;
+  text-decoration:none;color:var(--text-dim);font-size:12px;font-weight:700;
+  transition:.15s;
+}
+.nav-dropdown-menu a:hover{color:var(--gf-mabel);background:rgba(232,121,249,.1)}
+
+/* ── Sound toggle ── */
+#sound-btn{
+  position:fixed;right:14px;bottom:14px;z-index:1200;
+  background:var(--gf-bg2);border:2px solid var(--gf-mabel);
+  border-radius:999px;padding:8px 14px;
+  color:var(--text);font-weight:800;font-size:13px;
+  cursor:pointer;display:flex;align-items:center;gap:5px;
+  transition:.2s;
+}
+#sound-btn:hover{background:rgba(232,121,249,.2);box-shadow:0 0 12px var(--gf-mabel)}
+
+/* ── Section wrapper ── */
+.section{
+  background:var(--panel-bg);
+  border-radius:18px;padding:28px 24px;
+  margin:28px auto;width:92%;max-width:1000px;
+  border:2px solid var(--border);
+  box-shadow:0 4px 22px rgba(0,0,0,.7);
+  position:relative;z-index:1;
+}
+.section::before{
+  content:"";position:absolute;inset:-4px;border-radius:22px;
+  border:2px dashed rgba(232,121,249,.3);
+  transform:rotate(-.5deg);pointer-events:none;
+}
+.section::after{
+  content:"";position:absolute;inset:-10px;border-radius:26px;
+  border:2px solid rgba(232,121,249,.15);
+  transform:rotate(.8deg);pointer-events:none;
+}
+
+h1,h2,h3{font-family:'Cinzel Decorative',serif}
+h1{color:var(--gf-mabel);font-size:clamp(18px,4vw,32px);
+   text-shadow:0 0 18px rgba(232,121,249,.8);margin-bottom:12px}
+h2{color:var(--gf-teal);font-size:clamp(14px,3vw,22px);margin-bottom:14px}
+h3{color:var(--gf-gold);font-size:clamp(13px,2.5vw,17px);margin-bottom:8px}
+p{line-height:1.7;color:var(--text-dim);margin-bottom:10px}
+ul{padding-left:20px;color:var(--text-dim);line-height:1.9}
+li{margin-bottom:3px}
+a{color:var(--gf-teal)}
+code{background:rgba(15,23,42,.9);padding:2px 5px;border-radius:4px;font-size:13px;color:var(--gf-gold)}
+blockquote{
+  border-left:4px solid var(--gf-mabel);
+  padding:10px 16px;margin:12px 0;
+  background:rgba(232,121,249,.07);border-radius:0 12px 12px 0;
+  color:var(--gf-mabel2);font-style:italic;
+}
+
+/* ── Hero ── */
+.hero-circle{
+  width:200px;height:200px;margin:0 auto 20px;
+  border-radius:50%;
+  background:radial-gradient(circle at 35% 25%,var(--gf-mabel),#7c3aed,var(--gf-bg2));
+  border:5px solid var(--gf-mabel);
+  box-shadow:0 0 40px rgba(232,121,249,.7),0 0 80px rgba(232,121,249,.3);
+  display:flex;align-items:center;justify-content:center;
+  font-size:80px;
+  animation:heroPulse 3s ease-in-out infinite;
+}
+@keyframes heroPulse{
+  0%,100%{box-shadow:0 0 40px rgba(232,121,249,.7),0 0 80px rgba(232,121,249,.3)}
+  50%{box-shadow:0 0 60px rgba(232,121,249,1),0 0 120px rgba(232,121,249,.5)}
+}
+.badge{
+  display:inline-block;
+  background:linear-gradient(135deg,var(--gf-mabel),#7c3aed);
+  color:#fff;font-weight:900;font-size:11px;letter-spacing:.05em;
+  padding:6px 14px;border-radius:999px;margin:10px 0;
+  box-shadow:0 0 14px rgba(232,121,249,.6);
+}
+
+/* ── Jump bar ── */
+.jump-bar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}
+.jump-btn{
+  padding:6px 12px;border-radius:999px;
+  background:rgba(232,121,249,.12);
+  border:1.5px solid var(--gf-mabel);
+  color:var(--gf-mabel2);font-weight:800;font-size:12px;
+  text-decoration:none;cursor:pointer;transition:.2s;
+}
+.jump-btn:hover{background:rgba(232,121,249,.3);transform:translateY(-1px)}
+
+/* ── Topics grid ── */
+.topic-grid{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.topic-tag{
+  background:rgba(34,211,238,.12);border:1.5px solid var(--gf-teal);
+  border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700;color:var(--gf-teal);
+}
+
+/* ── Accordion ── */
+.accordion{
+  border-radius:14px;overflow:hidden;
+  margin-bottom:10px;border:1.5px solid var(--border);
+}
+.acc-header{
+  padding:12px 16px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  font-weight:900;color:#0f172a;font-size:15px;
+  background:linear-gradient(90deg,var(--gf-mabel),#a855f7);
+  transition:.2s;
+}
+.acc-header:hover{filter:brightness(1.1)}
+.acc-content{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.acc-inner{padding:16px}
+
+/* ── Card grid ── */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin:14px 0}
+.card{
+  background:rgba(15,23,42,.9);border-radius:14px;
+  border:1.5px solid var(--border);padding:16px;
+  transition:.2s;
+}
+.card:hover{border-color:var(--gf-mabel);transform:translateY(-2px);box-shadow:0 6px 20px rgba(232,121,249,.2)}
+.card-role{
+  font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.05em;
+  color:var(--gf-mabel);margin-bottom:6px;
+}
+.card-name{color:var(--gf-teal);font-weight:900;font-size:15px;margin-bottom:6px}
+
+/* ── Phase cards ── */
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin:14px 0}
+.phase-card{
+  background:rgba(15,23,42,.9);border-radius:14px;
+  border:2px solid var(--gf-mabel);padding:16px;text-align:center;
+}
+.phase-num{
+  width:36px;height:36px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gf-mabel),#7c3aed);
+  color:#fff;font-weight:900;font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 8px;
+}
+.phase-name{color:var(--gf-teal);font-weight:900;font-size:13px;margin-bottom:4px}
+.phase-tag{
+  font-size:10px;background:rgba(250,204,21,.12);
+  border:1px solid var(--gf-gold);border-radius:999px;
+  padding:2px 7px;color:var(--gf-gold);display:inline-block;margin-top:6px;
+}
+
+/* ── Quiz ── */
+.quiz-q{color:var(--gf-teal);font-weight:900;margin:16px 0 8px;font-size:14px}
+.quiz-opt{
+  background:rgba(15,23,42,.9);padding:10px 14px;
+  border-radius:12px;margin:5px 0;
+  border:1.5px solid var(--border);cursor:pointer;
+  transition:.15s;font-size:14px;
+}
+.quiz-opt:hover:not(.locked){background:rgba(232,121,249,.15);border-color:var(--gf-mabel);transform:translateY(-1px)}
+.q-correct{background:rgba(34,197,94,.25)!important;border-color:#22c55e!important;color:#bbf7d0}
+.q-wrong{background:rgba(248,113,113,.25)!important;border-color:#f87171!important;color:#fecaca}
+.locked{cursor:default!important}
+
+/* ── Adventure ── */
+.adv-choice{
+  background:rgba(15,23,42,.9);padding:12px 16px;
+  border-radius:14px;margin:8px 0;
+  border:1.5px solid var(--border);cursor:pointer;
+  transition:.15s;font-size:14px;
+}
+.adv-choice:hover:not(.locked){background:rgba(34,211,238,.1);border-color:var(--gf-teal);transform:translateY(-1px)}
+.adv-picked{background:rgba(34,211,238,.2)!important;border-color:var(--gf-gold)!important}
+.hidden{display:none!important}
+
+/* ── Flashcard ── */
+#fc-card{
+  background:rgba(15,23,42,.95);border-radius:18px;
+  padding:28px 22px;border:2px solid var(--gf-mabel);
+  min-height:160px;display:flex;flex-direction:column;justify-content:center;
+  cursor:pointer;transition:.2s;
+}
+#fc-card:hover{box-shadow:0 0 20px rgba(232,121,249,.3)}
+#fc-front{font-size:17px;font-weight:900;color:var(--gf-teal);line-height:1.5}
+#fc-back{font-size:15px;color:var(--gf-mabel2);line-height:1.6;margin-top:12px}
+.fc-controls{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
+.fc-btn{
+  padding:9px 16px;border-radius:999px;border:none;
+  font-weight:900;cursor:pointer;font-family:'Nunito',sans-serif;font-size:13px;
+  transition:.15s;
+}
+.fc-btn:hover{transform:translateY(-1px)}
+.btn-show{background:var(--gf-teal);color:#0f172a}
+.btn-right{background:#22c55e;color:#022c22}
+.btn-wrong{background:#f97373;color:#450a0a}
+.btn-skip{background:rgba(148,163,184,.2);color:var(--text-dim);border:1px solid var(--border)}
+.box-info{margin-top:10px;font-size:13px;color:var(--text-dim)}
+
+/* ── Study links ── */
+.link-card{
+  display:flex;align-items:center;gap:12px;
+  background:rgba(15,23,42,.9);border-radius:14px;
+  padding:14px 16px;border:1.5px solid var(--border);
+  text-decoration:none;color:var(--text);
+  transition:.2s;margin-bottom:10px;
+}
+.link-card:hover{border-color:var(--gf-mabel);transform:translateX(4px)}
+.link-icon{font-size:24px;flex-shrink:0}
+.link-label{font-weight:900;color:var(--gf-mabel);font-size:14px}
+.link-desc{font-size:12px;color:var(--text-dim)}
+
+/* ── Confetti ── */
+.confetti-piece{
+  position:fixed;pointer-events:none;z-index:9999;
+  width:8px;height:10px;border-radius:2px;
+  animation:confettiFall 3s ease-in forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(-20px) rotate(0deg);opacity:1}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0}
+}
+
+/* ── Character names ── */
+.dipper{color:#60a5fa;font-weight:900}
+.mabel{color:var(--gf-mabel);font-weight:900}
+.ford{color:var(--gf-ford);font-weight:900}
+.bill{color:var(--gf-bill);font-weight:900;text-shadow:0 0 8px rgba(250,191,36,.8)}
+.stan{color:#f97373;font-weight:900}
+.soos{color:#a3e635;font-weight:900}
+.wendy{color:#fb923c;font-weight:900}
+
+/* ── Score ── */
+#score-box{
+  background:rgba(15,23,42,.98);border-radius:18px;
+  border:2px solid var(--gf-mabel);padding:24px;text-align:center;
+}
+.score-num{font-size:48px;font-weight:900;color:var(--gf-mabel);font-family:'Cinzel Decorative',serif}
+.retake-btn{
+  margin-top:14px;padding:10px 22px;border-radius:999px;
+  background:linear-gradient(135deg,var(--gf-mabel),#7c3aed);
+  color:#fff;font-weight:900;border:none;cursor:pointer;
+  font-family:'Nunito',sans-serif;font-size:14px;
+  transition:.2s;
+}
+.retake-btn:hover{transform:scale(1.05)}
+
+/* ── Notes ── */
+.note-card{
+  background:linear-gradient(135deg,rgba(232,121,249,.07),rgba(34,211,238,.05));
+  border:1.5px solid rgba(232,121,249,.3);
+  border-radius:14px;padding:16px;margin-bottom:12px;
+}
+.note-title{color:var(--gf-gold);font-weight:900;margin-bottom:6px;font-size:14px}
+
+/* ── Progress bar ── */
+.progress-wrap{background:rgba(15,23,42,.9);border-radius:999px;height:8px;margin:8px 0;overflow:hidden}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--gf-mabel),var(--gf-teal));border-radius:999px;transition:width .4s}
+
+/* ── Mini quiz in accordions ── */
+.mini-q{color:var(--gf-teal);font-weight:900;margin:14px 0 7px;font-size:13px}
+.mini-opt{
+  background:rgba(15,23,42,.9);padding:8px 12px;
+  border-radius:10px;margin:4px 0;
+  border:1.5px solid var(--border);cursor:pointer;font-size:13px;
+  transition:.15s;
+}
+.mini-opt:hover:not(.locked){background:rgba(232,121,249,.12);border-color:var(--gf-mabel)}
+.mini-correct{background:rgba(34,197,94,.2)!important;border-color:#22c55e!important;color:#bbf7d0}
+.mini-wrong{background:rgba(248,113,113,.2)!important;border-color:#f87171!important;color:#fecaca}
+
+footer{
+  text-align:center;padding:30px 20px 20px;
+  color:var(--text-dim);font-size:13px;line-height:1.9;
+  position:relative;z-index:1;
+}
+footer a{color:var(--gf-mabel);text-decoration:none}
+footer a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="#">🌲 GF Security+</a>
+  <a class="nav-link" href="https://charleneluequeue.github.io/" target="_blank">Portfolio</a>
+  <a class="nav-link" href="#top">Study Hub</a>
+  <div class="nav-dropdown">
+    <span class="nav-link" style="cursor:pointer">📺 All Cartoons ▾</span>
+    <div class="nav-dropdown-menu">
+      <a href="cartoon-spongebob.html">🧽 SpongeBob SquarePants</a>
+      <a href="cartoon-ben10.html">⌚ Ben 10</a>
+      <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+      <a href="cartoon-avatar.html">🌊 Avatar: TLA</a>
+      <a href="cartoon-knd.html">🔢 Kids Next Door</a>
+      <a href="cartoon-xmen.html">⚡ X-Men</a>
+      <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+      <a href="cartoon-futurama.html">🚀 Futurama</a>
+      <a href="cartoon-danny.html">👻 Danny Phantom</a>
+      <a href="cartoon-fairyodd.html">🧚 Fairly OddParents</a>
+      <a href="cartoon-magicbus.html">🚌 Magic School Bus</a>
+      <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+      <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+      <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+      <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+    </div>
+  </div>
+  <a class="nav-link" href="#adventure">Adventure</a>
+  <a class="nav-link" href="#quiz">Quiz</a>
+  <a class="nav-link" href="#flashcards">Flashcards</a>
+</nav>
+
+<!-- HERO -->
+<div class="section" id="top" style="text-align:center">
+  <div class="hero-circle">🌲</div>
+  <div class="badge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <h1>Gravity Falls Security+ Study Hub</h1>
+  <p>Welcome to Gravity Falls, Oregon — where the Mystery Shack runs on paranoia, Journal 3 is the ultimate threat intelligence feed, and a triangular dream demon named Bill Cipher is your top-tier APT. Learn every Security+ SY0-701 domain through Dipper's investigations, Mabel's chaos, Ford's bunker architecture, and Bill's relentless social engineering.</p>
+  <blockquote>"Trust no one." — Journal 3 &nbsp;|&nbsp; "A DEAL'S A DEAL!" — Bill Cipher</blockquote>
+</div>
+
+<!-- JUMP BAR -->
+<div class="section" style="padding:18px 22px">
+  <div class="jump-bar">
+    <a class="jump-btn" href="#topics">📚 Topics</a>
+    <a class="jump-btn" href="#domains">🧠 Study Guide</a>
+    <a class="jump-btn" href="#characters">🧬 Characters</a>
+    <a class="jump-btn" href="#analogies">🔍 Analogies</a>
+    <a class="jump-btn" href="#notes">📝 Notes</a>
+    <a class="jump-btn" href="#ir-lifecycle">🚨 IR Lifecycle</a>
+    <a class="jump-btn" href="#detection">🔎 Detection</a>
+    <a class="jump-btn" href="#roles">👥 Roles</a>
+    <a class="jump-btn" href="#reporting">📋 Reporting</a>
+    <a class="jump-btn" href="#post-ir">🔁 Post-Incident</a>
+    <a class="jump-btn" href="#adventure">🌀 Adventure</a>
+    <a class="jump-btn" href="#links">🔗 Links</a>
+    <a class="jump-btn" href="#flashcards">🃏 Flashcards</a>
+    <a class="jump-btn" href="#quiz">✏️ Quiz</a>
+  </div>
+</div>
+
+<!-- TOPICS COVERED -->
+<div class="section" id="topics">
+  <h2>📚 Topics Covered — All 5 Domains</h2>
+  
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Domain 1.0 — General Security Concepts (12%)</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p>Objectives: 1.1 Security Controls · 1.2 Fundamental Concepts · 1.3 Change Management · 1.4 Cryptographic Solutions</p>
+      <div class="topic-grid">
+        <span class="topic-tag">CIA Triad</span><span class="topic-tag">Zero Trust</span><span class="topic-tag">AAA</span>
+        <span class="topic-tag">Non-repudiation</span><span class="topic-tag">Hashing</span><span class="topic-tag">PKI</span>
+        <span class="topic-tag">Symmetric/Asymmetric</span><span class="topic-tag">MFA</span><span class="topic-tag">Physical Security</span>
+        <span class="topic-tag">Honeypots</span><span class="topic-tag">Change Management</span><span class="topic-tag">Certificates</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Domain 2.0 — Threats, Vulnerabilities &amp; Mitigations (22%)</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p>Objectives: 2.1 Threat Actors · 2.2 Attack Vectors · 2.3 Vulnerabilities · 2.4 Indicators of Malicious Activity · 2.5 Mitigations</p>
+      <div class="topic-grid">
+        <span class="topic-tag">APT / Nation-State</span><span class="topic-tag">Social Engineering</span><span class="topic-tag">Phishing/Smishing</span>
+        <span class="topic-tag">Malware Types</span><span class="topic-tag">SQL Injection</span><span class="topic-tag">Buffer Overflow</span>
+        <span class="topic-tag">DDoS</span><span class="topic-tag">Ransomware</span><span class="topic-tag">Zero-day</span>
+        <span class="topic-tag">Insider Threat</span><span class="topic-tag">Hardening</span><span class="topic-tag">Patching</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Domain 3.0 — Security Architecture (18%)</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p>Objectives: 3.1 Architecture Models · 3.2 Enterprise Infrastructure · 3.3 Data Protection · 3.4 Resilience &amp; Recovery</p>
+      <div class="topic-grid">
+        <span class="topic-tag">Network Segmentation</span><span class="topic-tag">DMZ</span><span class="topic-tag">VPN/SASE/SD-WAN</span>
+        <span class="topic-tag">Cloud IaaS/PaaS/SaaS</span><span class="topic-tag">Firewalls/WAF</span><span class="topic-tag">IDS/IPS</span>
+        <span class="topic-tag">Data Classification</span><span class="topic-tag">Backups/RTO/RPO</span><span class="topic-tag">Air Gap</span>
+        <span class="topic-tag">High Availability</span><span class="topic-tag">Load Balancing</span><span class="topic-tag">Virtualization</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Domain 4.0 — Security Operations (28%)</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p>Objectives: 4.1 Security Techniques · 4.2 Asset Management · 4.3 Vulnerability Management · 4.4 Monitoring · 4.5 Enterprise Capabilities · 4.6 Identity &amp; Access · 4.7 Automation · 4.8 Incident Response · 4.9 Investigations</p>
+      <div class="topic-grid">
+        <span class="topic-tag">SIEM</span><span class="topic-tag">EDR/XDR</span><span class="topic-tag">Incident Response Phases</span>
+        <span class="topic-tag">RBAC/ABAC/MFA</span><span class="topic-tag">SSO/SAML/LDAP</span><span class="topic-tag">Vulnerability Scanning</span>
+        <span class="topic-tag">Log Analysis</span><span class="topic-tag">Threat Hunting</span><span class="topic-tag">Digital Forensics</span>
+        <span class="topic-tag">DLP</span><span class="topic-tag">DMARC/SPF/DKIM</span><span class="topic-tag">802.1X</span>
+      </div>
+    </div></div>
+  </div>
+
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>Domain 5.0 — Security Program Management &amp; Oversight (20%)</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p>Objectives: 5.1 Security Governance · 5.2 Risk Management · 5.3 Third-Party Risk · 5.4 Compliance · 5.5 Audits &amp; Assessments · 5.6 Security Awareness</p>
+      <div class="topic-grid">
+        <span class="topic-tag">Policy/Standard/Procedure</span><span class="topic-tag">Risk Register</span><span class="topic-tag">BIA/RTO/RPO</span>
+        <span class="topic-tag">SLA/NDA/MOU</span><span class="topic-tag">Pen Testing</span><span class="topic-tag">Compliance Frameworks</span>
+        <span class="topic-tag">GDPR/Privacy</span><span class="topic-tag">SLE/ALE/ARO</span><span class="topic-tag">Vendor Assessment</span>
+        <span class="topic-tag">Phishing Campaigns</span><span class="topic-tag">Security Awareness</span><span class="topic-tag">Governance Structures</span>
+      </div>
+    </div></div>
+  </div>
+</div>
+
+<!-- DOMAIN STUDY GUIDE -->
+<div class="section" id="domains">
+  <h2>🧠 Domain Study Guide — Gravity Falls Mnemonics</h2>
+
+  <!-- D1 P.I.N.E.S. -->
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>📌 P.I.N.E.S. — Domain 1: General Security Concepts</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p><strong style="color:var(--gf-mabel)">P.I.N.E.S.</strong> — <b>P</b>olicies, <b>I</b>ntegrity, <b>N</b>etworks, <b>E</b>ncryption, <b>S</b>afeguards</p>
+      <h3>CIA Triad &amp; Fundamental Concepts</h3>
+      <ul>
+        <li><b>Confidentiality:</b> Journal 3 secrets stay hidden from Gideon and Bill.</li>
+        <li><b>Integrity:</b> Entries remain unaltered; Blendin's time-travel can't corrupt them.</li>
+        <li><b>Availability:</b> Ford's bunker systems stay online during Weirdmageddon.</li>
+        <li><b>Non-repudiation:</b> Digital signatures prove Ford wrote the journals — he can't deny it.</li>
+        <li><b>AAA:</b> Authentication (who you are), Authorization (what you can do), Accounting (what you did).</li>
+        <li><b>Zero Trust:</b> "Trust no one" — even inside the Shack, everyone is verified before accessing Ford's lab.</li>
+      </ul>
+      <h3>Security Control Types</h3>
+      <ul>
+        <li><b>Preventive:</b> Lock the bunker door — stops Bill before he enters.</li>
+        <li><b>Detective:</b> Cameras catch Gideon sneaking through the vending machine.</li>
+        <li><b>Corrective:</b> Restore journals from backup after an alteration.</li>
+        <li><b>Deterrent:</b> Warning sign: "DO NOT ENTER — Highly Dangerous Anomalies."</li>
+        <li><b>Compensating:</b> If biometrics fail, use a multi-digit code instead.</li>
+      </ul>
+      <h3>Cryptographic Solutions</h3>
+      <ul>
+        <li><b>Hashing:</b> One-way fingerprint; SHA-256 the journal page, any change detected immediately.</li>
+        <li><b>Salting:</b> Add random data before hashing to defeat rainbow table attacks on passwords.</li>
+        <li><b>PKI:</b> Ford issues certificates; CA signs them; CRL lists revoked certs.</li>
+        <li><b>Symmetric (AES):</b> One shared key — Dipper and Ford both hold it.</li>
+        <li><b>Asymmetric (RSA/ECC):</b> Ford publishes a public key; only his private key decrypts.</li>
+      </ul>
+      <div class="mini-q">Mini Quiz: Hiding Journal 3 in a secret compartment primarily protects which CIA pillar?</div>
+      <div class="mini-opt" onclick="miniAnswer(this,true)">A. Confidentiality</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">B. Integrity</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">C. Availability</div>
+    </div></div>
+  </div>
+
+  <!-- D2 S.T.A.N.F.O.R.D. -->
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>⚡ S.T.A.N.F.O.R.D. — Domain 2: Threats, Vulnerabilities &amp; Mitigations</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p><strong style="color:var(--gf-mabel)">S.T.A.N.F.O.R.D.</strong> — <b>S</b>ocial Engineering, <b>T</b>hreat Actors, <b>A</b>ttack Vectors, <b>N</b>etwork Attacks, <b>F</b>laws, <b>O</b>utages, <b>R</b>ansomware, <b>D</b>emons</p>
+      <h3>Threat Actor Classifications</h3>
+      <ul>
+        <li><span class="bill">Bill Cipher</span>: APT/Nation-state level — reality-bending, high resources, sophisticated. Motivated by chaos and conquest.</li>
+        <li><b>Gideon Gleeful</b>: Hacktivist/organized-crime hybrid — social engineering, physical threats, persistent adversary.</li>
+        <li><b>Random anomalies</b>: Unskilled attackers / zero-day threats — unpredictable, zero-day exploits in reality itself.</li>
+        <li><b>Shack insider</b>: Insider threat — legitimate access abused; most dangerous because already trusted.</li>
+      </ul>
+      <h3>Social Engineering Attacks</h3>
+      <ul>
+        <li><b>Phishing:</b> Fake email — "New anomaly research discovered, click here."</li>
+        <li><b>Spear phishing:</b> Targeted at Ford specifically — references his dimensional research.</li>
+        <li><b>Vishing:</b> Voice call — Gideon impersonating the Mayor to extract info.</li>
+        <li><b>Pretexting:</b> Bill creates a false identity and backstory to manipulate victims.</li>
+        <li><b>Watering hole:</b> Compromise a site Ford visits — GravityFallsResearch.net.</li>
+      </ul>
+      <h3>Malware &amp; Attack Types</h3>
+      <ul>
+        <li><b>Ransomware:</b> Bill encrypts Ford's research — "Sign the deal or lose everything."</li>
+        <li><b>Rootkit:</b> Hidden deep in the Shack's systems, invisible to normal scans.</li>
+        <li><b>Logic bomb:</b> Triggers when Blendin sets a specific date in the time machine.</li>
+        <li><b>DDoS:</b> Anomaly army floods the network — overwhelming capacity.</li>
+        <li><b>SQLi/XSS:</b> Application-layer attacks on the Shack's tourist website.</li>
+      </ul>
+      <div class="mini-q">Bill Cipher convincing someone to "just sign this deal" is best described as:</div>
+      <div class="mini-opt" onclick="miniAnswer(this,true)">A. Social engineering</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">B. Patch management</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">C. Network segmentation</div>
+    </div></div>
+  </div>
+
+  <!-- D3 F.O.R.D. -->
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>🏗️ F.O.R.D. — Domain 3: Security Architecture</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p><strong style="color:var(--gf-mabel)">F.O.R.D.</strong> — <b>F</b>rameworks, <b>O</b>rganization, <b>R</b>esilience, <b>D</b>esign</p>
+      <h3>Network Segmentation &amp; Infrastructure</h3>
+      <ul>
+        <li><b>Shack guest Wi-Fi:</b> Low trust, tourist-facing — think DMZ / screened subnet.</li>
+        <li><b>Ford's bunker network:</b> High security, air-gapped from tourist systems.</li>
+        <li><b>Town systems:</b> Separate segment, different risk profile entirely.</li>
+        <li><b>VPN:</b> Ford securely connects from town to his bunker over an encrypted tunnel.</li>
+        <li><b>Jump server:</b> Dipper must proxy through a secure host before touching bunker systems.</li>
+      </ul>
+      <h3>Secure Design Principles</h3>
+      <ul>
+        <li><b>Least privilege:</b> Soos has ops access; he cannot read Ford's dimensional research files.</li>
+        <li><b>Defense in depth:</b> Physical locks + network firewall + application controls + monitoring.</li>
+        <li><b>Fail-secure:</b> Bunker door defaults CLOSED, not open, on system failure.</li>
+        <li><b>Separation of duties:</b> One person discovers anomalies, another approves containment.</li>
+      </ul>
+      <h3>Resilience &amp; Recovery</h3>
+      <ul>
+        <li><b>RTO:</b> Max downtime before research operations collapse — 4 hours.</li>
+        <li><b>RPO:</b> Max data loss acceptable — no more than 24 hours of journal entries.</li>
+        <li><b>Hot/Warm/Cold sites:</b> Hot = bunker backup always running; Cold = alternate Shack location, no data yet.</li>
+        <li><b>Backups:</b> Encrypted, offsite, tested with restore drills (tabletop exercises at Ford's kitchen table).</li>
+      </ul>
+      <div class="mini-q">Keeping Ford's bunker on a separate network from the Shack guest Wi-Fi is:</div>
+      <div class="mini-opt" onclick="miniAnswer(this,true)">A. Network segmentation</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">B. Obfuscation</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">C. Vishing</div>
+    </div></div>
+  </div>
+
+  <!-- D4 W.A.D.D.L.E.S. -->
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>🐷 W.A.D.D.L.E.S. — Domain 4: Security Operations</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p><strong style="color:var(--gf-mabel)">W.A.D.D.L.E.S.</strong> — <b>W</b>atch, <b>A</b>lerts, <b>D</b>etection, <b>D</b>ata, <b>L</b>ogs, <b>E</b>vents, <b>S</b>tability</p>
+      <h3>Monitoring &amp; SIEM</h3>
+      <ul>
+        <li><b>SIEM:</b> One console showing Shack, bunker, and town events — correlates anomaly patterns.</li>
+        <li><b>Log aggregation:</b> All access logs centralized; firewall, OS, application, IDS/IPS logs combined.</li>
+        <li><b>Alert fatigue:</b> Soos ignoring the 50th "Bill-like pattern" alert of the day. Tune your rules.</li>
+        <li><b>EDR/XDR:</b> Endpoint agents watching for malicious behavior on every terminal in the Shack.</li>
+        <li><b>DLP:</b> Prevents journal entries from leaving via email to Gideon.</li>
+      </ul>
+      <h3>Identity &amp; Access Management</h3>
+      <ul>
+        <li><b>RBAC:</b> Dipper (analyst), Ford (architect/admin), Soos (IT ops) — each role has defined permissions.</li>
+        <li><b>MFA:</b> Password + hardware token + Ford's 6-finger handprint scan.</li>
+        <li><b>SSO / SAML:</b> Log in once, access all Shack systems — credentials not re-entered per service.</li>
+        <li><b>802.1X:</b> Port-based NAC — devices authenticate to the network before getting access.</li>
+        <li><b>Privileged access management (PAM):</b> Just-in-time access for admin tasks, no persistent admin sessions.</li>
+      </ul>
+      <h3>Vulnerability Management</h3>
+      <ul>
+        <li><b>CVE/CVSS:</b> Bill exploits catalogued vulnerabilities; CVSS scores prioritize which to patch first.</li>
+        <li><b>Credentialed vs. non-credentialed scans:</b> Credentialed finds more; like Dipper having a key to the room.</li>
+        <li><b>Bug bounty:</b> Ford pays anomaly hunters who responsibly disclose vulnerabilities in his systems.</li>
+      </ul>
+      <div class="mini-q">Investigating strange access patterns in Journal 3 log files is part of which IR phase?</div>
+      <div class="mini-opt" onclick="miniAnswer(this,true)">A. Detection &amp; Analysis</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">B. Preparation</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">C. Lessons Learned</div>
+    </div></div>
+  </div>
+
+  <!-- D5 B.I.L.L. -->
+  <div class="accordion" data-acc>
+    <div class="acc-header" onclick="toggleAcc(this)"><span>👁️ B.I.L.L. — Domain 5: Governance, Risk &amp; Compliance</span><span>➕</span></div>
+    <div class="acc-content"><div class="acc-inner">
+      <p><strong style="color:var(--gf-mabel)">B.I.L.L.</strong> — <b>B</b>oundaries, <b>I</b>ntegrity, <b>L</b>aws, <b>L</b>iability</p>
+      <h3>Security Governance</h3>
+      <ul>
+        <li><b>Policy:</b> "No one may access the bunker without Ford's explicit written approval." High-level, management-issued.</li>
+        <li><b>Standard:</b> "All bunker passwords must be 20+ chars, include symbols, changed every 90 days." Mandatory.</li>
+        <li><b>Procedure:</b> Exact step-by-step Dipper follows to report and contain an anomaly. Specific, actionable.</li>
+        <li><b>Guideline:</b> "Trust no one as a general mindset." Recommended, not mandatory.</li>
+      </ul>
+      <h3>Risk Management</h3>
+      <ul>
+        <li><b>Risk = Likelihood × Impact:</b> Probability Bill appears × damage he causes.</li>
+        <li><b>SLE:</b> Single loss expectancy — what one Bill attack costs in dollars.</li>
+        <li><b>ALE = SLE × ARO:</b> Annual expected loss from all Bill-type incidents per year.</li>
+        <li><b>Avoid:</b> Never open the interdimensional rift. Ever.</li>
+        <li><b>Mitigate:</b> Add mystical wards + firewalls + monitoring around the Shack.</li>
+        <li><b>Transfer:</b> Cyber insurance for anomaly-related data breaches.</li>
+        <li><b>Accept:</b> "Gravity Falls will always be weird." Residual risk acknowledged.</li>
+      </ul>
+      <h3>Compliance &amp; Audits</h3>
+      <ul>
+        <li><b>Compliance reporting:</b> Internal audits (Ford reviewing his own controls), external (regulators auditing the Shack).</li>
+        <li><b>Pen testing:</b> Dipper attempts to breach the bunker under a rules-of-engagement agreement with Ford.</li>
+        <li><b>NDA / SLA:</b> Any vendor working with anomaly data signs an NDA; SLAs define acceptable uptime.</li>
+        <li><b>GDPR/Privacy:</b> Tourist data from the Shack's website must comply with applicable privacy law.</li>
+      </ul>
+      <div class="mini-q">"No one may access the bunker without Ford's approval" is an example of a:</div>
+      <div class="mini-opt" onclick="miniAnswer(this,true)">A. Policy</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">B. Procedure</div>
+      <div class="mini-opt" onclick="miniAnswer(this,false)">C. Guideline</div>
+    </div></div>
+  </div>
+</div>
+
+<!-- CHARACTER MAPPING -->
+<div class="section" id="characters">
+  <h2>🧬 Character → Security Role Mapping</h2>
+  <div class="card-grid">
+    <div class="card"><div class="card-role">SOC Analyst / Investigator</div><div class="card-name dipper">Dipper Pines</div><p>Reads logs, hunts threats, and documents anomalies in the journal. Dipper is your incident responder — methodical, evidence-driven, and relentless in detection and analysis.</p></div>
+    <div class="card"><div class="card-role">User Awareness / Chaos Tester</div><div class="card-name mabel">Mabel Pines</div><p>Embodies end-user behavior — creative, unpredictable, and occasionally the source of unintentional insider risk. Mabel's social energy maps to user-awareness training and phishing susceptibility testing.</p></div>
+    <div class="card"><div class="card-role">Security Architect / CISO</div><div class="card-name ford">Ford Pines</div><p>The paranoid genius who designed the bunker's security architecture. Ford is your CISO — threat modeler, policy author, zero-trust evangelist, and PKI authority for anomaly research systems.</p></div>
+    <div class="card"><div class="card-role">Business Owner / Insider Risk</div><div class="card-name stan">Grunkle Stan</div><p>Stan runs the business with minimal security hygiene — cash-only, fake exhibits, probably violates a compliance regulation per episode. He's your insider-risk-adjacent business owner who prioritizes revenue over security controls.</p></div>
+    <div class="card"><div class="card-role">IT Operations / Help Desk</div><div class="card-name soos">Soos Ramirez</div><p>Soos fixes things — sometimes correctly, sometimes accidentally creating a misconfiguration. He represents IT ops: enthusiastic, well-meaning, and the reason change management procedures exist.</p></div>
+    <div class="card"><div class="card-role">Physical Security / Operator</div><div class="card-name wendy">Wendy Corduroy</div><p>Cool under pressure, practical, and handles physical security. Wendy understands the real-world controls — she knows when to escalate, when to hold the line, and when something is genuinely weird vs. normal weird.</p></div>
+    <div class="card"><div class="card-role">APT / Threat Actor</div><div class="card-name bill">Bill Cipher</div><p>The ultimate Advanced Persistent Threat. Bill is nation-state-level: near-unlimited resources, reality-bending capabilities, motivated by chaos. He social engineers, exfiltrates from minds, and attacks at every layer simultaneously.</p></div>
+    <div class="card"><div class="card-role">Persistent Adversary</div><div class="card-name" style="color:#f97373">Gideon Gleeful</div><p>Organized crime / hacktivist hybrid. Gideon uses social engineering, physical coercion, and manipulation to gain access. He's the threat actor that never gives up — persistent, resourceful, and personally motivated.</p></div>
+  </div>
+</div>
+
+<!-- DEEP-DIVE ANALOGIES -->
+<div class="section" id="analogies">
+  <h2>🔍 Deep-Dive Security Analogies</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-role">Scenario → Concept</div>
+      <div class="card-name">Bill Reading Ford's Mind → Data Exfiltration</div>
+      <p>When Bill enters Ford's mindscape and extracts research data directly, that's advanced data exfiltration bypassing all technical controls. The countermeasure isn't purely technical — it's compartmentalization (Ford never giving Bill a mental foothold) plus strong MFA on access to sensitive thoughts. Organizations face the same with spear-phishing + credential theft leading to exfil.</p>
+    </div>
+    <div class="card">
+      <div class="card-role">Scenario → Concept</div>
+      <div class="card-name">Vending Machine Elevator → Access Control Vestibule</div>
+      <p>The secret vending machine that leads to Ford's bunker is a physical access control vestibule — you must authenticate through the first door before the second opens. It enforces the principle that two separated checkpoints prevent tailgating. On the SY0-701 exam, this maps directly to objective 1.2 physical security controls and mantraps.</p>
+    </div>
+    <div class="card">
+      <div class="card-role">Scenario → Concept</div>
+      <div class="card-name">Blendin's Time Tampering → Integrity Violations</div>
+      <p>Blendin Blandin traveling through logs and rolling back events is a perfect integrity attack — data is modified, timestamps are wrong, and the chain of custody for forensic evidence is destroyed. The defense is immutable logging, cryptographic log signing, and WORM storage so that even time-travel can't alter what was written.</p>
+    </div>
+    <div class="card">
+      <div class="card-role">Scenario → Concept</div>
+      <div class="card-name">Weirdmageddon → Availability Attack (DDoS)</div>
+      <p>Bill turning Gravity Falls into a nightmare dimension is the ultimate availability attack — every system overwhelmed, no services function, communications cut off. The countermeasure parallels enterprise DDoS mitigation: scrubbing centers, CDN-based absorption, emergency failover to cold sites, and an incident response plan that survives Weirdmageddon-level disruption.</p>
+    </div>
+  </div>
+</div>
+
+<!-- STUDY NOTES -->
+<div class="section" id="notes">
+  <h2>📝 High-Frequency Exam Topics — Study Notes</h2>
+  <div class="note-card">
+    <div class="note-title">🔑 Ports You Must Know (from your flashcard CSV)</div>
+    <p>SSH=22 · HTTP=80 · HTTPS=443 · DNS=53 · NTP=123 · RDP=3389 · LDAP=389 · LDAPS=636 · Syslog=514 · RADIUS=1812/1813 · TACACS+=49</p>
+    <p>Memory hook: <em>Bill speaks on port 443 (HTTPS), but his real channel is port 22 (SSH — Secure Shell… Bill's deals).</em></p>
+  </div>
+  <div class="note-card">
+    <div class="note-title">⚖️ Risk Formula &amp; Business Impact</div>
+    <p><b>Risk = Likelihood × Impact</b> &nbsp;|&nbsp; <b>SLE = Asset Value × Exposure Factor</b> &nbsp;|&nbsp; <b>ALE = SLE × ARO</b></p>
+    <p>RTO = max downtime tolerated before operations fail. RPO = max data age acceptable at recovery. MTTR = average repair time. MTBF = average time between failures.</p>
+  </div>
+  <div class="note-card">
+    <div class="note-title">🔐 Crypto Quick Reference</div>
+    <p>AES = symmetric (128/192/256-bit) · RSA/ECC = asymmetric · SHA-256/SHA-3 = hashing · PBKDF2/bcrypt = key stretching/salting · Diffie-Hellman = key exchange · PFS = session keys not derived from long-term keys.</p>
+  </div>
+  <div class="note-card">
+    <div class="note-title">📧 Email Security Trio</div>
+    <p><b>SPF</b> = lists authorized sending IPs in DNS · <b>DKIM</b> = cryptographic signature on outbound email · <b>DMARC</b> = policy telling receivers what to do when SPF/DKIM fail (quarantine, reject, or report).</p>
+    <p>Analogy: SPF = bouncer's guest list · DKIM = wax seal on the envelope · DMARC = instructions to the post office if the seal is broken.</p>
+  </div>
+  <div class="note-card">
+    <div class="note-title">🛡️ Zero Trust Core Principles</div>
+    <p>Never trust, always verify. Assume breach. Least privilege always. Micro-segmentation. Continuous monitoring and validation of every session — even Ford's own account gets re-verified when entering the bunker.</p>
+  </div>
+</div>
+
+<!-- IR LIFECYCLE -->
+<div class="section" id="ir-lifecycle">
+  <h2>🚨 Incident Response Lifecycle — Domain 4.8</h2>
+  <div class="phase-grid">
+    <div class="phase-card">
+      <div class="phase-num">1</div>
+      <div class="phase-name">Preparation</div>
+      <p style="font-size:12px;color:var(--text-dim)">Plans, playbooks, tools, training. Ford writes contingency plans; Dipper memorizes the journal.</p>
+      <div class="phase-tag">4.8 Exam Tag</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">2</div>
+      <div class="phase-name">Detection &amp; Analysis</div>
+      <p style="font-size:12px;color:var(--text-dim)">Identify and understand the incident. Noticing Bill's symbol in SIEM logs and tracing the pattern.</p>
+      <div class="phase-tag">4.8 Exam Tag</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">3</div>
+      <div class="phase-name">Containment</div>
+      <p style="font-size:12px;color:var(--text-dim)">Limit the damage. Isolate compromised portals, restrict access to bunker systems, snapshot state.</p>
+      <div class="phase-tag">4.8 Exam Tag</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">4</div>
+      <div class="phase-name">Eradication</div>
+      <p style="font-size:12px;color:var(--text-dim)">Remove the threat. Purge Bill's code, close gateways, rebuild affected systems from known-good images.</p>
+      <div class="phase-tag">4.8 Exam Tag</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">5</div>
+      <div class="phase-name">Recovery</div>
+      <p style="font-size:12px;color:var(--text-dim)">Restore operations. Restore journals from encrypted offsite backups; verify integrity with hashes.</p>
+      <div class="phase-tag">4.8 Exam Tag</div>
+    </div>
+    <div class="phase-card">
+      <div class="phase-num">6</div>
+      <div class="phase-name">Lessons Learned</div>
+      <p style="font-size:12px;color:var(--text-dim)">Review and improve. Dipper updates Journal 3 with exactly what went wrong and how to prevent it next time.</p>
+      <div class="phase-tag">4.8 Exam Tag</div>
+    </div>
+  </div>
+</div>
+
+<!-- DETECTION DEEP DIVE -->
+<div class="section" id="detection">
+  <h2>🔎 Detection Deep Dive</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-name">Indicators of Compromise (IoC)</div>
+      <p>Account lockouts, impossible travel (Bill logging in from Dimension 52-B and Oregon simultaneously), out-of-cycle logging, missing logs, resource spikes.</p>
+    </div>
+    <div class="card">
+      <div class="card-name">Threat Hunting</div>
+      <p>Proactively searching for threats not yet detected by automated tools. Dipper reading between the lines of the journal — finding anomalies before SIEM fires.</p>
+    </div>
+    <div class="card">
+      <div class="card-name">False Positives vs. Negatives</div>
+      <p>False positive = alert fires but nothing is wrong (Mabel's glitter gun triggers motion sensors). False negative = real attack missed (Bill slips through undetected). CVSS helps prioritize which to chase.</p>
+    </div>
+    <div class="card">
+      <div class="card-name">SIEM vs. SOAR</div>
+      <p>SIEM collects, correlates, and alerts. SOAR adds automated response — auto-blocks Bill's IP, auto-creates a ticket, auto-notifies Ford without Soos needing to click anything.</p>
+    </div>
+  </div>
+  <div class="mini-q">A system that only generates alerts but does NOT block traffic is a(n):</div>
+  <div class="mini-opt" onclick="miniAnswer(this,false)">A. IPS</div>
+  <div class="mini-opt" onclick="miniAnswer(this,true)">B. IDS</div>
+  <div class="mini-opt" onclick="miniAnswer(this,false)">C. WAF</div>
+</div>
+
+<!-- ROLES & RESPONSIBILITIES -->
+<div class="section" id="roles">
+  <h2>👥 Roles &amp; Responsibilities</h2>
+  <div class="card-grid">
+    <div class="card"><div class="card-name">Data Owner</div><p>Ford — the creator and ultimate responsible party for Journal 3 data. Defines classification and access policy.</p></div>
+    <div class="card"><div class="card-name">Data Custodian</div><p>Dipper — manages and protects the data on the owner's behalf. Runs backups, enforces access controls.</p></div>
+    <div class="card"><div class="card-name">Data Processor</div><p>Soos — processes data per instructions from the owner. Doesn't make policy decisions, just executes them (sometimes incorrectly).</p></div>
+    <div class="card"><div class="card-name">Privacy Officer (DPO)</div><p>Responsible for GDPR/privacy compliance. Ensures tourist data from the Shack's gift shop isn't shared without consent.</p></div>
+  </div>
+  <div class="mini-q">The person who creates and is ultimately responsible for data classification and policy is the:</div>
+  <div class="mini-opt" onclick="miniAnswer(this,true)">A. Data Owner</div>
+  <div class="mini-opt" onclick="miniAnswer(this,false)">B. Data Custodian</div>
+  <div class="mini-opt" onclick="miniAnswer(this,false)">C. Data Processor</div>
+</div>
+
+<!-- REPORTING REQUIREMENTS -->
+<div class="section" id="reporting">
+  <h2>📋 Reporting Requirements</h2>
+  <div class="card-grid">
+    <div class="card"><div class="card-name">Internal Reporting</div><p>Immediate notification up the chain — Dipper tells Ford within 1 hour of detecting anomalous log activity. Internal SLAs typically require rapid escalation.</p></div>
+    <div class="card"><div class="card-name">External Reporting</div><p>Regulatory notifications (GDPR: 72 hours to supervisory authority), breach disclosure to affected individuals, law enforcement when criminal activity is involved.</p></div>
+    <div class="card"><div class="card-name">Timelines Matter</div><p>Many frameworks set hard deadlines: PCI DSS requires immediate notification to payment brands; HIPAA requires 60-day breach notification; GDPR requires 72 hours to regulator.</p></div>
+    <div class="card"><div class="card-name">Legal Hold &amp; Forensics</div><p>Before any eradication — preserve evidence. Chain of custody maintained for every artifact. Dipper documents who touched the journal, when, and under what supervision before it's cleaned up.</p></div>
+  </div>
+  <div class="mini-q">Under GDPR, a data breach must be reported to the supervisory authority within:</div>
+  <div class="mini-opt" onclick="miniAnswer(this,false)">A. 24 hours</div>
+  <div class="mini-opt" onclick="miniAnswer(this,true)">B. 72 hours</div>
+  <div class="mini-opt" onclick="miniAnswer(this,false)">C. 30 days</div>
+</div>
+
+<!-- POST-INCIDENT -->
+<div class="section" id="post-ir">
+  <h2>🔁 Post-Incident Activity</h2>
+  <div class="note-card">
+    <div class="note-title">Lessons Learned Meeting</div>
+    <p>Within 2 weeks of incident closure. Entire team present. Cover: what happened, root cause, what worked, what didn't, what to improve. Dipper writes it all into an updated journal entry — this becomes the new playbook.</p>
+  </div>
+  <div class="note-card">
+    <div class="note-title">Key Metrics to Review</div>
+    <p>MTTD (mean time to detect) · MTTR (mean time to respond/repair) · Number of IoCs detected vs. missed · Cost of incident · Compliance impact. These feed into the next risk assessment cycle.</p>
+  </div>
+  <div class="note-card">
+    <div class="note-title">Training &amp; Awareness Updates</div>
+    <p>If Bill's social engineering succeeded because Mabel clicked a phishing link, new training is mandatory before the next tabletop exercise. Awareness campaigns are updated to reflect current threat actor TTPs observed in the incident.</p>
+  </div>
+</div>
+
+<!-- ADVENTURE -->
+<div class="section" id="adventure">
+  <h2>🌀 Interactive Adventure: The Journal 3 Data Breach</h2>
+  <p>Journal 3 has been tampered with. Entries are missing, timestamps are wrong, and SIEM is showing Bill's triangular symbol in 14 log files. Blendin Blandin has been spotted near the server room. This is a full IR scenario — walk through every phase correctly to stop Bill and restore the journals.</p>
+
+  <div id="adv1">
+    <h3>🔍 Scene 1 — Detection: Something is Wrong</h3>
+    <p>Dipper notices journal entries from yesterday are gone, replaced by outdated versions. SIEM shows 47 failed logins from an unknown IP and a spike in outbound traffic at 3:17 AM. Ford is suspicious. What's your first move?</p>
+    <div class="adv-choice" onclick="advChoice(this,'adv2');playCorrect()">📊 Compare current journal data against known-good hashed backups and review SIEM correlation rules for the timeline</div>
+    <div class="adv-choice" onclick="advChoice(this,null);playWrong()">🎨 Assume Mabel was doodling in the logs again and close the alert</div>
+  </div>
+
+  <div id="adv2" class="hidden">
+    <h3>🛡️ Scene 2 — Containment: Limit the Damage</h3>
+    <p>Hash verification confirms 12 journal files were modified. Blendin admits to "accidentally" time-traveling through the backup server at 3 AM. Bill's symbol appears in 3 system processes — memory injection suspected. What do you do?</p>
+    <div class="adv-choice" onclick="advChoice(this,'adv3');playCorrect()">🔒 Isolate affected systems from the network, revoke all active sessions, snapshot the current state for forensics, restrict bunker access to Ford only</div>
+    <div class="adv-choice" onclick="advChoice(this,null);playWrong()">⏰ Let Blendin keep time-traveling to "fix" the timestamps himself</div>
+  </div>
+
+  <div id="adv3" class="hidden">
+    <h3>🧹 Scene 3 — Eradication: Remove the Threat</h3>
+    <p>Memory forensics confirms a rootkit installed by Bill's influence via a malicious macro in an email Ford opened. The rootkit has persistence mechanisms in 4 locations. You've contained the blast radius. Now what?</p>
+    <div class="adv-choice" onclick="advChoice(this,'adv4');playCorrect()">🔥 Wipe and rebuild affected systems from known-good baselines. Remove all 4 persistence mechanisms, rotate all credentials, patch the vulnerability used for initial access</div>
+    <div class="adv-choice" onclick="advChoice(this,null);playWrong()">🤞 Run one antivirus scan and mark the incident as resolved</div>
+  </div>
+
+  <div id="adv4" class="hidden">
+    <h3>🔁 Scene 4 — Recovery &amp; Lessons Learned</h3>
+    <p>Systems rebuilt. Now you need to restore clean data and make sure this never happens again. Ford wants full documentation. Mabel wants to add glitter to the incident report. Soos says he has a "fix."</p>
+    <div class="adv-choice" onclick="advChoice(this,'finale');playCorrect()">📋 Restore from verified encrypted backups, validate with hashes, implement email filtering and macro controls, conduct lessons learned meeting, update playbooks and awareness training</div>
+    <div class="adv-choice" onclick="advChoice(this,null);playWrong()">✨ Let Mabel write the incident report with rainbow gel pens and hope Bill doesn't come back</div>
+  </div>
+
+  <div id="finale" class="hidden">
+    <h2>⭐ Adventure Complete — You Survived Bill &amp; Blendin!</h2>
+    <p>You walked through all 6 IR phases:</p>
+    <ul>
+      <li>✅ Detection &amp; Analysis — Correlated SIEM data and confirmed compromise via hashing</li>
+      <li>✅ Containment — Isolated systems, revoked sessions, preserved forensic state</li>
+      <li>✅ Eradication — Full wipe, rebuilt from baseline, removed all persistence</li>
+      <li>✅ Recovery — Verified restore from clean backups, hash-validated integrity</li>
+      <li>✅ Lessons Learned — Playbooks updated, awareness training improved, controls hardened</li>
+    </ul>
+    <p>The wheel turns, the journals are intact, and Waddles gets a celebratory snack. Somewhere Bill's voice fades: "I'LL BE BACK!" — but next time, you'll catch him in Phase 1.</p>
+  </div>
+</div>
+
+<!-- STUDY LINKS -->
+<div class="section" id="links">
+  <h2>🔗 Study Resources</h2>
+  <a class="link-card" href="security-notes.html">
+    <span class="link-icon">📄</span>
+    <div><div class="link-label">Security Notes</div><div class="link-desc">Your personal Security+ notes (activates on GitHub upload)</div></div>
+  </a>
+  <a class="link-card" href="CompTIA-Security-Plus-SY0-701-Exam-Objectives.pdf" target="_blank">
+    <span class="link-icon">📋</span>
+    <div><div class="link-label">Official Exam Objectives PDF</div><div class="link-desc">CompTIA SY0-701 official objectives — all domains and sub-objectives (activates on GitHub upload)</div></div>
+  </a>
+  <a class="link-card" href="https://amzn.to/4nVi25Y" target="_blank" rel="noopener">
+    <span class="link-icon">📚</span>
+    <div><div class="link-label">Security+ Study Book (Amazon)</div><div class="link-desc">Recommended study guide — affiliate link</div></div>
+  </a>
+  <a class="link-card" href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank" rel="noopener">
+    <span class="link-icon">🎓</span>
+    <div><div class="link-label">Professor Messer — Free SY0-701 Course</div><div class="link-desc">Comprehensive free video course mapped to all objectives</div></div>
+  </a>
+  <a class="link-card" href="https://quizlet.com/search?query=comptia+security+plus+sy0-701&type=sets" target="_blank" rel="noopener">
+    <span class="link-icon">🃏</span>
+    <div><div class="link-label">Quizlet — SY0-701 Sets</div><div class="link-desc">Community flashcard sets for additional practice</div></div>
+  </a>
+  <a class="link-card" href="https://charleneluequeue.github.io/" target="_blank" rel="noopener">
+    <span class="link-icon">🌐</span>
+    <div><div class="link-label">Portfolio — charleneluequeue.github.io</div><div class="link-desc">Full study hub portfolio with all cartoon pages</div></div>
+  </a>
+</div>
+
+<!-- FLASHCARDS -->
+<div class="section" id="flashcards">
+  <h2>🃏 Leitner Flashcards — All 5 Domains</h2>
+  <p style="font-size:13px">Spaced repetition: Box 1 = new/weak · Box 5 = "Explain it to Ford while Bill whispers backwards." &nbsp; <kbd>Space</kbd>=flip · <kbd>1</kbd>=Again · <kbd>2</kbd>=Got It · <kbd>3</kbd>=Easy · <kbd>S</kbd>=Skip</p>
+  <div id="fc-card" onclick="flipCard()">
+    <div id="fc-front">Loading...</div>
+    <div id="fc-back" style="display:none"></div>
+  </div>
+  <div class="box-info" id="fc-box"></div>
+  <div class="fc-controls">
+    <button class="fc-btn btn-show" onclick="flipCard()">Flip Card</button>
+    <button class="fc-btn btn-right" onclick="markFC(true)">✓ Got It</button>
+    <button class="fc-btn btn-wrong" onclick="markFC(false)">✗ Again</button>
+    <button class="fc-btn btn-skip" onclick="skipFC()">→ Skip</button>
+  </div>
+  <div class="box-info" id="fc-boxes"></div>
+  <div class="progress-wrap"><div class="progress-fill" id="fc-progress" style="width:0%"></div></div>
+</div>
+
+<!-- QUIZ -->
+<div class="section" id="quiz">
+  <h2>✏️ 10-Question Security+ Quiz — Gravity Falls Edition</h2>
+  <div id="quiz-area">
+    <div class="quiz-group">
+    <div class="quiz-q">1. Hiding Journal 3 in a secret compartment primarily protects which CIA pillar?</div>
+    <div class="quiz-opt" data-orig="A. Integrity" onclick="checkQ(this,false,'CIA Triad – Confidentiality')">A. Integrity</div>
+    <div class="quiz-opt" data-orig="B. Availability" onclick="checkQ(this,false,'CIA Triad – Confidentiality')">B. Availability</div>
+    <div class="quiz-opt" data-orig="C. Confidentiality" onclick="checkQ(this,true,'CIA Triad – Confidentiality')">C. Confidentiality</div>
+    </div>
+    <div class="quiz-group">
+    <div class="quiz-q">2. Bill Cipher convincing someone to sign a deal using false promises is best described as:</div>
+    <div class="quiz-opt" data-orig="A. Patch management" onclick="checkQ(this,false,'Threats – Social Engineering')">A. Patch management</div>
+    <div class="quiz-opt" data-orig="B. Physical security" onclick="checkQ(this,false,'Threats – Social Engineering')">B. Physical security</div>
+    <div class="quiz-opt" data-orig="C. Social engineering" onclick="checkQ(this,true,'Threats – Social Engineering')">C. Social engineering</div>
+    </div>
+    <div class="quiz-group">
+    <div class="quiz-q">3. Ford's bunker network isolated from the tourist Shack Wi-Fi is an example of:</div>
+    <div class="quiz-opt" data-orig="A. Network segmentation" onclick="checkQ(this,true,'Architecture – Network Segmentation')">A. Network segmentation</div>
+    <div class="quiz-opt" data-orig="B. Obfuscation" onclick="checkQ(this,false,'Architecture – Network Segmentation')">B. Obfuscation</div>
+    <div class="quiz-opt" data-orig="C. DDoS mitigation" onclick="checkQ(this,false,'Architecture – Network Segmentation')">C. DDoS mitigation</div>
+    </div>
+    <div class="quiz-group">
+    <div class="quiz-q">4. Blendin time-traveling and rolling system state back to older versions primarily threatens:</div>
+    <div class="quiz-opt" data-orig="A. Availability" onclick="checkQ(this,false,'CIA Triad – Integrity')">A. Availability</div>
+    <div class="quiz-opt" data-orig="B. Integrity" onclick="checkQ(this,true,'CIA Triad – Integrity')">B. Integrity</div>
+    <div class="quiz-opt" data-orig="C. Confidentiality" onclick="checkQ(this,false,'CIA Triad – Integrity')">C. Confidentiality</div>
+    </div>
+    <div class="quiz-group">
+    <div class="quiz-q">5. Soos having IT ops access but NOT access to Ford's research files demonstrates:</div>
+    <div class="quiz-opt" data-orig="A. Full-disk encryption" onclick="checkQ(this,false,'Access Control – Least Privilege')">A. Full-disk encryption</div>
+    <div class="quiz-opt" data-orig="B. Tailgating" onclick="checkQ(this,false,'Access Control – Least Privilege')">B. Tailgating</div>
+    <div class="quiz-opt" data-orig="C. Least privilege" onclick="checkQ(this,true,'Access Control – Least Privilege')">C. Least privilege</div>
+    </div>
+    <div class="quiz-group">
+    <div class="quiz-q">6. Investigating strange log patterns in Journal 3 access records is part of which IR phase?</div>
+    <div class="quiz-opt" data-orig="A. Preparation" onclick="checkQ(this,false,'IR Phases – Detection &amp; Analysis')">A. Preparation</div>
+    <div class="quiz-opt" data-orig="B. Detection &amp; Analysis" onclick="checkQ(this,true,'IR Phases – Detection &amp; Analysis')">B. Detection &amp; Analysis</div>
+    <div class="quiz-opt" data-orig="C. Lessons Learned" onclick="checkQ(this,false,'IR Phases – Detection &amp; Analysis')">C. Lessons Learned</div>
+    </div>
+    <div class="quiz-group">
+    <div class="quiz-q">7. Isolating compromised portals and revoking active sessions after detecting Bill's rootkit is:</div>
+    <div class="quiz-opt" data-orig="A. Preparation" onclick="checkQ(this,false,'IR Phases – Containment')">A. Preparation</div>
+    <div class="quiz-opt" data-orig="B. Containment" onclick="checkQ(this,true,'IR Phases – Containment')">B. Containment</div>
+    <div class="quiz-opt" data-orig="C. Governance" onclick="checkQ(this,false,'IR Phases – Containment')">C. Governance</div>
+    </div>
+    <div class="quiz-group">
+    <div class="quiz-q">8. Restoring journal files from verified encrypted backups after Bill's attack is:</div>
+    <div class="quiz-opt" data-orig="A. Eradication" onclick="checkQ(this,false,'IR Phases – Recovery')">A. Eradication</div>
+    <div class="quiz-opt" data-orig="B. Detection" onclick="checkQ(this,false,'IR Phases – Recovery')">B. Detection</div>
+    <div class="quiz-opt" data-orig="C. Recovery" onclick="checkQ(this,true,'IR Phases – Recovery')">C. Recovery</div>
+    </div>
+    <div class="quiz-group">
+    <div class="quiz-q">9. "No one may access the bunker without Ford's written approval" is a(n):</div>
+    <div class="quiz-opt" data-orig="A. Policy" onclick="checkQ(this,true,'Governance – Policy vs Procedure')">A. Policy</div>
+    <div class="quiz-opt" data-orig="B. Guideline" onclick="checkQ(this,false,'Governance – Policy vs Procedure')">B. Guideline</div>
+    <div class="quiz-opt" data-orig="C. Procedure" onclick="checkQ(this,false,'Governance – Policy vs Procedure')">C. Procedure</div>
+    </div>
+    <div class="quiz-group">
+    <div class="quiz-q">10. "Never implicitly trust any user or device, even inside the Shack network" describes:</div>
+    <div class="quiz-opt" data-orig="A. Defense in depth" onclick="checkQ(this,false,'Zero Trust Architecture')">A. Defense in depth</div>
+    <div class="quiz-opt" data-orig="B. Zero Trust" onclick="checkQ(this,true,'Zero Trust Architecture')">B. Zero Trust</div>
+    <div class="quiz-opt" data-orig="C. Tailgating prevention" onclick="checkQ(this,false,'Zero Trust Architecture')">C. Tailgating prevention</div>
+    </div>
+  </div>
+
+  <div id="score-box" class="hidden" style="margin-top:20px">
+    <div class="score-num" id="score-num">0/10</div>
+    <p id="score-msg" style="margin:10px 0;font-size:15px;color:var(--text-dim)"></p>
+    <pre id="score-advice" style="white-space:pre-wrap;font-size:13px;color:var(--text-dim);text-align:left;max-width:500px;margin:10px auto"></pre>
+    <button class="retake-btn" onclick="retakeQuiz()">🔁 Retake Quiz</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p><a href="security-notes.html">📝 Security Notes</a> &nbsp;|&nbsp; <a href="https://charleneluequeue.github.io/" target="_blank">🌐 Portfolio</a></p>
+  <p style="margin-top:8px">© 2025 — Security+ SY0-701 Study Hub · Gravity Falls Edition</p>
+  <p style="font-size:11px;margin-top:6px;color:#475569">Gravity Falls characters are the property of Disney/Alex Hirsch. This is a fan-made educational resource not affiliated with or endorsed by Disney. Educational use only.</p>
+</footer>
+
+<!-- SOUND TOGGLE -->
+<button id="sound-btn" onclick="toggleSound()">🔇 Sound: OFF</button>
+
+<script>
+/* ─── Sound ─── */
+let soundOn = false;
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let actx;
+function getCtx(){if(!actx&&AudioCtx)actx=new AudioCtx();return actx}
+
+function playTone(freq,dur,type='sine',vol=0.18){
+  if(!soundOn)return;
+  const ctx=getCtx();if(!ctx)return;
+  const o=ctx.createOscillator(),g=ctx.createGain();
+  o.connect(g);g.connect(ctx.destination);
+  o.type=type;o.frequency.setValueAtTime(freq,ctx.currentTime);
+  g.gain.setValueAtTime(vol,ctx.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);
+  o.start(ctx.currentTime);o.stop(ctx.currentTime+dur);
+}
+function playCorrect(){playTone(523,.12);setTimeout(()=>playTone(659,.12),100);setTimeout(()=>playTone(784,.2),200)}
+function playWrong(){playTone(200,.15,'sawtooth',.15);setTimeout(()=>playTone(150,.25,'sawtooth',.12),150)}
+function playVictory(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,.15),i*120))}
+
+function toggleSound(){
+  soundOn=!soundOn;
+  document.getElementById('sound-btn').textContent=soundOn?'🔊 Sound: ON':'🔇 Sound: OFF';
+}
+
+/* ─── Particles ─── */
+const symbols=['🌲','📖','⭐','🌀','👁️','🔺','✨','🎀','🍂','🔮'];
+function spawnParticle(){
+  const p=document.createElement('div');
+  p.className='particle';
+  p.textContent=symbols[Math.floor(Math.random()*symbols.length)];
+  p.style.left=(Math.random()*95)+'vw';
+  const dur=12+Math.random()*8;
+  p.style.animationDuration=dur+'s';
+  /* No animationDelay — starts immediately, works on iOS Safari */
+  document.body.appendChild(p);
+  setTimeout(()=>{if(p.parentNode)p.parentNode.removeChild(p)},dur*1000+200);
+}
+/* Spawn 8 immediately so particles are visible right away */
+for(let i=0;i<8;i++)setTimeout(spawnParticle,i*300);
+setInterval(spawnParticle,2200);
+
+/* ─── Accordion ─── */
+function toggleAcc(hdr){
+  const acc=hdr.parentElement;
+  const content=acc.querySelector('.acc-content');
+  const icon=hdr.querySelector('span:last-child');
+  const isOpen=content.style.maxHeight&&content.style.maxHeight!=='0px';
+  document.querySelectorAll('[data-acc]').forEach(a=>{
+    a.querySelector('.acc-content').style.maxHeight=null;
+    a.querySelector('.acc-header span:last-child').textContent='➕';
+  });
+  if(!isOpen){
+    content.style.maxHeight=content.scrollHeight+'px';
+    icon.textContent='➖';
+  }
+}
+
+/* ─── Mini Quiz ─── */
+function miniAnswer(el,correct){
+  if(el.classList.contains('locked'))return;
+  const siblings=el.parentElement.querySelectorAll('.mini-opt');
+  siblings.forEach(s=>s.classList.add('locked'));
+  if(correct){el.classList.add('mini-correct');el.innerHTML+=' ✔ Correct!';playCorrect()}
+  else{el.classList.add('mini-wrong');el.innerHTML+=' ✖ Incorrect';playWrong()}
+}
+
+/* ─── Adventure ─── */
+function advChoice(el,next){
+  if(el.classList.contains('locked'))return;
+  const parent=el.parentElement;
+  parent.querySelectorAll('.adv-choice').forEach(c=>c.classList.add('locked'));
+  el.classList.add('adv-picked');
+  if(next){
+    const t=document.getElementById(next);
+    t.classList.remove('hidden');
+    setTimeout(()=>t.scrollIntoView({behavior:'smooth',block:'start'}),200);
+  } else {
+    const err=document.createElement('p');
+    err.style.cssText='color:#f87171;font-weight:900;margin-top:10px;font-size:14px';
+    err.textContent='⚠️ Try the other option — Bill is watching!';
+    parent.appendChild(err);
+    parent.querySelectorAll('.adv-choice').forEach(c=>c.classList.remove('locked'));
+    err.remove();
+    // reset
+    setTimeout(()=>{
+      parent.querySelectorAll('.adv-choice').forEach(c=>{c.classList.remove('locked','adv-picked')});
+      const errs=parent.querySelectorAll('p[style*="f87171"]');
+      errs.forEach(e=>e.remove());
+    },0);
+    // show message
+    const msg=document.createElement('p');
+    msg.style.cssText='color:#f87171;font-weight:900;margin-top:10px;font-size:14px';
+    msg.textContent='⚠️ Try the other option — Bill is watching!';
+    parent.appendChild(msg);
+    setTimeout(()=>msg.remove(),2500);
+  }
+}
+
+/* ─── Confetti ─── */
+function launchConfetti(){
+  const colors=['#e879f9','#22d3ee','#facc15','#f97373','#a855f7','#60a5fa'];
+  for(let i=0;i<80;i++){
+    const c=document.createElement('div');
+    c.className='confetti-piece';
+    c.style.left=Math.random()*100+'vw';
+    c.style.top='-20px';
+    c.style.background=colors[Math.floor(Math.random()*colors.length)];
+    c.style.animationDelay=(Math.random()*1.5)+'s';
+    c.style.transform=`rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(c);
+    setTimeout(()=>c.remove(),4000);
+  }
+}
+
+/* ─── Main Quiz ─── */
+let qScore=0,qAnswered=0,qMissed=[];
+const TOTAL_Q=10;
+
+function checkQ(el,correct,topic){
+  if(el.classList.contains('locked'))return;
+  /* Lock only the options inside this question's group */
+  const group=el.closest('.quiz-group');
+  group.querySelectorAll('.quiz-opt').forEach(s=>s.classList.add('locked'));
+  if(correct){el.classList.add('q-correct');el.innerHTML+=' ✔';qScore++;playCorrect()}
+  else{el.classList.add('q-wrong');el.innerHTML+=' ✗';qMissed.push(topic);playWrong()}
+  qAnswered++;
+  if(qAnswered===TOTAL_Q)setTimeout(()=>{showResults();setTimeout(retakeQuiz,8000)},400);
+}
+
+function showResults(){
+  const box=document.getElementById('score-box');
+  box.classList.remove('hidden');
+  document.getElementById('score-num').textContent=qScore+'/'+TOTAL_Q;
+  let msg='',advice='';
+  if(qScore===10){msg="🌟 Perfect score! You're Ford-level prepared. Even Bill can't deny it.";launchConfetti();playVictory()}
+  else if(qScore>=8){msg="Great work, Dipper! Almost there — review the missed topics below."}
+  else if(qScore>=6){msg="Solid foundation, Soos! But a few more sessions and you'll be bunker-ready."}
+  else{msg="Keep studying! Even Mabel would tell you to try again. Review all 5 domains."}
+  if(qMissed.length){advice="Review these topics:\n"+[...new Set(qMissed)].map(t=>'• '+t).join('\n')}
+  document.getElementById('score-msg').textContent=msg;
+  document.getElementById('score-advice').textContent=advice;
+  box.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function retakeQuiz(){
+  qScore=0;qAnswered=0;qMissed=[];
+  document.querySelectorAll('.quiz-opt').forEach(o=>{
+    o.classList.remove('q-correct','q-wrong','locked');
+    if(o.dataset.orig)o.innerHTML=o.dataset.orig;
+  });
+  document.getElementById('score-box').classList.add('hidden');
+}
+
+/* ─── Flashcards ─── */
+const FC_KEY='ltr_cartoon-gravityfalls';
+const fcCards=[
+  // CIA & Core
+  {f:"CIA Triad — name the three elements",b:"Confidentiality, Integrity, Availability.\n\nGF: Dipper hides secrets (C), keeps entries accurate (I), Shack systems stay online (A)."},
+  {f:"Confidentiality definition",b:"Keeping data accessible only to authorized parties.\n\nGF: Journal 3 hidden from Gideon and Bill."},
+  {f:"Integrity definition",b:"Data remains accurate and unaltered.\n\nGF: Blendin can't roll back journal entries."},
+  {f:"Availability definition",b:"Systems accessible to authorized users when needed.\n\nGF: Ford's bunker stays operational during Weirdmageddon."},
+  {f:"Non-repudiation definition",b:"Proving an action occurred and cannot be denied.\n\nGF: Digital signature on Ford's research — he can't claim he didn't write it."},
+  // AAA
+  {f:"AAA framework stands for...",b:"Authentication, Authorization, Accounting.\n\nGF: Confirm it's Ford (A), grant bunker access (A), log everything he does (A)."},
+  {f:"Authentication vs Authorization",b:"Authentication = who you are. Authorization = what you can do.\n\nGF: Soos is authenticated but not authorized to read Ford's files."},
+  // Zero Trust
+  {f:"Zero Trust core principle",b:"Never implicitly trust — always verify every user, device, and session.\n\nGF: 'Trust no one' — even inside the Shack perimeter."},
+  // Threat Actors
+  {f:"What is an APT?",b:"Advanced Persistent Threat — highly skilled, well-funded, long-term access.\n\nGF: Bill Cipher is the ultimate APT."},
+  {f:"Insider threat definition",b:"Threat from someone with legitimate access.\n\nGF: A Shack employee leaking intel to Bill."},
+  {f:"Hacktivist threat actor",b:"Ideologically motivated attacker — disruption over profit.\n\nGF: Gideon disrupting the Shack for revenge/power."},
+  // Social Engineering
+  {f:"Phishing definition",b:"Fraudulent messages designed to trick users into revealing credentials.\n\nGF: Email promising 'new anomaly research' — click here."},
+  {f:"Spear phishing",b:"Targeted phishing aimed at a specific individual.\n\nGF: Custom email for Ford about his 6-fingered research."},
+  {f:"Vishing",b:"Voice-based phishing — phone call manipulation.\n\nGF: Gideon calling Ford pretending to be the Mayor."},
+  {f:"Pretexting",b:"Creating a fabricated scenario to extract information.\n\nGF: Bill posing as a research assistant to gain trust."},
+  {f:"Watering hole attack",b:"Compromising a website frequently visited by the target.\n\nGF: Bill infects GravityFallsResearch.net knowing Ford visits daily."},
+  // Malware
+  {f:"Ransomware definition",b:"Encrypts data and demands payment for decryption key.\n\nGF: Bill encrypts Ford's research — 'Sign the deal or lose everything.'"},
+  {f:"Rootkit definition",b:"Malware that hides itself deep in the OS, hard to detect.\n\nGF: Bill's code embedded in the Shack's system firmware — invisible to normal scans."},
+  {f:"Logic bomb",b:"Malicious code that triggers on a specific condition or date.\n\nGF: Blendin's payload fires when the time machine hits a set date."},
+  {f:"Keylogger definition",b:"Records keystrokes to steal credentials.\n\nGF: Bill's keylogger captures Ford's bunker password."},
+  // Vulnerabilities
+  {f:"Zero-day vulnerability",b:"Flaw unknown to the vendor — no patch exists yet.\n\nGF: Anomalies that exploit reality gaps no one knew existed."},
+  {f:"SQL Injection (SQLi)",b:"Inserting malicious SQL into input fields to manipulate databases.\n\nGF: Attacker injects SQL into the Shack's tourist booking form."},
+  {f:"Cross-Site Scripting (XSS)",b:"Injecting malicious scripts into web pages viewed by other users.\n\nGF: Bill's script runs in every tourist's browser on the Shack site."},
+  {f:"Buffer overflow",b:"Writing more data than a buffer can hold, causing code execution.\n\nGF: Flooding Ford's anomaly detector beyond its input capacity."},
+  // Controls
+  {f:"Preventive control",b:"Stops an attack before it happens.\n\nGF: Locking the bunker door before Gideon arrives."},
+  {f:"Detective control",b:"Identifies attacks in progress or after the fact.\n\nGF: SIEM alerts when Bill's symbol appears in logs."},
+  {f:"Corrective control",b:"Restores systems after an incident.\n\nGF: Restoring journals from clean backup after Bill's alteration."},
+  {f:"Deterrent control",b:"Discourages potential attackers.\n\nGF: 'DANGER — HIGHLY SENSITIVE ANOMALIES' sign on the bunker door."},
+  {f:"Compensating control",b:"Alternative control when primary control isn't feasible.\n\nGF: When biometrics fail, use multi-digit code plus secondary verification."},
+  // Access Control
+  {f:"Least privilege principle",b:"Grant minimum access required to do the job.\n\nGF: Soos gets IT ops access — not Ford's research files."},
+  {f:"Separation of duties",b:"Split critical tasks between multiple people.\n\nGF: Dipper discovers anomalies; Ford approves containment — neither does both."},
+  {f:"MFA definition",b:"Requiring 2+ factors to authenticate.\n\nGF: Password + hardware token + Ford's 6-finger scan."},
+  {f:"RBAC definition",b:"Role-Based Access Control — permissions based on job role.\n\nGF: Dipper=analyst, Ford=admin, Soos=ops, Mabel=user."},
+  {f:"802.1X",b:"Port-based NAC — devices authenticate before network access is granted.\n\nGF: No device connects to the bunker LAN without a valid certificate."},
+  // Crypto
+  {f:"Symmetric encryption",b:"Same key used to encrypt and decrypt.\n\nGF: Dipper and Ford share one secret key for journal files."},
+  {f:"Asymmetric encryption",b:"Public key encrypts, private key decrypts.\n\nGF: Ford publishes a public key; only his private key can read the message."},
+  {f:"Hashing definition",b:"One-way function producing a fixed-length digest.\n\nGF: Hash the journal page — any Bill alteration changes the hash."},
+  {f:"Salting definition",b:"Adding random data before hashing to defeat rainbow tables.\n\nGF: Even if Gideon has the hash list, unique salts make each password unique."},
+  {f:"Perfect Forward Secrecy (PFS)",b:"Session keys not derived from long-term keys — past sessions safe if key compromised.\n\nGF: Even if Bill gets Ford's master key, old sessions can't be decrypted."},
+  {f:"PKI — Certificate Authority (CA)",b:"Trusted entity that signs and issues digital certificates.\n\nGF: Ford is the CA for all bunker system certificates."},
+  {f:"CRL vs OCSP",b:"CRL = published list of revoked certificates. OCSP = real-time certificate status check.\n\nGF: CRL is a monthly bulletin; OCSP is checking with Ford in real-time."},
+  // Network
+  {f:"DMZ definition",b:"Demilitarized Zone — buffer zone for public-facing services.\n\nGF: Shack tourist website sits in the DMZ, separate from bunker network."},
+  {f:"VPN definition",b:"Encrypted tunnel over untrusted network.\n\nGF: Ford connects to the bunker from town via VPN."},
+  {f:"SASE definition",b:"Secure Access Service Edge — cloud-delivered security + WAN.\n\nGF: Ford's remote researchers connect securely through a cloud edge service."},
+  {f:"IDS vs IPS difference",b:"IDS = detects and alerts. IPS = detects AND blocks.\n\nGF: IDS is Dipper watching logs; IPS is Wendy who actually stops Gideon."},
+  {f:"WAF definition",b:"Web Application Firewall — protects against SQLi, XSS, CSRF at layer 7.\n\nGF: WAF blocks Bill's injection attempts on the Shack's website."},
+  // Monitoring
+  {f:"SIEM definition",b:"Security Information and Event Management — centralized log correlation.\n\nGF: One console showing Shack, bunker, and town events combined."},
+  {f:"Alert fatigue",b:"Too many alerts causing analysts to ignore them.\n\nGF: Soos ignoring the 50th Bill-pattern alert of the day."},
+  {f:"DLP definition",b:"Data Loss Prevention — prevents sensitive data from leaving unauthorized channels.\n\nGF: Blocks journal entries from being emailed to Gideon."},
+  {f:"EDR definition",b:"Endpoint Detection and Response — agent on devices detecting malicious behavior.\n\nGF: EDR on every Shack terminal — catches rootkits before they spread."},
+  // IR
+  {f:"IR Phase 1: Preparation",b:"Plans, playbooks, tools, training before incidents occur.\n\nGF: Ford writing contingency plans; Dipper memorizing them."},
+  {f:"IR Phase 2: Detection & Analysis",b:"Identifying an incident and understanding its scope.\n\nGF: Noticing Bill's symbol in SIEM and tracing the attack timeline."},
+  {f:"IR Phase 3: Containment",b:"Limiting the damage and preventing spread.\n\nGF: Isolating compromised portals, revoking sessions, snapshotting for forensics."},
+  {f:"IR Phase 4: Eradication",b:"Completely removing the threat from the environment.\n\nGF: Wiping affected systems, removing rootkit persistence, rotating credentials."},
+  {f:"IR Phase 5: Recovery",b:"Restoring systems to normal operation.\n\nGF: Restoring journals from encrypted backups, validating with hashes."},
+  {f:"IR Phase 6: Lessons Learned",b:"Post-incident review to improve future response.\n\nGF: Dipper updates Journal 3 with what went wrong and how to prevent it."},
+  // Risk
+  {f:"Risk formula",b:"Risk = Likelihood × Impact.\n\nGF: Probability Bill appears × damage he causes if he does."},
+  {f:"SLE definition",b:"Single Loss Expectancy = Asset Value × Exposure Factor.\n\nGF: Cost of one successful Bill attack on the bunker."},
+  {f:"ALE definition",b:"ALE = SLE × ARO (Annualized Rate of Occurrence).\n\nGF: Expected annual financial loss from all Bill-type incidents."},
+  {f:"Risk treatment: Mitigate",b:"Reduce likelihood or impact of the risk.\n\nGF: Adding wards, firewalls, and monitoring around the Shack."},
+  {f:"Risk treatment: Transfer",b:"Shift risk to another party (insurance, third party).\n\nGF: Cyber insurance for anomaly-related data breaches."},
+  {f:"Risk treatment: Accept",b:"Acknowledge and live with the residual risk.\n\nGF: 'Gravity Falls will always be weird' — some risk is unavoidable."},
+  // Governance
+  {f:"Policy vs Procedure vs Standard",b:"Policy = high-level 'what'. Standard = mandatory 'how much'. Procedure = step-by-step 'how'.\n\nGF: Policy=bunker rules; Standard=password length; Procedure=anomaly reporting steps."},
+  {f:"BIA definition",b:"Business Impact Analysis — identifies critical processes and their recovery priorities.\n\nGF: If the bunker goes down, what's the max downtime before research is lost?"},
+  {f:"RTO vs RPO",b:"RTO = max acceptable downtime. RPO = max acceptable data loss age.\n\nGF: RTO=4hr; RPO=24hr of journal entries."},
+  // Ports
+  {f:"Port 22",b:"SSH — Secure Shell encrypted terminal communication.\n\nGF: Ford's secure backdoor to the bunker CLI."},
+  {f:"Port 443",b:"HTTPS — encrypted web traffic.\n\nGF: The Shack's tourist site uses HTTPS only."},
+  {f:"Port 53",b:"DNS — Domain Name System name resolution.\n\nGF: Translates 'mysterysshack.gf' to an IP address."},
+  {f:"Port 3389",b:"RDP — Remote Desktop Protocol.\n\nGF: Ford remotely controls bunker workstations via RDP."},
+  {f:"Port 389 vs 636",b:"LDAP=389 (unencrypted). LDAPS=636 (encrypted).\n\nGF: Always use 636 — never let Gideon sniff directory queries."},
+  {f:"Ports 1812 and 1813",b:"RADIUS — 1812 for authentication, 1813 for accounting.\n\nGF: All bunker Wi-Fi auth flows through RADIUS."},
+  // Misc
+  {f:"Tailgating definition",b:"Following an authorized person into a secured area.\n\nGF: Gideon slipping through the vending machine behind Dipper."},
+  {f:"Defense in depth",b:"Multiple overlapping layers of security controls.\n\nGF: Physical locks + wards + firewall + monitoring — Bill must defeat all layers."},
+  {f:"Hardening definition",b:"Reducing attack surface by removing unnecessary services and applying controls.\n\nGF: Disabling unused ports on bunker servers; changing default passwords."},
+  {f:"Change management purpose",b:"Controlled, documented process for modifying systems to prevent unintended consequences.\n\nGF: Stopping Soos from 'improving' the bunker firewall rules without approval."},
+  {f:"Tabletop exercise",b:"Discussion-based IR simulation — no live systems involved.\n\nGF: Ford and Dipper at the kitchen table walking through 'what if Bill returns.'"},
+  {f:"Digital forensics: Chain of custody",b:"Documented, unbroken record of who handled evidence and when.\n\nGF: Every journal page access logged, signed, and witnessed before it enters forensic analysis."},
+  {f:"SPF, DKIM, DMARC — the trio",b:"SPF=authorized sender IPs. DKIM=cryptographic email signature. DMARC=policy for SPF/DKIM failures.\n\nGF: Three layers preventing Bill from spoofing Ford's email domain."},
+  {f:"Jump server (bastion host)",b:"Secure, hardened proxy to access protected network segments.\n\nGF: Must log into the jump server before touching any bunker system."},
+  {f:"HSM definition",b:"Hardware Security Module — dedicated hardware for key storage and cryptographic operations.\n\nGF: Ford's HSM stores all bunker encryption keys in tamper-resistant hardware."},
+  {f:"TPM definition",b:"Trusted Platform Module — chip providing hardware-based cryptographic functions.\n\nGF: TPM in every bunker workstation ensures boot integrity."},
+];
+
+let fcBoxes=[[],[],[],[],[]];
+let fcCurrent=null;
+let fcFlipped=false;
+
+function loadFC(){
+  const saved=localStorage.getItem(FC_KEY);
+  if(saved){try{fcBoxes=JSON.parse(saved)}catch(e){}}
+  if(fcBoxes[0].length===0&&fcBoxes.every(b=>b.length===0)){
+    fcCards.forEach((_,i)=>fcBoxes[0].push(i));
+    saveFC();
+  }
+  pickFC();
+}
+
+function saveFC(){
+  try{localStorage.setItem(FC_KEY,JSON.stringify(fcBoxes))}catch(e){}
+}
+
+function pickFC(){
+  let boxIdx=-1;
+  for(let i=0;i<5;i++){if(fcBoxes[i].length>0){boxIdx=i;break}}
+  if(boxIdx===-1){
+    document.getElementById('fc-front').innerHTML='🎉 All cards mastered! You\'re Ford-level prepared.';
+    document.getElementById('fc-back').style.display='none';
+    document.getElementById('fc-box').textContent='';
+    updateFCProgress();return;
+  }
+  const box=fcBoxes[boxIdx];
+  const pos=Math.floor(Math.random()*box.length);
+  fcCurrent={boxIdx,pos,cardIdx:box[pos]};
+  fcFlipped=false;
+  document.getElementById('fc-front').innerHTML=fcCards[fcCurrent.cardIdx].f;
+  document.getElementById('fc-back').innerHTML=fcCards[fcCurrent.cardIdx].b;
+  document.getElementById('fc-back').style.display='none';
+  document.getElementById('fc-box').textContent='Box '+(boxIdx+1)+' of 5';
+  updateFCProgress();
+  updateFCBoxDisplay();
+}
+
+function flipCard(){
+  fcFlipped=!fcFlipped;
+  document.getElementById('fc-back').style.display=fcFlipped?'block':'none';
+}
+
+function markFC(correct){
+  if(fcCurrent===null)return;
+  const {boxIdx,pos,cardIdx}=fcCurrent;
+  fcBoxes[boxIdx].splice(pos,1);
+  if(correct){
+    if(boxIdx<4)fcBoxes[boxIdx+1].push(cardIdx);
+    else fcBoxes[4].push(cardIdx);
+    playCorrect();
+  } else {
+    fcBoxes[0].push(cardIdx);
+    playWrong();
+  }
+  fcCurrent=null;
+  saveFC();
+  pickFC();
+}
+
+function skipFC(){
+  if(fcCurrent===null)return;
+  const {boxIdx,pos,cardIdx}=fcCurrent;
+  fcBoxes[boxIdx].splice(pos,1);
+  fcBoxes[boxIdx].push(cardIdx);
+  fcCurrent=null;
+  pickFC();
+}
+
+function updateFCProgress(){
+  const done=fcBoxes[4].length;
+  const total=fcCards.length;
+  document.getElementById('fc-progress').style.width=(done/total*100)+'%';
+}
+
+function updateFCBoxDisplay(){
+  const el=document.getElementById('fc-boxes');
+  el.textContent='Cards per box: '+fcBoxes.map((b,i)=>'Box '+(i+1)+':'+b.length).join(' · ');
+}
+
+// Keyboard shortcuts
+document.addEventListener('keydown',e=>{
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+  if(e.code==='Space'){e.preventDefault();flipCard()}
+  if(e.key==='1')markFC(false);
+  if(e.key==='2')markFC(true);
+  if(e.key==='3')markFC(true);
+  if(e.key==='s'||e.key==='S')skipFC();
+});
+
+loadFC();
+</script>
+</body>
+</html>

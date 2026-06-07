@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Scooby-Doo | Security+ SY0-701 Study Hub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&display=swap');
+:root{
+  --bg:#0D1F0F;--bg2:#122016;--surface:#1A2E1D;--nav:#0A180C;
+  --mm-green:#3CB371;--mm-green-light:#5ED490;--fred-orange:#FF8C00;
+  --daphne-purple:#9B59B6;--velma-orange:#E67E22;--shaggy-lime:#A8D5A2;
+  --scooby-brown:#C4962A;--text:#F0FFF2;--muted:#8BAD8E;
+  --border:rgba(60,179,113,.25);--card-bg:#162019;--danger:#E74C3C;--good:#2ECC71;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(-45deg,transparent,transparent 40px,rgba(60,179,113,.03) 40px,rgba(60,179,113,.03) 80px);pointer-events:none;z-index:0;}
+h1,h2,h3{font-family:'Bangers',cursive;letter-spacing:.04em}
+a{color:var(--mm-green);text-decoration:none}
+a:hover{text-decoration:underline;color:var(--mm-green-light)}
+.particle{position:fixed;pointer-events:none;z-index:1;animation:floatUp 18s ease-in-out forwards;opacity:.18;font-size:1.6rem;}
+@keyframes floatUp{0%{transform:translate(0,0) rotate(0deg) scale(.7);opacity:.18}50%{transform:translate(var(--dx,20px),-50vh) rotate(180deg) scale(1.1);opacity:.3}100%{transform:translate(calc(var(--dx,20px)*-1),-110vh) rotate(360deg) scale(.8);opacity:0}}
+nav{background:var(--nav);display:flex;align-items:center;padding:10px 20px;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:500;box-shadow:0 3px 20px rgba(0,0,0,.8);border-bottom:3px solid var(--mm-green);}
+.nav-brand{font-family:'Bangers',cursive;font-size:1.15rem;color:var(--mm-green);letter-spacing:.05em;white-space:nowrap;text-shadow:0 0 12px rgba(60,179,113,.6)}
+.tnl{color:rgba(255,255,255,.75);font-size:.78rem;padding:5px 11px;border-radius:8px;transition:all .2s;white-space:nowrap;font-weight:700;border:1.5px solid transparent}
+.tnl:hover{background:rgba(60,179,113,.2);color:var(--mm-green);border-color:var(--border);text-decoration:none}
+.cnd{position:relative;display:inline-block}
+.cnb{background:rgba(60,179,113,.15);border:1.5px solid var(--border);color:var(--mm-green);font-size:.78rem;padding:5px 12px;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;transition:all .2s;white-space:nowrap}
+.cnb:hover{background:rgba(60,179,113,.3)}
+.cnm{display:none;position:absolute;top:calc(100% + 6px);right:0;background:#0A180C;border:2px solid var(--border);border-radius:12px;min-width:240px;z-index:600;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.8)}
+.cnm a{display:block;padding:9px 15px;font-size:.79rem;color:rgba(255,255,255,.7);border-bottom:1px solid rgba(60,179,113,.1);transition:background .15s;font-weight:700}
+.cnm a:last-child{border-bottom:none}
+.cnm a:hover{background:rgba(60,179,113,.15);color:var(--mm-green);text-decoration:none}
+.cnm a.active-page{color:var(--fred-orange)!important;font-weight:900}
+#sound-toggle{position:fixed;right:16px;bottom:16px;z-index:1200;background:var(--nav);border-radius:999px;padding:9px 16px;border:2px solid var(--border);color:var(--text);cursor:pointer;display:flex;align-items:center;gap:6px;font-weight:700;font-size:.82rem;font-family:'Nunito',sans-serif;transition:all .2s;box-shadow:0 4px 16px rgba(0,0,0,.5);}
+#sound-toggle:hover{border-color:var(--mm-green);background:rgba(60,179,113,.15)}
+.hero{background:linear-gradient(135deg,var(--bg2) 0%,#0F2A12 50%,#1A1030 100%);border-bottom:3px solid var(--mm-green);padding:48px 20px 40px;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'🐕';position:absolute;font-size:14rem;opacity:.04;right:-40px;top:-30px;pointer-events:none;animation:heroFloat 8s ease-in-out infinite;}
+@keyframes heroFloat{0%,100%{transform:translateY(0) rotate(-5deg)}50%{transform:translateY(-15px) rotate(5deg)}}
+.hero-circle{width:140px;height:140px;margin:0 auto 18px;background:radial-gradient(circle at 35% 30%,var(--mm-green) 0%,#1A5C2E 50%,#0A2010 100%);border:5px solid var(--fred-orange);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:5rem;box-shadow:0 0 40px rgba(60,179,113,.6),0 0 80px rgba(60,179,113,.2);animation:pulseLogo 3s ease-in-out infinite;position:relative;z-index:1;}
+@keyframes pulseLogo{0%,100%{box-shadow:0 0 40px rgba(60,179,113,.6),0 0 80px rgba(60,179,113,.2)}50%{box-shadow:0 0 60px rgba(255,140,0,.7),0 0 100px rgba(255,140,0,.3)}}
+.hero-badge{display:inline-block;background:linear-gradient(90deg,var(--fred-orange),var(--velma-orange));color:#fff;padding:5px 18px;border-radius:999px;font-size:.72rem;font-weight:900;letter-spacing:.8px;margin-bottom:14px;text-transform:uppercase;box-shadow:0 4px 12px rgba(255,140,0,.4);}
+.hero h1{font-size:clamp(2rem,6vw,3.8rem);color:var(--mm-green);text-shadow:0 0 20px rgba(60,179,113,.8),3px 3px 0 #0A180C;margin-bottom:10px;line-height:1.1;position:relative;z-index:1}
+.hero p{color:var(--shaggy-lime);font-size:1rem;max-width:680px;margin:0 auto;position:relative;z-index:1;font-weight:600}
+.jbar{background:var(--bg2);border-bottom:2px solid var(--border);padding:10px 16px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center;position:sticky;top:57px;z-index:400;}
+.jbtn{background:var(--surface);border:1.5px solid var(--border);color:var(--muted);padding:5px 13px;border-radius:20px;font-size:.72rem;font-weight:800;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none!important;display:inline-block;font-family:'Nunito',sans-serif;}
+.jbtn:hover{border-color:var(--mm-green);color:var(--mm-green);background:rgba(60,179,113,.12);transform:translateY(-1px)}
+.ps{padding:32px 20px;max-width:980px;margin:0 auto;position:relative;z-index:2}
+.pdiv{border:none;border-top:2px solid var(--border)}
+.sec-hd{margin-bottom:18px}
+.sec-hd h2{font-size:1.9rem;color:var(--mm-green);display:flex;align-items:center;gap:10px;margin-bottom:4px;text-shadow:0 0 10px rgba(60,179,113,.4)}
+.sec-hd p{color:var(--muted);font-size:.88rem;font-weight:600}
+.acc{border-radius:14px;overflow:hidden;margin-bottom:10px;border:2px solid var(--border);transition:border-color .2s}
+.acc:hover{border-color:rgba(60,179,113,.5)}
+.acc-hd{padding:13px 16px;cursor:pointer;display:flex;justify-content:space-between;align-items:center;font-weight:900;color:#fff;background:linear-gradient(90deg,rgba(60,179,113,.2),rgba(155,89,182,.15));transition:background .2s;font-family:'Bangers',cursive;letter-spacing:.05em;font-size:1.1rem;}
+.acc-hd:hover{background:linear-gradient(90deg,rgba(60,179,113,.35),rgba(155,89,182,.25))}
+.acc-hd .arrow{transition:transform .3s;color:var(--mm-green);font-size:1rem}
+.acc-hd.open .arrow{transform:rotate(45deg)}
+.acc-body{max-height:0;overflow:hidden;transition:max-height .35s ease-out}
+.acc-inner{padding:16px}
+.tag{display:inline-block;padding:3px 9px;border-radius:99px;font-size:.68rem;font-weight:800;margin:2px;letter-spacing:.3px}
+.tag-green{background:rgba(60,179,113,.2);color:var(--mm-green);border:1px solid rgba(60,179,113,.4)}
+.tag-orange{background:rgba(255,140,0,.2);color:var(--fred-orange);border:1px solid rgba(255,140,0,.4)}
+.tag-purple{background:rgba(155,89,182,.2);color:var(--daphne-purple);border:1px solid rgba(155,89,182,.4)}
+.tag-exam{background:rgba(231,76,60,.15);color:#FF6B6B;border:1px solid rgba(231,76,60,.4);font-size:.65rem}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{background:var(--card-bg);border:2px solid var(--border);border-radius:14px;padding:18px;transition:all .2s;position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--mm-green),var(--fred-orange));}
+.card:hover{border-color:rgba(60,179,113,.5);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.card h3{font-size:1.15rem;color:var(--mm-green);margin-bottom:6px;font-family:'Bangers',cursive;letter-spacing:.04em}
+.card p{font-size:.83rem;color:var(--muted);line-height:1.6}
+.role-badge{display:inline-block;padding:3px 10px;border-radius:8px;font-size:.68rem;font-weight:800;margin-bottom:8px;letter-spacing:.3px}
+.rb-ciso{background:rgba(255,140,0,.2);color:var(--fred-orange);border:1px solid rgba(255,140,0,.5)}
+.rb-soc{background:rgba(60,179,113,.2);color:var(--mm-green);border:1px solid rgba(60,179,113,.5)}
+.rb-forensic{background:rgba(155,89,182,.2);color:var(--daphne-purple);border:1px solid rgba(155,89,182,.5)}
+.rb-threat{background:rgba(231,76,60,.2);color:#FF6B6B;border:1px solid rgba(231,76,60,.5)}
+.rb-user{background:rgba(196,150,42,.2);color:var(--scooby-brown);border:1px solid rgba(196,150,42,.5)}
+.rb-arch{background:rgba(230,126,34,.2);color:var(--velma-orange);border:1px solid rgba(230,126,34,.5)}
+.mq-opt{background:var(--surface);border:1.5px solid var(--border);border-radius:9px;padding:9px 13px;margin:5px 0;cursor:pointer;font-size:.84rem;transition:all .2s;color:var(--text);font-weight:600;}
+.mq-opt:hover{border-color:var(--mm-green);background:rgba(60,179,113,.1)}
+.mq-opt.correct{background:rgba(46,204,113,.2)!important;border-color:var(--good)!important;color:var(--good)!important;cursor:default}
+.mq-opt.wrong{background:rgba(231,76,60,.2)!important;border-color:var(--danger)!important;color:var(--danger)!important;cursor:default}
+.mq-opt.disabled{cursor:default;opacity:.6}
+.adv-scene{display:none;animation:fadeIn .4s ease}
+.adv-scene.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.adv-text{background:var(--card-bg);border:2px solid var(--border);border-radius:14px;padding:20px;margin-bottom:14px;font-size:.95rem;line-height:1.7;font-weight:600;}
+.adv-choice{background:var(--surface);border:2px solid var(--border);border-radius:11px;padding:12px 16px;margin:7px 0;cursor:pointer;font-size:.9rem;font-weight:700;transition:all .2s;}
+.adv-choice:hover{border-color:var(--mm-green);background:rgba(60,179,113,.12);transform:translateX(4px)}
+.adv-choice.picked{background:rgba(60,179,113,.25)!important;border-color:var(--mm-green)!important;color:var(--mm-green)!important}
+.adv-choice.wrong-pick{background:rgba(231,76,60,.15)!important;border-color:var(--danger)!important;color:var(--danger)!important;animation:shake .4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.ir-phase-badge{display:inline-block;padding:4px 12px;border-radius:8px;font-size:.72rem;font-weight:800;background:rgba(255,140,0,.2);color:var(--fred-orange);border:1px solid rgba(255,140,0,.4);margin-top:6px;letter-spacing:.3px;}
+.ir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.ir-card{background:var(--card-bg);border:2px solid var(--border);border-radius:12px;padding:16px;text-align:center;transition:all .2s;}
+.ir-card:hover{border-color:var(--mm-green);transform:translateY(-2px)}
+.ir-card .phase-icon{font-size:2rem;margin-bottom:6px;display:block}
+.ir-card h4{font-family:'Bangers',cursive;font-size:1.1rem;color:var(--mm-green);letter-spacing:.04em;margin-bottom:4px}
+.ir-card p{font-size:.78rem;color:var(--muted);line-height:1.5}
+.note-card{background:linear-gradient(135deg,var(--card-bg),rgba(60,179,113,.05));border:2px solid var(--border);border-left:5px solid var(--mm-green);border-radius:12px;padding:16px;margin-bottom:12px;}
+.note-card h4{font-family:'Bangers',cursive;color:var(--fred-orange);font-size:1.15rem;margin-bottom:8px;letter-spacing:.04em}
+.note-card ul{list-style:none;padding:0}
+.note-card li{padding:4px 0;font-size:.85rem;color:var(--muted);border-bottom:1px solid rgba(60,179,113,.1);font-weight:600}
+.note-card li:last-child{border-bottom:none}
+.note-card li::before{content:'🔍 ';font-size:.75rem}
+.role-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.role-card{background:var(--card-bg);border:2px solid var(--border);border-radius:12px;padding:14px;text-align:center;transition:all .2s;}
+.role-card:hover{border-color:var(--daphne-purple);transform:translateY(-2px)}
+.role-icon{font-size:2rem;margin-bottom:6px;display:block}
+.role-title{font-family:'Bangers',cursive;font-size:1.05rem;color:var(--daphne-purple);letter-spacing:.04em;margin-bottom:4px}
+.role-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
+.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.link-card{background:var(--card-bg);border:2px solid var(--border);border-radius:14px;padding:18px;transition:all .2s;display:flex;flex-direction:column;gap:10px;}
+.link-card:hover{border-color:var(--mm-green);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+.link-card h4{font-family:'Bangers',cursive;font-size:1.15rem;color:var(--mm-green);letter-spacing:.04em}
+.link-card p{font-size:.8rem;color:var(--muted);line-height:1.5;flex:1}
+.link-btn{display:inline-block;padding:7px 14px;border-radius:9px;background:rgba(60,179,113,.2);color:var(--mm-green);border:2px solid rgba(60,179,113,.4);font-weight:800;font-size:.8rem;text-align:center;transition:all .2s;}
+.link-btn:hover{background:rgba(60,179,113,.35);text-decoration:none;transform:translateY(-1px)}
+.report-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.report-card{background:var(--card-bg);border:2px solid var(--border);border-radius:12px;padding:16px;transition:all .2s}
+.report-card:hover{border-color:rgba(155,89,182,.5);transform:translateY(-2px)}
+.report-card h4{font-family:'Bangers',cursive;font-size:1.1rem;color:var(--daphne-purple);letter-spacing:.04em;margin-bottom:8px}
+.report-card ul{list-style:none;padding:0}
+.report-card li{font-size:.82rem;color:var(--muted);padding:3px 0;border-bottom:1px solid rgba(155,89,182,.1);font-weight:600}
+.report-card li:last-child{border-bottom:none}
+.report-card li::before{content:'📋 ';font-size:.7rem}
+.confetti-piece{position:fixed;top:-20px;pointer-events:none;z-index:9999;width:10px;height:10px;border-radius:2px;animation:confettiFall 3s ease-in forwards;}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0);opacity:1}100%{transform:translateY(110vh) rotate(720deg);opacity:0}}
+.qz-c{display:flex;align-items:flex-start;gap:9px;padding:9px 13px;border-radius:10px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s;font-size:.86rem;color:var(--text);line-height:1.5;margin-bottom:6px;font-weight:600}
+.qz-c:hover{border-color:var(--mm-green);background:rgba(60,179,113,.1)}
+.qz-c.qc{border-color:var(--good)!important;background:rgba(46,204,113,.15)!important;color:var(--good)!important;font-weight:800}
+.qz-c.qw{border-color:var(--danger)!important;background:rgba(231,76,60,.15)!important;color:var(--danger)!important;font-weight:800}
+.qz-exp{margin-top:10px;background:var(--surface);border-left:4px solid var(--mm-green);border-radius:0 10px 10px 0;padding:10px 14px;font-size:.82rem;color:var(--muted);line-height:1.6;display:none}
+.qbtn{padding:7px 16px;border-radius:9px;border:none;cursor:pointer;font-size:.8rem;font-weight:800;font-family:'Nunito',sans-serif;transition:all .2s}
+.qbtn-check{background:var(--mm-green);color:#0A180C}
+.qbtn-next{background:var(--fred-orange);color:#fff}
+.qbtn-retry{background:var(--surface);color:var(--muted);border:1.5px solid var(--border)}
+.qbtn:hover{transform:translateY(-1px);opacity:.9}
+.qz-done{text-align:center;padding:24px 0;display:none}
+.qz-score-big{font-size:3.2rem;font-weight:900;line-height:1;margin-bottom:6px}
+.missed-box{background:var(--surface);border:1.5px solid rgba(231,76,60,.3);border-radius:10px;padding:12px;margin-top:12px;text-align:left;font-size:.8rem;color:var(--muted)}
+.missed-box h4{color:var(--danger);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:6px}
+
+/* ══ SCOOBY FLASHCARD STYLES ══ */
+.fc-section-wrap{background:var(--card-bg);border:3px solid var(--mm-green);border-radius:18px;padding:24px;position:relative;overflow:hidden;}
+.fc-section-wrap::before{content:'';position:absolute;inset:-4px;border-radius:22px;border:2px dashed rgba(168,213,162,.5);pointer-events:none;}
+.fc-card-display{background:#FFFDF5;border-radius:16px;padding:20px 18px;border:3px solid #CDDC39;box-shadow:0 4px 16px rgba(0,0,0,.25);min-height:160px;display:flex;flex-direction:column;justify-content:center;margin-bottom:16px;position:relative;}
+.fc-card-tags{margin-bottom:10px;display:flex;flex-wrap:wrap;gap:5px;}
+.fc-card-question{font-weight:800;color:#7E57C2;font-size:.95rem;line-height:1.6;margin-bottom:10px;}
+.fc-card-answer{margin-top:10px;padding-top:10px;border-top:2px dashed rgba(0,0,0,.12);font-size:.88rem;color:#263238;line-height:1.7;font-weight:600;white-space:pre-line;}
+.fc-char-hint{font-size:.82rem;font-style:italic;margin-top:8px;padding:6px 10px;border-radius:8px;background:rgba(60,179,113,.1);border-left:3px solid var(--mm-green);}
+.fc-tag{display:inline-block;padding:2px 9px;border-radius:999px;font-size:.68rem;font-weight:800;letter-spacing:.3px;}
+.fc-tag-d1{background:#FFECB3;color:#BF360C;}
+.fc-tag-d2{background:#FFCDD2;color:#B71C1C;}
+.fc-tag-d3{background:#C5E1A5;color:#1B5E20;}
+.fc-tag-d4{background:#BBDEFB;color:#0D47A1;}
+.fc-tag-d5{background:#D1C4E9;color:#4A148C;}
+.fc-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+.fc-btn-show{background:#CDDC39;color:#33691E;padding:8px 16px;border-radius:999px;border:none;cursor:pointer;font-weight:800;font-size:.85rem;font-family:'Nunito',sans-serif;transition:all .2s;}
+.fc-btn-show:hover{opacity:.85;transform:translateY(-1px)}
+.fc-btn-next{background:#26C6DA;color:#004D40;padding:8px 16px;border-radius:999px;border:none;cursor:pointer;font-weight:800;font-size:.85rem;font-family:'Nunito',sans-serif;transition:all .2s;}
+.fc-btn-next:hover{opacity:.85;transform:translateY(-1px)}
+.fc-btn-hard{background:#FF7043;color:#3E2723;padding:8px 16px;border-radius:999px;border:none;cursor:pointer;font-weight:800;font-size:.85rem;font-family:'Nunito',sans-serif;transition:all .2s;}
+.fc-btn-hard:hover{opacity:.85;transform:translateY(-1px)}
+.fc-btn-easy{background:#7E57C2;color:#F3E5F5;padding:8px 16px;border-radius:999px;border:none;cursor:pointer;font-weight:800;font-size:.85rem;font-family:'Nunito',sans-serif;transition:all .2s;}
+.fc-btn-easy:hover{opacity:.85;transform:translateY(-1px)}
+.fc-btn-reset{background:#B0BEC5;color:#263238;padding:8px 16px;border-radius:999px;border:none;cursor:pointer;font-weight:800;font-size:.85rem;font-family:'Nunito',sans-serif;transition:all .2s;}
+.fc-btn-reset:hover{opacity:.85;transform:translateY(-1px)}
+.fc-deck-info{font-size:.78rem;color:var(--muted);font-weight:700;margin-top:8px;padding:8px 12px;background:var(--surface);border-radius:8px;border:1px solid var(--border);}
+.fc-char-scooby{color:#5D4037;font-weight:800;}
+.fc-char-shaggy{color:#8BC34A;font-weight:800;}
+.fc-char-velma{color:#FF7043;font-weight:800;}
+.fc-char-fred{color:#1976D2;font-weight:800;}
+.fc-char-daphne{color:#AB47BC;font-weight:800;}
+.fc-char-villain{color:#C62828;font-weight:800;}
+
+.quiz-wrap{background:var(--card-bg);border:2px solid var(--border);border-radius:16px;padding:22px;margin-bottom:24px}
+.qz-hd{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.qz-hd h3{font-family:'Bangers',cursive;font-size:1.4rem;color:var(--mm-green);letter-spacing:.04em}
+.qz-meta{font-size:.78rem;color:var(--muted);font-weight:700}
+.quiz-q-text{font-size:.93rem;font-weight:800;color:var(--text);margin-bottom:12px;line-height:1.5}
+.quiz-nav{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+
+@media(max-width:600px){.ps{padding:20px 14px}.hero h1{font-size:2.2rem}.hero-circle{width:110px;height:110px;font-size:4rem}}
+</style>
+</head>
+<body>
+<div id="particles-container"></div>
+<button id="sound-toggle" onclick="toggleSound()">🔇 Sound: OFF</button>
+
+<nav>
+  <div class="nav-brand">🐕 Scooby-Doo Security+</div>
+  <div style="display:flex;gap:5px;flex-wrap:wrap;align-items:center;margin-left:auto">
+    <a href="https://charleneluequeue.github.io/" class="tnl">🏠 Portfolio</a>
+    <a href="security-notes.html" class="tnl">📚 Study Hub</a>
+    <a href="security-notes.html#flashcards" class="tnl">🃏 Flashcards</a>
+    <div class="cnd">
+      <button class="cnb" onclick="toggleCN(this)">🎭 All Cartoons ▾</button>
+      <div class="cnm">
+        <a href="cartoon-spongebob.html">🧽 SpongeBob SquarePants</a>
+        <a href="cartoon-ben10.html">⌚ Ben 10</a>
+        <a href="cartoon-scooby.html" class="active-page">🐕 Scooby-Doo</a>
+        <a href="cartoon-avatar.html">🌊 Avatar: The Last Airbender</a>
+        <a href="cartoon-knd.html">🏠 Codename: Kids Next Door</a>
+        <a href="cartoon-xmen.html">⚡ X-Men '97</a>
+        <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+        <a href="cartoon-futurama.html">🤖 Futurama</a>
+        <a href="cartoon-danny.html">👻 Danny Phantom</a>
+        <a href="cartoon-fairyodd.html">🌟 The Fairly OddParents</a>
+        <a href="cartoon-magicbus.html">🚌 The Magic School Bus</a>
+        <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+        <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+        <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+        <a href="cartoon-americandad.html">🚀 American Dad</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<div class="hero" id="top">
+  <div class="hero-circle">🐕</div>
+  <div class="hero-badge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <h1>🕵️ Scooby-Doo Mystery Inc.<br>Security+ Study Hub</h1>
+  <p>Zoinks! A wave of cyber-mysteries is haunting Coolsville — and Mystery Inc. has been called to solve them all. From the CIA Triad to Incident Response, Velma's analyzing clues, Fred's building containment traps, and Scooby's sniffing out IOCs… for Scooby Snacks.</p>
+</div>
+
+<div class="jbar" id="jumpbar">
+  <a href="#topics" class="jbtn">📚 Topics</a>
+  <a href="#domains" class="jbtn">🔑 Domain Guide</a>
+  <a href="#characters" class="jbtn">👥 Characters</a>
+  <a href="#analogies" class="jbtn">🎭 Analogies</a>
+  <a href="#notes" class="jbtn">📝 Study Notes</a>
+  <a href="#ir" class="jbtn">🚨 IR Lifecycle</a>
+  <a href="#detection" class="jbtn">🔎 Detection</a>
+  <a href="#roles" class="jbtn">🎯 Roles</a>
+  <a href="#reporting" class="jbtn">📊 Reporting</a>
+  <a href="#postincident" class="jbtn">🔁 Post-Incident</a>
+  <a href="#adventure" class="jbtn">🗺️ Adventure</a>
+  <a href="#links" class="jbtn">🔗 Study Links</a>
+  <a href="#flashcards" class="jbtn">🃏 Flashcards</a>
+  <a href="#quiz" class="jbtn">🧠 Quiz</a>
+</div>
+
+<hr class="pdiv" id="topics">
+<div class="ps">
+  <div class="sec-hd"><h2>📚 Topics Covered — All 5 Domains</h2><p>Click any domain to expand full objectives with exam topic tags.</p></div>
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>Domain 1 — General Security Concepts (12%)</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner"><p style="color:var(--muted);font-size:.82rem;margin-bottom:10px"><strong style="color:var(--mm-green)">1.1</strong> Security controls · <strong style="color:var(--mm-green)">1.2</strong> CIA Triad, AAA, Zero Trust · <strong style="color:var(--mm-green)">1.3</strong> Change management · <strong style="color:var(--mm-green)">1.4</strong> Cryptography &amp; PKI</p><div><span class="tag tag-green">CIA Triad</span><span class="tag tag-green">Non-repudiation</span><span class="tag tag-green">AAA Framework</span><span class="tag tag-green">Zero Trust</span><span class="tag tag-green">Honeypot/Honeynet</span><span class="tag tag-green">PKI</span><span class="tag tag-green">Asymmetric Encryption</span><span class="tag tag-green">Hashing &amp; Salting</span><span class="tag tag-green">Digital Signatures</span><span class="tag tag-green">Certificate Authority</span><span class="tag tag-green">Change Management</span><span class="tag tag-green">Physical Security Controls</span><span class="tag tag-green">Steganography</span><span class="tag tag-green">Tokenization</span></div></div></div></div>
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>Domain 2 — Threats, Vulnerabilities &amp; Mitigations (22%)</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner"><p style="color:var(--muted);font-size:.82rem;margin-bottom:10px"><strong style="color:var(--fred-orange)">2.1</strong> Threat actors · <strong style="color:var(--fred-orange)">2.2</strong> Threat vectors · <strong style="color:var(--fred-orange)">2.3</strong> Vulnerability types · <strong style="color:var(--fred-orange)">2.4</strong> IOCs · <strong style="color:var(--fred-orange)">2.5</strong> Mitigations</p><div><span class="tag tag-orange">Nation-State</span><span class="tag tag-orange">Insider Threat</span><span class="tag tag-orange">Phishing/Vishing</span><span class="tag tag-orange">Social Engineering</span><span class="tag tag-orange">Ransomware</span><span class="tag tag-orange">SQL Injection</span><span class="tag tag-orange">Buffer Overflow</span><span class="tag tag-orange">Zero-Day</span><span class="tag tag-orange">DDoS</span><span class="tag tag-orange">Password Spraying</span><span class="tag tag-orange">CVSS/CVE</span><span class="tag tag-orange">Hardening Techniques</span><span class="tag tag-orange">Least Privilege</span><span class="tag tag-orange">Patching</span></div></div></div></div>
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>Domain 3 — Security Architecture (18%)</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner"><p style="color:var(--muted);font-size:.82rem;margin-bottom:10px"><strong style="color:var(--daphne-purple)">3.1</strong> Architecture models · <strong style="color:var(--daphne-purple)">3.2</strong> Enterprise infrastructure · <strong style="color:var(--daphne-purple)">3.3</strong> Data protection · <strong style="color:var(--daphne-purple)">3.4</strong> Resilience &amp; recovery</p><div><span class="tag tag-purple">Cloud Architecture</span><span class="tag tag-purple">Air-Gapped Networks</span><span class="tag tag-purple">Segmentation</span><span class="tag tag-purple">VPN/SASE</span><span class="tag tag-purple">Firewall Types</span><span class="tag tag-purple">IDS/IPS</span><span class="tag tag-purple">Jump Server</span><span class="tag tag-purple">Data Sovereignty</span><span class="tag tag-purple">Hot/Cold/Warm Sites</span><span class="tag tag-purple">RTO/RPO</span><span class="tag tag-purple">Backup Strategies</span><span class="tag tag-purple">Load Balancing</span><span class="tag tag-purple">Containerization</span><span class="tag tag-purple">Zero Trust Architecture</span></div></div></div></div>
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>Domain 4 — Security Operations (28%)</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner"><p style="color:var(--muted);font-size:.82rem;margin-bottom:10px"><strong style="color:var(--velma-orange)">4.1</strong> Secure baselines · <strong style="color:var(--velma-orange)">4.4</strong> Alerting &amp; monitoring · <strong style="color:var(--velma-orange)">4.6</strong> IAM · <strong style="color:var(--velma-orange)">4.7</strong> Automation · <strong style="color:var(--velma-orange)">4.8</strong> Incident response · <strong style="color:var(--velma-orange)">4.9</strong> Digital forensics</p><div><span class="tag tag-exam">4.8 IR Lifecycle</span><span class="tag tag-exam">4.8 Digital Forensics</span><span class="tag tag-exam">Chain of Custody</span><span class="tag tag-exam">Legal Hold</span><span class="tag tag-exam">Order of Volatility</span><span class="tag tag-exam">E-Discovery</span><span class="tag tag-exam">SIEM</span><span class="tag tag-exam">EDR/XDR</span><span class="tag tag-exam">MFA</span><span class="tag tag-exam">RBAC/ABAC</span><span class="tag tag-exam">MDM</span><span class="tag tag-exam">Threat Hunting</span><span class="tag tag-exam">Vulnerability Management</span><span class="tag tag-exam">Automation/Orchestration</span></div></div></div></div>
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>Domain 5 — Security Program Management &amp; Oversight (20%)</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner"><p style="color:var(--muted);font-size:.82rem;margin-bottom:10px"><strong style="color:var(--scooby-brown)">5.1</strong> Security governance · <strong style="color:var(--scooby-brown)">5.2</strong> Risk management · <strong style="color:var(--scooby-brown)">5.3</strong> Third-party risk · <strong style="color:var(--scooby-brown)">5.4</strong> Compliance · <strong style="color:var(--scooby-brown)">5.5</strong> Audits · <strong style="color:var(--scooby-brown)">5.6</strong> Awareness</p><div><span class="tag tag-green">Policies &amp; Standards</span><span class="tag tag-green">ALE/SLE/ARO</span><span class="tag tag-green">Risk Register</span><span class="tag tag-green">BIA</span><span class="tag tag-green">SLA/NDA/MOU</span><span class="tag tag-green">Vendor Assessment</span><span class="tag tag-green">Right-to-Audit</span><span class="tag tag-green">Compliance Reporting</span><span class="tag tag-green">GDPR/Privacy</span><span class="tag tag-green">Penetration Testing</span><span class="tag tag-green">Security Awareness</span><span class="tag tag-green">Phishing Campaigns</span></div></div></div></div>
+</div>
+
+<hr class="pdiv" id="domains">
+<div class="ps">
+  <div class="sec-hd"><h2>🔑 Domain Study Guide — Mystery Inc. Mnemonics</h2><p>Each domain gets a character-themed mnemonic to lock concepts in your brain.</p></div>
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>S.C.O.O.B.Y. — General Security Concepts</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner">
+    <p style="font-family:'Bangers',cursive;font-size:1.3rem;color:var(--fred-orange);margin-bottom:12px"><span style="color:var(--mm-green)">S</span>ecurity <span style="color:var(--mm-green)">C</span>ontrols · <span style="color:var(--mm-green)">O</span>bfuscation · <span style="color:var(--mm-green)">O</span>perations · <span style="color:var(--mm-green)">B</span>arriers · <span style="color:var(--mm-green)">Y</span>ikes (Threats)</p>
+    <h4 style="color:var(--mm-green);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:6px">CIA Triad</h4>
+    <ul style="list-style:none;padding:0;margin-bottom:14px"><li style="font-size:.85rem;color:var(--muted);padding:4px 0;font-weight:600">🔒 <strong style="color:var(--text)">Confidentiality:</strong> Keeping the villain's identity secret from everyone but Velma</li><li style="font-size:.85rem;color:var(--muted);padding:4px 0;font-weight:600">✅ <strong style="color:var(--text)">Integrity:</strong> Ensuring clues aren't tampered with before Velma analyzes them</li><li style="font-size:.85rem;color:var(--muted);padding:4px 0;font-weight:600">⚡ <strong style="color:var(--text)">Availability:</strong> The Mystery Machine always starts when the gang needs it</li></ul>
+    <h4 style="color:var(--mm-green);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:6px">Control Categories</h4>
+    <ul style="list-style:none;padding:0;margin-bottom:14px"><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">🔧 <strong style="color:var(--text)">Technical:</strong> Firewalls, encryption, MFA — the gang's gadgets</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">📋 <strong style="color:var(--text)">Operational:</strong> Training, procedures — like Mystery Inc.'s playbooks</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">🏛️ <strong style="color:var(--text)">Managerial:</strong> Risk assessments, policies — Daphne's organizational skills</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">🚧 <strong style="color:var(--text)">Physical:</strong> Bollards, fencing — the haunted mansion's locked gates</li></ul>
+    <h4 style="color:var(--mm-green);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:8px">Mini Quiz</h4>
+    <div class="mq-opt" onclick="miniQ(this,true,'mq1')">A firewall preventing unauthorized access = Technical, Preventive control ✓</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq1')">A security guard watching for villains = Technical control</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq1')">Non-repudiation means a user CAN deny sending a message</div>
+  </div></div></div>
+
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>M.Y.S.T.E.R.Y. — Threats &amp; Mitigations</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner">
+    <p style="font-family:'Bangers',cursive;font-size:1.3rem;color:var(--fred-orange);margin-bottom:12px"><span style="color:var(--fred-orange)">M</span>alware · <span style="color:var(--fred-orange)">Y</span>ikes · <span style="color:var(--fred-orange)">S</span>poofs · <span style="color:var(--fred-orange)">T</span>hreats · <span style="color:var(--fred-orange)">E</span>xploits · <span style="color:var(--fred-orange)">R</span>isks · <span style="color:var(--fred-orange)">Y</span>ou-Know-Who</p>
+    <h4 style="color:var(--fred-orange);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:6px">Threat Actors</h4>
+    <ul style="list-style:none;padding:0;margin-bottom:14px"><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">🌍 <strong style="color:var(--text)">Nation-state:</strong> The real villain with massive resources — like a ghost with a full lab</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">👷 <strong style="color:var(--text)">Insider threat:</strong> Old Man Smithers — works there legitimately, causes harm from inside</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">😅 <strong style="color:var(--text)">Unskilled attacker:</strong> A villain who just bought a ghost costume — script kiddie</li></ul>
+    <h4 style="color:var(--fred-orange);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:8px">Mini Quiz</h4>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq2')">Ransomware locks your files — this is a Physical attack</div>
+    <div class="mq-opt" onclick="miniQ(this,true,'mq2')">A villain tricking Shaggy into giving up the password = Social Engineering ✓</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq2')">Password spraying tries one password on one account many times</div>
+  </div></div></div>
+
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>V.E.L.M.A. — Security Architecture</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner">
+    <p style="font-family:'Bangers',cursive;font-size:1.3rem;color:var(--daphne-purple);margin-bottom:12px"><span style="color:var(--daphne-purple)">V</span>ulnerability <span style="color:var(--daphne-purple)">E</span>valuation · <span style="color:var(--daphne-purple)">L</span>ogging · <span style="color:var(--daphne-purple)">M</span>itigation · <span style="color:var(--daphne-purple)">A</span>nalysis</p>
+    <h4 style="color:var(--daphne-purple);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:6px">Network Segmentation</h4>
+    <ul style="list-style:none;padding:0;margin-bottom:14px"><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">🚐 <strong style="color:var(--text)">Mystery Machine network:</strong> Trusted internal LAN — Fred's private channel</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">🏚️ <strong style="color:var(--text)">Haunted Mansion DMZ:</strong> Semi-trusted zone for investigating suspicious systems</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">👻 <strong style="color:var(--text)">Villain's control room:</strong> Air-gapped — physically isolated, no external connections</li></ul>
+    <h4 style="color:var(--daphne-purple);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:8px">Mini Quiz</h4>
+    <div class="mq-opt" onclick="miniQ(this,true,'mq3')">Least privilege = Only Velma can access the forensics logs ✓</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq3')">A WAF operates at Layer 3 of the OSI model</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq3')">RPO = Recovery Time Objective (how fast to recover)</div>
+  </div></div></div>
+
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>F.R.E.D. — Security Operations</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner">
+    <p style="font-family:'Bangers',cursive;font-size:1.3rem;color:var(--velma-orange);margin-bottom:12px"><span style="color:var(--velma-orange)">F</span>rameworks · <span style="color:var(--velma-orange)">R</span>esponse · <span style="color:var(--velma-orange)">E</span>ngineering · <span style="color:var(--velma-orange)">D</span>efense</p>
+    <h4 style="color:var(--velma-orange);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:6px">Incident Response Phases</h4>
+    <ul style="list-style:none;padding:0;margin-bottom:14px"><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">📋 <strong style="color:var(--text)">Preparation:</strong> Fred writes the playbook before leaving the garage</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">🔍 <strong style="color:var(--text)">Detection &amp; Analysis:</strong> Shaggy stumbles on an IOC; Velma determines real vs. false positive</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">🕸️ <strong style="color:var(--text)">Containment:</strong> Fred's trap isolates the ghost — stop the spread</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">🎭 <strong style="color:var(--text)">Eradication:</strong> Unmask the villain — remove root cause and malicious artifacts</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">💡 <strong style="color:var(--text)">Recovery:</strong> Lights back on, park reopens — restore normal operations</li></ul>
+    <h4 style="color:var(--velma-orange);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:8px">Mini Quiz</h4>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq4')">SIEM = Security Incident and Event Manager (stores tickets only)</div>
+    <div class="mq-opt" onclick="miniQ(this,true,'mq4')">EDR = Endpoint Detection and Response — monitors and responds at the device level ✓</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq4')">Threat hunting is a reactive process that only starts after an alert fires</div>
+  </div></div></div>
+
+  <div class="acc"><div class="acc-hd" onclick="togAcc(this)"><span>D.A.P.H.N.E. — Governance, Risk &amp; Compliance</span><span class="arrow">＋</span></div><div class="acc-body"><div class="acc-inner">
+    <p style="font-family:'Bangers',cursive;font-size:1.3rem;color:var(--shaggy-lime);margin-bottom:12px"><span style="color:var(--shaggy-lime)">D</span>ue Diligence · <span style="color:var(--shaggy-lime)">A</span>ssessment · <span style="color:var(--shaggy-lime)">P</span>olicies · <span style="color:var(--shaggy-lime)">H</span>andbooks · <span style="color:var(--shaggy-lime)">N</span>on-disclosure · <span style="color:var(--shaggy-lime)">E</span>xposure</p>
+    <h4 style="color:var(--shaggy-lime);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:6px">Risk Formulas</h4>
+    <ul style="list-style:none;padding:0;margin-bottom:14px"><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">📊 <strong style="color:var(--text)">SLE:</strong> Single Loss Expectancy — cost if the villain haunts once</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">📅 <strong style="color:var(--text)">ARO:</strong> Annualized Rate of Occurrence — how often the ghost appears per year</li><li style="font-size:.85rem;color:var(--muted);padding:3px 0;font-weight:600">💸 <strong style="color:var(--text)">ALE = SLE × ARO:</strong> Total annual cost of the haunting</li></ul>
+    <h4 style="color:var(--shaggy-lime);font-family:'Bangers',cursive;font-size:1.1rem;margin-bottom:8px">Mini Quiz</h4>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq5')">Risk Transfer means the organization accepts the risk and does nothing</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mq5')">An AUP is a type of technical control</div>
+    <div class="mq-opt" onclick="miniQ(this,true,'mq5')">Black-box penetration testing = tester has zero prior knowledge of the target ✓</div>
+  </div></div></div>
+</div>
+
+<hr class="pdiv" id="characters">
+<div class="ps">
+  <div class="sec-hd"><h2>👥 Character Mapping — Mystery Inc. Security Roles</h2><p>Every member of the gang fills a critical cybersecurity function.</p></div>
+  <div class="cgrid">
+    <div class="card"><div class="role-badge rb-ciso">CISO / Incident Commander</div><h3>🧡 Fred Jones</h3><p>Fred leads Mystery Inc. like a CISO — setting strategy, planning operations, and designing the containment traps. He runs the Incident Response process from detection to recovery, assigning roles and keeping everyone on task.</p></div>
+    <div class="card"><div class="role-badge rb-forensic">Digital Forensics Analyst</div><h3>🔶 Velma Dinkley</h3><p>Velma is the SOC's forensics lead. She maintains chain of custody on every clue, applies the Order of Volatility when collecting evidence, and distinguishes real incidents from false positives. Jinkies — she knows her IOCs.</p></div>
+    <div class="card"><div class="role-badge rb-soc">Security Awareness Champion</div><h3>💜 Daphne Blake</h3><p>Daphne spots what everyone else misses — she represents the security awareness function. Her ability to notice social engineering attempts and report suspicious behavior makes her the gang's phishing-spotter and insider threat detector.</p></div>
+    <div class="card"><div class="role-badge rb-user">End User / Risk Indicator</div><h3>💚 Shaggy Rogers</h3><p>Shaggy is the well-meaning but easily manipulated end user. He accidentally discovers IOCs by stumbling into them, falls for social engineering, and reminds us why security awareness training is non-negotiable. Zoinks!</p></div>
+    <div class="card"><div class="role-badge rb-user">Behavioral Analytics / IOC Detector</div><h3>🐕 Scooby-Doo</h3><p>Scooby's nose detects anomalies that no scanner can — he represents User Behavior Analytics (UBA) and endpoint sensors. His instincts flag suspicious activity before traditional tools would. He works for Scooby Snacks (minimal budget).</p></div>
+    <div class="card"><div class="role-badge rb-threat">Threat Actor (Villain)</div><h3>👻 The Masked Villain</h3><p>Every villain in Scooby-Doo represents a different threat actor — from insider threats to hacktivists. Motivations range from financial gain to revenge and disruption. Always unmasked in the end.</p></div>
+    <div class="card"><div class="role-badge rb-arch">Law Enforcement / Legal Hold Authority</div><h3>🚔 Sheriff</h3><p>The Sheriff represents law enforcement's role in cybersecurity. He issues Legal Holds, manages e-discovery requests, and ensures the chain of custody stays intact so evidence is admissible in court.</p></div>
+    <div class="card"><div class="role-badge rb-arch">Secure Mobile SOC</div><h3>🚐 The Mystery Machine</h3><p>The Mystery Machine is Mystery Inc.'s mobile SOC — representing network infrastructure, VPN for secure comms, jump server for remote access, and the IDS/IPS monitoring the road for threats.</p></div>
+  </div>
+</div>
+
+<hr class="pdiv" id="analogies">
+<div class="ps">
+  <div class="sec-hd"><h2>🎭 Deep-Dive Analogies — Scooby Scenes → Security Concepts</h2><p>Four canonical scenes mapped to exam-critical security concepts.</p></div>
+  <div class="cgrid">
+    <div class="card"><span style="font-size:1.6rem">🔍</span><h3>Velma Analyzing Clues</h3><span class="tag tag-exam">Domain 4.8 — Digital Forensics</span><p style="margin-top:8px">When Velma photographs the ghost's glowing mist before collecting footprints, she's applying the <strong>Order of Volatility</strong> — capturing RAM-resident data before disk-resident data. Her documentation from discovery to the Sheriff demonstrates proper <strong>chain of custody</strong>.</p></div>
+    <div class="card"><span style="font-size:1.6rem">🕸️</span><h3>Fred's Elaborate Trap</h3><span class="tag tag-exam">Domain 4.8 — Containment</span><p style="margin-top:8px">Fred's trap catches the ghost without destroying evidence — this is textbook <strong>Containment</strong>. He isolates the threat (net = network segmentation), prevents lateral movement, and preserves evidence for <strong>eradication and forensics</strong>.</p></div>
+    <div class="card"><span style="font-size:1.6rem">🎭</span><h3>Unmasking the Villain</h3><span class="tag tag-exam">Domain 4.8 — Eradication &amp; Root Cause</span><p style="margin-top:8px">"I would have gotten away with it!" — Unmasking is <strong>Eradication</strong>. The gang identifies the root cause, removes the threat (costume = malicious artifacts), and eliminates the actor. Root cause analysis prevents the same ghost from returning next episode.</p></div>
+    <div class="card"><span style="font-size:1.6rem">💡</span><h3>The Final Scene Debrief</h3><span class="tag tag-exam">Domain 4.8 — Lessons Learned</span><p style="margin-top:8px">Every Scooby episode ends with the gang explaining exactly how the mystery was solved. This is <strong>Post-Incident Activity / Lessons Learned</strong> — documenting what happened, updating playbooks, and improving response time for future mysteries.</p></div>
+    <div class="card"><span style="font-size:1.6rem">📜</span><h3>Sheriff's Legal Hold on the Mansion</h3><span class="tag tag-exam">Domain 4.8 — Legal Hold &amp; E-Discovery</span><p style="margin-top:8px">When the Sheriff tapes off the haunted mansion, that's a <strong>Legal Hold</strong>. If the mystery goes to trial, <strong>e-discovery</strong> kicks in, collecting all electronic documents relevant to the case.</p></div>
+    <div class="card"><span style="font-size:1.6rem">🧲</span><h3>The Abandoned Amusement Park Honeypot</h3><span class="tag tag-exam">Domain 1.2 — Deception Technology</span><p style="margin-top:8px">A seemingly unguarded server left online to attract attackers is a <strong>Honeypot</strong> — just like the fake haunted attraction that lures the villain out of hiding. A <strong>Honeynet</strong> is an entire fake network; a <strong>Honeytoken</strong> is a single bait file.</p></div>
+  </div>
+</div>
+
+<hr class="pdiv" id="notes">
+<div class="ps">
+  <div class="sec-hd"><h2>📝 High-Frequency Exam Study Notes</h2><p>Five note cards covering the concepts most likely to appear on your Security+ SY0-701 exam.</p></div>
+  <div class="note-card"><h4>🐾 Cryptography Quick Reference</h4><ul><li>Asymmetric encryption: Public key encrypts, Private key decrypts (RSA, ECC)</li><li>Symmetric encryption: Same key for encrypt/decrypt — faster, used for bulk data (AES)</li><li>Hashing: One-way transformation for integrity verification — not reversible (SHA-256)</li><li>Salting: Random data added to password before hashing — defeats rainbow tables</li><li>Digital signature: Sender uses PRIVATE key to sign; receiver uses PUBLIC key to verify</li><li>Key escrow: Third party holds a copy of encryption keys for emergency recovery</li></ul></div>
+  <div class="note-card"><h4>🕵️ Authentication &amp; Access Control</h4><ul><li>MFA factors: Something you know, have, are, somewhere you are</li><li>RBAC: Role-Based — permissions assigned to roles, not individuals</li><li>MAC: Mandatory Access Control — uses sensitivity labels (Top Secret, Confidential)</li><li>DAC: Discretionary — resource owner sets permissions (most flexible, least secure)</li><li>Least privilege: Users get ONLY the access required to do their job</li><li>Zero Trust: "Never trust, always verify" — no implicit trust based on network location</li></ul></div>
+  <div class="note-card"><h4>🔬 Vulnerability Management Pipeline</h4><ul><li>CVE: Common Vulnerabilities and Exposures — unique ID for known vulns</li><li>CVSS: Score 0–10 rating severity; 9.0–10.0 = Critical</li><li>False positive: Scanner says vulnerable but system is NOT</li><li>False negative: Scanner says safe but system IS vulnerable (worse outcome!)</li><li>Patch → Rescan → Verify → Document: Full remediation cycle</li><li>Zero-day: Vulnerability with no patch available yet — highest risk</li></ul></div>
+  <div class="note-card"><h4>💼 Business Continuity &amp; Risk Math</h4><ul><li>RTO: Recovery Time Objective — MAX time allowed to restore a system after outage</li><li>RPO: Recovery Point Objective — MAX acceptable data loss measured in time</li><li>MTTR: Mean Time To Repair — average time to fix a failed component</li><li>MTBF: Mean Time Between Failures — average time between system failures</li><li>ALE = SLE × ARO — Annual Loss Expectancy formula (memorize this!)</li><li>Risk strategies: Transfer (insurance), Avoid, Mitigate (controls), Accept</li></ul></div>
+  <div class="note-card"><h4>📡 Network Security Essentials</h4><ul><li>WAF: Web Application Firewall — Layer 7, protects against SQLi, XSS, CSRF</li><li>NGFW: Next-Gen Firewall — deep packet inspection, application awareness</li><li>IDS: Intrusion Detection System — alerts only, passive/tap mode</li><li>IPS: Intrusion Prevention System — inline, actively blocks malicious traffic</li><li>SIEM: Aggregates logs + correlates events + generates alerts + long-term storage</li><li>802.1X: Port-based NAC — authenticate before being granted network access</li></ul></div>
+</div>
+
+<hr class="pdiv" id="ir">
+<div class="ps">
+  <div class="sec-hd"><h2>🚨 Incident Response Lifecycle — Domain 4.8</h2><p>The six phases of the IR process as Mystery Inc. lives them. <span class="tag tag-exam">4.8 Exam Objective</span></p></div>
+  <div class="ir-grid">
+    <div class="ir-card"><span class="phase-icon">📋</span><h4>1. Preparation</h4><span class="tag tag-exam">4.8</span><p style="margin-top:8px">Fred writes playbooks before the Mystery Machine leaves the garage. Policies, response plans, Scooby Snacks stocked and ready.</p></div>
+    <div class="ir-card"><span class="phase-icon">🔍</span><h4>2. Detection &amp; Analysis</h4><span class="tag tag-exam">4.8</span><p style="margin-top:8px">Shaggy stumbles on an IOC. Velma analyzes: is this Old Man Jenkins (false positive) or a real intruder?</p></div>
+    <div class="ir-card"><span class="phase-icon">🕸️</span><h4>3. Containment</h4><span class="tag tag-exam">4.8</span><p style="margin-top:8px">Fred's trap isolates the ghost. Short-term: quarantine. Long-term: patch and segment. Stop spread without destroying evidence.</p></div>
+    <div class="ir-card"><span class="phase-icon">🎭</span><h4>4. Eradication</h4><span class="tag tag-exam">4.8</span><p style="margin-top:8px">Unmask the villain — identify root cause, delete malware, revoke compromised credentials, verify the threat is gone.</p></div>
+    <div class="ir-card"><span class="phase-icon">💡</span><h4>5. Recovery</h4><span class="tag tag-exam">4.8</span><p style="margin-top:8px">Turn the lights back on. Restore from clean backups, verify functionality, monitor closely, return to normal operations.</p></div>
+    <div class="ir-card"><span class="phase-icon">📖</span><h4>6. Lessons Learned</h4><span class="tag tag-exam">4.8</span><p style="margin-top:8px">"I would've gotten away with it!" — Document what happened, update playbooks, measure MTTR, brief stakeholders.</p></div>
+  </div>
+</div>
+
+<hr class="pdiv" id="detection">
+<div class="ps">
+  <div class="sec-hd"><h2>🔎 Detection Deep Dive</h2><p>Key detection concepts for the Security+ exam.</p></div>
+  <div class="cgrid">
+    <div class="card"><h3>Indicators of Compromise (IOCs)</h3><p>Shaggy's discoveries are IOCs — evidence an incident may have occurred. Examples: unusual account lockouts, impossible travel logins, out-of-cycle log entries, missing logs, unexplained resource consumption spikes.</p></div>
+    <div class="card"><h3>SIEM — Velma's Dashboard</h3><p>A SIEM aggregates logs from firewalls, endpoints, apps, and network devices. It correlates events, generates alerts, and stores logs for forensic investigation. Think of it as Velma's giant clue board.</p></div>
+    <div class="card"><h3>Threat Hunting</h3><p>Proactively searching for threats that evade automated detection. Unlike reactive alerting, threat hunting assumes a breach has already occurred. Velma doesn't wait for Shaggy to scream — she goes looking herself.</p></div>
+    <div class="card"><h3>Impossible Travel Alert</h3><p>A key IOC — if a user logs in from New York at 9 AM and Paris at 9:15 AM, that's impossible. SIEM/UEBA flags this automatically. Even Scooby could spot that ghost teleportation.</p></div>
+  </div>
+  <div style="margin-top:18px">
+    <p style="font-weight:800;color:var(--text);margin-bottom:10px;font-size:.9rem">🧪 Quick Detection Quiz:</p>
+    <div class="mq-opt" onclick="miniQ(this,false,'mqd')">An IDS blocks malicious traffic in real time</div>
+    <div class="mq-opt" onclick="miniQ(this,true,'mqd')">A SIEM collects and correlates log data from multiple sources to generate alerts ✓</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mqd')">Threat hunting is triggered only after a SIEM alert fires</div>
+  </div>
+</div>
+
+<hr class="pdiv" id="roles">
+<div class="ps">
+  <div class="sec-hd"><h2>🎯 Roles &amp; Responsibilities</h2><p>Who owns what in a security program — mapped to Mystery Inc. job functions.</p></div>
+  <div class="role-grid">
+    <div class="role-card"><span class="role-icon">🎩</span><div class="role-title">Data Owner</div><div class="role-desc">Senior exec accountable for data classification. Fred decides the mystery case files are "Confidential."</div></div>
+    <div class="role-card"><span class="role-icon">🔶</span><div class="role-title">Data Custodian</div><div class="role-desc">Implements controls the owner defined. Velma maintains, backs up, and secures the case file database.</div></div>
+    <div class="role-card"><span class="role-icon">🔧</span><div class="role-title">System Administrator</div><div class="role-desc">Manages the Mystery Machine's OS, patches, and configurations. Keeps the van's tech running.</div></div>
+    <div class="role-card"><span class="role-icon">💜</span><div class="role-title">Security Awareness Officer</div><div class="role-desc">Daphne trains the gang to spot social engineering, manage passwords, and handle removable media safely.</div></div>
+    <div class="role-card"><span class="role-icon">🚔</span><div class="role-title">Legal / Compliance</div><div class="role-desc">The Sheriff ensures all evidence collection follows legal procedures — chain of custody and legal holds.</div></div>
+    <div class="role-card"><span class="role-icon">🐕</span><div class="role-title">Endpoint Sensor</div><div class="role-desc">Scooby detects anomalies the tools miss — representing behavioral analytics and endpoint monitoring agents.</div></div>
+  </div>
+  <div style="margin-top:18px">
+    <p style="font-weight:800;color:var(--text);margin-bottom:10px;font-size:.9rem">🧪 Roles Quiz:</p>
+    <div class="mq-opt" onclick="miniQ(this,true,'mqr')">The Data Owner is accountable for data classification, not day-to-day technical management ✓</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mqr')">A Data Custodian decides who can access the data and sets classification levels</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mqr')">The CISO is responsible for all hands-on technical implementation of security controls</div>
+  </div>
+</div>
+
+<hr class="pdiv" id="reporting">
+<div class="ps">
+  <div class="sec-hd"><h2>📊 Reporting Requirements</h2><p>Internal and external reporting obligations — what Mystery Inc. must document and disclose.</p></div>
+  <div class="report-grid">
+    <div class="report-card"><h4>Internal Reporting</h4><ul><li>Initial incident report to CISO/management</li><li>Status updates during active investigation</li><li>Root cause analysis report post-incident</li><li>Compliance self-assessment results</li><li>Risk register updates after new findings</li></ul></div>
+    <div class="report-card"><h4>External Reporting</h4><ul><li>Breach notification laws (GDPR: 72 hours)</li><li>Regulatory body notifications (PCI DSS, HIPAA)</li><li>Law enforcement involvement when required</li><li>Vendor/supply chain notifications</li><li>Public disclosure if required by regulation</li></ul></div>
+    <div class="report-card"><h4>Reporting Timelines</h4><ul><li>GDPR breach: 72 hours to supervisory authority</li><li>HIPAA breach: 60 days to HHS (large breaches)</li><li>Immediate: Life-safety incidents</li><li>SLA-defined: Contract-based timelines</li><li>Tabletop exercises: Verify timing procedures</li></ul></div>
+    <div class="report-card"><h4>Compliance Consequences</h4><ul><li>Financial fines (GDPR up to 4% annual revenue)</li><li>License revocation for regulated industries</li><li>Reputational damage and loss of customers</li><li>Contractual penalties from broken SLAs</li><li>Criminal liability for executives in severe cases</li></ul></div>
+  </div>
+  <div style="margin-top:18px">
+    <p style="font-weight:800;color:var(--text);margin-bottom:10px;font-size:.9rem">🧪 Reporting Quiz:</p>
+    <div class="mq-opt" onclick="miniQ(this,false,'mqrp')">GDPR requires breach notification within 30 days</div>
+    <div class="mq-opt" onclick="miniQ(this,true,'mqrp')">GDPR requires breach notification to supervisory authorities within 72 hours ✓</div>
+    <div class="mq-opt" onclick="miniQ(this,false,'mqrp')">Internal incident reports are only needed after external regulators request them</div>
+  </div>
+</div>
+
+<hr class="pdiv" id="postincident">
+<div class="ps">
+  <div class="sec-hd"><h2>🔁 Post-Incident Activity</h2><p>What happens after the villain is unmasked — the final and most often neglected phase.</p></div>
+  <div class="cgrid">
+    <div class="card"><h3>Lessons Learned Meeting</h3><p>Gather the full team within 1–2 weeks of resolution. Review the timeline, identify what worked, what failed, and what should change. "How did the ghost bypass our tripwire?" Answer that before the next mystery.</p></div>
+    <div class="card"><h3>Metrics &amp; KPIs</h3><p>Track MTTD (Mean Time to Detect), MTTR (Mean Time to Respond), and incidents per month. If Fred's traps keep failing at the same point, measure it — then fix it.</p></div>
+    <div class="card"><h3>Playbook Updates</h3><p>Update incident response playbooks with new IOCs, attack patterns, and response procedures discovered during the incident. Velma's mystery-solving manual gets a new chapter after every case.</p></div>
+    <div class="card"><h3>Training &amp; Awareness</h3><p>Use the incident as a training case. Run tabletop exercises simulating the attack. Brief all staff on new phishing tactics discovered. Shaggy learning from his mistakes is the whole point.</p></div>
+  </div>
+</div>
+
+<hr class="pdiv" id="adventure">
+<div class="ps">
+  <div class="sec-hd"><h2>🗺️ Interactive Adventure — The Haunted Server Room</h2><p>Make the right security decisions to solve the mystery. Wrong answers say "Try the other option!" and won't advance.</p></div>
+  <div id="adv-scene-1" class="adv-scene active">
+    <div class="adv-text"><strong style="color:var(--fred-orange)">Scene 1 — Detection 🔍</strong><br><br>Scooby sniffs something strange near the server room — the door is ajar and an unfamiliar USB drive is plugged into the main server. The SIEM dashboard shows unusual outbound traffic spikes at 3 AM for the past week. Shaggy wants to immediately pull the USB drive and restart the server.<br><br><strong style="color:var(--mm-green)">What should Velma do FIRST?</strong></div>
+    <div class="adv-choice" onclick="advChoose(this,true,1)">📸 Document and photograph the scene, capture volatile memory before touching anything</div>
+    <div class="adv-choice" onclick="advChoose(this,false,1)">🔌 Pull the USB drive immediately — remove the threat as fast as possible</div>
+    <div class="adv-choice" onclick="advChoose(this,false,1)">🔄 Restart the server — clears the malware and restores normal operations</div>
+    <div id="adv-feedback-1" style="display:none;margin-top:10px;padding:12px;border-radius:10px;background:rgba(60,179,113,.1);border:2px solid rgba(60,179,113,.4);font-size:.88rem;font-weight:700;color:var(--mm-green)">Jinkies! Correct! Documenting and capturing volatile data (RAM) applies the <strong>Order of Volatility</strong> and preserves the <strong>Chain of Custody</strong>. <div class="ir-phase-badge">📋 Phase: Detection &amp; Analysis</div><div style="margin-top:12px"><button class="btn-flip" onclick="advNext(2)">Next Scene →</button></div></div>
+  </div>
+  <div id="adv-scene-2" class="adv-scene">
+    <div class="adv-text"><strong style="color:var(--fred-orange)">Scene 2 — Containment 🕸️</strong><br><br>Velma confirms a keylogger is exfiltrating credentials. The compromised server is connected to HR and Financial systems. Fred wants to shut the whole network down immediately.<br><br><strong style="color:var(--mm-green)">What's the best containment strategy?</strong></div>
+    <div class="adv-choice" onclick="advChoose(this,false,2)">💥 Shut down ALL systems network-wide — scorched earth containment</div>
+    <div class="adv-choice" onclick="advChoose(this,true,2)">🔗 Isolate ONLY the compromised server while keeping other systems operational</div>
+    <div class="adv-choice" onclick="advChoose(this,false,2)">👀 Do nothing yet — keep monitoring to gather more threat intelligence</div>
+    <div id="adv-feedback-2" style="display:none;margin-top:10px;padding:12px;border-radius:10px;background:rgba(60,179,113,.1);border:2px solid rgba(60,179,113,.4);font-size:.88rem;font-weight:700;color:var(--mm-green)">Fred's trap springs! Isolating only the affected system minimizes business impact while stopping lateral movement. <div class="ir-phase-badge">🕸️ Phase: Containment</div><div style="margin-top:12px"><button class="btn-flip" onclick="advNext(3)">Next Scene →</button></div></div>
+  </div>
+  <div id="adv-scene-3" class="adv-scene">
+    <div class="adv-text"><strong style="color:var(--fred-orange)">Scene 3 — Eradication 🎭</strong><br><br>The keylogger is identified — installed by a rogue contractor who still has valid Active Directory credentials. The malware is removed. What's needed for complete eradication?</div>
+    <div class="adv-choice" onclick="advChoose(this,false,3)">🔒 Just change the server's local admin password</div>
+    <div class="adv-choice" onclick="advChoose(this,false,3)">🗑️ Reinstall the OS and consider the job done</div>
+    <div class="adv-choice" onclick="advChoose(this,true,3)">✅ Revoke ALL contractor credentials, audit all accounts, patch the vulnerability, verify no persistence mechanisms remain</div>
+    <div id="adv-feedback-3" style="display:none;margin-top:10px;padding:12px;border-radius:10px;background:rgba(60,179,113,.1);border:2px solid rgba(60,179,113,.4);font-size:.88rem;font-weight:700;color:var(--mm-green)">The villain is unmasked! True eradication means removing ALL footholds — credentials, backdoors, persistence mechanisms. <div class="ir-phase-badge">🎭 Phase: Eradication</div><div style="margin-top:12px"><button class="btn-flip" onclick="advNext(4)">Next Scene →</button></div></div>
+  </div>
+  <div id="adv-scene-4" class="adv-scene">
+    <div class="adv-text"><strong style="color:var(--fred-orange)">Scene 4 — Recovery &amp; Lessons Learned 💡</strong><br><br>Systems are clean, credentials rotated, patching complete. Management wants to bring the server online immediately. Velma insists on monitoring for at least 30 days before declaring full recovery.</div>
+    <div class="adv-choice" onclick="advChoose(this,false,4)">⚡ Bring the server online immediately — patching and backups are enough</div>
+    <div class="adv-choice" onclick="advChoose(this,true,4)">📡 Velma is right — restore to production with enhanced monitoring, then declare recovery once stability is confirmed</div>
+    <div class="adv-choice" onclick="advChoose(this,false,4)">🔄 Rebuild from scratch every time — monitoring is unnecessary overhead</div>
+    <div id="adv-feedback-4" style="display:none;margin-top:10px;padding:12px;border-radius:10px;background:rgba(60,179,113,.1);border:2px solid rgba(60,179,113,.4);font-size:.88rem;font-weight:700;color:var(--mm-green)">Mystery solved! Recovery requires restoring systems AND verifying stability through enhanced monitoring. <div class="ir-phase-badge">💡 Phase: Recovery + Lessons Learned</div></div>
+  </div>
+  <div id="adv-finale" style="display:none;margin-top:18px;background:linear-gradient(135deg,rgba(60,179,113,.2),rgba(255,140,0,.15));border:3px solid var(--mm-green);border-radius:16px;padding:24px;text-align:center">
+    <div style="font-size:3rem;margin-bottom:10px">🏆🐕🎉</div>
+    <h3 style="font-family:'Bangers',cursive;font-size:2rem;color:var(--mm-green);letter-spacing:.05em">Mystery Solved!</h3>
+    <p style="color:var(--text);font-weight:700;margin:10px 0">You navigated all four IR phases like a true Security professional!</p>
+    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px"><span class="ir-phase-badge">📋 Preparation</span><span class="ir-phase-badge">🔍 Detection</span><span class="ir-phase-badge">🕸️ Containment</span><span class="ir-phase-badge">🎭 Eradication</span><span class="ir-phase-badge">💡 Recovery</span><span class="ir-phase-badge">📖 Lessons Learned</span></div>
+    <p style="color:var(--muted);font-size:.82rem;margin-top:12px">And I would've gotten away with it if not for you meddling Security+ candidates!</p>
+    <button class="btn-flip" style="margin-top:12px" onclick="resetAdv()">🔄 Solve Another Mystery</button>
+  </div>
+</div>
+
+<hr class="pdiv" id="links">
+<div class="ps">
+  <div class="sec-hd"><h2>🔗 Study Links &amp; Resources</h2><p>Everything you need to ace the Security+ SY0-701 exam.</p></div>
+  <div class="link-grid">
+    <div class="link-card"><h4>📄 Scooby Study Guide PDF</h4><p>The full Scooby-Doo themed Security+ guide — all domains with mystery analogies. Upload to GitHub Pages to activate.</p><a href="ScoobyDoo_FullPDF.html" class="link-btn" target="_blank">📥 Open Guide</a></div>
+    <div class="link-card"><h4>🎯 IR Forensics Theory</h4><p>Deep dive into the Mystery Machine as a CSIRT — IR Lifecycle, Digital Forensics, and Chain of Custody through Scooby scenarios.</p><a href="The_Mystery_Machine_Guide.html" class="link-btn" target="_blank">📖 Read Theory</a></div>
+    <div class="link-card"><h4>📋 Official Exam Objectives</h4><p>CompTIA Security+ SY0-701 official exam objectives PDF — the authoritative source for all exam topics.</p><a href="CompTIA-Security-SY0-701-Exam-Objectives-1.pdf" class="link-btn" target="_blank">📑 Download PDF</a></div>
+    <div class="link-card"><h4>📚 Professor Messer</h4><p>Free Security+ SY0-701 video training course — one of the best free resources available.</p><a href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" class="link-btn" target="_blank">▶️ Watch Free</a></div>
+    <div class="link-card"><h4>🛒 Study Materials</h4><p>Recommended Security+ study books and practice exam materials on Amazon.</p><a href="https://amzn.to/4nVi25Y" class="link-btn" target="_blank">🛒 View on Amazon</a></div>
+    <div class="link-card"><h4>🃏 Quizlet Flashcards</h4><p>Search Quizlet for Security+ SY0-701 flashcard sets — thousands of community-made sets covering all five domains.</p><a href="https://quizlet.com/search?query=security+plus+sy0-701&type=sets" class="link-btn" target="_blank">🔍 Search Quizlet</a></div>
+  </div>
+</div>
+<hr class="pdiv" id="flashcards">
+<div class="ps">
+  <div class="sec-hd">
+    <h2>🃏 Mystery Machine Study Deck</h2>
+    <p>Each card ties a Security+ concept to a Scooby-Doo mystery. Think like <span class="fc-char-velma">Velma</span>, notice patterns like <span class="fc-char-fred">Fred</span>, avoid mistakes like <span class="fc-char-shaggy">Shaggy</span> and <span class="fc-char-scooby">Scooby</span>, and never underestimate a <span class="fc-char-villain">masked villain</span>.</p>
+  </div>
+  <div class="fc-section-wrap">
+    <div class="fc-card-display" id="fc-card-display">
+      <div class="fc-card-tags" id="fc-card-tags"></div>
+      <div class="fc-card-question" id="fc-card-question"></div>
+      <div class="fc-card-answer" id="fc-card-answer" style="display:none"></div>
+    </div>
+    <div class="fc-controls">
+      <button class="fc-btn-show" onclick="fcShowAnswer()">🔍 Show Answer</button>
+      <button class="fc-btn-next" onclick="fcNext()">➡️ Next Card</button>
+      <button class="fc-btn-hard" onclick="fcMarkHard()">😰 Hard (lower box)</button>
+      <button class="fc-btn-easy" onclick="fcMarkEasy()">⭐ Easy (promote)</button>
+      <button class="fc-btn-reset" onclick="fcReset()">🔄 Reset Progress</button>
+    </div>
+    <div class="fc-deck-info" id="fc-deck-info"></div>
+  </div>
+</div>
+
+<hr class="pdiv" id="quiz">
+<div class="ps">
+  <div class="sec-hd"><h2>🧠 10-Question Knowledge Quiz</h2><p>One question per domain area with personalized feedback on missed topics.</p></div>
+  <div class="quiz-wrap">
+    <div class="qz-hd"><h3>🕵️ Scooby-Doo Security+ Quiz</h3><div class="qz-meta" id="quiz-meta">Question 1 of 10</div></div>
+    <div id="quiz-body"></div>
+    <div class="quiz-nav" id="quiz-nav">
+      <button class="qbtn qbtn-check" id="quiz-check-btn" onclick="quizCheck()" style="display:none">Check Answer</button>
+      <button class="qbtn qbtn-next" id="quiz-next-btn" onclick="quizNext()" style="display:none">Next →</button>
+      <button class="qbtn qbtn-retry" id="quiz-retry-btn" onclick="quizRetry()" style="display:none">🔄 Retake</button>
+    </div>
+    <div class="qz-done" id="quiz-done">
+      <div class="qz-score-big" id="quiz-score-pct"></div>
+      <p id="quiz-score-label" style="color:var(--muted);font-weight:700;margin-bottom:8px"></p>
+      <div class="missed-box" id="quiz-missed" style="display:none"><h4>📌 Review These Topics:</h4><div id="quiz-missed-list"></div></div>
+      <button class="qbtn qbtn-retry" onclick="quizRetry()" style="margin-top:14px">🔄 Try Again</button>
+    </div>
+  </div>
+</div>
+
+<footer style="background:#050D06;padding:28px 20px;text-align:center;color:rgba(255,255,255,.38);font-size:.74rem;margin-top:48px;border-top:3px solid var(--border)">
+  <p>🛡️ <a href="security-notes.html" style="color:var(--mm-green)">Study Hub</a> &nbsp;·&nbsp; <a href="https://charleneluequeue.github.io/" style="color:var(--mm-green)">Portfolio</a> &nbsp;·&nbsp; Built by Charlene LueQuee</p>
+  <p style="margin-top:5px;font-size:.7rem">Scooby-Doo and all related characters are property of Warner Bros. Entertainment Inc. — used for educational analogy purposes only. Not affiliated with CompTIA.</p>
+  <div style="margin-top:10px;display:inline-block;background:rgba(60,179,113,.08);border:1px solid rgba(60,179,113,.2);border-radius:8px;padding:6px 20px;font-size:.68rem;letter-spacing:.5px">&copy; 2025 Charlene LueQuee &nbsp;·&nbsp; All Rights Reserved</div>
+</footer>
+
+<script>
+/* ══ NAV ══ */
+function toggleCN(btn){var m=btn.nextElementSibling;m.style.display=m.style.display==='block'?'none':'block';}
+document.addEventListener('click',function(e){if(!e.target.closest('.cnd'))document.querySelectorAll('.cnm').forEach(function(m){m.style.display='none';});});
+
+/* ══ ACCORDION ══ */
+function togAcc(hd){
+  var body=hd.nextElementSibling;
+  var isOpen=hd.classList.contains('open');
+  document.querySelectorAll('.acc-hd.open').forEach(function(h){h.classList.remove('open');h.nextElementSibling.style.maxHeight='0';h.querySelector('.arrow').textContent='＋';});
+  if(!isOpen){hd.classList.add('open');body.style.maxHeight=body.scrollHeight+'px';hd.querySelector('.arrow').textContent='－';}
+}
+
+/* ══ MINI QUIZ ══ */
+function miniQ(el,correct){
+  var siblings=el.parentElement.querySelectorAll('.mq-opt');
+  if(Array.from(siblings).some(function(s){return s.classList.contains('correct');}))return;
+  siblings.forEach(function(s){s.classList.add('disabled')});
+  el.classList.add(correct?'correct':'wrong');
+  playTone(correct);
+}
+
+/* ══ PARTICLES ══ */
+(function(){
+  var emojis=['🐕','👻','🔍','🕵️','🚐','🔦'];
+  var c=document.getElementById('particles-container');
+  function spawn(){var p=document.createElement('div');p.className='particle';p.textContent=emojis[Math.floor(Math.random()*emojis.length)];p.style.left=Math.random()*100+'vw';p.style.bottom='-40px';p.style.setProperty('--dx',(Math.random()*60-30)+'px');p.style.animationDuration=(14+Math.random()*10)+'s';p.style.animationDelay=(Math.random()*5)+'s';c.appendChild(p);setTimeout(function(){p.remove()},24000);}
+  for(var i=0;i<6;i++)spawn();
+  setInterval(spawn,3500);
+})();
+
+/* ══ SOUND ══ */
+var soundOn=false;var actx=null;
+function getCtx(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
+function playTone(correct){if(!soundOn)return;try{var c=getCtx();var o=c.createOscillator();var g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=correct?880:220;g.gain.setValueAtTime(.3,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.4);o.start(c.currentTime);o.stop(c.currentTime+.4);}catch(e){}}
+function playVictory(){if(!soundOn)return;try{var c=getCtx();[523,659,784,1047].forEach(function(f,i){var o=c.createOscillator();var g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=f;g.gain.setValueAtTime(.2,c.currentTime+i*.12);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+i*.12+.25);o.start(c.currentTime+i*.12);o.stop(c.currentTime+i*.12+.25);});}catch(e){}}
+function toggleSound(){soundOn=!soundOn;document.getElementById('sound-toggle').innerHTML=(soundOn?'🔊':'🔇')+' Sound: '+(soundOn?'ON':'OFF');}
+
+/* ══ CONFETTI ══ */
+function confetti(){
+  var colors=['#3CB371','#FF8C00','#9B59B6','#E67E22','#A8D5A2','#C4962A','#fff'];
+  for(var i=0;i<80;i++){var el=document.createElement('div');el.className='confetti-piece';el.style.left=Math.random()*100+'vw';el.style.background=colors[Math.floor(Math.random()*colors.length)];el.style.animationDelay=(Math.random()*1.5)+'s';el.style.animationDuration=(2+Math.random()*2)+'s';el.style.width=(6+Math.random()*10)+'px';el.style.height=el.style.width;el.style.borderRadius=Math.random()>.5?'50%':'2px';document.body.appendChild(el);setTimeout(function(e){return function(){e.remove()}}(el),4000);}
+  playVictory();
+}
+
+/* ══ ADVENTURE ══ */
+function advChoose(el,correct,scene){
+  var parent=document.getElementById('adv-scene-'+scene);
+  var choices=parent.querySelectorAll('.adv-choice');
+  var fb=document.getElementById('adv-feedback-'+scene);
+  if(el.classList.contains('picked')||el.classList.contains('wrong-pick'))return;
+  if(correct){
+    el.classList.add('picked');choices.forEach(function(c){c.style.pointerEvents='none'});fb.style.display='block';
+    if(scene===4){setTimeout(function(){document.getElementById('adv-finale').style.display='block';confetti();},800);}
+  }else{
+    el.classList.add('wrong-pick');
+    var msg=document.createElement('div');msg.style.cssText='font-size:.78rem;color:#E74C3C;font-weight:700;margin-top:4px;padding:4px 8px;background:rgba(231,76,60,.1);border-radius:6px';msg.textContent='👻 Try the other option!';el.appendChild(msg);
+    setTimeout(function(){el.classList.remove('wrong-pick');if(msg.parentNode)msg.parentNode.removeChild(msg);},1200);
+  }
+}
+function advNext(scene){
+  document.querySelectorAll('.adv-scene').forEach(function(s){s.classList.remove('active')});
+  var next=document.getElementById('adv-scene-'+scene);
+  if(next){next.classList.add('active');next.scrollIntoView({behavior:'smooth',block:'nearest'});}
+}
+function resetAdv(){
+  document.getElementById('adv-finale').style.display='none';
+  document.querySelectorAll('.adv-scene').forEach(function(s){
+    s.classList.remove('active');
+    s.querySelectorAll('.adv-choice').forEach(function(c){c.classList.remove('picked','wrong-pick');c.style.pointerEvents='';});
+    var fb=s.querySelector('[id^="adv-feedback-"]');if(fb)fb.style.display='none';
+  });
+  document.getElementById('adv-scene-1').classList.add('active');
+}
+
+/* ══ SCOOBY FLASHCARDS ══ */
+var FC_CARDS=[
+  {q:"CIA Triad – In a Scooby-Doo mystery, what is CONFIDENTIALITY?",a:"Keeping the villain's true identity and motive hidden until the right time.\nIn Security+, it's protecting data from unauthorized access.",tags:["Domain 1","CIA Triad"],domain:1,char:"velma"},
+  {q:"CIA Triad – What is INTEGRITY in a Scooby-Doo context?",a:"Ensuring clues aren't altered or tampered with.\nIn Security+, it's making sure data isn't changed without authorization.",tags:["Domain 1","CIA Triad"],domain:1,char:"velma"},
+  {q:"CIA Triad – What is AVAILABILITY in a Scooby-Doo mystery?",a:"Making sure the gang can access the Mystery Machine, maps, and clues when needed.\nIn Security+, it's ensuring systems and data are accessible when required.",tags:["Domain 1","CIA Triad"],domain:1,char:"fred"},
+  {q:"Security controls – Administrative, technical, physical in the Scooby-Doo world?",a:"Administrative: Rules like 'Don't split up without a plan.'\nTechnical: Security cameras at the haunted mansion.\nPhysical: Locked doors, fences, and gates.",tags:["Domain 1","Controls"],domain:1,char:"fred"},
+  {q:"Least privilege – How would Velma apply this to clue access?",a:"Only Velma and Fred get full access to the evidence room.\nShaggy and Scooby get limited access so they don't accidentally eat the evidence.",tags:["Domain 1","Least Privilege"],domain:1,char:"velma"},
+  {q:"Defense in depth – Scooby-Doo style?",a:"Multiple layers: locks on doors, cameras, guards, and alarms.\nIn Security+, it's using several controls together to protect assets.",tags:["Domain 1","Defense in Depth"],domain:1,char:"fred"},
+  {q:"Authentication vs Authorization – Mystery Machine example?",a:"Authentication: Proving you're part of the gang (Velma, Fred, etc.).\nAuthorization: Deciding who can drive the Mystery Machine or access certain clues.",tags:["Domain 1","AuthN/AuthZ"],domain:1,char:"velma"},
+  {q:"Non-repudiation – How does the gang ensure a villain can't deny their actions?",a:"They collect solid evidence: recordings, logs, and witness statements.\nIn Security+, it's using logs, signatures, and audit trails.",tags:["Domain 1","Non-repudiation"],domain:1,char:"velma"},
+  {q:"What is a Digital Signature in Security+?",a:"The sender encrypts a hash with their PRIVATE key. The receiver uses the PUBLIC key to verify. Like Velma signing off on official evidence reports.",tags:["Domain 1","Cryptography"],domain:1,char:"velma"},
+  {q:"What is Salting and why does it matter?",a:"Adding random unique data to a password before hashing defeats rainbow table attacks. Even if two gang members pick 'scoobysnacks', their stored hashes differ.",tags:["Domain 1","Cryptography"],domain:1,char:"velma"},
+  {q:"Threat actor – Who is the typical Scooby-Doo villain in Security+ terms?",a:"A threat actor with a motive (money, revenge, hiding a crime) using disguises and tricks to scare people away.",tags:["Domain 2","Threat Actors"],domain:2,char:"villain"},
+  {q:"Social engineering – How does a Scooby-Doo villain use it?",a:"They spread rumors, fake ghost stories, and scary legends to manipulate people into leaving an area.\nIn Security+, it's manipulating people to gain access or information.",tags:["Domain 2","Social Engineering"],domain:2,char:"shaggy"},
+  {q:"Phishing – Scooby-Doo version?",a:"Fake letters claiming 'You've won a prize, come alone to the old mansion.'\nIn Security+, it's deceptive emails or messages to trick users.",tags:["Domain 2","Phishing"],domain:2,char:"shaggy"},
+  {q:"Insider threat – Who could be an insider in a Scooby-Doo episode?",a:"A museum employee, caretaker, or security guard secretly helping the villain.\nIn Security+, it's someone with legitimate access misusing it.",tags:["Domain 2","Insider Threat"],domain:2,char:"villain"},
+  {q:"Physical attack – Scooby-Doo example?",a:"The villain sabotages the Mystery Machine or cuts power to the mansion.\nIn Security+, it's physical damage to systems or infrastructure.",tags:["Domain 2","Physical Attacks"],domain:2,char:"villain"},
+  {q:"Reconnaissance – How does a villain gather info before scaring people?",a:"They study the building, security routines, and people's habits.\nIn Security+, it's scanning, mapping, and gathering intel on targets.",tags:["Domain 2","Reconnaissance"],domain:2,char:"villain"},
+  {q:"DoS / DDoS – Scooby-Doo analogy?",a:"Overwhelming the gang with fake clues, traps, and distractions so they can't focus on the real problem.\nIn Security+, it's flooding systems to make them unavailable.",tags:["Domain 2","DoS/DDoS"],domain:2,char:"villain"},
+  {q:"Zero-day – How would Velma describe it in a haunted mansion?",a:"A hidden trap or flaw no one knew about, exploited by the villain before anyone can fix it.\nIn Security+, it's an unknown vulnerability being exploited.",tags:["Domain 2","Zero-day"],domain:2,char:"velma"},
+  {q:"What is Password Spraying?",a:"Trying a small set of common passwords (like 'scoobysnacks') across many accounts to avoid lockouts. Different from brute force, which hammers one account.",tags:["Domain 2","Password Attacks"],domain:2,char:"villain"},
+  {q:"What is a Rootkit?",a:"Malware that gains admin-level control and hides its presence from the OS — the ghost secretly living in the mansion walls, invisible to normal inspection.",tags:["Domain 2","Malware"],domain:2,char:"villain"},
+  {q:"Network segmentation – Mystery Machine and mansion networks?",a:"Guest Wi-Fi for visitors, secure network for security cameras, separate network for critical systems.\nSegmentation limits damage if one part is compromised.",tags:["Domain 3","Segmentation"],domain:3,char:"fred"},
+  {q:"DMZ – Scooby-Doo style?",a:"A semi-public area of the mansion where visitors can go, but deeper rooms are restricted.\nIn Security+, it's a network zone between internal and external networks.",tags:["Domain 3","DMZ"],domain:3,char:"fred"},
+  {q:"Zero trust – Scooby-Doo analogy?",a:"Fred assumes every door, hallway, and person could be part of the villain's plan.\nIn Security+, it's 'never trust, always verify' for every access request.",tags:["Domain 3","Zero Trust"],domain:3,char:"fred"},
+  {q:"On-prem vs cloud – Mystery Machine vs remote storage?",a:"On-prem: Evidence stored in a locked room at the mansion.\nCloud: Evidence stored in a secure remote archive the gang can access from anywhere.",tags:["Domain 3","Cloud vs On-Prem"],domain:3,char:"velma"},
+  {q:"Secure baselines – Velma's approach?",a:"Velma defines what 'normal' looks like: camera settings, lock configurations, and log formats.\nIn Security+, baselines define expected secure configurations.",tags:["Domain 3","Baselines"],domain:3,char:"velma"},
+  {q:"Redundancy – How does the gang ensure they don't lose evidence?",a:"Multiple copies of notes, photos, and recordings.\nIn Security+, redundancy keeps systems and data available if one part fails.",tags:["Domain 3","Redundancy"],domain:3,char:"fred"},
+  {q:"What is the difference between RTO and RPO?",a:"RTO = how fast you must restore the system after an outage.\nRPO = how much data loss is acceptable, measured in time.\nBoth are set during Business Impact Analysis.",tags:["Domain 3","BCP/DR"],domain:3,char:"velma"},
+  {q:"What is a Hot Site vs a Cold Site?",a:"Hot site: Fully operational backup facility with current data — instant failover.\nCold site: Space and power only, needs full setup.\nWarm site: Hardware ready, data needs syncing.",tags:["Domain 3","BCP/DR"],domain:3,char:"fred"},
+  {q:"Logging – Scooby-Doo style?",a:"Velma keeps detailed notes of every clue, time, and location.\nIn Security+, logs record events for analysis and investigations.",tags:["Domain 4","Logging"],domain:4,char:"velma"},
+  {q:"SIEM – Velma's master notebook analogy?",a:"A central place where all clues, logs, and events are correlated.\nIn Security+, SIEM collects and analyzes logs from many sources.",tags:["Domain 4","SIEM"],domain:4,char:"velma"},
+  {q:"Incident response – Scooby-Doo phases?",a:"Preparation, detection & analysis, containment, eradication, recovery, and lessons learned.\nThe gang follows these steps when dealing with a villain.",tags:["Domain 4","IR Phases"],domain:4,char:"fred"},
+  {q:"Containment – Scooby-Doo example?",a:"Blocking off certain hallways, securing doors, and isolating the villain's hiding spots.\nIn Security+, it's limiting the spread of an incident.",tags:["Domain 4","Containment"],domain:4,char:"fred"},
+  {q:"Eradication – How does the gang 'clean up' after catching the villain?",a:"Removing traps, disabling fake ghosts, and clearing malicious setups.\nIn Security+, it's removing malware and malicious changes.",tags:["Domain 4","Eradication"],domain:4,char:"fred"},
+  {q:"Recovery – Scooby-Doo analogy?",a:"Restoring the mansion to normal, fixing damage, and reopening safely.\nIn Security+, it's restoring systems and returning to normal operations.",tags:["Domain 4","Recovery"],domain:4,char:"fred"},
+  {q:"Lessons learned – How does Velma improve future investigations?",a:"She documents what worked, what didn't, and updates their approach.\nIn Security+, lessons learned refine policies and procedures.",tags:["Domain 4","Lessons Learned"],domain:4,char:"velma"},
+  {q:"What is the Order of Volatility?",a:"Capture evidence from most volatile (RAM, cache) to least volatile (hard drive, backups).\nVelma photographs the ghost's glowing mist BEFORE collecting footprints.",tags:["Domain 4","Digital Forensics"],domain:4,char:"velma"},
+  {q:"What is Chain of Custody?",a:"Documentation tracking who handled evidence from collection through court proceedings.\nVelma logs every clue the moment it's found to ensure admissibility.",tags:["Domain 4","Digital Forensics"],domain:4,char:"velma"},
+  {q:"What is a Legal Hold?",a:"A directive to preserve all relevant evidence and prevent modification during an investigation.\nThe Sheriff tapes off the haunted mansion — nothing gets touched.",tags:["Domain 4","Digital Forensics"],domain:4,char:"velma"},
+  {q:"What is Threat Hunting?",a:"Proactively searching for threats that evade automated detection — assumes breach has already occurred.\nVelma doesn't wait for Shaggy to scream; she goes looking herself.",tags:["Domain 4","Threat Hunting"],domain:4,char:"velma"},
+  {q:"What is EDR?",a:"Endpoint Detection and Response — monitors endpoint activity and can respond to threats automatically.\nScooby sniffing every corner of the mansion, ready to act immediately.",tags:["Domain 4","Monitoring"],domain:4,char:"scooby"},
+  {q:"Policy vs procedure – Scooby-Doo example?",a:"Policy: 'The gang must investigate safely.'\nProcedure: Step-by-step instructions for entering a haunted mansion.\nPolicies are high-level; procedures are detailed steps.",tags:["Domain 5","Policy vs Procedure"],domain:5,char:"daphne"},
+  {q:"Risk – Scooby-Doo definition?",a:"The chance that a villain's plan will succeed and cause harm.\nIn Security+, risk = likelihood × impact.",tags:["Domain 5","Risk"],domain:5,char:"daphne"},
+  {q:"Risk treatment – How does the gang handle risk?",a:"Avoid: Don't go into certain areas.\nMitigate: Bring better equipment.\nTransfer: Call local authorities.\nAccept: Proceed with caution.",tags:["Domain 5","Risk Treatment"],domain:5,char:"daphne"},
+  {q:"Compliance – Scooby-Doo analogy?",a:"Following local laws, museum rules, and safety regulations.\nIn Security+, compliance means meeting legal and regulatory requirements.",tags:["Domain 5","Compliance"],domain:5,char:"daphne"},
+  {q:"Business continuity – How does a museum plan for villain disruptions?",a:"They plan to reopen quickly, protect artifacts, and keep visitors safe.\nIn Security+, BC ensures critical operations continue during disruptions.",tags:["Domain 5","Business Continuity"],domain:5,char:"fred"},
+  {q:"Security awareness training – How does Daphne help the gang?",a:"She reminds them of safety rules, how to spot traps, and how to respond to suspicious activity.\nIn Security+, awareness training teaches users to recognize threats.",tags:["Domain 5","Awareness Training"],domain:5,char:"daphne"},
+  {q:"What is ALE and how is it calculated?",a:"Annualized Loss Expectancy = SLE × ARO.\nSLE = cost of one haunting. ARO = how many times per year.\nALE = total expected annual loss from that ghost.",tags:["Domain 5","Risk Math"],domain:5,char:"velma"},
+  {q:"What does an SLA define?",a:"Service-Level Agreement — a contract defining the expected level of service.\nMystery Inc. guarantees they'll solve the case within 24 hours or your Scooby Snacks back.",tags:["Domain 5","Agreements"],domain:5,char:"daphne"},
+  {q:"What is the Right-to-Audit clause?",a:"A contract provision allowing an organization to review a vendor's security controls.\nThe museum can inspect the security company's logs at any time.",tags:["Domain 5","Third-Party Risk"],domain:5,char:"velma"}
+];
+
+var fcBoxes={};
+var fcCurrent=0;
+var FC_LS_KEY='ltr_cartoon-scooby';
+
+function fcLoadBoxes(){
+  try{var d=JSON.parse(localStorage.getItem(FC_LS_KEY));if(d)fcBoxes=d;}catch(e){}
+  FC_CARDS.forEach(function(_,i){if(!fcBoxes[i])fcBoxes[i]=1;});
+}
+function fcSaveBoxes(){try{localStorage.setItem(FC_LS_KEY,JSON.stringify(fcBoxes));}catch(e){}}
+
+function fcTagClass(domain){return['','fc-tag-d1','fc-tag-d2','fc-tag-d3','fc-tag-d4','fc-tag-d5'][domain]||'';}
+
+function fcCharHint(char){
+  var map={velma:'<span class="fc-char-velma">🔶 Velma says: Think analytically!</span>',fred:'<span class="fc-char-fred">🧡 Fred says: Build a solid plan!</span>',shaggy:'<span class="fc-char-shaggy">💚 Shaggy says: Zoinks! Don\'t fall for it!</span>',scooby:'<span class="fc-char-scooby">🐕 Scooby says: Scooby-Dooby-Doo!</span>',daphne:'<span class="fc-char-daphne">💜 Daphne says: Stay aware and prepared!</span>',villain:'<span class="fc-char-villain">👻 Villain says: I would\'ve gotten away with it!</span>'};
+  return map[char]||'';
+}
+
+function fcPickNext(){
+  var b1=[],b2=[],b3=[];
+  FC_CARDS.forEach(function(_,i){var b=fcBoxes[i]||1;if(b===1)b1.push(i);else if(b===2)b2.push(i);else b3.push(i);});
+  var roll=Math.random(),pool;
+  if(roll<0.6&&b1.length)pool=b1;
+  else if(roll<0.85&&b2.length)pool=b2;
+  else if(b3.length)pool=b3;
+  else if(b2.length)pool=b2;
+  else pool=b1;
+  return pool[Math.floor(Math.random()*pool.length)];
+}
+
+function fcRender(){
+  var card=FC_CARDS[fcCurrent];
+  var box=fcBoxes[fcCurrent]||1;
+  // tags
+  var tagsEl=document.getElementById('fc-card-tags');
+  tagsEl.innerHTML='';
+  card.tags.forEach(function(t){var s=document.createElement('span');s.className='fc-tag '+fcTagClass(card.domain);s.textContent=t;tagsEl.appendChild(s);});
+  // box badge
+  var boxColors={1:'#FF7043',2:'#FF8C00',3:'#CDDC39',4:'#26C6DA',5:'#7E57C2'};
+  var bb=document.createElement('span');bb.className='fc-tag';bb.style.background=(boxColors[box]||'#ccc')+'33';bb.style.color=boxColors[box]||'#333';bb.style.border='1px solid '+(boxColors[box]||'#ccc');bb.textContent='Box '+box;tagsEl.appendChild(bb);
+  // question
+  document.getElementById('fc-card-question').textContent=card.q;
+  // answer
+  var aEl=document.getElementById('fc-card-answer');
+  aEl.style.display='none';
+  aEl.innerHTML=card.a.replace(/\n/g,'<br>')+'<div class="fc-char-hint">'+fcCharHint(card.char)+'</div>';
+  // deck info
+  fcUpdateInfo();
+}
+
+function fcUpdateInfo(){
+  var b1=0,b2=0,b3=0,b4=0,b5=0;
+  FC_CARDS.forEach(function(_,i){var b=fcBoxes[i]||1;if(b===1)b1++;else if(b===2)b2++;else if(b===3)b3++;else if(b===4)b4++;else b5++;});
+  document.getElementById('fc-deck-info').textContent='Box 1 (new/hard): '+b1+' · Box 2: '+b2+' · Box 3: '+b3+' · Box 4: '+b4+' · Box 5 (mastered): '+b5+' · Total: '+FC_CARDS.length+' cards';
+}
+
+function fcShowAnswer(){document.getElementById('fc-card-answer').style.display='block';}
+function fcNext(){fcCurrent=fcPickNext();fcRender();}
+function fcMarkHard(){fcBoxes[fcCurrent]=1;fcSaveBoxes();playTone(false);fcNext();}
+function fcMarkEasy(){var b=fcBoxes[fcCurrent]||1;if(b<5)fcBoxes[fcCurrent]=b+1;fcSaveBoxes();playTone(true);fcNext();}
+function fcReset(){if(!confirm('Reset Scooby-Doo flashcard progress?'))return;FC_CARDS.forEach(function(_,i){fcBoxes[i]=1;});fcSaveBoxes();fcCurrent=0;fcRender();}
+
+fcLoadBoxes();
+fcRender();
+
+/* ══ 10-QUESTION QUIZ ══ */
+var QZ=[
+  {q:"Fred writes a complete mystery-solving playbook before the gang leaves the garage. This represents which IR phase? [Domain 4]",c:["Detection","Containment","Preparation","Recovery"],a:2,topic:"Incident Response — Preparation",exp:"Preparation involves creating playbooks, training the team, and having resources ready BEFORE an incident occurs."},
+  {q:"A villain alters Velma's log files to hide their tracks. Which element of the CIA Triad is primarily violated? [Domain 1]",c:["Confidentiality","Integrity","Availability","Non-repudiation"],a:1,topic:"CIA Triad — Integrity",exp:"Integrity ensures data is not tampered with or altered without authorization. Modified logs directly violate Integrity."},
+  {q:"Velma must photograph the ghost's glowing mist BEFORE collecting physical footprints because: [Domain 4]",c:["Chain of custody requires it","Order of volatility — mist is more volatile than footprints","Legal hold is in effect","E-discovery process demands it"],a:1,topic:"Order of Volatility",exp:"Order of Volatility requires capturing the most volatile evidence (RAM/mist — disappears quickly) before less volatile data (disk/footprints)."},
+  {q:"Mystery Inc. isolates only the compromised server while keeping all other systems running. This demonstrates: [Domain 4]",c:["Eradication","Lessons learned","Containment","Recovery"],a:2,topic:"IR Phase — Containment",exp:"Containment stops threat spread while minimizing business impact. Isolating only the affected system is better than total shutdown."},
+  {q:"An attacker registers 'mysterymachime.com' to trick victims into entering credentials. This attack is: [Domain 2]",c:["Phishing","Vishing","Typosquatting","Pretexting"],a:2,topic:"Typosquatting",exp:"Typosquatting registers misspelled versions of legitimate domains to misdirect users who make typing errors."},
+  {q:"Which firewall type operates at Layer 7 and protects against SQL injection and XSS? [Domain 3]",c:["NGFW","Packet-filtering firewall","WAF (Web Application Firewall)","Stateful inspection firewall"],a:2,topic:"Web Application Firewall (WAF)",exp:"WAF operates at the application layer (L7) specifically to protect web applications from SQLi, XSS, and CSRF."},
+  {q:"An organization's maximum acceptable data loss is 4 hours. This is an example of: [Domain 3]",c:["RTO — Recovery Time Objective","RPO — Recovery Point Objective","MTTR — Mean Time To Repair","BIA — Business Impact Analysis"],a:1,topic:"Recovery Point Objective (RPO)",exp:"RPO defines the maximum acceptable amount of data loss measured in time — how far back you can afford to restore from backup."},
+  {q:"The Sheriff tells the gang not to touch anything in the haunted mansion until the investigation is complete. This is a: [Domain 4]",c:["Chain of custody","E-discovery order","Legal hold","Forensic acquisition"],a:2,topic:"Legal Hold",exp:"Legal hold is a directive to preserve all relevant evidence in its current state until the investigation or litigation is concluded."},
+  {q:"Mystery Inc. buys cybersecurity insurance to cover costs if a breach occurs. This risk strategy is: [Domain 5]",c:["Risk avoidance","Risk mitigation","Risk acceptance","Risk transfer"],a:3,topic:"Risk Transfer",exp:"Risk transfer moves financial liability to a third party (insurance company) rather than absorbing the full cost of an incident."},
+  {q:"Scooby sniffs logins from impossible geographic locations in a short timeframe. This IOC is called: [Domain 4]",c:["Concurrent session usage","Impossible travel","Out-of-cycle logging","Resource consumption anomaly"],a:1,topic:"IOC — Impossible Travel",exp:"Impossible travel is an IOC flagged when authentication occurs from geographically impossible locations — caught by UEBA/SIEM."}
+];
+var qzState={cur:0,score:0,answered:false,missed:[],active:false};
+function quizInit(){
+  qzState={cur:0,score:0,answered:false,missed:[],active:true};
+  document.getElementById('quiz-done').style.display='none';
+  document.getElementById('quiz-body').style.display='block';
+  document.getElementById('quiz-nav').style.display='flex';
+  renderQ();
+}
+function renderQ(){
+  var q=QZ[qzState.cur];
+  document.getElementById('quiz-meta').textContent='Question '+(qzState.cur+1)+' of '+QZ.length;
+  var html='<p class="quiz-q-text">'+q.q+'</p>';
+  q.c.forEach(function(ch,i){html+='<div class="qz-c" id="qzc-'+i+'" onclick="qzSelect('+i+')"><span style="font-weight:800;margin-right:6px">'+'ABCD'[i]+'.</span>'+ch+'</div>';});
+  html+='<div class="qz-exp" id="qz-exp">💡 '+q.exp+'</div>';
+  document.getElementById('quiz-body').innerHTML=html;
+  qzState.answered=false;
+  document.getElementById('quiz-check-btn').style.display='none';
+  document.getElementById('quiz-next-btn').style.display='none';
+  document.getElementById('quiz-retry-btn').style.display='none';
+  document.getElementById('quiz-done').style.display='none';
+}
+function qzSelect(i){
+  if(qzState.answered)return;
+  document.querySelectorAll('.qz-c').forEach(function(el){el.style.opacity='0.7';el.style.borderColor='';});
+  document.getElementById('qzc-'+i).style.opacity='1';
+  document.getElementById('qzc-'+i).style.borderColor='var(--mm-green)';
+  document.getElementById('quiz-check-btn').style.display='inline-block';
+  document.getElementById('quiz-check-btn').setAttribute('data-sel',i);
+}
+function quizCheck(){
+  if(qzState.answered)return;
+  var sel=parseInt(document.getElementById('quiz-check-btn').getAttribute('data-sel'));
+  if(isNaN(sel))return;
+  qzState.answered=true;
+  var q=QZ[qzState.cur];
+  document.querySelectorAll('.qz-c').forEach(function(el,i){
+    el.style.opacity='1';el.style.borderColor='';
+    if(i===q.a)el.classList.add('qc');
+    else if(i===sel&&sel!==q.a)el.classList.add('qw');
+    el.style.pointerEvents='none';
+  });
+  document.getElementById('qz-exp').style.display='block';
+  if(sel===q.a){qzState.score++;playTone(true);}else{qzState.missed.push(q.topic);playTone(false);}
+  document.getElementById('quiz-check-btn').style.display='none';
+  if(qzState.cur<QZ.length-1){document.getElementById('quiz-next-btn').style.display='inline-block';}
+  else{document.getElementById('quiz-retry-btn').style.display='inline-block';showQzDone();}
+}
+function quizNext(){qzState.cur++;renderQ();}
+function showQzDone(){
+  setTimeout(function(){
+    var pct=Math.round(qzState.score/QZ.length*100);
+    document.getElementById('quiz-body').style.display='none';
+    document.getElementById('quiz-nav').style.display='none';
+    var done=document.getElementById('quiz-done');done.style.display='block';
+    var color=pct>=80?'var(--mm-green)':pct>=60?'var(--fred-orange)':'var(--danger)';
+    document.getElementById('quiz-score-pct').innerHTML='<span style="color:'+color+'">'+pct+'%</span>';
+    document.getElementById('quiz-score-label').textContent=qzState.score+' of '+QZ.length+' correct — '+(pct===100?'Perfect! Scooby Snacks for everyone! 🎉':pct>=80?'Great work! Almost mystery-solved!':pct>=60?'Not bad — keep studying!':'More snacks needed before the exam 😅');
+    var missedDiv=document.getElementById('quiz-missed');
+    if(qzState.missed.length>0){missedDiv.style.display='block';document.getElementById('quiz-missed-list').innerHTML=qzState.missed.map(function(t){return'<div style="padding:3px 0;border-bottom:1px solid rgba(231,76,60,.2)">📌 '+t+'</div>';}).join('');}
+    else{missedDiv.style.display='none';}
+    if(pct===100)confetti();
+  },600);
+}
+function quizRetry(){document.getElementById('quiz-body').style.display='block';document.getElementById('quiz-nav').style.display='flex';quizInit();}
+quizInit();
+
+/* ══ BUTTON HELPER for adventure ══ */
+document.querySelectorAll('.btn-flip').forEach(function(btn){
+  btn.style.cssText='padding:8px 20px;border-radius:9px;border:2px solid rgba(60,179,113,.4);cursor:pointer;font-size:.84rem;font-weight:800;font-family:Nunito,sans-serif;background:rgba(60,179,113,.15);color:#3CB371;transition:all .2s;';
+});
+</script>
+</body>
+</html>

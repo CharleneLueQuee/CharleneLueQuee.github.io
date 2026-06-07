@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Avatar: The Last Airbender | Security+ SY0-701 Study Hub</title>
+<style>
+:root{
+  /* ── FOUR NATIONS PALETTE ── */
+  /* Water Tribe: deep arctic blues */
+  --water:#00B4F0;        /* bright glacier blue */
+  --water-dark:#004E8C;   /* deep ocean navy */
+  /* Fire Nation: blazing reds & oranges */
+  --fire:#FF4500;         /* vivid fire-orange-red */
+  --fire-bright:#FF8C00;  /* ember orange */
+  /* Earth Kingdom: rich greens & golds */
+  --earth:#4CAF50;        /* bright forest green */
+  --earth-gold:#C8A400;   /* Ba Sing Se gold */
+  /* Air Nomads: warm saffron & cream */
+  --air:#FFB300;          /* saffron/monk yellow */
+  --air-light:#FFF3CC;    /* parchment cream */
+
+  /* ── BACKGROUNDS (dark navy base — Water Tribe night sky) ── */
+  --bg:#050F1C;
+  --bg2:#0A1E33;
+  --surface:#0D2645;
+  --nav:#020A14;
+  --card-bg:#081A2E;
+
+  /* ── ACCENT = Water Tribe bright blue (primary) ── */
+  --accent:#00C8FF;       /* electric water blue */
+  --accent2:#FFB300;      /* air saffron (secondary highlights) */
+
+  /* ── TEXT ── */
+  --text:#F0F8FF;          /* alice blue — clean & bright */
+  --muted:#7BBDD4;
+
+  /* ── BORDERS / FEEDBACK ── */
+  --border:rgba(0,200,255,.2);
+  --green:#3DCC6E;
+  --red:#FF5A5A;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Georgia',serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+nav{background:var(--nav);display:flex;align-items:center;padding:10px 20px;gap:8px;flex-wrap:wrap;position:sticky;top:0;z-index:200;box-shadow:0 2px 20px rgba(0,0,0,.8);border-bottom:1px solid var(--border)}
+.nav-brand{font-size:.9rem;font-weight:800;color:var(--accent);white-space:nowrap}
+.nav-brand span{color:#fff;font-weight:400}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-left:auto}
+.tnl{color:rgba(255,255,255,.7);font-size:.78rem;padding:4px 10px;border-radius:6px;transition:background .2s;white-space:nowrap;text-decoration:none!important}
+.tnl:hover{background:rgba(255,255,255,.12);color:#fff}
+.cnd{position:relative;display:inline-block}
+.cnb{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);font-size:.78rem;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s;white-space:nowrap}
+.cnb:hover{background:rgba(255,255,255,.18);color:#fff}
+.cnm{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#050d1a;border:1px solid rgba(255,255,255,.12);border-radius:10px;min-width:250px;z-index:300;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.8)}
+.cnm a{display:block;padding:9px 14px;font-size:.79rem;color:rgba(255,255,255,.7);border-bottom:1px solid rgba(255,255,255,.06);transition:background .15s;text-decoration:none!important}
+.cnm a:last-child{border-bottom:none}
+.cnm a:hover{background:rgba(79,195,247,.1);color:#fff}
+.cnm a.active-page{color:#00C8FF;font-weight:700;background:rgba(0,200,255,.1)}
+.jbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:8px 16px;display:flex;gap:5px;flex-wrap:wrap;justify-content:center}
+.jbtn{background:var(--surface);border:1px solid var(--border);color:var(--muted);padding:4px 12px;border-radius:16px;font-size:.7rem;font-weight:500;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none!important;display:inline-block}
+.jbtn:hover{border-color:var(--accent);color:var(--accent)}
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;opacity:0;animation:floatUp 14s linear infinite}
+@keyframes floatUp{0%{opacity:0;transform:translateY(100vh) rotate(0deg)}10%{opacity:.1}90%{opacity:.07}100%{opacity:0;transform:translateY(-120px) rotate(360deg)}}
+#sound-toggle{position:fixed;bottom:20px;right:20px;z-index:500;background:var(--nav);border:1.5px solid var(--border);color:var(--muted);font-size:.73rem;padding:7px 13px;border-radius:20px;cursor:pointer;font-family:inherit;transition:all .2s}
+#sound-toggle:hover{border-color:#00C8FF;color:#00C8FF}
+/* Hero — four nations sky: water blue → fire sunrise at horizon */
+.hero{background:linear-gradient(170deg,#050F1C 0%,#0A2340 40%,#1A1A0A 70%,#1C0A00 100%);border-bottom:3px solid transparent;border-image:linear-gradient(90deg,#00C8FF,#FFB300,#FF4500,#4CAF50) 1;padding:44px 20px 36px;text-align:center;position:relative;overflow:hidden;z-index:1}
+.hero::before{content:'🌊';position:absolute;font-size:11rem;opacity:.07;top:-20px;right:-10px;pointer-events:none;line-height:1}
+.hero::after{content:'🔥';position:absolute;font-size:9rem;opacity:.07;bottom:-10px;left:-10px;pointer-events:none;line-height:1}
+.hero-icon{width:92px;height:92px;border-radius:50%;background:conic-gradient(from 0deg,#00C8FF 0%,#FFB300 25%,#FF4500 50%,#4CAF50 75%,#00C8FF 100%);display:flex;align-items:center;justify-content:center;font-size:2.9rem;margin:0 auto 16px;box-shadow:0 0 50px rgba(0,200,255,.65),0 0 90px rgba(255,69,0,.25);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 50px rgba(0,200,255,.65),0 0 90px rgba(255,69,0,.2)}50%{box-shadow:0 0 75px rgba(0,200,255,.9),0 0 110px rgba(255,179,0,.45)}}
+.hero-badge{display:inline-block;background:linear-gradient(90deg,#00B4F0,#FFB300,#FF4500,#4CAF50);color:#fff;padding:5px 18px;border-radius:20px;font-size:.68rem;font-weight:800;letter-spacing:1.4px;margin-bottom:14px;text-shadow:0 1px 3px rgba(0,0,0,.6)}
+.hero h1{font-size:1.9rem;font-weight:900;color:#fff;margin-bottom:8px;text-shadow:0 0 30px rgba(0,200,255,.5),0 0 60px rgba(255,179,0,.2)}
+.hero p{color:#A8D4E8;max-width:600px;margin:0 auto;font-size:.91rem}
+.ps{padding:32px 20px;max-width:980px;margin:0 auto;position:relative;z-index:1}
+.sec-hr{border:none;border-top:2px solid transparent;border-image:linear-gradient(90deg,#00C8FF22,#FFB30022,#FF450022,#4CAF5022) 1;margin:0}
+.sec-hd{margin-bottom:18px}
+.sec-hd h2{font-size:1.22rem;font-weight:800;color:var(--text);display:flex;align-items:center;gap:8px;margin-bottom:4px}
+.sec-hd p{color:var(--muted);font-size:.81rem}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:15px}
+.card h3{font-size:.88rem;font-weight:700;color:var(--text);margin-bottom:6px}
+.card p{font-size:.78rem;color:var(--muted);line-height:1.65}
+/* Water Tribe = brilliant blue */
+.card-accent-water{border-left:4px solid #00C8FF}
+/* Fire Nation = vivid red-orange */
+.card-accent-fire{border-left:4px solid #FF4500}
+/* Earth Kingdom = bright green */
+.card-accent-earth{border-left:4px solid #4CAF50}
+/* Air Nomads = warm saffron */
+.card-accent-air{border-left:4px solid #FFB300}
+.card-accent-main{border-left:4px solid var(--accent)}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:.64rem;font-weight:700;margin:2px}
+/* Domain tags — one per nation */
+/* D1 General → Air Nomad saffron */
+.tag-d1{background:rgba(255,179,0,.18);color:#FFD54F;border:1px solid rgba(255,179,0,.4)}
+/* D2 Threats → Fire Nation red-orange */
+.tag-d2{background:rgba(255,69,0,.18);color:#FF8C42;border:1px solid rgba(255,69,0,.4)}
+/* D3 Architecture → Water Tribe blue */
+.tag-d3{background:rgba(0,200,255,.15);color:#4DD9FF;border:1px solid rgba(0,200,255,.35)}
+/* D4 Operations → Earth Kingdom green */
+.tag-d4{background:rgba(76,175,80,.16);color:#81C784;border:1px solid rgba(76,175,80,.38)}
+/* D5 Governance → Avatar white/spirit glow */
+.tag-d5{background:rgba(255,255,255,.1);color:#E0F7FF;border:1px solid rgba(255,255,255,.25)}
+.acc-item{background:var(--card-bg);border:1.5px solid var(--border);border-radius:10px;margin-bottom:8px;overflow:hidden}
+.acc-header{padding:13px 16px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;font-weight:700;font-size:.88rem;color:var(--text);user-select:none;transition:background .2s}
+.acc-header:hover{background:rgba(79,195,247,.06)}
+.acc-header .chev{transition:transform .3s;font-size:.7rem;color:var(--muted);flex-shrink:0}
+.acc-body{display:none;padding:12px 16px 14px;border-top:1px solid var(--border)}
+.acc-item.open .acc-body{display:block}
+.acc-item.open .chev{transform:rotate(180deg)}
+.mini-quiz{background:rgba(0,200,255,.05);border:1px solid rgba(0,200,255,.2);border-radius:8px;padding:12px;margin-top:12px}
+.mini-quiz>p{font-size:.82rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.mq-opts{display:flex;flex-direction:column;gap:5px}
+.mq-opt{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;padding:7px 11px;font-size:.76rem;color:var(--text);cursor:pointer;transition:all .2s;text-align:left;font-family:inherit;width:100%}
+.mq-opt:hover:not(:disabled){border-color:var(--accent)}
+.mq-opt.mq-right{border-color:var(--green)!important;background:rgba(63,185,80,.1)!important;color:var(--green)!important;font-weight:700}
+.mq-opt.mq-wrong{border-color:var(--red)!important;background:rgba(212,120,143,.1)!important;color:var(--red)!important}
+.mq-fb{font-size:.74rem;margin-top:7px;padding:7px 10px;border-radius:6px;background:rgba(0,200,255,.07);color:var(--muted);display:none;line-height:1.5}
+.role-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:14px;transition:border-color .2s}
+.role-card:hover{border-color:var(--accent)}
+.role-badge{display:inline-block;font-size:.63rem;font-weight:700;padding:2px 10px;border-radius:99px;margin-bottom:8px;letter-spacing:.5px}
+.phase-card{background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:16px;position:relative;overflow:hidden}
+.phase-num{font-size:3.5rem;font-weight:900;opacity:.05;position:absolute;right:8px;top:-4px;line-height:1;color:var(--accent);pointer-events:none}
+.phase-tag{display:inline-block;background:rgba(0,200,255,.12);border:1px solid rgba(0,200,255,.3);color:#00C8FF;font-size:.6rem;font-weight:700;padding:2px 8px;border-radius:99px;margin-bottom:8px}
+.note-card{background:linear-gradient(135deg,var(--card-bg),rgba(79,195,247,.03));border:1.5px solid var(--border);border-radius:12px;padding:16px;border-top:3px solid}
+.adv-scene{background:var(--card-bg);border:1.5px solid var(--border);border-radius:12px;padding:20px;display:none}
+.adv-scene.active{display:block}
+.adv-narr{font-size:.87rem;line-height:1.7;color:var(--muted);margin-bottom:14px;font-style:italic;border-left:3px solid var(--accent);padding-left:12px}
+.adv-q{font-size:.9rem;font-weight:700;color:var(--text);margin-bottom:10px}
+.adv-btn{background:var(--surface);border:1.5px solid var(--border);color:var(--text);border-radius:8px;padding:9px 14px;font-size:.8rem;cursor:pointer;font-family:inherit;transition:all .2s;display:block;width:100%;text-align:left;margin-bottom:6px}
+.adv-btn:hover:not(:disabled){border-color:var(--accent)}
+.adv-btn.adv-wrong{border-color:var(--red)!important;color:var(--red)!important}
+.adv-feedback{font-size:.78rem;padding:9px 12px;border-radius:6px;margin-top:6px;display:none;line-height:1.55}
+.adv-next{background:linear-gradient(90deg,#00C8FF,#00A0CC);color:#000;border:none;border-radius:8px;padding:9px 20px;font-size:.82rem;font-weight:700;cursor:pointer;margin-top:10px;display:none;font-family:inherit}
+.adv-next:hover{opacity:.9}
+.confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;animation:cffall 3s ease-in forwards;pointer-events:none;z-index:9999}
+@keyframes cffall{0%{opacity:1;transform:translateY(-20px) rotate(0)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+.fc-wrap{background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;padding:18px;margin-bottom:20px}
+.fc-header h3{font-size:.95rem;font-weight:800;color:var(--text);margin-bottom:3px}
+.fc-lrow{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin:10px 0 8px}
+.fc-lbox{background:var(--surface);border:1.5px solid var(--border);border-radius:7px;padding:5px 8px;font-size:.67rem;text-align:center;min-width:56px;color:var(--muted)}
+.fc-lbox span{display:block;font-size:1rem;font-weight:800;line-height:1.2}
+.fc-l1 span{color:#D4788F}.fc-l2 span{color:#c75e00}.fc-l3 span{color:var(--accent)}.fc-l4 span{color:#6D60AD}.fc-l5 span{color:#3fb950}
+.fc-srow{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:9px}
+.fc-stat{background:var(--surface);border:1.5px solid var(--border);border-radius:7px;padding:5px 11px;text-align:center;min-width:60px}
+.fc-snum{font-size:1.05rem;font-weight:800}.fc-slbl{font-size:.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.fc-toolbar{display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-bottom:9px}
+.fc-tbtn{padding:4px 10px;border-radius:6px;border:1.5px solid var(--border);cursor:pointer;font-size:.72rem;font-weight:600;background:var(--surface);color:var(--muted);font-family:inherit;transition:all .2s}
+.fc-tbtn:hover{border-color:var(--accent);color:var(--accent)}
+.fc-tbtn.active{background:#00C8FF;color:#020A14;border-color:#00C8FF;font-weight:800}
+.flashcard{perspective:1200px;cursor:pointer;height:190px;margin-bottom:10px}
+.card-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.flashcard.flipped .card-inner{transform:rotateY(180deg)}
+.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:10px;display:flex;align-items:center;justify-content:center;padding:16px;text-align:center;flex-direction:column;border:2px solid}
+.card-front::before{content:'❓ QUESTION';position:absolute;top:8px;left:10px;font-size:.58rem;letter-spacing:1.5px;color:var(--muted);font-weight:700}
+.card-back{transform:rotateY(180deg)}
+.card-back::before{content:'✅ ANSWER';position:absolute;top:8px;left:10px;font-size:.58rem;letter-spacing:1.5px;font-weight:700;color:var(--accent)}
+.card-front p,.card-back p{font-size:.85rem;line-height:1.55}
+.card-hint{position:absolute;bottom:6px;font-size:.6rem;color:var(--muted)}
+.card-box-ind{position:absolute;top:8px;right:10px;font-size:.6rem;font-weight:700;padding:2px 6px;border-radius:5px}
+.card-ctr{text-align:center;font-size:.72rem;color:var(--muted);margin-bottom:4px}
+.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:9px}
+.progress-fill{height:100%;border-radius:2px;transition:width .35s}
+.card-controls{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;margin-bottom:6px}
+.btn{padding:7px 14px;border-radius:7px;border:none;cursor:pointer;font-size:.8rem;font-weight:700;transition:all .2s;font-family:inherit}
+.btn:hover{transform:translateY(-1px)}
+.btn-again{background:rgba(255,69,0,.18);color:#FF8C42;border:1.5px solid rgba(255,69,0,.45)}
+.btn-good{background:rgba(0,200,255,.15);color:#00C8FF;border:1.5px solid rgba(0,200,255,.4)}
+.btn-easy{background:rgba(76,175,80,.14);color:#81C784;border:1.5px solid rgba(76,175,80,.4)}
+.btn-skip{background:var(--surface);color:var(--muted);border:1.5px solid var(--border)}
+.done-screen{display:none;text-align:center;padding:22px 10px}
+.score-big{font-size:2.2rem;font-weight:900;line-height:1;margin-bottom:3px}
+.qz-c{display:flex;align-items:flex-start;gap:8px;padding:8px 12px;border-radius:8px;border:1.5px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s;font-size:.8rem;color:var(--text);line-height:1.5;margin-bottom:6px;font-family:inherit;text-align:left;width:100%}
+.qz-c:hover:not(:disabled){border-color:var(--accent)}
+.qz-c.qc{border-color:var(--green)!important;background:rgba(63,185,80,.1)!important;color:var(--green)!important;font-weight:700}
+.qz-c.qw{border-color:var(--red)!important;background:rgba(212,120,143,.1)!important;color:var(--red)!important;font-weight:700}
+.qz-exp{margin-top:8px;background:var(--surface);border-left:3px solid var(--accent);border-radius:0 8px 8px 0;padding:8px 12px;font-size:.76rem;color:var(--muted);line-height:1.6;display:none}
+@media(max-width:600px){.flashcard{height:170px}.card-front p,.card-back p{font-size:.78rem}.ps{padding:18px 12px}.hero h1{font-size:1.4rem}.cgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+<button id="sound-toggle" onclick="toggleSound()">🔇 Sound: OFF</button>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">🛡️ <span>Security+ Hub</span></div>
+  <div class="nav-links">
+    <a href="https://charleneluequeue.github.io/" class="tnl">🏠 Portfolio</a>
+    <a href="security-notes.html" class="tnl">📚 Study Hub</a>
+    <div class="cnd">
+      <button class="cnb" onclick="toggleCN(this)">🎭 All Cartoons ▾</button>
+      <div class="cnm">
+        <a href="cartoon-spongebob.html">🧽 SpongeBob SquarePants</a>
+        <a href="cartoon-knd.html">🔢 Codename: Kids Next Door</a>
+        <a href="cartoon-ben10.html">⌚ Ben 10</a>
+        <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+        <a href="cartoon-avatar.html" class="active-page">🌊 Avatar: The Last Airbender</a>
+        <a href="cartoon-danny.html">👻 Danny Phantom</a>
+        <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+        <a href="cartoon-futurama.html">🚀 Futurama</a>
+        <a href="cartoon-xmen.html">⚡ X-Men '97</a>
+        <a href="cartoon-fairyodd.html">⭐ The Fairly OddParents</a>
+        <a href="cartoon-magicbus.html">🚌 The Magic School Bus</a>
+        <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+        <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+        <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+        <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- JUMP BAR -->
+<div class="jbar">
+  <a href="#hero" class="jbtn">🌊 Hero</a>
+  <a href="#topics" class="jbtn">📋 Topics</a>
+  <a href="#study-guide" class="jbtn">🗺️ Study Guide</a>
+  <a href="#characters" class="jbtn">👥 Characters</a>
+  <a href="#analogies" class="jbtn">🔗 Analogies</a>
+  <a href="#notes" class="jbtn">📝 Notes</a>
+  <a href="#ir-lifecycle" class="jbtn">🚨 IR Lifecycle</a>
+  <a href="#detection" class="jbtn">🔍 Detection</a>
+  <a href="#roles" class="jbtn">🎭 Roles</a>
+  <a href="#reporting" class="jbtn">📊 Reporting</a>
+  <a href="#post-incident" class="jbtn">📌 Post-IR</a>
+  <a href="#adventure" class="jbtn">⚔️ Adventure</a>
+  <a href="#links" class="jbtn">🔗 Links</a>
+  <a href="#flashcards" class="jbtn">🃏 Flashcards</a>
+  <a href="#quiz" class="jbtn">🧠 Quiz</a>
+</div>
+
+<!-- HERO -->
+<div class="hero" id="hero">
+  <div class="hero-icon">🌊</div>
+  <div class="hero-badge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <h1>Avatar: The Last Airbender</h1>
+  <p>Master all five Security+ SY0-701 domains through the four nations — from cryptographic bending arts to governance scrolls of the Earth Kingdom. The four elements guide your path to certification.</p>
+</div>
+
+<!-- TOPICS COVERED -->
+<hr class="sec-hr" id="topics">
+<div class="ps">
+  <div class="sec-hd"><h2>📋 Topics Covered</h2><p>All five exam domains with objective numbers and key topic tags.</p></div>
+  <div id="topics-acc">
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)"><span>🟡 Domain 1 — General Security Concepts (12%)</span><span class="chev">▼</span></div>
+      <div class="acc-body"><p style="font-size:.72rem;color:var(--muted);margin-bottom:8px">Objectives: 1.1 · 1.2 · 1.3 · 1.4</p><span class="tag tag-d1">CIA Triad</span><span class="tag tag-d1">AAA Framework</span><span class="tag tag-d1">Security Controls</span><span class="tag tag-d1">Cryptography</span><span class="tag tag-d1">PKI</span><span class="tag tag-d1">Symmetric/Asymmetric</span><span class="tag tag-d1">Hashing &amp; Salting</span><span class="tag tag-d1">Zero Trust</span><span class="tag tag-d1">Change Management</span><span class="tag tag-d1">Digital Signatures</span><span class="tag tag-d1">Honeypots</span><span class="tag tag-d1">Non-repudiation</span></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)"><span>🔴 Domain 2 — Threats, Vulnerabilities &amp; Mitigations (22%)</span><span class="chev">▼</span></div>
+      <div class="acc-body"><p style="font-size:.72rem;color:var(--muted);margin-bottom:8px">Objectives: 2.1 · 2.2 · 2.3 · 2.4 · 2.5</p><span class="tag tag-d2">Threat Actors</span><span class="tag tag-d2">Social Engineering</span><span class="tag tag-d2">Phishing/Vishing</span><span class="tag tag-d2">Malware Types</span><span class="tag tag-d2">DDoS</span><span class="tag tag-d2">SQL Injection</span><span class="tag tag-d2">XSS</span><span class="tag tag-d2">Ransomware</span><span class="tag tag-d2">Zero-Day</span><span class="tag tag-d2">Hardening</span><span class="tag tag-d2">Segmentation</span><span class="tag tag-d2">Least Privilege</span></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)"><span>🔵 Domain 3 — Security Architecture (18%)</span><span class="chev">▼</span></div>
+      <div class="acc-body"><p style="font-size:.72rem;color:var(--muted);margin-bottom:8px">Objectives: 3.1 · 3.2 · 3.3 · 3.4</p><span class="tag tag-d3">Cloud Models</span><span class="tag tag-d3">DMZ/Screened Subnet</span><span class="tag tag-d3">VLAN</span><span class="tag tag-d3">Air Gap</span><span class="tag tag-d3">Firewall Types</span><span class="tag tag-d3">IDS/IPS</span><span class="tag tag-d3">VPN/SD-WAN</span><span class="tag tag-d3">Data States</span><span class="tag tag-d3">RTO/RPO</span><span class="tag tag-d3">Hot/Warm/Cold Site</span><span class="tag tag-d3">Zero Trust Architecture</span><span class="tag tag-d3">Defense in Depth</span></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)"><span>🟢 Domain 4 — Security Operations (28%)</span><span class="chev">▼</span></div>
+      <div class="acc-body"><p style="font-size:.72rem;color:var(--muted);margin-bottom:8px">Objectives: 4.1 · 4.2 · 4.3 · 4.4 · 4.5 · 4.6 · 4.7 · 4.8 · 4.9</p><span class="tag tag-d4">IAM/SSO/MFA</span><span class="tag tag-d4">RBAC/ABAC</span><span class="tag tag-d4">SIEM/SOAR</span><span class="tag tag-d4">EDR/XDR</span><span class="tag tag-d4">Incident Response</span><span class="tag tag-d4">Digital Forensics</span><span class="tag tag-d4">Vulnerability Mgmt</span><span class="tag tag-d4">Threat Hunting</span><span class="tag tag-d4">Log Analysis</span><span class="tag tag-d4">Automation</span><span class="tag tag-d4">DLP</span><span class="tag tag-d4">Chain of Custody</span></div>
+    </div>
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this)"><span>🩵 Domain 5 — Security Program Management &amp; Oversight (20%)</span><span class="chev">▼</span></div>
+      <div class="acc-body"><p style="font-size:.72rem;color:var(--muted);margin-bottom:8px">Objectives: 5.1 · 5.2 · 5.3 · 5.4 · 5.5 · 5.6</p><span class="tag tag-d5">Governance</span><span class="tag tag-d5">Risk Management</span><span class="tag tag-d5">Compliance</span><span class="tag tag-d5">Vendor Risk</span><span class="tag tag-d5">Audit/Assessment</span><span class="tag tag-d5">Pen Testing</span><span class="tag tag-d5">Security Awareness</span><span class="tag tag-d5">BIA/BCP</span><span class="tag tag-d5">Privacy Laws</span><span class="tag tag-d5">SLA/MOU/NDA</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- DOMAIN STUDY GUIDE -->
+<hr class="sec-hr" id="study-guide">
+<div class="ps">
+  <div class="sec-hd"><h2>🗺️ Domain Study Guide — Bender Mnemonics</h2><p>One mnemonic per domain, opening one accordion at a time.</p></div>
+  <div id="guide-acc">
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this,true,'guide-acc')"><span>🟡 D1 — <strong>AANG</strong>: General Security Concepts</span><span class="chev">▼</span></div>
+      <div class="acc-body">
+        <p style="font-size:.82rem;color:var(--accent);font-weight:700;margin-bottom:8px">A·A·N·G = Authentication · Authorization · Non-repudiation · Governance</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">CIA Triad:</strong> Confidentiality (only Aang knows the Avatar State trigger), Integrity (scroll authenticity verified by monks), Availability (spirit world access when needed).</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">Controls:</strong> Preventive (walls), Detective (seismic SIEM alerts), Corrective (restoration bending), Deterrent (fire nation patrols), Compensating (redirect if main gate fails).</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:10px"><strong style="color:var(--text)">Cryptography:</strong> Symmetric (shared temple key), Asymmetric (Avatar's public seal + private meditation key), PKI (White Lotus Society as CA), Salting (adding random chi to each password hash).</p>
+        <div class="mini-quiz" id="mq1">
+          <p>Which cryptographic concept uses a public key to encrypt and a private key to decrypt?</p>
+          <div class="mq-opts">
+            <button class="mq-opt" onclick="answerMQ('mq1',this,false)">A. Symmetric encryption</button>
+            <button class="mq-opt" onclick="answerMQ('mq1',this,true)">B. Asymmetric encryption</button>
+            <button class="mq-opt" onclick="answerMQ('mq1',this,false)">C. Hashing</button>
+          </div>
+          <div class="mq-fb" id="mq1-fb">Like Aang's Avatar seal — anyone encrypts a message with the public key, only the Avatar opens it with the private key. That's asymmetric!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this,true,'guide-acc')"><span>🔴 D2 — <strong>SOZIN</strong>: Threats &amp; Mitigations</span><span class="chev">▼</span></div>
+      <div class="acc-body">
+        <p style="font-size:.82rem;color:var(--accent);font-weight:700;margin-bottom:8px">S·O·Z·I·N = Social Engineering · On-path Attacks · Zero-Day · Injection · Nation-State</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">Threat Actors:</strong> Fire Nation = Nation-State APT. Azula = Sophisticated insider/APT. Dai Li = Organized crime with state backing. Wan Shi Tong = Hacktivist (withholds knowledge as leverage).</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">Malware:</strong> Azula's lightning = Ransomware (fast, demands surrender). Fire nation virus = Worm (self-propagating). Dai Li agents = Rootkits (hidden, persistent, high privilege).</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:10px"><strong style="color:var(--text)">Mitigations:</strong> Segmentation (four nations), Hardening (Ba Sing Se walls), Least Privilege (bending roles), Patching (fixing wall gaps), Monitoring (Toph's seismic SIEM).</p>
+        <div class="mini-quiz" id="mq2">
+          <p>A threat actor pretends to be a Water Tribe healer to gain access to Ba Sing Se medical records. This is:</p>
+          <div class="mq-opts">
+            <button class="mq-opt" onclick="answerMQ('mq2',this,false)">A. Brute Force</button>
+            <button class="mq-opt" onclick="answerMQ('mq2',this,false)">B. SQL Injection</button>
+            <button class="mq-opt" onclick="answerMQ('mq2',this,true)">C. Impersonation / Social Engineering</button>
+          </div>
+          <div class="mq-fb" id="mq2-fb">Pretending to be someone else to gain access = Impersonation, a Social Engineering technique. No technical exploit needed!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this,true,'guide-acc')"><span>🔵 D3 — <strong>APPA</strong>: Security Architecture</span><span class="chev">▼</span></div>
+      <div class="acc-body">
+        <p style="font-size:.82rem;color:var(--accent);font-weight:700;margin-bottom:8px">A·P·P·A = Architecture Models · Perimeter Controls · PKI/Encryption · Availability/Resilience</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">Network Zones:</strong> Ba Sing Se's three rings = Defense in Depth. Outer wall = DMZ. Middle ring = Internal LAN. Palace = Air-gapped highly restricted zone requiring separate auth at each layer.</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">Cloud Models:</strong> Air Nomads (stateless/mobile) = Serverless/Cloud-native. Earth Kingdom (heavy on-prem) = IaaS. Fire Navy fleet (standardized ships) = PaaS. White Lotus (service network) = SaaS.</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:10px"><strong style="color:var(--text)">Resilience:</strong> Spirit Oasis = Hot Site. Iroh's backup teahouse = Warm Site. Empty outpost = Cold Site. RTO/RPO = recovery commitments after Fire Nation invasion.</p>
+        <div class="mini-quiz" id="mq3">
+          <p>Ba Sing Se's three-ring concentric wall system best maps to which security principle?</p>
+          <div class="mq-opts">
+            <button class="mq-opt" onclick="answerMQ('mq3',this,false)">A. Zero Trust</button>
+            <button class="mq-opt" onclick="answerMQ('mq3',this,true)">B. Defense in Depth</button>
+            <button class="mq-opt" onclick="answerMQ('mq3',this,false)">C. Air Gap Isolation</button>
+          </div>
+          <div class="mq-fb" id="mq3-fb">Defense in Depth = multiple layered security controls so breaching one doesn't grant full access. Three independent rings = three independent security zones!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this,true,'guide-acc')"><span>🟢 D4 — <strong>IROH</strong>: Security Operations</span><span class="chev">▼</span></div>
+      <div class="acc-body">
+        <p style="font-size:.82rem;color:var(--accent);font-weight:700;margin-bottom:8px">I·R·O·H = Identity/Access Mgmt · Response (IR) · Operations (SIEM/EDR) · Hardening</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">IAM:</strong> RBAC (bending roles), MFA (White Lotus riddle + physical presence + bending = 3 factors), SSO (Avatar State grants all-element access instantly), Least Privilege (soldiers bend only their element).</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">Monitoring:</strong> Toph's seismic sense = SIEM. Zuko tracking Aang = Threat Hunting. Sokka's war room = SOC. CVSS scores = danger rating of each bender's attack capability.</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:10px"><strong style="color:var(--text)">IR Lifecycle:</strong> Prep (training) → Detection (scout sighting) → Analysis (confirm threat) → Containment (hold wall) → Eradication (defeat Ozai) → Recovery (rebuild) → Lessons Learned (Zuko's reforms).</p>
+        <div class="mini-quiz" id="mq4">
+          <p>Zuko actively hunts Aang's trail using known patterns and new clues. This models which security operation?</p>
+          <div class="mq-opts">
+            <button class="mq-opt" onclick="answerMQ('mq4',this,false)">A. Log aggregation</button>
+            <button class="mq-opt" onclick="answerMQ('mq4',this,false)">B. Vulnerability scanning</button>
+            <button class="mq-opt" onclick="answerMQ('mq4',this,true)">C. Threat Hunting</button>
+          </div>
+          <div class="mq-fb" id="mq4-fb">Threat Hunting = proactively searching for threats using intelligence and patterns, not waiting for alerts. Zuko doesn't wait — he hunts!</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="acc-item">
+      <div class="acc-header" onclick="toggleAcc(this,true,'guide-acc')"><span>🩵 D5 — <strong>KYOSHI</strong>: Governance &amp; Risk</span><span class="chev">▼</span></div>
+      <div class="acc-body">
+        <p style="font-size:.82rem;color:var(--accent);font-weight:700;margin-bottom:8px">K·Y·O·S·H·I = Key Policies · Your Risk Register · Oversight · Standards · Human Factors · Investigation</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">Governance:</strong> Fire Lord's decrees = AUP (Acceptable Use Policy). Earth King's council = Board/Committee structure. White Lotus = External audit body. Avatar cycle = Annual policy review cadence.</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:7px"><strong style="color:var(--text)">Risk:</strong> Sozin's Comet = Known risk with high ALE. Building the wall = Mitigation. Surrendering Omashu = Acceptance. Dispersing the fleet = Avoidance. Hiring White Lotus = Transference.</p>
+        <p style="font-size:.79rem;color:var(--muted);margin-bottom:10px"><strong style="color:var(--text)">Compliance:</strong> Four nations' treaties = SLAs. GDPR = Earth Kingdom data sovereignty. Aang's privacy (hiding identity) = Right to be forgotten. Dai Li monitoring = Compliance surveillance.</p>
+        <div class="mini-quiz" id="mq5">
+          <p>The Earth King commits to restoring Ba Sing Se's defenses within 4 hours of any fire attack. This maps to:</p>
+          <div class="mq-opts">
+            <button class="mq-opt" onclick="answerMQ('mq5',this,true)">A. Recovery Time Objective (RTO)</button>
+            <button class="mq-opt" onclick="answerMQ('mq5',this,false)">B. Recovery Point Objective (RPO)</button>
+            <button class="mq-opt" onclick="answerMQ('mq5',this,false)">C. Mean Time Between Failures (MTBF)</button>
+          </div>
+          <div class="mq-fb" id="mq5-fb">RTO = the maximum time a system can be DOWN before business impact. Four-hour restoration commitment = RTO. RPO is about data loss, not downtime time.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- CHARACTER MAPPING -->
+<hr class="sec-hr" id="characters">
+<div class="ps">
+  <div class="sec-hd"><h2>👥 Character Security Role Mapping</h2><p>Each bender mirrors a real-world cybersecurity role.</p></div>
+  <div class="cgrid">
+    <div class="role-card">
+      <div class="role-badge" style="background:rgba(255,179,0,.2);color:#FFD54F;border:1px solid rgba(255,179,0,.45)">SUPERUSER / CISO</div>
+      <h3 style="color:var(--text);font-size:.9rem;margin-bottom:5px">🌀 Aang — The Avatar</h3>
+      <p style="font-size:.77rem;color:var(--muted);line-height:1.65">Holds the ultimate "Superuser" role — unrestricted access to all four elemental systems. Like a CISO, responsible for the security posture of the entire world. His compromise would be catastrophic for all nations — a total loss-of-confidentiality event.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-badge" style="background:rgba(0,200,255,.18);color:#4DD9FF;border:1px solid rgba(0,200,255,.4)">SOC ANALYST / HEALER</div>
+      <h3 style="color:var(--text);font-size:.9rem;margin-bottom:5px">💧 Katara — Water Healer</h3>
+      <p style="font-size:.77rem;color:var(--muted);line-height:1.65">Katara's healing mirrors a SOC Analyst's corrective control function — she identifies damage and restores system integrity. Her waterbending role grants access only to the healing module, not destructive firebending — perfect Least Privilege implementation.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-badge" style="background:rgba(76,175,80,.18);color:#81C784;border:1px solid rgba(76,175,80,.4)">THREAT ANALYST / SIEM</div>
+      <h3 style="color:var(--text);font-size:.9rem;margin-bottom:5px">🪨 Toph — Seismic Seer</h3>
+      <p style="font-size:.77rem;color:var(--muted);line-height:1.65">Toph's seismic sense is the perfect SIEM metaphor — aggregating data from across the network (earth), identifying anomalies (enemy tunnels), and alerting in real time. Her blind spot to aerial threats = monitoring coverage gaps that attackers exploit.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-badge" style="background:rgba(255,69,0,.2);color:#FF8C42;border:1px solid rgba(255,69,0,.45)">THREAT HUNTER / RED TEAM</div>
+      <h3 style="color:var(--text);font-size:.9rem;margin-bottom:5px">🔥 Zuko — Fire Prince</h3>
+      <p style="font-size:.77rem;color:var(--muted);line-height:1.65">Early Zuko = persistent, targeted Threat Hunter tracking the Avatar across all nations using intelligence and behavioral patterns. His arc from adversary to ally also demonstrates insider threat rehabilitation — with proper onboarding (Iroh's mentorship), even high-risk actors become defenders.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-badge" style="background:rgba(255,179,0,.18);color:#FFD54F;border:1px solid rgba(255,179,0,.4)">SECURITY ARCHITECT</div>
+      <h3 style="color:var(--text);font-size:.9rem;margin-bottom:5px">☕ Iroh — Dragon of the West</h3>
+      <p style="font-size:.77rem;color:var(--muted);line-height:1.65">The wise Security Architect — deeply understands all four domains, designs layered defenses, and mentors junior analysts. His White Lotus network demonstrates supply-chain security: trusted third-party relationships built through rigorous vetting rather than assumed trust.</p>
+    </div>
+    <div class="role-card">
+      <div class="role-badge" style="background:rgba(255,0,80,.18);color:#FF6B9D;border:1px solid rgba(255,0,80,.4)">APT / NATION-STATE ACTOR</div>
+      <h3 style="color:var(--text);font-size:.9rem;margin-bottom:5px">⚡ Azula — Fire General</h3>
+      <p style="font-size:.77rem;color:var(--muted);line-height:1.65">The textbook Advanced Persistent Threat — state-sponsored, near-perfect accuracy, uses zero-days (lightning bending no one else can replicate), recruits insider threats (Long Feng), achieves persistent access to Ba Sing Se. Defeating her required behavioral analytics, not signatures.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DEEP-DIVE ANALOGIES -->
+<hr class="sec-hr" id="analogies">
+<div class="ps">
+  <div class="sec-hd"><h2>🔗 Deep-Dive Security Analogies</h2><p>Four Avatar scenarios mapped precisely to Security+ exam concepts.</p></div>
+  <div class="cgrid">
+    <div class="card card-accent-water"><span class="tag tag-d3">D3</span><span class="tag tag-d4">D4</span><h3>Ba Sing Se's Rings → Defense in Depth</h3><p>Three concentric rings force any attacker to breach three independent security zones. This maps to Defense in Depth: layered controls so that defeating one (bypassing the perimeter firewall) doesn't grant full access. Each ring requires separate authentication, mirroring network micro-segmentation.</p></div>
+    <div class="card card-accent-air"><span class="tag tag-d1">D1</span><span class="tag tag-d3">D3</span><h3>Air Nomad Temples → Zero Trust</h3><p>Air Nomads are stateless and mobile — they verify identity through bending tests, not location. This is Zero Trust: "Never trust, always verify." No implicit trust zone exists; every monk authenticates regardless of being inside the temple. White Lotus challenges mirror re-authentication at every Policy Enforcement Point.</p></div>
+    <div class="card card-accent-fire"><span class="tag tag-d2">D2</span><span class="tag tag-d4">D4</span><h3>Dai Li Infiltration → Insider Threat / APT</h3><p>The Dai Li secretly operate inside Ba Sing Se while appearing loyal — classic insider threat combined with APT persistence. They maintain elevated privileges, avoid detection by blending in, and exfiltrate intelligence. Detection required behavioral analytics (anomaly-based), not signature matching of known attacks.</p></div>
+    <div class="card card-accent-earth"><span class="tag tag-d1">D1</span><span class="tag tag-d5">D5</span><h3>White Lotus Society → PKI &amp; Certificate Authority</h3><p>The White Lotus issues membership certificates through identity verification (riddles/challenges) by trusted Grandmasters (Root CAs). Iroh as CA signs new members. Revocation occurs if a member betrays the order (CRL). Trust chains from the Root CA (Iroh) to all validated leaf certificates (members).</p></div>
+  </div>
+</div>
+
+<!-- STUDY NOTES -->
+<hr class="sec-hr" id="notes">
+<div class="ps">
+  <div class="sec-hd"><h2>📝 High-Frequency Exam Notes</h2><p>Five must-know topic cards — the most commonly tested Security+ concepts.</p></div>
+  <div class="cgrid">
+    <div class="note-card" style="border-top-color:#FFB300"><h3 style="color:#FFD54F;font-size:.87rem;margin-bottom:8px">🟡 Encryption Must-Knows</h3><p style="font-size:.77rem;color:var(--muted);line-height:1.7">• AES = Symmetric (128/192/256-bit)<br>• RSA/ECC = Asymmetric (public+private pair)<br>• ECC = same security, smaller keys than RSA<br>• Diffie-Hellman = key exchange over insecure channel<br>• PFS = new session key each connection<br>• TPM = hardware key storage on motherboard<br>• HSM = dedicated hardware for key management</p></div>
+    <div class="note-card" style="border-top-color:#FF4500"><h3 style="color:#FF8C42;font-size:.87rem;margin-bottom:8px">🔴 Critical Port Numbers</h3><p style="font-size:.77rem;color:var(--muted);line-height:1.7">• SSH=22 · FTP=21 · Telnet=23<br>• SMTP=25 · DNS=53 · HTTP=80<br>• HTTPS=443 · RDP=3389 · LDAP=389<br>• LDAPS=636 · RADIUS=1812/1813<br>• TACACS+=49 · Syslog=514 · NTP=123<br>• SNMP=161/162 · Kerberos=88<br>• SFTP=22 (same as SSH)</p></div>
+    <div class="note-card" style="border-top-color:#00C8FF"><h3 style="color:#4DD9FF;font-size:.87rem;margin-bottom:8px">🔵 Access Control Models</h3><p style="font-size:.77rem;color:var(--muted);line-height:1.7">• MAC = Mandatory — labels (Top Secret)<br>• DAC = Discretionary — owner sets perms<br>• RBAC = Role-based — job function<br>• ABAC = Attribute-based — time/location/device<br>• Rule-based = ACL firewall rules<br>• Least Privilege = minimum access to do job<br>• 802.1X = port NAC (supplicant→authenticator→RADIUS)</p></div>
+    <div class="note-card" style="border-top-color:#4CAF50"><h3 style="color:#81C784;font-size:.87rem;margin-bottom:8px">🟢 IR Phases &amp; Forensics</h3><p style="font-size:.77rem;color:var(--muted);line-height:1.7">• Order: Prep→Detection→Analysis→Containment→Eradication→Recovery→Lessons Learned<br>• Chain of custody = document who touched evidence<br>• Legal hold = preserve data, suspend deletion<br>• E-discovery = legal process for electronic evidence<br>• Order of volatility: RAM→swap→disk→remote logs<br>• Root Cause Analysis = WHY it happened</p></div>
+    <div class="note-card" style="border-top-color:#00C8FF"><h3 style="color:var(--accent);font-size:.87rem;margin-bottom:8px">🩵 Risk &amp; Governance Formulas</h3><p style="font-size:.77rem;color:var(--muted);line-height:1.7">• SLE = Asset Value × Exposure Factor<br>• ALE = SLE × ARO<br>• RTO = max downtime before business impact<br>• RPO = max data loss tolerable (in time)<br>• MTTR = average time to repair a failure<br>• MTBF = average time BETWEEN failures<br>• Risk = Threat × Vulnerability × Impact</p></div>
+  </div>
+</div>
+
+<!-- IR LIFECYCLE -->
+<hr class="sec-hr" id="ir-lifecycle">
+<div class="ps">
+  <div class="sec-hd"><h2>🚨 Incident Response Lifecycle</h2><p>Domain 4.8 — Seven IR phases mapped to Team Avatar's comet battle.</p></div>
+  <div class="cgrid" style="grid-template-columns:repeat(auto-fill,minmax(210px,1fr))">
+    <div class="phase-card" style="border-color:rgba(255,179,0,.4)"><div class="phase-num">1</div><div class="phase-tag" style="background:rgba(255,179,0,.15);border-color:rgba(255,179,0,.35);color:#FFD54F">4.8 — Preparation</div><h3 style="font-size:.87rem;color:var(--text);margin-bottom:5px">🛡️ Preparation</h3><p style="font-size:.76rem;color:var(--muted);line-height:1.6">Team Avatar trains for months before Sozin's Comet. IR plans written, tabletop exercises run, tools prepared. Like creating an IRP and running simulation drills before any real incident occurs.</p></div>
+    <div class="phase-card" style="border-color:rgba(255,69,0,.45)"><div class="phase-num">2</div><div class="phase-tag" style="background:rgba(255,69,0,.15);border-color:rgba(255,69,0,.4);color:#FF8C42">4.8 — Detection</div><h3 style="font-size:.87rem;color:var(--text);margin-bottom:5px">🔍 Detection &amp; Analysis</h3><p style="font-size:.76rem;color:var(--muted);line-height:1.6">Scouts detect the Fire Nation fleet. Team analyzes: true positive or false positive? SIEM alerts, log analysis, IDS triggers — all map to identifying an actual incident vs. noise in the data.</p></div>
+    <div class="phase-card" style="border-color:rgba(0,200,255,.4)"><div class="phase-num">3</div><div class="phase-tag" style="background:rgba(0,200,255,.12);border-color:rgba(0,200,255,.3);color:#4DD9FF">4.8 — Containment</div><h3 style="font-size:.87rem;color:var(--text);margin-bottom:5px">🧱 Containment</h3><p style="font-size:.76rem;color:var(--muted);line-height:1.6">Aang creates an earth shield — stop the spread without destroying forensic evidence. Short-term = isolate infected system. Long-term = VLAN segmentation, firewall rule update. Don't wipe yet!</p></div>
+    <div class="phase-card" style="border-color:rgba(76,175,80,.45)"><div class="phase-num">4</div><div class="phase-tag" style="background:rgba(76,175,80,.13);border-color:rgba(76,175,80,.35);color:#81C784">4.8 — Eradication</div><h3 style="font-size:.87rem;color:var(--text);margin-bottom:5px">⚔️ Eradication &amp; Recovery</h3><p style="font-size:.76rem;color:var(--muted);line-height:1.6">Aang defeats Ozai — root cause removed. Patch the vulnerability, revoke compromised credentials, restore from clean backups, rotate secrets. Confirm clean state before returning to production.</p></div>
+    <div class="phase-card" style="border-color:rgba(0,200,255,.35)"><div class="phase-num">5</div><div class="phase-tag">4.8 — Lessons Learned</div><h3 style="font-size:.87rem;color:var(--text);margin-bottom:5px">📖 Lessons Learned</h3><p style="font-size:.76rem;color:var(--muted);line-height:1.6">Zuko becomes Fire Lord and rewrites policy. The post-incident report identifies what failed, what worked, and how to improve. Root cause analysis prevents the same incident from happening again.</p></div>
+  </div>
+</div>
+
+<!-- DETECTION DEEP DIVE -->
+<hr class="sec-hr" id="detection">
+<div class="ps">
+  <div class="sec-hd"><h2>🔍 Detection Deep Dive</h2><p>Domain 4.4 — Security alerting, monitoring concepts and tools.</p></div>
+  <div class="cgrid" style="margin-bottom:18px">
+    <div class="card card-accent-main"><h3>SIEM vs. SOAR</h3><p>SIEM = collects, correlates, and alerts (Toph hearing footsteps). SOAR = automated response (Toph automatically sealing tunnels without being told). SIEM tells you; SOAR acts for you. Together they are the ideal monitoring stack.</p></div>
+    <div class="card card-accent-main"><h3>Signature vs. Anomaly Detection</h3><p>Signature-based = matches known attack patterns (Azula's blue fire = known IOC). Anomaly-based = flags unusual behavior (non-bender accessing firebending scrolls). Zero-Day threats bypass signature detection — anomaly catches them.</p></div>
+    <div class="card card-accent-main"><h3>True/False Positive/Negative</h3><p>True Positive = correctly detecting Azula. False Positive = alerting on a friendly waterbender (wasted resources). False Negative = MISSING Dai Li agents (worst outcome — breach goes undetected). Tune your alerts to minimize both FP and FN.</p></div>
+  </div>
+  <div class="mini-quiz" id="mq-det">
+    <p>Toph's seismic sense misidentifies a badgermole tunnel as an enemy invasion. Which detection term applies?</p>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-det',this,false)">A. True Positive</button>
+      <button class="mq-opt" onclick="answerMQ('mq-det',this,true)">B. False Positive</button>
+      <button class="mq-opt" onclick="answerMQ('mq-det',this,false)">C. False Negative</button>
+    </div>
+    <div class="mq-fb" id="mq-det-fb">False Positive = incorrectly identifying a benign event as a threat. The badgermole is not an attacker — alert was wrong! FP wastes resources and causes alert fatigue.</div>
+  </div>
+</div>
+
+<!-- ROLES & RESPONSIBILITIES -->
+<hr class="sec-hr" id="roles">
+<div class="ps">
+  <div class="sec-hd"><h2>🎭 Roles &amp; Responsibilities</h2><p>Domain 5.1 governance roles mapped to Avatar characters.</p></div>
+  <div class="cgrid" style="margin-bottom:18px">
+    <div class="card card-accent-air"><h3>Data Owner</h3><p>Earth King — owns all Ba Sing Se citizen records. Ultimately accountable for data classification and protection policy, even though he doesn't manage it day-to-day. Sets the rules; Dai Li enforces them.</p></div>
+    <div class="card card-accent-fire"><h3>Data Custodian / Steward</h3><p>Dai Li — physically handle and store the records. Responsible for implementing controls the Owner dictates. They can (dangerously) abuse their access without the Owner knowing — demonstrates why separation of duties matters.</p></div>
+    <div class="card card-accent-water"><h3>Data Processor</h3><p>White Lotus scholars who process and copy scrolls on behalf of nations. Process data per the controller's instructions but don't own it — the GDPR processor role. Must sign data processing agreements (DPAs).</p></div>
+    <div class="card card-accent-earth"><h3>Data Controller</h3><p>Fire Lord Ozai — determines the purpose and means of processing captured intelligence. The controller decides WHY and HOW data is processed, carrying full legal accountability under frameworks like GDPR.</p></div>
+  </div>
+  <div class="mini-quiz" id="mq-roles">
+    <p>The Earth King orders the Dai Li to store and protect citizen census scrolls. Who is the Data Owner?</p>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-roles',this,false)">A. The Dai Li agents</button>
+      <button class="mq-opt" onclick="answerMQ('mq-roles',this,true)">B. The Earth King</button>
+      <button class="mq-opt" onclick="answerMQ('mq-roles',this,false)">C. The census clerk</button>
+    </div>
+    <div class="mq-fb" id="mq-roles-fb">Data Owner = the executive/entity ultimately accountable for the data. The Earth King owns the kingdom's data even though Dai Li physically handle it (they're custodians).</div>
+  </div>
+</div>
+
+<!-- REPORTING REQUIREMENTS -->
+<hr class="sec-hr" id="reporting">
+<div class="ps">
+  <div class="sec-hd"><h2>📊 Reporting Requirements</h2><p>Domain 4.8 and 5.4 — internal and external incident reporting obligations.</p></div>
+  <div class="cgrid" style="margin-bottom:18px">
+    <div class="card card-accent-main"><h3>Internal Reporting</h3><p style="font-size:.77rem;color:var(--muted);line-height:1.65">Notify: CISO, SOC team, Legal, HR (if insider), affected business unit managers. Timeline: immediate verbal → 1-hour written summary → 24-hour full incident report. Like Sokka briefing King Bumi immediately, then submitting a battle report to the council within a day.</p></div>
+    <div class="card card-accent-main"><h3>External Reporting</h3><p style="font-size:.77rem;color:var(--muted);line-height:1.65">Regulators (GDPR = 72 hours), law enforcement (FBI/CISA for critical infrastructure), affected customers (breach notifications). Like informing all four nations of the comet threat — mandatory disclosure within legal deadlines, not optional communication.</p></div>
+    <div class="card card-accent-main"><h3>Legal Hold &amp; Chain of Custody</h3><p style="font-size:.77rem;color:var(--muted);line-height:1.65">Legal hold = suspend all data deletion for relevant evidence. Chain of custody = document every person who touched evidence. Like preserving Ozai's war scrolls for a war crimes tribunal — tampered or undocumented evidence is inadmissible in court.</p></div>
+  </div>
+  <div class="mini-quiz" id="mq-rep">
+    <p>Under GDPR, how quickly must a data breach be reported to the supervisory authority after discovery?</p>
+    <div class="mq-opts">
+      <button class="mq-opt" onclick="answerMQ('mq-rep',this,false)">A. 24 hours</button>
+      <button class="mq-opt" onclick="answerMQ('mq-rep',this,false)">B. 7 days</button>
+      <button class="mq-opt" onclick="answerMQ('mq-rep',this,true)">C. 72 hours</button>
+    </div>
+    <div class="mq-fb" id="mq-rep-fb">GDPR Article 33 requires notification within 72 hours of becoming aware of a personal data breach involving risk to individuals. Miss the deadline = fines apply!</div>
+  </div>
+</div>
+
+<!-- POST-INCIDENT -->
+<hr class="sec-hr" id="post-incident">
+<div class="ps">
+  <div class="sec-hd"><h2>📌 Post-Incident Activity</h2><p>Domain 4.8 — what happens AFTER the incident is resolved.</p></div>
+  <div class="cgrid">
+    <div class="card card-accent-earth"><h3>📋 Lessons Learned Meeting</h3><p>Mandatory post-incident review ideally within 2 weeks. Attendees: all responders. Questions: What happened? What worked? What failed? What changes? Team Avatar's war council after defeating Ozai = perfect model. Zuko's governance reforms = policy updates driven by lessons learned.</p></div>
+    <div class="card card-accent-water"><h3>📏 Key Metrics to Capture</h3><p>MTTD (Mean Time to Detect), MTTR (Mean Time to Respond/Recover), number of systems affected, data volume exposed, regulatory notifications sent, total incident cost. Track these to demonstrate SOC effectiveness and justify security budget increases.</p></div>
+    <div class="card card-accent-fire"><h3>🎓 Training &amp; Awareness Updates</h3><p>After Azula's insider threat succeeded via social engineering, all nations must update security awareness training. Post-incident training targets the specific attack vector used. If phishing succeeded, run a phishing simulation within 30 days. Close every gap that enabled the breach.</p></div>
+  </div>
+</div>
+
+<!-- INTERACTIVE ADVENTURE -->
+<hr class="sec-hr" id="adventure">
+<div class="ps">
+  <div class="sec-hd"><h2>⚔️ Interactive IR Adventure</h2><p>Guide Team Avatar through a security incident using real IR decisions. Wrong answers won't advance — choose wisely!</p></div>
+  <div id="adv-container">
+    <div class="adv-scene active" id="adv-s1">
+      <p style="font-size:.7rem;color:#00C8FF;font-weight:700;letter-spacing:1px;margin-bottom:8px">⚔️ SCENE 1 OF 4 — DETECTION &amp; ANALYSIS</p>
+      <div class="adv-narr">Toph's seismic sense triggers at 3 AM. She detects dozens of armored boots approaching Ba Sing Se's outer wall from three directions simultaneously — outside normal patrol hours. Sokka reviews the logs: movement patterns don't match known city guards. Multiple SIEM alerts are firing.</div>
+      <div class="adv-q">🛡️ What is your FIRST action as the security team?</div>
+      <button class="adv-btn" onclick="advAnswer('s1',this,false)">A. Immediately send all waterbenders to attack the perimeter</button>
+      <button class="adv-btn" onclick="advAnswer('s1',this,true)">B. Analyze the alert — confirm it's a true positive before responding</button>
+      <button class="adv-btn" onclick="advAnswer('s1',this,false)">C. Shut down all city gates and evacuate all citizens immediately</button>
+      <div class="adv-feedback" id="adv-s1-fb"></div>
+      <button class="adv-next" id="adv-s1-next" onclick="advNext(2)">Next Scene →</button>
+    </div>
+    <div class="adv-scene" id="adv-s2">
+      <p style="font-size:.7rem;color:#00C8FF;font-weight:700;letter-spacing:1px;margin-bottom:8px">⚔️ SCENE 2 OF 4 — CONTAINMENT</p>
+      <div class="adv-narr">Confirmed: Fire Nation infiltrators have breached the outer wall and are in the lower ring. Azula is with them. They haven't reached the middle ring gate yet. You have about 10 minutes. The forensic evidence (tracks, burn marks, intercepted communications) must be preserved.</div>
+      <div class="adv-q">🧱 What is the CORRECT containment action?</div>
+      <button class="adv-btn" onclick="advAnswer('s2',this,false)">A. Destroy the entire outer ring to stop them — wipe everything now</button>
+      <button class="adv-btn" onclick="advAnswer('s2',this,true)">B. Seal the gate between the outer and middle ring — contain them in the current segment while preserving evidence</button>
+      <button class="adv-btn" onclick="advAnswer('s2',this,false)">C. Do nothing — observe their full plan before taking any action</button>
+      <div class="adv-feedback" id="adv-s2-fb"></div>
+      <button class="adv-next" id="adv-s2-next" onclick="advNext(3)">Next Scene →</button>
+    </div>
+    <div class="adv-scene" id="adv-s3">
+      <p style="font-size:.7rem;color:#00C8FF;font-weight:700;letter-spacing:1px;margin-bottom:8px">⚔️ SCENE 3 OF 4 — ERADICATION</p>
+      <div class="adv-narr">Azula is contained. Forensic analysis (with documented chain of custody) reveals root cause: a Dai Li agent's credentials were stolen via pretexting. Azula used the insider access to open the gate. Aang has arrived and is ready to act. The backdoor access must be permanently closed.</div>
+      <div class="adv-q">⚔️ What are the CORRECT eradication steps?</div>
+      <button class="adv-btn" onclick="advAnswer('s3',this,false)">A. Just defeat Azula — the threat is gone when the attacker leaves</button>
+      <button class="adv-btn" onclick="advAnswer('s3',this,true)">B. Defeat Azula, revoke compromised Dai Li credentials, patch the social engineering gap with awareness training, and audit all Dai Li access logs</button>
+      <button class="adv-btn" onclick="advAnswer('s3',this,false)">C. Reset all Dai Li accounts and re-enroll everyone immediately without investigation</button>
+      <div class="adv-feedback" id="adv-s3-fb"></div>
+      <button class="adv-next" id="adv-s3-next" onclick="advNext(4)">Next Scene →</button>
+    </div>
+    <div class="adv-scene" id="adv-s4">
+      <p style="font-size:.7rem;color:#00C8FF;font-weight:700;letter-spacing:1px;margin-bottom:8px">⚔️ SCENE 4 OF 4 — LESSONS LEARNED</p>
+      <div class="adv-narr">Azula is defeated. The outer ring is secured. Earthbenders are repairing walls (restoring from clean backups). Citizens are returning (systems back online). All compromised Dai Li credentials have been rotated and audited. Zuko has been appointed Fire Lord. The crisis is over.</div>
+      <div class="adv-q">📋 What is the FINAL required step in the IR lifecycle?</div>
+      <button class="adv-btn" onclick="advAnswer('s4',this,false)">A. Close the incident ticket — the threat is eliminated, work is done</button>
+      <button class="adv-btn" onclick="advAnswer('s4',this,false)">B. Send a congratulations memo to all four nations</button>
+      <button class="adv-btn" onclick="advAnswer('s4',this,true)">C. Conduct a Lessons Learned meeting, document root cause, update the IR plan, and implement targeted security awareness training</button>
+      <div class="adv-feedback" id="adv-s4-fb"></div>
+      <button class="adv-next" id="adv-s4-next" onclick="advFinale()">Complete Mission →</button>
+    </div>
+    <div class="adv-scene" id="adv-finale" style="text-align:center;padding:28px 20px">
+      <div style="font-size:3rem;margin-bottom:10px">🏆</div>
+      <h3 style="color:var(--accent);font-size:1.2rem;margin-bottom:8px">The Four Nations Are Safe!</h3>
+      <p style="color:var(--muted);font-size:.85rem;margin-bottom:14px">You guided Team Avatar through all four IR phases correctly:</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:18px">
+        <span style="background:rgba(0,200,255,.12);border:1px solid rgba(0,200,255,.28);color:#00C8FF;padding:4px 14px;border-radius:99px;font-size:.77rem;font-weight:700">✅ Detection &amp; Analysis</span>
+        <span style="background:rgba(0,200,255,.12);border:1px solid rgba(0,200,255,.28);color:#00C8FF;padding:4px 14px;border-radius:99px;font-size:.77rem;font-weight:700">✅ Containment</span>
+        <span style="background:rgba(0,200,255,.12);border:1px solid rgba(0,200,255,.28);color:#00C8FF;padding:4px 14px;border-radius:99px;font-size:.77rem;font-weight:700">✅ Eradication &amp; Recovery</span>
+        <span style="background:rgba(0,200,255,.12);border:1px solid rgba(0,200,255,.28);color:#00C8FF;padding:4px 14px;border-radius:99px;font-size:.77rem;font-weight:700">✅ Lessons Learned</span>
+      </div>
+      <button onclick="restartAdv()" style="background:linear-gradient(90deg,#FFB300,#FF8C00);color:#000;font-weight:800;border:none;border-radius:8px;padding:10px 22px;font-size:.82rem;font-weight:700;cursor:pointer;font-family:inherit">🔄 Play Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- STUDY LINKS -->
+<hr class="sec-hr" id="links">
+<div class="ps">
+  <div class="sec-hd"><h2>🔗 Study Links &amp; Resources</h2><p>All the tools you need to pass SY0-701.</p></div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:9px">
+    <a href="CompTIA_Security___SY0-701__Study_Guide__1_.pdf" target="_blank" style="background:var(--card-bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit;transition:border-color .2s" onmouseover="this.style.borderColor='#4FC3F7'" onmouseout="this.style.borderColor=''"><div style="font-size:1.5rem">📖</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block">SY0-701 Study Guide PDF</span><span style="font-size:.68rem;color:var(--muted)">Activates on GitHub upload</span></div></a>
+    <a href="CompTIA-Security-Plus-SY0-701-Exam-Objectives__1_.pdf" target="_blank" style="background:var(--card-bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit;transition:border-color .2s" onmouseover="this.style.borderColor='#4FC3F7'" onmouseout="this.style.borderColor=''"><div style="font-size:1.5rem">📄</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block">Exam Objectives PDF</span><span style="font-size:.68rem;color:var(--muted)">Official CompTIA blueprint</span></div></a>
+    <a href="https://amzn.to/4nVi25Y" target="_blank" style="background:var(--card-bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit;transition:border-color .2s" onmouseover="this.style.borderColor='#4FC3F7'" onmouseout="this.style.borderColor=''"><div style="font-size:1.5rem">📚</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block">Security+ Study Kit</span><span style="font-size:.68rem;color:var(--muted)">Sybex SY0-701 7th Ed.</span></div></a>
+    <a href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank" style="background:var(--card-bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit;transition:border-color .2s" onmouseover="this.style.borderColor='#4FC3F7'" onmouseout="this.style.borderColor=''"><div style="font-size:1.5rem">🎬</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block">Professor Messer</span><span style="font-size:.68rem;color:var(--muted)">Free SY0-701 video course</span></div></a>
+    <a href="https://quizlet.com/search?query=comptia+security+sy0-701&type=sets" target="_blank" style="background:var(--card-bg);border:1.5px solid var(--border);border-radius:10px;padding:12px 14px;display:flex;align-items:center;gap:9px;text-decoration:none;color:inherit;transition:border-color .2s" onmouseover="this.style.borderColor='#4FC3F7'" onmouseout="this.style.borderColor=''"><div style="font-size:1.5rem">🎴</div><div><span style="font-size:.8rem;font-weight:700;color:var(--text);display:block">Quizlet SY0-701</span><span style="font-size:.68rem;color:var(--muted)">Community flashcard sets</span></div></a>
+  </div>
+</div>
+
+<!-- LEITNER FLASHCARDS -->
+<hr class="sec-hr" id="flashcards">
+<div style="padding:32px 20px;max-width:980px;margin:0 auto;position:relative;z-index:1">
+  <div class="sec-hd"><h2>🃏 Leitner Flashcard Deck</h2><p>70 cards across all 5 domains — spaced repetition. Progress saves to your browser automatically.</p></div>
+  <div class="fc-wrap" id="fc-avatar-cards">
+    <div class="fc-header"><h3>🌊 Avatar: The Last Airbender — Security+ Deck</h3><p style="font-size:.77rem;color:var(--muted)">70 cards · Domains 1–5 · Leitner spaced repetition · localStorage key: ltr_avatar-cards</p></div>
+    <div class="fc-lrow">
+      <div class="fc-lbox fc-l1"><span id="fc-avatar-cards-lb1">0</span>Box 1<br><small>Daily</small></div>
+      <div class="fc-lbox fc-l2"><span id="fc-avatar-cards-lb2">0</span>Box 2<br><small>Every 2</small></div>
+      <div class="fc-lbox fc-l3"><span id="fc-avatar-cards-lb3">0</span>Box 3<br><small>Every 4</small></div>
+      <div class="fc-lbox fc-l4"><span id="fc-avatar-cards-lb4">0</span>Box 4<br><small>Every 8</small></div>
+      <div class="fc-lbox fc-l5"><span id="fc-avatar-cards-lb5">0</span>Box 5<br><small>Mastered ✨</small></div>
+    </div>
+    <div class="fc-srow">
+      <div class="fc-stat"><div class="fc-snum" id="fc-avatar-cards-total" style="color:#00C8FF">0</div><div class="fc-slbl">Total</div></div>
+      <div class="fc-stat"><div class="fc-snum" id="fc-avatar-cards-learning" style="color:#FF8C42">0</div><div class="fc-slbl">Learning</div></div>
+      <div class="fc-stat"><div class="fc-snum" id="fc-avatar-cards-reviewing" style="color:#FFD54F">0</div><div class="fc-slbl">Reviewing</div></div>
+      <div class="fc-stat"><div class="fc-snum" id="fc-avatar-cards-mastered" style="color:#81C784">0</div><div class="fc-slbl">Mastered</div></div>
+    </div>
+    <div class="fc-toolbar">
+      <button class="fc-tbtn active" id="fc-avatar-cards-btn-due" onclick="fcDue('avatar-cards')">📋 Due Cards</button>
+      <button class="fc-tbtn" id="fc-avatar-cards-btn-all" onclick="fcAll('avatar-cards')">🔀 All Cards</button>
+      <button class="fc-tbtn" onclick="fcRestart('avatar-cards')">🔄 Restart</button>
+      <button class="fc-tbtn" onclick="fcResetAll('avatar-cards')">⚠️ Reset All</button>
+    </div>
+    <div id="fc-avatar-cards-main">
+      <div class="card-ctr" id="fc-avatar-cards-counter"></div>
+      <div class="progress-bar"><div class="progress-fill" id="fc-avatar-cards-fill" style="background:linear-gradient(90deg,#00C8FF,#FFB300)"></div></div>
+      <div class="flashcard" id="fc-avatar-cards-card" onclick="fcFlip('avatar-cards')">
+        <div class="card-inner">
+          <div class="card-front" style="border-color:rgba(255,179,0,.5);background:linear-gradient(135deg,#081A2E,#0F1F0A)">
+            <div class="card-box-ind" id="fc-avatar-cards-boxind"></div>
+            <p id="fc-avatar-cards-q"></p>
+            <span class="card-hint">Click card or press Space/F to reveal</span>
+          </div>
+          <div class="card-back" style="border-color:#00C8FF;background:linear-gradient(135deg,#001830,#001A10)">
+            <p id="fc-avatar-cards-a" style="color:#FFB300"></p>
+          </div>
+        </div>
+      </div>
+      <div id="fc-avatar-cards-empty" style="display:none;text-align:center;padding:22px;color:var(--muted)"><div style="font-size:2.2rem">🎉</div><p>All caught up! Switch to All Cards to keep drilling.</p></div>
+      <div class="card-controls">
+        <button class="btn" id="fc-avatar-cards-flipbtn" onclick="fcFlip('avatar-cards')" style="background:linear-gradient(90deg,#00C8FF,#00A0CC);color:#000;font-weight:800">👁️ Reveal Answer</button>
+      </div>
+      <div class="card-controls" id="fc-avatar-cards-ansbtn" style="display:none">
+        <button class="btn btn-again" onclick="fcGrade('avatar-cards','again')">❌ Again (1)</button>
+        <button class="btn btn-good" onclick="fcGrade('avatar-cards','good')">✅ Got It (2)</button>
+        <button class="btn btn-easy" onclick="fcGrade('avatar-cards','easy')">⚡ Easy (3)</button>
+        <button class="btn btn-skip" onclick="fcSkip('avatar-cards')">⏭️ Skip (S)</button>
+      </div>
+    </div>
+    <div id="fc-avatar-cards-done" class="done-screen">
+      <div style="font-size:2.2rem">🏆</div>
+      <h3 style="color:var(--text);margin-bottom:6px">Session Complete!</h3>
+      <div class="score-big" id="fc-avatar-cards-score" style="color:var(--accent)"></div>
+      <p id="fc-avatar-cards-scoredet" style="color:var(--muted);margin-bottom:12px"></p>
+      <div class="card-controls">
+        <button class="btn" onclick="fcRestart('avatar-cards')" style="background:linear-gradient(90deg,#00C8FF,#00A0CC);color:#000;font-weight:800">🔄 Study Again</button>
+      </div>
+    </div>
+    <div style="text-align:center;font-size:.67rem;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border)">⌨️ Space/F = flip &nbsp;·&nbsp; 1 = Again &nbsp;·&nbsp; 2 = Got It &nbsp;·&nbsp; 3 = Easy &nbsp;·&nbsp; S = Skip</div>
+  </div>
+</div>
+
+<!-- 10-QUESTION QUIZ -->
+<hr class="sec-hr" id="quiz">
+<div style="padding:32px 20px;max-width:980px;margin:0 auto;position:relative;z-index:1">
+  <div class="sec-hd"><h2>🧠 Knowledge Quiz — 10 Questions</h2><p>Exam-style questions across all five domains. Personalized feedback on missed topics. Retake resets without page reload.</p></div>
+  <div style="background:var(--card-bg);border:1.5px solid var(--border);border-radius:14px;padding:22px">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:5px;margin-bottom:14px">
+      <h3 style="font-size:.97rem;font-weight:800;color:var(--text)">🌊 Avatar: The Last Airbender — SY0-701 Quiz</h3>
+      <div style="font-size:.72rem;color:var(--muted);font-weight:600" id="quiz-meta"></div>
+    </div>
+    <div id="quiz-body"></div>
+    <div id="quiz-nav" style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">
+      <button id="quiz-submit" onclick="quizSubmit()" style="background:linear-gradient(90deg,#00C8FF,#00A0CC);color:#000;font-weight:800;padding:7px 16px;border-radius:7px;border:none;cursor:pointer;font-size:.78rem;font-weight:700;display:none;font-family:inherit">Check Answer</button>
+      <button id="quiz-next" onclick="quizNext()" style="background:var(--surface);color:var(--text);padding:7px 16px;border-radius:7px;border:1.5px solid var(--border);cursor:pointer;font-size:.78rem;font-weight:700;display:none;font-family:inherit">Next →</button>
+      <button id="quiz-restart" onclick="quizRestart()" style="background:var(--surface);color:var(--muted);padding:7px 16px;border-radius:7px;border:1.5px solid var(--border);cursor:pointer;font-size:.78rem;display:none;font-family:inherit">🔄 Restart</button>
+    </div>
+    <div id="quiz-final" style="display:none;text-align:center;padding:22px 0">
+      <div id="quiz-score" style="font-size:3rem;font-weight:900;color:var(--accent)"></div>
+      <p id="quiz-detail" style="color:var(--muted);margin-bottom:10px"></p>
+      <div id="quiz-missed" style="text-align:left;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:.78rem;color:var(--muted);margin-bottom:12px;display:none"></div>
+      <button onclick="quizRestart()" style="background:linear-gradient(90deg,#00C8FF,#00A0CC);color:#000;font-weight:800;padding:8px 18px;border-radius:7px;border:none;cursor:pointer;font-size:.8rem;font-weight:700;font-family:inherit">🔄 Try Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer style="background:#020a14;padding:26px 20px;text-align:center;color:rgba(255,255,255,.38);font-size:.73rem;margin-top:48px;border-top:1px solid rgba(255,255,255,.08)">
+  <p>🛡️ <a href="security-notes.html" style="color:var(--accent)">Study Hub</a> &nbsp;·&nbsp; <a href="https://charleneluequeue.github.io/" style="color:var(--accent)">Portfolio</a> &nbsp;·&nbsp; Built by Charlene LueQuee</p>
+  <p style="margin-top:4px;font-size:.7rem">Avatar: The Last Airbender characters are property of Nickelodeon/Viacom — used for educational analogy purposes only.</p>
+  <div style="margin-top:10px;display:inline-block;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:6px;padding:5px 16px;font-size:.67rem;letter-spacing:.5px">&copy; 2025 Charlene LueQuee &nbsp;·&nbsp; All Rights Reserved &nbsp;·&nbsp; Unauthorized reproduction prohibited</div>
+</footer>
+
+<script>
+// ── SOUND ENGINE ──
+var soundOn=false,actx=null;
+function getCtx(){if(!actx)actx=new(window.AudioContext||window.webkitAudioContext)();return actx;}
+function tone(f,d,t,v){if(!soundOn)return;try{var c=getCtx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t||'sine';o.frequency.setValueAtTime(f,c.currentTime);g.gain.setValueAtTime(v||0.13,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+d);o.start();o.stop(c.currentTime+d);}catch(e){}}
+function playCorrect(){tone(523,.1);setTimeout(function(){tone(659,.1);},110);setTimeout(function(){tone(784,.18);},220);}
+function playWrong(){tone(200,.22,'sawtooth',.08);setTimeout(function(){tone(170,.2,'sawtooth',.06);},200);}
+function playVictory(){[523,659,784,1047].forEach(function(f,i){setTimeout(function(){tone(f,.2,'sine',.12);},i*120);});}
+function playFlip(){tone(440,.06,'sine',.06);}
+function toggleSound(){soundOn=!soundOn;document.getElementById('sound-toggle').textContent=soundOn?'🔊 Sound: ON':'🔇 Sound: OFF';if(soundOn)try{getCtx().resume();}catch(e){}}
+
+// ── NAV ──
+function toggleCN(btn){var m=btn.nextElementSibling;m.style.display=m.style.display==='block'?'none':'block';}
+document.addEventListener('click',function(e){if(!e.target.closest('.cnd'))document.querySelectorAll('.cnm').forEach(function(m){m.style.display='none';});});
+
+// ── SMOOTH SCROLL ──
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}});});});
+
+// ── ACCORDION ──
+function toggleAcc(hdr,exclusive,groupId){
+  var item=hdr.parentElement,isOpen=item.classList.contains('open');
+  if(exclusive&&groupId){document.getElementById(groupId).querySelectorAll('.acc-item').forEach(function(i){i.classList.remove('open');});}
+  if(!isOpen)item.classList.add('open');
+  else item.classList.remove('open');
+}
+
+// ── MINI QUIZ ──
+function answerMQ(id,btn,correct){
+  var wrap=document.getElementById(id);if(!wrap)return;
+  wrap.querySelectorAll('.mq-opt').forEach(function(b){b.disabled=true;});
+  btn.classList.add(correct?'mq-right':'mq-wrong');
+  var fb=document.getElementById(id+'-fb');if(fb)fb.style.display='block';
+  correct?playCorrect():playWrong();
+}
+
+// ── PARTICLES ──
+(function(){
+  var el=document.getElementById('particles'),emojis=['🌊','🔥','🌪️','🪨','💧'];
+  for(var i=0;i<20;i++){(function(){
+    var p=document.createElement('div');p.className='particle';
+    p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    p.style.cssText='left:'+Math.random()*100+'%;font-size:'+(1+Math.random())+'rem;animation-delay:'+Math.random()*14+'s;animation-duration:'+(10+Math.random()*10)+'s';
+    el.appendChild(p);
+  })();}
+})();
+
+// ── CONFETTI ──
+function launchConfetti(){
+  var cols=['#00C8FF','#FF4500','#FFB300','#4CAF50','#FFFFFF','#FF8C42'];
+  for(var i=0;i<70;i++){(function(){
+    var d=document.createElement('div');d.className='confetti-piece';
+    d.style.cssText='left:'+Math.random()*100+'vw;top:-10px;background:'+cols[Math.floor(Math.random()*cols.length)]+';animation-delay:'+Math.random()*1.5+'s;animation-duration:'+(2+Math.random()*1.5)+'s;transform:rotate('+Math.random()*360+'deg)';
+    document.body.appendChild(d);setTimeout(function(){d.remove();},4500);
+  })();}
+}
+
+// ── ADVENTURE ──
+var advDone={};
+var advData={
+  s1:{right:1,fb:'✅ Correct! In IR, always ANALYZE before acting. Confirm true positive vs. false positive first — rushing wastes resources and can escalate unnecessarily. (Domain 4.8 — Detection &amp; Analysis)'},
+  s2:{right:1,fb:'✅ Correct! Containment = stop spread without destroying evidence. Sealing the inter-ring gate = network segmentation/isolation. Wiping loses forensics; waiting allows propagation. (Domain 4.8 — Containment)'},
+  s3:{right:1,fb:'✅ Correct! Eradication = remove root cause + patch vulnerability + audit for persistence. Defeating only Azula leaves the backdoor open. Rash account reset without investigation misses other compromised accounts. (Domain 4.8 — Eradication)'},
+  s4:{right:2,fb:'✅ Correct! Lessons Learned is the MANDATORY final IR phase. Closing without review guarantees the same incident recurs. Document everything, update the IRP, train on the specific attack vector used. (Domain 4.8 — Lessons Learned)'}
+};
+function advAnswer(scene,btn,correct){
+  if(advDone[scene])return;
+  var btns=document.getElementById('adv-s'+scene.slice(1)).querySelectorAll('.adv-btn');
+  var fb=document.getElementById('adv-'+scene+'-fb');
+  if(!correct){
+    btn.classList.add('adv-wrong');
+    fb.style.cssText='display:block;background:rgba(212,120,143,.1);color:var(--red);padding:9px 12px;border-radius:6px';
+    fb.textContent='❌ Try the other option! Think carefully about IR best practices.';
+    playWrong();return;
+  }
+  advDone[scene]=true;
+  btns.forEach(function(b){b.disabled=true;});
+  fb.style.cssText='display:block;background:rgba(63,185,80,.1);color:var(--green);padding:9px 12px;border-radius:6px';
+  fb.innerHTML=advData[scene].fb;
+  document.getElementById('adv-'+scene+'-next').style.display='inline-block';
+  playCorrect();
+}
+function advNext(n){document.querySelectorAll('.adv-scene').forEach(function(s){s.classList.remove('active');});document.getElementById('adv-s'+n).classList.add('active');}
+function advFinale(){document.querySelectorAll('.adv-scene').forEach(function(s){s.classList.remove('active');});document.getElementById('adv-finale').classList.add('active');launchConfetti();playVictory();}
+function restartAdv(){advDone={};document.querySelectorAll('.adv-scene').forEach(function(s){s.classList.remove('active');s.querySelectorAll('.adv-feedback,.adv-next').forEach(function(f){f.style.display='none';});s.querySelectorAll('.adv-btn').forEach(function(b){b.disabled=false;b.classList.remove('adv-wrong');});});document.getElementById('adv-s1').classList.add('active');}
+
+// ── FLASHCARDS ──
+(function(){
+var DK='avatar-cards',SK='ltr_avatar-cards',IV=[0,1,2,4,8,999];
+var C=[
+{q:"Which principle ensures data is accessible only to authorized parties?",a:"Confidentiality — the C in the CIA Triad."},
+{q:"Which principle ensures data has not been altered by unauthorized users?",a:"Integrity — the I in the CIA Triad."},
+{q:"Which principle ensures systems are accessible to authorized users when needed?",a:"Availability — the A in the CIA Triad."},
+{q:"What does AAA stand for in network security?",a:"Authentication, Authorization, and Accounting."},
+{q:"Which control type STOPS a threat before it happens?",a:"Preventive control."},
+{q:"Which control type IDENTIFIES threats already occurring?",a:"Detective control."},
+{q:"Which control type RESTORES systems after an incident?",a:"Corrective control."},
+{q:"Which control type DISCOURAGES attackers without directly stopping them?",a:"Deterrent control."},
+{q:"Which encryption type uses the SAME key to encrypt and decrypt?",a:"Symmetric encryption (e.g., AES)."},
+{q:"Which encryption type uses a PUBLIC key to encrypt and PRIVATE key to decrypt?",a:"Asymmetric encryption (e.g., RSA, ECC)."},
+{q:"What is the primary purpose of a cryptographic hash function?",a:"Verify data integrity — creates a unique fixed-length fingerprint."},
+{q:"What technique adds random data to a password before hashing to defeat rainbow tables?",a:"Salting."},
+{q:"Which symmetric algorithm is the current global standard (128/192/256-bit keys)?",a:"AES (Advanced Encryption Standard)."},
+{q:"What is the primary advantage of ECC over RSA?",a:"Equivalent security with much smaller key sizes — more efficient."},
+{q:"Which protocol lets two parties establish a shared secret over an insecure channel?",a:"Diffie-Hellman (DH)."},
+{q:"Which property ensures past session keys are safe even if long-term keys are later stolen?",a:"Perfect Forward Secrecy (PFS)."},
+{q:"Which entity in a PKI verifies identities and signs digital certificates?",a:"Certificate Authority (CA)."},
+{q:"Which list does a CA publish to identify revoked certificates before expiration?",a:"Certificate Revocation List (CRL)."},
+{q:"Which technology lets a server prove certificate validity within the TLS handshake itself?",a:"OCSP Stapling (Online Certificate Status Protocol)."},
+{q:"Which network segment houses public-facing servers between the internet and internal network?",a:"DMZ / Screened Subnet."},
+{q:"Which technology logically segments a physical network into multiple broadcast domains at Layer 2?",a:"VLAN (Virtual Local Area Network)."},
+{q:"What concept describes complete physical isolation of a network from all other networks?",a:"Air Gap."},
+{q:"Which firewall type protects against application-layer attacks like SQL injection and XSS?",a:"WAF (Web Application Firewall)."},
+{q:"What is the key difference between IDS and IPS?",a:"IDS alerts on threats; IPS actively BLOCKS them inline."},
+{q:"Which VPN config routes only corporate traffic through the tunnel, sending internet traffic direct?",a:"Split Tunneling."},
+{q:"Which DNS record lists mail servers authorized to send email on behalf of a domain?",a:"SPF record (Sender Policy Framework)."},
+{q:"Which email standard uses digital signatures to verify a domain authorized the email?",a:"DKIM (DomainKeys Identified Mail)."},
+{q:"Which policy tells receiving servers how to handle emails failing SPF or DKIM checks?",a:"DMARC (Domain-based Message Authentication Reporting and Conformance)."},
+{q:"Which attack uses a botnet to overwhelm a service?",a:"DDoS (Distributed Denial of Service)."},
+{q:"Which attack positions an adversary between two parties to intercept communications?",a:"Man-in-the-Middle (MitM) / On-path attack."},
+{q:"Which exploit modifies a DNS server's cache to redirect users to a malicious IP?",a:"DNS Poisoning (DNS Cache Poisoning)."},
+{q:"Which attack inserts malicious code into input fields to manipulate a back-end database?",a:"SQL Injection (SQLi)."},
+{q:"Which vulnerability allows attackers to inject malicious scripts into pages viewed by other users?",a:"XSS (Cross-Site Scripting)."},
+{q:"Which security tool is a decoy system designed to attract and observe attackers?",a:"Honeypot."},
+{q:"Which solution provides centralized logging, real-time monitoring, and security event analysis?",a:"SIEM (Security Information and Event Management)."},
+{q:"Which technology lets a user log in once and access multiple independent systems?",a:"SSO (Single Sign-On)."},
+{q:"Which standard provides port-based network access control requiring auth before network access?",a:"IEEE 802.1X."},
+{q:"Which device provides a secure, controlled point of access into a protected network segment?",a:"Jump Server."},
+{q:"Which hardware device distributes incoming traffic across redundant servers?",a:"Load Balancer."},
+{q:"Which dedicated appliance is used for secure storage and management of cryptographic keys?",a:"HSM (Hardware Security Module)."},
+{q:"Which chip on a motherboard provides hardware-based cryptographic functions and secure key storage?",a:"TPM (Trusted Platform Module)."},
+{q:"Which solution monitors endpoints for malicious activity and provides automated response?",a:"EDR (Endpoint Detection and Response)."},
+{q:"Which technology identifies and prevents unauthorized transfer of sensitive data?",a:"DLP (Data Loss Prevention)."},
+{q:"Which security strategy assumes no device or user should be trusted by default?",a:"Zero Trust."},
+{q:"Which authorization model assigns permissions based on a user's organizational role?",a:"RBAC (Role-Based Access Control)."},
+{q:"What does 'supplicant' refer to in an 802.1X environment?",a:"The user device requesting network access (client-side component)."},
+{q:"Which attack tries every possible character combination to crack a password?",a:"Brute Force."},
+{q:"What is a mantrap in physical security?",a:"A physical airlock with two interlocking doors to prevent tailgating."},
+{q:"Which hashing algorithm is considered legacy due to its 128-bit output and known collisions?",a:"MD5 (Message Digest 5)."},
+{q:"Which metric defines the maximum time a system can be DOWN before business impact?",a:"RTO (Recovery Time Objective)."},
+{q:"Which metric defines the maximum data loss tolerable, measured in time?",a:"RPO (Recovery Point Objective)."},
+{q:"What is 'hardening' in security?",a:"Removing unnecessary software and disabling unused services to reduce attack surface."},
+{q:"Which scan type provides deeper analysis by logging in with valid credentials?",a:"Credentialed Scan."},
+{q:"What are the three primary MFA factors?",a:"Something you KNOW, something you HAVE, something you ARE."},
+{q:"Which protocol uses port 22 for secure remote terminal access?",a:"SSH (Secure Shell)."},
+{q:"Which protocol uses ports 1812 and 1813 for authentication and accounting?",a:"RADIUS (Remote Authentication Dial-In User Service)."},
+{q:"Which protocol uses port 49 and encrypts the ENTIRE communication payload?",a:"TACACS+ (Terminal Access Controller Access Control System Plus)."},
+{q:"What is the IR phase that comes BEFORE detection?",a:"Preparation — policies, tools, training, and IRP written before any incident."},
+{q:"What is root cause analysis in IR context?",a:"Identifying the fundamental reason the incident occurred — answering the WHY."},
+{q:"What is a legal hold in digital forensics?",a:"Preserving all relevant data and suspending deletion policies for legal proceedings."},
+{q:"What is chain of custody?",a:"Documentation tracking who handled evidence, when, and how — required for admissibility."},
+{q:"In risk management, what is SLE?",a:"Single Loss Expectancy = Asset Value × Exposure Factor."},
+{q:"In risk management, what is ALE?",a:"Annualized Loss Expectancy = SLE × ARO (Annualized Rate of Occurrence)."},
+{q:"Which recovery site has full hardware and real-time data replication for near-instant failover?",a:"Hot Site."},
+{q:"Which recovery site has only power and cooling — no pre-installed hardware?",a:"Cold Site."},
+{q:"What does GDPR require for breach notification to supervisory authorities?",a:"Within 72 hours of becoming aware of the personal data breach."},
+{q:"Which access control model assigns labels like Top Secret and Confidential?",a:"MAC (Mandatory Access Control)."},
+{q:"Which access control model lets the DATA OWNER set permissions?",a:"DAC (Discretionary Access Control)."},
+{q:"What is the difference between MTTR and MTBF?",a:"MTTR = average repair time after failure; MTBF = average time BETWEEN failures."},
+{q:"Which cloud model gives the consumer most control over OS and middleware?",a:"IaaS (Infrastructure as a Service)."},
+{q:"What is steganography?",a:"Hiding secret data within ordinary, non-secret files (e.g., hiding text inside an image)."},
+{q:"Which security concept describes limiting access to the MINIMUM necessary to perform a job?",a:"Principle of Least Privilege."},
+{q:"What is a honeytoken?",a:"A fake data artifact (fake credential/file) used to detect unauthorized access — triggers alert when used."}
+];
+var st,sN,du,po,co,to,fl,al;
+function ls(){try{var r=localStorage.getItem(SK);if(r)return JSON.parse(r);}catch(e){}var s={};C.forEach(function(_,i){s[i]={box:1};});return s;}
+function sv(){try{localStorage.setItem(SK,JSON.stringify(st));}catch(e){}}
+function gd(){var d=[];Object.keys(st).forEach(function(i){var b=st[i].box;if(b===5)return;if(b===1||sN%IV[b]===0)d.push(+i);});for(var i=d.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=d[i];d[i]=d[j];d[j]=t;}return d;}
+function el(id){return document.getElementById('fc-'+DK+'-'+id);}
+var BC=['','#D4788F','#c75e00','#4FC3F7','#6D60AD','#3fb950'];
+var BB=['','rgba(212,120,143,.15)','rgba(199,94,0,.15)','rgba(79,195,247,.12)','rgba(109,96,173,.15)','rgba(63,185,80,.15)'];
+function rn(){
+  if(po>=du.length){dn();return;}
+  var i=du[po],b=st[i].box;
+  el('q').textContent=C[i].q;el('a').textContent=C[i].a;
+  var bi=el('boxind');bi.textContent='Box '+b;bi.style.background=BB[b];bi.style.color=BC[b];bi.style.border='1px solid '+BC[b]+'66';
+  var c=el('card');if(c.classList.contains('flipped'))c.classList.remove('flipped');
+  fl=false;el('ansbtn').style.display='none';el('flipbtn').style.display='block';
+  el('counter').textContent='Card '+(po+1)+' of '+du.length;
+  el('fill').style.width=(po/du.length*100)+'%';us();
+}
+window.fcFlip=window.fcFlip||function(dk){if(dk!==DK)return;if(!fl){el('card').classList.add('flipped');fl=true;el('ansbtn').style.display='flex';el('flipbtn').style.display='none';playFlip();}};
+window.fcGrade=window.fcGrade||function(dk,g){if(dk!==DK)return;var i=du[po];to++;if(g!=='again')co++;if(g==='again')st[i].box=1;else if(g==='good')st[i].box=Math.min(st[i].box+1,5);else if(g==='easy')st[i].box=Math.min(st[i].box+2,5);sv();po++;rn();};
+window.fcSkip=window.fcSkip||function(dk){if(dk===DK){po++;rn();}};
+window.fcDue=window.fcDue||function(dk){if(dk!==DK)return;al=false;document.getElementById('fc-'+DK+'-btn-due').classList.add('active');document.getElementById('fc-'+DK+'-btn-all').classList.remove('active');window.fcRestart(dk);};
+window.fcAll=window.fcAll||function(dk){if(dk!==DK)return;al=true;document.getElementById('fc-'+DK+'-btn-all').classList.add('active');document.getElementById('fc-'+DK+'-btn-due').classList.remove('active');window.fcRestart(dk);};
+window.fcRestart=window.fcRestart||function(dk){if(dk!==DK)return;co=0;to=0;po=0;el('done').style.display='none';el('main').style.display='block';if(al){du=[...Array(C.length).keys()];for(var i=du.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=du[i];du[i]=du[j];du[j]=t;}}else du=gd();if(du.length===0){el('counter').textContent='All caught up!';el('card').style.display='none';el('flipbtn').style.display='none';el('empty').style.display='block';}else{el('card').style.display='block';el('flipbtn').style.display='block';el('empty').style.display='none';rn();}};
+window.fcResetAll=window.fcResetAll||function(dk){if(dk!==DK)return;if(!confirm('Reset all flashcard progress for this deck?'))return;try{localStorage.removeItem(SK);}catch(e){}sN=1;st=ls();al=false;document.getElementById('fc-'+DK+'-btn-due').classList.add('active');document.getElementById('fc-'+DK+'-btn-all').classList.remove('active');window.fcRestart(dk);};
+function dn(){el('main').style.display='none';el('done').style.display='block';var p=to>0?Math.round(co/to*100):0;el('score').textContent=p+'%';el('scoredet').textContent=co+' correct out of '+to+' answered';if(p>=80)playVictory();us();}
+function us(){var c=[0,0,0,0,0,0];Object.values(st).forEach(function(s){c[s.box]++;});el('total').textContent=C.length;el('learning').textContent=c[1]+c[2];el('reviewing').textContent=c[3]+c[4];el('mastered').textContent=c[5];for(var b=1;b<=5;b++){var e=document.getElementById('fc-'+DK+'-lb'+b);if(e)e.textContent=c[b];}}
+document.addEventListener('keydown',function(e){var m=el('main');if(!m||m.style.display==='none')return;if((e.key===' '||e.key==='f')&&!e.target.matches('input,textarea,button')){e.preventDefault();window.fcFlip(DK);}if(e.key==='1')window.fcGrade(DK,'again');if(e.key==='2')window.fcGrade(DK,'good');if(e.key==='3')window.fcGrade(DK,'easy');if(e.key==='s'&&!e.target.matches('input,textarea'))window.fcSkip(DK);});
+st=ls();sN=parseInt(localStorage.getItem(SK+'_s')||'0')+1;try{localStorage.setItem(SK+'_s',sN);}catch(e){}co=0;to=0;po=0;fl=false;al=false;du=gd();if(du.length===0)du=[...Array(C.length).keys()];rn();us();
+})();
+
+// ── 10-QUESTION QUIZ (answers distributed: B,B,D,C,C,B,D,D,C,C) ──
+(function(){
+var QS=[
+  {q:"Aang proves his identity using his bending ability (unique biometric), a sacred Air Nomad staff grip (physical token), AND a secret temple riddle answer. Which MFA factors are these, in order?",
+   ch:["Something you know, something you have, something you are","Something you are, something you have, something you know","Something you have, something you are, something you know","Something you are, something you know, something you have"],
+   ai:1,dom:"D1 – MFA Factors",
+   exp:"Bending ability = biometric (something you ARE). Staff grip = physical token (something you HAVE). Riddle answer = password (something you KNOW). Order in the question: ARE→HAVE→KNOW = answer B."},
+  {q:"Azula uses a fabricated identity story to trick a Dai Li agent into revealing his gate access code. Which social engineering technique is this?",
+   ch:["Phishing","Pretexting","Vishing","Watering hole"],
+   ai:1,dom:"D2 – Social Engineering",
+   exp:"Pretexting = creating a fabricated scenario (false pretext) to manipulate someone into giving up information. Phishing uses email links; Vishing uses phone calls. Azula told a story in person."},
+  {q:"A specialist Earthbender at Ba Sing Se's middle ring gate inspects every merchant's goods at Layer 7, looking for hidden weapons in the CONTENT of the cargo — not just who carries it. What firewall type does this represent?",
+   ch:["Stateful inspection firewall","Packet filter firewall","Web Application Firewall (WAF)","Next-Generation Firewall (NGFW)"],
+   ai:3,dom:"D3 – Firewall Types",
+   exp:"NGFW performs deep packet inspection at Layer 7 — examining application content, user identity, and behavior. WAF specifically protects web applications (HTTP/HTTPS). The specialist checks CONTENT across all traffic types, making NGFW the better match."},
+  {q:"Toph's seismic sense aggregates vibration data from across the entire earth, correlates unusual patterns, and fires real-time alerts to Team Avatar when anomalies are detected. This best maps to:",
+   ch:["IDS (Intrusion Detection System)","Firewall","SIEM (Security Information and Event Management)","DLP (Data Loss Prevention)"],
+   ai:2,dom:"D4 – Monitoring Tools",
+   exp:"SIEM = centralized log aggregation, correlation, and real-time alerting across the entire environment. IDS only detects at one point. Toph covers the whole earth (enterprise-wide) and correlates patterns — that's SIEM."},
+  {q:"Team Avatar assigns each bender a specific elemental role — Katara heals with water only, Toph bends earth only, Zuko bends fire only. Access is granted based on their role in the group, not their individual identity. Which access control model is this?",
+   ch:["MAC (Mandatory Access Control)","DAC (Discretionary Access Control)","RBAC (Role-Based Access Control)","ABAC (Attribute-Based Access Control)"],
+   ai:2,dom:"D1 – Access Control Models",
+   exp:"RBAC = permissions assigned to ROLES (healer, earthbender, firebender), not to individuals. Each person inherits the permissions of their role — Katara can't firebend because the Healer role doesn't have that permission."},
+  {q:"The four nations agree that Ba Sing Se will restore full border operations within 6 hours of any fire nation attack. This commitment maps to which recovery metric?",
+   ch:["RPO (Recovery Point Objective)","RTO (Recovery Time Objective)","MTBF (Mean Time Between Failures)","MTTR (Mean Time to Repair)"],
+   ai:1,dom:"D5 – Risk & Governance",
+   exp:"RTO = the maximum targeted time for a system to be DOWN after a failure before business impact occurs. The 6-hour restoration commitment is an RTO. RPO measures maximum acceptable DATA LOSS in time, not downtime."},
+  {q:"After Azula is contained, forensic analysis reveals a Dai Li agent's credentials were stolen via pretexting. The correct eradication steps are:",
+   ch:["Only defeat Azula — the threat leaves with her","Reset all Dai Li passwords and do nothing else","Revoke only the specific compromised credential and close the ticket","Defeat Azula, revoke all compromised credentials, patch the social engineering vulnerability with training, and audit all Dai Li access logs for persistence"],
+   ai:3,dom:"D4 – Incident Response",
+   exp:"Eradication = fully remove root cause AND any persistence. Defeating only Azula leaves backdoors open. Revoking one credential misses others potentially compromised. Full eradication = attacker out + root cause patched + environment confirmed clean."},
+  {q:"Iroh confirms a member's White Lotus membership by checking their current revocation status against a published list maintained by the Grandmaster CA. Which PKI mechanism is this?",
+   ch:["OCSP Stapling","Digital Signature verification","Key Escrow","Certificate Revocation List (CRL) check"],
+   ai:3,dom:"D1 – Cryptography & PKI",
+   exp:"A CRL (Certificate Revocation List) is a list published by a CA of certificates that have been revoked before their expiration date. Checking membership status against this list = CRL check. OCSP is real-time; CRL is a published periodic list."},
+  {q:"After defeating Ozai, Team Avatar closes the incident, repairs Ba Sing Se, and rotates all credentials. The FINAL mandatory step in the IR lifecycle is:",
+   ch:["File the incident report and archive it","Send breach notifications to all affected citizens","Conduct Lessons Learned: document root cause, update IR plan, implement targeted security training","Purchase better IDS sensors to prevent future attacks"],
+   ai:2,dom:"D4 – IR Lifecycle",
+   exp:"Lessons Learned is the mandatory final IR phase per NIST SP 800-61. Without it, the same incident recurs. Document: what happened, what worked, what failed, what to change. Then update the IRP and deliver targeted training on the specific attack vector used."},
+  {q:"The White Lotus Society requires ALL members — even known Grandmasters — to pass identity challenges before receiving access. There is no 'you're already trusted because you're inside.' Which security model is this?",
+   ch:["Defense in Depth","RBAC (Role-Based Access Control)","Zero Trust","Principle of Least Privilege"],
+   ai:2,dom:"D3 – Security Architecture",
+   exp:"Zero Trust = 'Never trust, always verify.' No implicit trust is granted based on prior relationship, location, or seniority. Every access request is authenticated and authorized regardless of who is asking or where they are."}
+];
+var cu=0,sc=0,an=false,missed=[];
+function rn(){
+  var q=QS[cu];
+  document.getElementById('quiz-meta').textContent='Question '+(cu+1)+' of '+QS.length;
+  var h='<p style="font-size:.87rem;font-weight:700;color:var(--text);margin-bottom:12px;line-height:1.5">'+q.q+'</p>';
+  var letters=['A','B','C','D'];
+  q.ch.forEach(function(c,i){h+='<button class="qz-c" id="qzc'+i+'" onclick="quizSel('+i+')"><span style="font-weight:800;min-width:18px;flex-shrink:0">'+letters[i]+'.</span><span>'+c+'</span></button>';});
+  if(q.exp)h+='<div class="qz-exp" id="qze">💡 '+q.exp+'</div>';
+  document.getElementById('quiz-body').innerHTML=h;
+  an=false;
+  document.getElementById('quiz-submit').style.display='none';
+  document.getElementById('quiz-next').style.display='none';
+  document.getElementById('quiz-restart').style.display='none';
+  document.getElementById('quiz-body').style.display='block';
+}
+window.quizSel=function(idx){
+  if(an)return;
+  document.querySelectorAll('.qz-c').forEach(function(b){b.style.borderColor='';});
+  var b=document.getElementById('qzc'+idx);if(b)b.style.borderColor='var(--accent)';
+  var sub=document.getElementById('quiz-submit');sub.style.display='inline-block';sub.dataset.sel=idx;
+};
+window.quizSubmit=function(){
+  if(an)return;
+  var idx=parseInt(document.getElementById('quiz-submit').dataset.sel);
+  if(isNaN(idx))return;
+  var q=QS[cu];an=true;
+  var ok=idx===q.ai;
+  if(ok){sc++;playCorrect();}else{missed.push(q.dom);playWrong();}
+  for(var i=0;i<q.ch.length;i++){
+    var b=document.getElementById('qzc'+i);if(!b)continue;
+    b.disabled=true;
+    if(i===q.ai)b.classList.add('qc');
+    else if(i===idx&&!ok)b.classList.add('qw');
+  }
+  var e=document.getElementById('qze');if(e)e.style.display='block';
+  document.getElementById('quiz-submit').style.display='none';
+  if(cu<QS.length-1)document.getElementById('quiz-next').style.display='inline-block';
+  else{document.getElementById('quiz-restart').style.display='inline-block';fin();}
+};
+window.quizNext=function(){cu++;rn();};
+window.quizRestart=function(){cu=0;sc=0;an=false;missed=[];document.getElementById('quiz-final').style.display='none';document.getElementById('quiz-body').style.display='block';document.getElementById('quiz-nav').style.display='flex';rn();};
+function fin(){
+  document.getElementById('quiz-body').style.display='none';
+  document.getElementById('quiz-nav').style.display='none';
+  document.getElementById('quiz-final').style.display='block';
+  var p=Math.round(sc/QS.length*100);
+  document.getElementById('quiz-score').textContent=p+'%';
+  document.getElementById('quiz-detail').textContent=sc+' of '+QS.length+' correct';
+  if(missed.length){
+    var m=document.getElementById('quiz-missed');m.style.display='block';
+    var h='<p style="font-weight:700;color:var(--text);margin-bottom:6px">📌 Topics to review:</p>';
+    var seen={};missed.forEach(function(d){if(!seen[d]){seen[d]=1;h+='<p style="margin-bottom:3px">• <strong style="color:var(--accent)">'+d+'</strong></p>';}});
+    m.innerHTML=h;
+  }
+  if(p===100){launchConfetti();playVictory();}
+}
+rn();
+})();
+</script>
+</body>
+</html>
