@@ -1,0 +1,2019 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🤖 Futurama – Security+ SY0-701 Study Hub</title>
+<style>
+/* ===== FUTURAMA COLOR PALETTE ===== */
+:root {
+  --pe-purple:    #6B21A8;
+  --pe-teal:      #0DA5CD;
+  --pe-red:       #F01428;
+  --pe-yellow:    #FFF064;
+  --pe-orange:    #F08D43;
+  --pe-green:     #64A050;
+  --pe-dark:      #0A0A1A;
+  --pe-panel:     #14142B;
+  --pe-mid:       #1E1E3F;
+  --pe-white:     #F0F0FF;
+  --pe-fry:       #FF6B00;
+  --pe-leela:     #9B59B6;
+  --pe-bender:    #C0C0C0;
+  --pe-prof:      #2ECC71;
+  --pe-hermes:    #F39C12;
+  --pe-zoidberg:  #E74C3C;
+  --text-on-dark: #F0F0FF;
+}
+
+/* ===== RESET & BASE ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: "Trebuchet MS", "Lucida Grande", sans-serif;
+  background: var(--pe-dark);
+  color: var(--pe-white);
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ===== FLOATING PARTICLES ===== */
+#particles {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+.particle {
+  position: absolute;
+  font-size: 20px;
+  opacity: 0.12;
+  animation: floatUp linear infinite;
+}
+@keyframes floatUp {
+  0%   { transform: translateY(100vh) rotate(0deg); opacity: 0.12; }
+  100% { transform: translateY(-120px) rotate(360deg); opacity: 0; }
+}
+
+/* ===== STICKY NAV ===== */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: var(--pe-panel);
+  border-bottom: 4px solid var(--pe-red);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  height: 56px;
+  box-shadow: 0 4px 0 var(--pe-teal);
+}
+.nav-left { display: flex; align-items: center; gap: 14px; }
+.nav-logo { font-size: 22px; }
+.nav-links { display: flex; align-items: center; gap: 8px; }
+.nav-links a {
+  color: var(--pe-yellow);
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 2px solid var(--pe-yellow);
+  transition: background .2s, color .2s;
+}
+.nav-links a:hover { background: var(--pe-yellow); color: var(--pe-dark); }
+.nav-dropdown { position: relative; }
+.nav-dropdown-btn {
+  background: var(--pe-teal);
+  color: var(--pe-dark);
+  border: 2px solid var(--pe-teal);
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 13px;
+  font-family: inherit;
+}
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  background: var(--pe-panel);
+  border: 3px solid var(--pe-teal);
+  border-radius: 10px;
+  min-width: 240px;
+  z-index: 999;
+  padding: 6px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+.nav-dropdown-menu a {
+  display: block;
+  color: var(--pe-white);
+  text-decoration: none;
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  transition: background .15s;
+}
+.nav-dropdown-menu a:hover { background: var(--pe-mid); }
+.nav-dropdown:hover .nav-dropdown-menu { display: block; }
+
+/* ===== CONTENT WRAPPER ===== */
+.content { position: relative; z-index: 1; }
+
+/* ===== SECTION WRAPPER ===== */
+.section {
+  max-width: 1100px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+}
+
+/* ===== HERO ===== */
+#hero {
+  background: var(--pe-panel);
+  border-bottom: 6px solid var(--pe-red);
+  padding: 50px 20px 40px;
+  text-align: center;
+}
+.hero-emoji-wrap {
+  width: 120px; height: 120px;
+  background: var(--pe-mid);
+  border: 6px solid var(--pe-teal);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 60px;
+  margin: 0 auto 20px;
+  box-shadow: 0 0 0 6px var(--pe-red), 0 0 30px rgba(13,165,205,0.5);
+  animation: pulse 3s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 6px var(--pe-red), 0 0 30px rgba(13,165,205,0.5); }
+  50%      { box-shadow: 0 0 0 6px var(--pe-yellow), 0 0 50px rgba(255,240,100,0.6); }
+}
+.hero-badge {
+  display: inline-block;
+  background: var(--pe-red);
+  color: var(--pe-yellow);
+  padding: 6px 18px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 13px;
+  letter-spacing: .5px;
+  margin-bottom: 14px;
+  border: 2px solid var(--pe-yellow);
+}
+#hero h1 {
+  font-size: clamp(26px, 5vw, 46px);
+  font-weight: 900;
+  color: var(--pe-yellow);
+  text-shadow: 3px 3px 0 var(--pe-red), 6px 6px 0 rgba(0,0,0,0.5);
+  margin-bottom: 12px;
+}
+#hero p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 16px;
+  color: #C0C8D8;
+  line-height: 1.6;
+}
+
+/* ===== JUMP BAR ===== */
+#jumpbar {
+  background: var(--pe-mid);
+  padding: 16px 20px;
+  border-bottom: 3px solid var(--pe-purple);
+  overflow-x: auto;
+  white-space: nowrap;
+  text-align: center;
+}
+.jump-btn {
+  display: inline-block;
+  background: var(--pe-panel);
+  color: var(--pe-teal);
+  border: 2px solid var(--pe-teal);
+  padding: 6px 12px;
+  border-radius: 8px;
+  margin: 4px 3px;
+  font-size: 12px;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background .2s, color .2s;
+  font-family: inherit;
+}
+.jump-btn:hover { background: var(--pe-teal); color: var(--pe-dark); }
+
+/* ===== GENERIC CARD ===== */
+.card {
+  background: var(--pe-mid);
+  border: 3px solid var(--pe-teal);
+  border-radius: 14px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.card h3 { color: var(--pe-yellow); font-size: 16px; margin-bottom: 8px; }
+.card p, .card li { color: #C0C8D8; font-size: 14px; line-height: 1.6; }
+.card ul { padding-left: 18px; }
+
+/* ===== SECTION HEADER ===== */
+.sec-header {
+  font-size: clamp(20px, 3vw, 28px);
+  font-weight: 900;
+  color: var(--pe-yellow);
+  text-shadow: 2px 2px 0 var(--pe-red);
+  margin-bottom: 6px;
+  padding-top: 40px;
+}
+.sec-sub {
+  color: var(--pe-teal);
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+.sec-divider {
+  height: 4px;
+  background: var(--pe-red);
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+
+/* ===== ACCORDION ===== */
+.accordion-btn {
+  width: 100%;
+  background: var(--pe-panel);
+  border: 3px solid var(--pe-teal);
+  border-radius: 10px;
+  color: var(--pe-yellow);
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 15px;
+  font-weight: 900;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+  transition: background .2s;
+}
+.accordion-btn:hover { background: var(--pe-mid); }
+.accordion-body {
+  display: none;
+  background: var(--pe-mid);
+  border: 2px solid var(--pe-teal);
+  border-radius: 0 0 10px 10px;
+  padding: 18px;
+  margin-top: -6px;
+  margin-bottom: 10px;
+}
+.accordion-body.open { display: block; }
+.accordion-body p, .accordion-body li { color: #C0C8D8; font-size: 14px; line-height: 1.65; }
+.accordion-body ul { padding-left: 18px; margin-top: 8px; }
+.accordion-body h4 { color: var(--pe-teal); margin: 12px 0 6px; font-size: 14px; }
+
+/* ===== TAGS ===== */
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  margin: 3px 3px 3px 0;
+}
+.tag-d1 { background: var(--pe-teal); color: var(--pe-dark); }
+.tag-d2 { background: var(--pe-red); color: #fff; }
+.tag-d3 { background: var(--pe-purple); color: #fff; }
+.tag-d4 { background: var(--pe-green); color: var(--pe-dark); }
+.tag-d5 { background: var(--pe-orange); color: var(--pe-dark); }
+
+/* ===== GRID ===== */
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 16px; }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 16px; }
+
+/* ===== CHARACTER CARDS ===== */
+.char-card {
+  border-radius: 14px;
+  padding: 18px;
+  border: 3px solid;
+}
+.char-fry   { border-color: var(--pe-fry); background: rgba(255,107,0,.08); }
+.char-leela { border-color: var(--pe-leela); background: rgba(155,89,182,.08); }
+.char-bender{ border-color: var(--pe-bender); background: rgba(192,192,192,.08); }
+.char-prof  { border-color: var(--pe-prof); background: rgba(46,204,113,.08); }
+.char-hermes{ border-color: var(--pe-hermes); background: rgba(243,156,18,.08); }
+.char-zoidberg{ border-color: var(--pe-zoidberg); background: rgba(231,76,60,.08); }
+.char-card .role-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 900;
+  margin-bottom: 8px;
+  background: var(--pe-panel);
+  color: var(--pe-yellow);
+  border: 2px solid var(--pe-yellow);
+}
+.char-name { font-weight: 900; font-size: 16px; margin-bottom: 4px; }
+.char-fry .char-name    { color: var(--pe-fry); }
+.char-leela .char-name  { color: var(--pe-leela); }
+.char-bender .char-name { color: var(--pe-bender); }
+.char-prof .char-name   { color: var(--pe-prof); }
+.char-hermes .char-name { color: var(--pe-hermes); }
+.char-zoidberg .char-name{ color: var(--pe-zoidberg); }
+.char-card p { color: #C0C8D8; font-size: 13px; line-height: 1.55; }
+
+/* ===== MINI QUIZ ===== */
+.mini-quiz { background: var(--pe-panel); border: 2px solid var(--pe-purple); border-radius: 10px; padding: 14px; margin-top: 14px; }
+.mini-quiz p { color: var(--pe-yellow); font-weight: 800; font-size: 14px; margin-bottom: 10px; }
+.mini-opt {
+  display: block;
+  width: 100%;
+  background: var(--pe-mid);
+  border: 2px solid #555;
+  color: var(--pe-white);
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: 13px;
+  margin-bottom: 6px;
+  transition: background .15s, border-color .15s;
+}
+.mini-opt:hover:not(:disabled) { background: rgba(13,165,205,.2); border-color: var(--pe-teal); }
+.mini-opt.correct  { background: rgba(46,204,113,.25); border-color: var(--pe-prof); color: #2ECC71; }
+.mini-opt.wrong    { background: rgba(240,20,40,.2); border-color: var(--pe-red); color: var(--pe-red); }
+.mini-feedback     { font-size: 13px; margin-top: 8px; font-weight: 700; }
+.mini-reset { margin-top: 8px; background: var(--pe-panel); border: 2px solid var(--pe-orange); color: var(--pe-orange); padding: 5px 14px; border-radius: 8px; cursor: pointer; font-family: inherit; font-weight: 800; font-size: 13px; }
+.mini-reset:hover { background: var(--pe-orange); color: var(--pe-dark); }
+
+/* ===== IR PHASE CARDS ===== */
+.ir-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px,1fr)); gap: 14px; }
+.ir-card {
+  background: var(--pe-panel);
+  border: 3px solid var(--pe-teal);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+.ir-card .ir-num { font-size: 30px; margin-bottom: 6px; }
+.ir-card h4 { color: var(--pe-yellow); font-size: 13px; font-weight: 900; margin-bottom: 6px; }
+.ir-card p { color: #9DB; font-size: 12px; line-height: 1.5; }
+.ir-tag { display: block; background: var(--pe-red); color: #fff; font-size: 10px; padding: 2px 8px; border-radius: 999px; margin-top: 8px; font-weight: 800; }
+
+/* ===== ADVENTURE ===== */
+#adventure-box { background: var(--pe-panel); border: 4px solid var(--pe-yellow); border-radius: 16px; padding: 24px; }
+.adv-scene { display: none; }
+.adv-scene.active { display: block; }
+.adv-scene h3 { color: var(--pe-yellow); font-size: 18px; font-weight: 900; margin-bottom: 10px; }
+.adv-scene p  { color: #C0C8D8; font-size: 14px; line-height: 1.6; margin-bottom: 14px; }
+.adv-btn {
+  display: block;
+  width: 100%;
+  background: var(--pe-mid);
+  border: 2px solid var(--pe-teal);
+  color: var(--pe-white);
+  padding: 10px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  transition: background .15s;
+}
+.adv-btn:hover:not(:disabled) { background: rgba(13,165,205,.2); }
+.adv-wrong-msg { color: var(--pe-red); font-weight: 800; font-size: 14px; margin-top: 8px; display: none; }
+.adv-finale { display: none; text-align: center; padding: 16px 0; }
+.adv-finale h3 { color: var(--pe-yellow); font-size: 22px; font-weight: 900; margin-bottom: 10px; }
+.adv-finale p { color: #C0C8D8; }
+.adv-finale .phases-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px; }
+.adv-finale .phase-tag { background: var(--pe-teal); color: var(--pe-dark); padding: 4px 14px; border-radius: 999px; font-weight: 900; font-size: 12px; }
+
+/* ===== STUDY LINKS ===== */
+.link-card {
+  background: var(--pe-mid);
+  border: 3px solid var(--pe-purple);
+  border-radius: 14px;
+  padding: 18px;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  transition: border-color .2s, transform .2s;
+}
+.link-card:hover { border-color: var(--pe-yellow); transform: translateY(-3px); }
+.link-card .link-icon { font-size: 30px; margin-bottom: 8px; }
+.link-card h4 { color: var(--pe-yellow); font-size: 14px; font-weight: 900; margin-bottom: 4px; }
+.link-card p { color: #9DB; font-size: 12px; }
+
+/* ===== FLASHCARD ===== */
+#flashcard-deck {
+  background: var(--pe-panel);
+  border: 4px solid var(--pe-teal);
+  border-radius: 16px;
+  padding: 24px;
+}
+.fc-card {
+  background: var(--pe-mid);
+  border: 3px solid var(--pe-purple);
+  border-radius: 12px;
+  padding: 22px;
+  min-height: 160px;
+  cursor: pointer;
+  transition: transform .2s;
+  position: relative;
+}
+.fc-card:hover { transform: scale(1.01); }
+.fc-front { display: block; }
+.fc-back  { display: none; border-top: 2px dashed rgba(255,255,255,.2); margin-top: 12px; padding-top: 12px; }
+.fc-card.flipped .fc-back { display: block; }
+.fc-q { color: var(--pe-yellow); font-weight: 900; font-size: 15px; margin-bottom: 6px; }
+.fc-a { color: #C0C8D8; font-size: 14px; line-height: 1.6; white-space: pre-line; }
+.fc-domain-tag { font-size: 11px; font-weight: 800; color: var(--pe-teal); margin-bottom: 8px; }
+.fc-controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+.fc-btn {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: none;
+  cursor: pointer;
+  font-weight: 900;
+  font-family: inherit;
+  font-size: 13px;
+  transition: opacity .2s;
+}
+.fc-btn:hover { opacity: .85; }
+.btn-flip   { background: var(--pe-yellow); color: var(--pe-dark); }
+.btn-again  { background: var(--pe-red); color: #fff; }
+.btn-gotit  { background: var(--pe-teal); color: var(--pe-dark); }
+.btn-easy   { background: var(--pe-green); color: var(--pe-dark); }
+.btn-skip   { background: var(--pe-panel); color: #aaa; border: 2px solid #555; }
+.fc-info    { margin-top: 12px; font-size: 13px; color: #8899AA; }
+.box-bars   { display: flex; gap: 8px; margin-top: 10px; }
+.box-bar    { background: var(--pe-panel); border: 2px solid; border-radius: 6px; padding: 4px 12px; font-size: 12px; font-weight: 800; }
+.box-bar.b1 { border-color: var(--pe-red);    color: var(--pe-red); }
+.box-bar.b2 { border-color: var(--pe-teal);   color: var(--pe-teal); }
+.box-bar.b3 { border-color: var(--pe-green);  color: var(--pe-green); }
+.box-bar.b4 { border-color: var(--pe-yellow); color: var(--pe-yellow); }
+.box-bar.b5 { border-color: var(--pe-purple); color: var(--pe-purple); }
+.fc-shortcuts { font-size: 12px; color: #667; margin-top: 8px; }
+
+/* ===== FINAL QUIZ ===== */
+#quiz-box { background: var(--pe-panel); border: 4px solid var(--pe-orange); border-radius: 16px; padding: 24px; }
+.quiz-q { font-size: 15px; font-weight: 900; color: var(--pe-yellow); margin-bottom: 14px; }
+.quiz-opt {
+  display: block;
+  width: 100%;
+  background: var(--pe-mid);
+  border: 2px solid #444;
+  color: var(--pe-white);
+  padding: 10px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: 14px;
+  margin-bottom: 8px;
+  transition: background .15s, border-color .15s;
+}
+.quiz-opt:hover:not(:disabled) { background: rgba(240,141,67,.2); border-color: var(--pe-orange); }
+.quiz-opt.q-correct { background: rgba(46,204,113,.2); border-color: var(--pe-green); color: var(--pe-green); }
+.quiz-opt.q-wrong   { background: rgba(240,20,40,.15); border-color: var(--pe-red); color: var(--pe-red); }
+.quiz-progress { height: 8px; background: var(--pe-mid); border-radius: 4px; margin-bottom: 20px; overflow: hidden; }
+.quiz-progress-fill { height: 100%; background: var(--pe-teal); border-radius: 4px; transition: width .3s; }
+.quiz-result { display: none; text-align: center; padding: 16px 0; }
+.quiz-result h3 { font-size: 24px; font-weight: 900; color: var(--pe-yellow); margin-bottom: 10px; }
+.quiz-result p { color: #C0C8D8; font-size: 14px; line-height: 1.7; }
+.quiz-reset-btn {
+  margin-top: 16px;
+  background: var(--pe-orange);
+  color: var(--pe-dark);
+  border: none;
+  padding: 10px 24px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+.quiz-reset-btn:hover { background: var(--pe-yellow); }
+.quiz-nav { margin-top: 14px; display: flex; justify-content: flex-end; }
+.quiz-next-btn {
+  background: var(--pe-teal);
+  color: var(--pe-dark);
+  border: none;
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  display: none;
+}
+.quiz-next-btn:hover { background: var(--pe-yellow); }
+
+/* ===== NOTE CARDS ===== */
+.note-card {
+  background: var(--pe-mid);
+  border-left: 6px solid var(--pe-teal);
+  border-radius: 0 12px 12px 0;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.note-card h4 { color: var(--pe-yellow); font-weight: 900; margin-bottom: 6px; }
+.note-card p, .note-card li { color: #C0C8D8; font-size: 14px; line-height: 1.6; }
+.note-card ul { padding-left: 16px; }
+
+/* ===== SLURM COMMERCIAL ===== */
+#slurm-modal, #hypno-modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  background: rgba(0,0,0,.85);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+#slurm-modal.show, #hypno-modal.show { display: flex; }
+.slurm-box {
+  background: #00CC44;
+  border: 8px solid #FF6600;
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 440px;
+  text-align: center;
+  animation: slurmPop .4s cubic-bezier(.25,1.5,.5,1);
+  box-shadow: 0 0 60px #00FF66;
+}
+@keyframes slurmPop {
+  0%   { transform: scale(0.5) rotate(-8deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.slurm-logo { font-size: 60px; margin-bottom: 10px; }
+.slurm-box h2 { color: #FFFFFF; font-size: 26px; font-weight: 900; text-shadow: 3px 3px 0 #006600; margin-bottom: 8px; }
+.slurm-box p { color: #003300; font-size: 15px; font-weight: 700; line-height: 1.5; margin-bottom: 16px; }
+.slurm-close {
+  background: #FF6600;
+  color: #fff;
+  border: 3px solid #fff;
+  padding: 10px 28px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+}
+.slurm-close:hover { background: #FF9900; }
+.slurm-fine { font-size: 10px !important; color: #005500 !important; margin-top: 10px !important; }
+
+/* ===== HYPNOTOAD ===== */
+.hypno-box {
+  background: #0A0A0A;
+  border: 8px solid;
+  border-image: linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00) 1;
+  border-radius: 20px;
+  padding: 32px;
+  max-width: 420px;
+  text-align: center;
+  animation: hypnoAppear .5s ease;
+}
+@keyframes hypnoAppear {
+  0%   { transform: scale(2); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.hypno-eyes {
+  font-size: 80px;
+  animation: hypnoSpin 1s linear infinite;
+  display: block;
+  margin-bottom: 10px;
+}
+@keyframes hypnoSpin {
+  0%   { filter: hue-rotate(0deg) saturate(3); }
+  100% { filter: hue-rotate(360deg) saturate(3); }
+}
+.hypno-box h2 { color: #FFFF00; font-size: 22px; font-weight: 900; text-shadow: 0 0 20px #FF00FF; margin-bottom: 10px; }
+.hypno-box p { color: #00FF00; font-size: 14px; line-height: 1.6; font-weight: 700; margin-bottom: 16px; }
+.hypno-close {
+  background: linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-family: inherit;
+  font-size: 15px;
+  cursor: pointer;
+  animation: rainbowBtn 2s linear infinite;
+}
+@keyframes rainbowBtn {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+/* ===== EASTER EGG TRIGGER ===== */
+.egg-trigger {
+  display: inline-block;
+  cursor: pointer;
+  color: var(--pe-green);
+  font-weight: 900;
+  font-size: 11px;
+  border: 1px dashed var(--pe-green);
+  border-radius: 4px;
+  padding: 1px 6px;
+  margin-left: 6px;
+  opacity: .6;
+  transition: opacity .2s;
+}
+.egg-trigger:hover { opacity: 1; }
+
+/* ===== SOUND TOGGLE ===== */
+#sound-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2000;
+  background: var(--pe-panel);
+  border: 3px solid var(--pe-teal);
+  color: var(--pe-teal);
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+  transition: background .2s;
+  font-family: inherit;
+}
+#sound-toggle:hover { background: var(--pe-mid); }
+
+/* ===== FOOTER ===== */
+footer {
+  background: var(--pe-panel);
+  border-top: 4px solid var(--pe-red);
+  padding: 28px 20px;
+  text-align: center;
+  color: #778;
+  font-size: 13px;
+}
+footer a { color: var(--pe-teal); text-decoration: none; font-weight: 700; }
+footer a:hover { color: var(--pe-yellow); }
+footer p { margin-bottom: 6px; }
+
+/* ===== CONFETTI ===== */
+.confetti-piece {
+  position: fixed;
+  width: 10px; height: 10px;
+  top: -20px;
+  pointer-events: none;
+  z-index: 9999;
+  border-radius: 2px;
+  animation: confettiFall 3s ease-in forwards;
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  nav { flex-wrap: wrap; height: auto; padding: 8px 14px; gap: 6px; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .ir-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* ===== ROLES TABLE ===== */
+.roles-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 14px; }
+.role-card {
+  background: var(--pe-mid);
+  border: 3px solid var(--pe-orange);
+  border-radius: 12px;
+  padding: 16px;
+}
+.role-card h4 { color: var(--pe-orange); font-weight: 900; margin-bottom: 4px; }
+.role-card p  { color: #C0C8D8; font-size: 13px; line-height: 1.55; }
+
+/* ===== REPORTING TABLE ===== */
+.rep-table { width: 100%; border-collapse: collapse; }
+.rep-table th { background: var(--pe-red); color: #fff; padding: 10px 14px; text-align: left; font-size: 13px; }
+.rep-table td { border: 2px solid var(--pe-mid); background: var(--pe-panel); padding: 9px 14px; color: #C0C8D8; font-size: 13px; }
+.rep-table tr:nth-child(even) td { background: var(--pe-mid); }
+
+/* ===== SLURM BREAK BANNER (inline) ===== */
+.slurm-break {
+  background: #00AA33;
+  border: 5px solid #FF6600;
+  border-radius: 12px;
+  padding: 16px 20px;
+  text-align: center;
+  margin: 32px auto;
+  max-width: 700px;
+  cursor: pointer;
+  transition: transform .2s;
+}
+.slurm-break:hover { transform: scale(1.02); }
+.slurm-break p { color: #003300; font-weight: 900; font-size: 15px; }
+.slurm-break span { color: #FFFFFF; font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- SLURM MODAL (Easter Egg 1) -->
+<div id="slurm-modal" role="dialog" aria-label="Slurm Commercial">
+  <div class="slurm-box">
+    <div class="slurm-logo">🥤</div>
+    <h2>We'll Be Right Back After This Message From Slurm!</h2>
+    <p>⚡ SLURM — It's Highly Addictive! ⚡<br><br>
+    "Slurm: The Gelatinous, Neon-Green Beverage from Wormulon That's Sweeping the Galaxy!<br>
+    As seen on the Slurm Factory Tour — 100% natural*!"</p>
+    <button class="slurm-close" onclick="closeSlurm()">BACK TO STUDYING! (Slurm helped™)</button>
+    <p class="slurm-fine">*The Slurm company is not responsible for addiction, hypnotic suggestion, or knowledge retention. Slurm is NOT made from Slurm worm secretions. Please do not investigate this claim. Side effects include acing Security+ and craving more Slurm.</p>
+  </div>
+</div>
+
+<!-- HYPNOTOAD MODAL (Easter Egg 2) -->
+<div id="hypno-modal" role="dialog" aria-label="Hypnotoad Break">
+  <div class="hypno-box">
+    <span class="hypno-eyes">🐸</span>
+    <h2>ALL GLORY TO THE HYPNOTOAD</h2>
+    <p>You have been blessed by the Hypnotoad.<br><br>
+    The Hypnotoad commands you to:<br>
+    ✅ Study Security+ concepts<br>
+    ✅ Remember all five domains<br>
+    ✅ Pass the SY0-701 exam<br><br>
+    <em>"Everybody Loves Hypnotoad" — Wednesdays on Omicron Persei 8 Broadcasting Corp.</em><br><br>
+    <small style="color:#888">[LOUD BUZZING NOISE INTENSIFIES]</small>
+    </p>
+    <button class="hypno-close" onclick="closeHypno()">I OBEY — BACK TO STUDYING</button>
+  </div>
+</div>
+
+<!-- SOUND TOGGLE -->
+<button id="sound-toggle" onclick="toggleSound()" title="Toggle Sound">🔇</button>
+
+<!-- ===== STICKY NAV ===== -->
+<nav>
+  <div class="nav-left">
+    <span class="nav-logo">🤖</span>
+    <div class="nav-links">
+      <a href="https://charleneluequee.github.io/" target="_blank">Portfolio</a>
+      <a href="security-notes.html">Study Hub</a>
+    </div>
+  </div>
+  <div class="nav-dropdown">
+    <button class="nav-dropdown-btn">📺 All Cartoons ▾</button>
+    <div class="nav-dropdown-menu">
+      <a href="cartoon-spongebob.html">🧽 SpongeBob SquarePants</a>
+      <a href="cartoon-ben10.html">⌚ Ben 10</a>
+      <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+      <a href="cartoon-avatar.html">🌊 Avatar: The Last Airbender</a>
+      <a href="cartoon-knd.html">🔢 Codename: Kids Next Door</a>
+      <a href="cartoon-xmen.html">⚡ X-Men '97</a>
+      <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+      <a href="cartoon-futurama.html">🤖 Futurama</a>
+      <a href="cartoon-danny.html">👻 Danny Phantom</a>
+      <a href="cartoon-fairyodd.html">🌟 The Fairly OddParents</a>
+      <a href="cartoon-magicbus.html">🚌 The Magic School Bus</a>
+      <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+      <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+      <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+      <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<div id="hero">
+  <div class="hero-emoji-wrap">🤖</div>
+  <div class="hero-badge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <h1>Futurama Security+ Study Hub</h1>
+  <p>Good news, everyone! Planet Express has been contracted to deliver the CompTIA Security+ certification to the year 3000 and beyond. Join Fry, Leela, Bender, and the crew as they navigate threats, vulnerabilities, cryptography, and compliance across the galaxy. Your Exam is in Danger!</p>
+</div>
+
+<!-- ===== JUMP BAR ===== -->
+<div id="jumpbar">
+  <a href="#topics" class="jump-btn">📚 Topics</a>
+  <a href="#study-guide" class="jump-btn">🧠 Study Guide</a>
+  <a href="#characters" class="jump-btn">👥 Characters</a>
+  <a href="#analogies" class="jump-btn">🔗 Analogies</a>
+  <a href="#study-notes" class="jump-btn">📝 Notes</a>
+  <a href="#ir-lifecycle" class="jump-btn">🚨 IR Lifecycle</a>
+  <a href="#detection" class="jump-btn">🔍 Detection</a>
+  <a href="#roles" class="jump-btn">🎭 Roles</a>
+  <a href="#reporting" class="jump-btn">📋 Reporting</a>
+  <a href="#post-incident" class="jump-btn">📊 Post-IR</a>
+  <a href="#adventure" class="jump-btn">🚀 Adventure</a>
+  <a href="#links" class="jump-btn">🔗 Links</a>
+  <a href="#flashcards" class="jump-btn">🃏 Flashcards</a>
+  <a href="#quiz" class="jump-btn">🎯 Quiz</a>
+</div>
+
+<div class="content">
+
+<!-- ===== SECTION 4: TOPICS COVERED ===== -->
+<div class="section" id="topics">
+  <h2 class="sec-header">📚 Topics Covered — All 5 Domains</h2>
+  <p class="sec-sub">Collapse/expand each domain. Futurama characters guide you through every objective.</p>
+  <div class="sec-divider"></div>
+
+  <button class="accordion-btn" onclick="toggleAcc(this)">
+    <span>🤖 Domain 1 — General Security Concepts <span class="tag tag-d1">D1</span></span><span>▾</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>Fry's Guide to Fundamentals:</strong> Even a 20th century delivery boy can learn these!</p>
+    <ul>
+      <li>CIA Triad: Confidentiality, Integrity, Availability</li>
+      <li>Non-repudiation — Can't deny you pressed the launch button</li>
+      <li>Security Controls: Preventive, Detective, Corrective, Deterrent, Compensating</li>
+      <li>Control Types: Managerial, Operational, Technical</li>
+      <li>Least Privilege — Only Leela pilots the ship</li>
+      <li>Separation of Duties — Hermes AND the Professor must approve experiments</li>
+      <li>Defense in Depth — Multiple layers from hangar to cockpit</li>
+      <li>Zero Trust — Even crew members need to re-verify</li>
+      <li>Gap Analysis, Change Management, Supply Chain Risk</li>
+      <li>Cryptographic concepts: hashing, salting, symmetric vs asymmetric</li>
+      <li>PKI, certificates, CA hierarchy, CRL, OCSP</li>
+    </ul>
+    <div style="margin-top:10px;">
+      <span class="tag tag-d1">1.1 Controls</span>
+      <span class="tag tag-d1">1.2 Cryptography</span>
+      <span class="tag tag-d1">1.3 Authentication</span>
+      <span class="tag tag-d1">1.4 Authorization</span>
+    </div>
+  </div>
+
+  <button class="accordion-btn" onclick="toggleAcc(this)">
+    <span>💥 Domain 2 — Threats, Vulnerabilities & Mitigations <span class="tag tag-d2">D2</span></span><span>▾</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>Bender's Threat Handbook:</strong> Bender embodies the insider threat so you understand them all.</p>
+    <ul>
+      <li>Threat actors: Nation-state, criminal, hacktivist, insider, script kiddie</li>
+      <li>Social engineering: Phishing, vishing, smishing, spear phishing, whaling</li>
+      <li>Malware: Ransomware, worms, trojans, RATs, rootkits, spyware</li>
+      <li>Application attacks: SQLi, XSS, CSRF, buffer overflow, injection</li>
+      <li>Network attacks: DDoS, MitM, DNS poisoning, VLAN hopping</li>
+      <li>Vulnerability scanning, CVSS scoring, zero-day, CVE</li>
+      <li>Physical attacks: Tailgating, shoulder surfing, dumpster diving</li>
+    </ul>
+    <div style="margin-top:10px;">
+      <span class="tag tag-d2">2.1 Threat Actors</span>
+      <span class="tag tag-d2">2.2 Vectors</span>
+      <span class="tag tag-d2">2.3 Vulnerabilities</span>
+      <span class="tag tag-d2">2.4 Mitigations</span>
+    </div>
+  </div>
+
+  <button class="accordion-btn" onclick="toggleAcc(this)">
+    <span>🔧 Domain 3 — Security Architecture <span class="tag tag-d3">D3</span></span><span>▾</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>Professor Farnsworth's Design Lab:</strong> "Good news, everyone — this architecture is secure (mostly)!"</p>
+    <ul>
+      <li>Cloud models: IaaS (Hangar), PaaS (Slurm Factory), SaaS (Holoshed)</li>
+      <li>Shared responsibility model</li>
+      <li>Network segmentation, DMZ, screened subnet</li>
+      <li>VLANs, SD-WAN, SASE, Zero Trust Architecture</li>
+      <li>Secure design principles: Fail secure, least functionality, isolation</li>
+      <li>On-prem vs cloud vs hybrid</li>
+      <li>Load balancers, HSMs, TPMs, jump servers</li>
+      <li>Containerization, microservices, serverless</li>
+      <li>Data protection: encryption at rest, in transit, in use</li>
+    </ul>
+    <div style="margin-top:10px;">
+      <span class="tag tag-d3">3.1 Architecture Models</span>
+      <span class="tag tag-d3">3.2 Infrastructure</span>
+      <span class="tag tag-d3">3.3 Data Protection</span>
+    </div>
+  </div>
+
+  <button class="accordion-btn" onclick="toggleAcc(this)">
+    <span>🛰️ Domain 4 — Security Operations <span class="tag tag-d4">D4</span></span><span>▾</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>Leela's Ops Command Center:</strong> One-eyed vision sees all threats clearly.</p>
+    <ul>
+      <li>Identity & Access Management: MFA, SSO, PAM, directory services</li>
+      <li>802.1X, RADIUS, TACACS+, LDAP/LDAPS</li>
+      <li>Endpoint security: EDR, DLP, patch management, hardening</li>
+      <li>Monitoring: SIEM, log management, SOAR, NetFlow</li>
+      <li>Incident Response: Preparation, Detection, Containment, Eradication, Recovery, Lessons Learned</li>
+      <li>Digital forensics: chain of custody, evidence collection</li>
+      <li>Penetration testing phases: Reconnaissance, scanning, exploitation, reporting</li>
+      <li>Honeypots, deception technologies</li>
+      <li>Vulnerability management lifecycle</li>
+    </ul>
+    <div style="margin-top:10px;">
+      <span class="tag tag-d4">4.1 Identity & Access</span>
+      <span class="tag tag-d4">4.4 Monitoring</span>
+      <span class="tag tag-d4">4.8 Incident Response</span>
+      <span class="tag tag-d4">4.9 Forensics</span>
+    </div>
+  </div>
+
+  <button class="accordion-btn" onclick="toggleAcc(this)">
+    <span>📋 Domain 5 — Governance, Risk & Compliance <span class="tag tag-d5">D5</span></span><span>▾</span>
+  </button>
+  <div class="accordion-body">
+    <p><strong>Hermes Conrad's Compliance Bureau:</strong> "Sweet three-toed sloth of Ice Planet 10, fill out the form!"</p>
+    <ul>
+      <li>Governance: Policies, standards, procedures, guidelines</li>
+      <li>Risk management: Risk tolerance, appetite, transfer, avoidance, mitigation</li>
+      <li>Frameworks: NIST CSF, ISO 27001, SOC 2, PCI-DSS, HIPAA, GDPR</li>
+      <li>Data roles: Owner, custodian, processor, controller, DPO</li>
+      <li>BCP/DR: RTO, RPO, MTTR, MTBF, BIA</li>
+      <li>Privacy concepts: PII, PHI, data classification</li>
+      <li>Third-party risk: vendor assessment, supply chain</li>
+      <li>Audits, assessments, attestations</li>
+    </ul>
+    <div style="margin-top:10px;">
+      <span class="tag tag-d5">5.1 Governance</span>
+      <span class="tag tag-d5">5.2 Risk</span>
+      <span class="tag tag-d5">5.3 Compliance</span>
+      <span class="tag tag-d5">5.4 Privacy</span>
+    </div>
+  </div>
+</div>
+
+<!-- SLURM BREAK BANNER -->
+<div class="slurm-break" onclick="openSlurm()" title="Click for a word from our sponsors!">
+  <div style="font-size:28px;margin-bottom:6px;">🥤🥤🥤</div>
+  <p>⚡ WE'LL BE RIGHT BACK AFTER A MESSAGE FROM SLURM! ⚡</p>
+  <span>Click to watch the commercial! (Easter Egg #1)</span>
+</div>
+
+<!-- ===== SECTION 5: DOMAIN STUDY GUIDE (Mnemonics) ===== -->
+<div class="section" id="study-guide">
+  <h2 class="sec-header">🧠 Domain Study Guide — Mnemonics</h2>
+  <p class="sec-sub">Each domain gets a Futurama mnemonic. Expand one at a time.</p>
+  <div class="sec-divider"></div>
+
+  <!-- D1 -->
+  <button class="accordion-btn acc-mnemonic" onclick="toggleMnemonic(this)">
+    <span>🤖 D1 — General Security Concepts: <strong style="color:var(--pe-teal)">FRY'S CIA</strong></span><span>▾</span>
+  </button>
+  <div class="accordion-body mnemonic-body">
+    <h4>F — Fundamental Controls (Preventive, Detective, Corrective)</h4>
+    <ul><li>Preventive: Firewall stops the robot army at the hangar door</li><li>Detective: IDS spots Bender sneaking out with stolen goods</li><li>Corrective: Patch the hull breach after the space worm attack</li></ul>
+    <h4>R — Risk-Reducing Authentication (MFA)</h4>
+    <ul><li>Something you know: Your locker combo at Planet Express</li><li>Something you have: The ship's access card</li><li>Something you are: Leela's iris scan (hard to fake with one eye)</li></ul>
+    <h4>Y — Your Cryptography Toolkit</h4>
+    <ul><li>Symmetric (AES): One key, fast — like the ship's master key</li><li>Asymmetric (RSA/ECC): Public/private pair — like DOOP's secure mailbox</li><li>Hashing (SHA-256): One-way fingerprint — like Hermes' tamper-proof stamps</li></ul>
+    <h4>C — Confidentiality</h4>
+    <ul><li>Keeping delivery routes from Omicron Persei 8 spies</li><li>Encryption, access controls, data classification</li></ul>
+    <h4>I — Integrity</h4>
+    <ul><li>Ensuring Bender can't alter cargo manifests</li><li>Hashing, digital signatures, version control</li></ul>
+    <h4>A — Availability</h4>
+    <ul><li>The ship must fly when the delivery needs to launch</li><li>Redundancy, backups, failover, load balancing</li></ul>
+    <div class="mini-quiz" id="mq1">
+      <p>🤖 Q: Which control prevents an attack before it occurs?</p>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq1',false)">A) Detective</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq1',true)">B) Preventive</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq1',false)">C) Corrective</button>
+      <div class="mini-feedback" id="mq1-fb"></div>
+      <button class="mini-reset" onclick="resetMiniQuiz('mq1')">↩ Retake</button>
+    </div>
+  </div>
+
+  <!-- D2 -->
+  <button class="accordion-btn acc-mnemonic" onclick="toggleMnemonic(this)">
+    <span>💥 D2 — Threats & Mitigations: <strong style="color:var(--pe-red)">BENDER STEALS</strong></span><span>▾</span>
+  </button>
+  <div class="accordion-body mnemonic-body">
+    <h4>B — Bad Actors (Threat Actors)</h4>
+    <ul><li>Nation-state: The Brain Slugs of Omicron Persei 8</li><li>Insider: Bender altering delivery logs for fun and profit</li><li>Script kiddie: Fry trying to "hack" using instructions he found in a 3000-year-old forum post</li></ul>
+    <h4>E — Engineering Socially (Social Engineering)</h4>
+    <ul><li>Phishing: Fake DOOP emails asking for credentials</li><li>Vishing: Voice call pretending to be Zapp Brannigan (hard to tell the difference)</li><li>Pretexting: Bender pretending to be a robot inspector</li></ul>
+    <h4>N — Network Attacks</h4>
+    <ul><li>DDoS: Robot Army overwhelming Planet Express comms</li><li>MitM: Intercepting deliveries mid-flight between solar systems</li><li>DNS Poisoning: Redirecting the ship to the wrong planet</li></ul>
+    <h4>D — Dangerous Code (Malware)</h4>
+    <ul><li>Ransomware: Holding the Professor's invention data hostage</li><li>Rootkit: Hidden robot spy embedded in ship firmware</li><li>Worm: Self-replicating code spreading through the Earthican internet</li></ul>
+    <h4>E — Exploits & Vulnerabilities</h4>
+    <ul><li>Zero-day: Unknown flaw in the ship's navigation AI</li><li>CVSS: How dangerous is that brain slug, really? (Score it!)</li><li>CVE: The official catalog of known space-bug exploits</li></ul>
+    <h4>R — Risk Mitigations</h4>
+    <ul><li>Patch management, hardening, network segmentation</li><li>Security awareness training for Fry (mandatory, annually)</li></ul>
+    <div class="mini-quiz" id="mq2">
+      <p>💥 Q: What type of attack involves deceiving users via fake emails?</p>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq2',false)">A) DDoS</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq2',false)">B) Rootkit</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq2',true)">C) Phishing</button>
+      <div class="mini-feedback" id="mq2-fb"></div>
+      <button class="mini-reset" onclick="resetMiniQuiz('mq2')">↩ Retake</button>
+    </div>
+  </div>
+
+  <!-- D3 -->
+  <button class="accordion-btn acc-mnemonic" onclick="toggleMnemonic(this)">
+    <span>🔧 D3 — Architecture: <strong style="color:var(--pe-purple)">PROF DESIGNS</strong></span><span>▾</span>
+  </button>
+  <div class="accordion-body mnemonic-body">
+    <h4>P — Planet Express IaaS (Infrastructure)</h4>
+    <ul><li>You rent the raw ship hull — you install the crew, OS, and nav systems yourself</li><li>Customer manages: OS, middleware, apps, data</li><li>Provider manages: Servers, storage, networking</li></ul>
+    <h4>R — Redundancy & Resilience</h4>
+    <ul><li>Load balancers distribute deliveries across multiple ships</li><li>Failover: If Ship A blows up, Ship B launches immediately</li><li>RAID, clustering, geographic distribution</li></ul>
+    <h4>O — On-Prem vs Cloud vs Hybrid</h4>
+    <ul><li>On-prem: Planet Express HQ server room (Hermes locks the door)</li><li>Cloud: DOOP's interplanetary hosting service</li><li>Hybrid: Some data on-ship, some in the cloud nebula</li></ul>
+    <h4>F — Firewall Zones (DMZ)</h4>
+    <ul><li>DMZ: Public-facing delivery kiosk — clients interact here, not in the hangar</li><li>WAF: Stops SQL injection attacks on the ordering portal</li><li>Screened subnet: Buffer between public internet and internal ship systems</li></ul>
+    <div class="mini-quiz" id="mq3">
+      <p>🔧 Q: In IaaS, who manages the Operating System?</p>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq3',true)">A) The Customer</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq3',false)">B) The Provider</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq3',false)">C) The Government</button>
+      <div class="mini-feedback" id="mq3-fb"></div>
+      <button class="mini-reset" onclick="resetMiniQuiz('mq3')">↩ Retake</button>
+    </div>
+  </div>
+
+  <!-- D4 -->
+  <button class="accordion-btn acc-mnemonic" onclick="toggleMnemonic(this)">
+    <span>🛰️ D4 — Security Operations: <strong style="color:var(--pe-green)">LEELA SEES ALL</strong></span><span>▾</span>
+  </button>
+  <div class="accordion-body mnemonic-body">
+    <h4>L — Logging & SIEM</h4>
+    <ul><li>Every ship maneuver logged — Hermes' audit trail in the cloud</li><li>SIEM aggregates logs from all ship systems and alerts on anomalies</li><li>Syslog port 514, SIEM correlation rules, retention policies</li></ul>
+    <h4>E — Endpoint Defense (EDR)</h4>
+    <ul><li>Each crew terminal monitored for malicious behavior</li><li>EDR detects, investigates, and responds to endpoint threats</li><li>DLP prevents Bender from emailing cargo manifests to competitors</li></ul>
+    <h4>E — Emergency Response (IR)</h4>
+    <ul><li>Preparation → Detection → Containment → Eradication → Recovery → Lessons Learned</li><li>Chain of custody for digital evidence from the ship's black box</li></ul>
+    <h4>L — Least Privilege & IAM</h4>
+    <ul><li>Only Leela gets Level 5 pilot clearance</li><li>MFA, RBAC, PAM for privileged accounts like the Professor's lab access</li><li>802.1X: Port-based NAC — authenticate before docking at any port</li></ul>
+    <h4>A — Attack Simulation (Pen Testing)</h4>
+    <ul><li>Recon → Scanning → Exploitation → Post-exploitation → Reporting</li><li>Honeypots trap Bender-like bots snooping around</li></ul>
+    <div class="mini-quiz" id="mq4">
+      <p>🛰️ Q: What tool aggregates logs from multiple systems and alerts on anomalies?</p>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq4',false)">A) EDR</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq4',false)">B) DLP</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq4',true)">C) SIEM</button>
+      <div class="mini-feedback" id="mq4-fb"></div>
+      <button class="mini-reset" onclick="resetMiniQuiz('mq4')">↩ Retake</button>
+    </div>
+  </div>
+
+  <!-- D5 -->
+  <button class="accordion-btn acc-mnemonic" onclick="toggleMnemonic(this)">
+    <span>📋 D5 — Governance & Risk: <strong style="color:var(--pe-orange)">HERMES RULES</strong></span><span>▾</span>
+  </button>
+  <div class="accordion-body mnemonic-body">
+    <h4>H — Hierarchy of Policies</h4>
+    <ul><li>Policy: "No stealing cargo" — board-level rule</li><li>Standard: AES-256 encryption for all ship comms — technical requirement</li><li>Procedure: Step-by-step checklist Hermes uses before every launch</li><li>Guideline: Suggested best practices Fry ignores</li></ul>
+    <h4>E — Enterprise Risk Management</h4>
+    <ul><li>Risk appetite: How much chaos Planet Express is willing to tolerate (a lot, apparently)</li><li>Treat: Reduce the risk with controls</li><li>Transfer: Buy space insurance from Zoidberg & Associates</li><li>Accept: Hope Bender doesn't break anything (bad plan)</li></ul>
+    <h4>R — Regulatory Compliance</h4>
+    <ul><li>HIPAA: Zoidberg's patient medical data must stay private</li><li>PCI-DSS: Fry's credit card transactions encrypted end-to-end</li><li>GDPR: Earth citizens' data rights — even in the year 3000</li></ul>
+    <h4>M — Metrics & Recovery (BCP/DR)</h4>
+    <ul><li>RTO: Max downtime before Planet Express loses clients</li><li>RPO: Max data loss — how old can the backup be and still be useful?</li><li>BIA: Business Impact Analysis before the next Omicron invasion</li></ul>
+    <div class="mini-quiz" id="mq5">
+      <p>📋 Q: Which metric defines the maximum tolerable downtime after a disaster?</p>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq5',false)">A) RPO</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq5',true)">B) RTO</button>
+      <button class="mini-opt" onclick="miniAnswer(this,'mq5',false)">C) MTBF</button>
+      <div class="mini-feedback" id="mq5-fb"></div>
+      <button class="mini-reset" onclick="resetMiniQuiz('mq5')">↩ Retake</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 6: CHARACTER MAPPING ===== -->
+<div class="section" id="characters">
+  <h2 class="sec-header">👥 Planet Express Security Team</h2>
+  <p class="sec-sub">Each crew member represents a real Security+ role. Know your team.</p>
+  <div class="sec-divider"></div>
+  <div class="grid-3">
+    <div class="char-card char-fry">
+      <div class="role-badge">👤 End User / Security Awareness</div>
+      <div class="char-name">Philip J. Fry</div>
+      <p>Fry represents every well-meaning but undertrained end user. He clicks suspicious links, forgets passwords, and accidentally social-engineers himself. Security awareness training exists specifically because of people like Fry — and it actually helps.</p>
+    </div>
+    <div class="char-card char-leela">
+      <div class="role-badge">🛡️ CISO / Security Lead</div>
+      <div class="char-name">Turanga Leela</div>
+      <p>Leela is the CISO of Planet Express — capable, alert, and willing to override bad decisions from above. She enforces least privilege (only she pilots), implements security controls, and leads incident response when Bender inevitably causes a breach.</p>
+    </div>
+    <div class="char-card char-bender">
+      <div class="role-badge">☠️ Malicious Insider / Threat Actor</div>
+      <div class="char-name">Bender Bending Rodríguez</div>
+      <p>Bender is the textbook malicious insider. He has legitimate access, deep knowledge of ship systems, and zero ethical constraints. He represents insider threats, data theft, and the reason you need separation of duties and monitoring for privileged accounts.</p>
+    </div>
+    <div class="char-card char-prof">
+      <div class="role-badge">🏗️ Security Architect / R&D</div>
+      <div class="char-name">Professor Farnsworth</div>
+      <p>The Professor designs the systems — sometimes brilliantly secure, sometimes catastrophically flawed. He embodies the security architect role: responsible for secure-by-design principles, cryptographic implementations, and occasionally deploying something called the "Doom-ulator 3000."</p>
+    </div>
+    <div class="char-card char-hermes">
+      <div class="role-badge">📋 Compliance Officer / GRC</div>
+      <div class="char-name">Hermes Conrad</div>
+      <p>Hermes is the GRC (Governance, Risk, Compliance) officer. He writes the policies, enforces the procedures, files the forms in triplicate, and ensures Planet Express complies with DOOP regulations. If it isn't documented, it didn't happen — Hermes lives by this principle.</p>
+    </div>
+    <div class="char-card char-zoidberg">
+      <div class="role-badge">🐛 Vulnerability / Misconfiguration</div>
+      <div class="char-name">Dr. John Zoidberg</div>
+      <p>Zoidberg represents vulnerabilities and misconfigurations — always in the wrong place, always causing problems, never intentionally malicious but somehow making things worse. Every network has a Zoidberg: an unpatched service, a misconfigured firewall rule, an open port nobody knew about.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 7: DEEP-DIVE ANALOGIES ===== -->
+<div class="section" id="analogies">
+  <h2 class="sec-header">🔗 Deep-Dive Futurama Analogies</h2>
+  <p class="sec-sub">Real security concepts mapped to iconic Futurama scenarios.</p>
+  <div class="sec-divider"></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>🏭 The Slurm Factory → PaaS Shared Responsibility</h3>
+      <span class="tag tag-d3">Domain 3</span>
+      <p style="margin-top:8px;">The Slurm Queen provides the entire factory platform — the vats, conveyor belts, runtime, and operating environment. You bring your secret ingredient (code) and bottles (data). You don't maintain the machinery. This perfectly maps to PaaS: the provider manages the OS, middleware, and runtime; you only manage your application and data. If the vats break, it's the Queen's problem. If your recipe is wrong, it's yours.</p>
+    </div>
+    <div class="card">
+      <h3>🐸 Hypnotoad's TV Show → Social Engineering / Influence Operations
+        <span class="egg-trigger" onclick="openHypno()" title="Easter Egg!">🐸 ALL GLORY</span>
+      </h3>
+      <span class="tag tag-d2">Domain 2</span>
+      <p style="margin-top:8px;">Hypnotoad's show "Everybody Loves Hypnotoad" is pure social engineering at scale — a hypnotic signal that bypasses rational thought and compels action. This mirrors influence operations, malvertising, and the psychological manipulation techniques used in spear phishing. The target doesn't realize they're being controlled. The only defense: awareness that the signal exists.</p>
+    </div>
+    <div class="card">
+      <h3>🚀 The Planet Express Ship → Defense in Depth</h3>
+      <span class="tag tag-d1">Domain 1</span>
+      <p style="margin-top:8px;">The ship has multiple overlapping security layers: hangar security door → ship hull → airlock → cockpit access controls → encrypted navigation AI. Each layer assumes the previous one might be compromised. If Bender gets through the hangar, the cockpit still requires Leela's iris scan. Defense in depth means no single point of failure controls access to the crown jewels.</p>
+    </div>
+    <div class="card">
+      <h3>🧊 Fry's Cryogenic Sleep → Backup & Recovery (RPO/RTO)</h3>
+      <span class="tag tag-d5">Domain 5</span>
+      <p style="margin-top:8px;">Fry was "backed up" in cryosleep for 1,000 years and restored perfectly to an operational state — zero data loss, instant recovery. This is the dream scenario: RPO = 0 (no data lost), RTO = instant. Real disaster recovery planning asks: how long can we be offline (RTO) and how much data can we afford to lose (RPO)? Fry proves flawless recovery is possible. It just takes 1,000 years of planning.</p>
+    </div>
+    <div class="card">
+      <h3>🤖 Bender's Robot Mafia Side Hustle → Insider Threat</h3>
+      <span class="tag tag-d2">Domain 2</span>
+      <p style="margin-top:8px;">Bender uses his legitimate access to ship systems to run side operations — stealing, smuggling, occasionally committing light treason. This is the classic privileged insider threat: authorized access exploited for unauthorized purposes. Mitigations include User and Entity Behavior Analytics (UEBA), separation of duties, least privilege, and logging all privileged actions — especially those taken by shiny metal beings.</p>
+    </div>
+    <div class="card">
+      <h3>📋 Hermes' Forms → Governance & Change Management</h3>
+      <span class="tag tag-d5">Domain 5</span>
+      <p style="margin-top:8px;">Hermes requires forms in triplicate before any significant action — new hires, ship modifications, experimental deployments. This is change management: no change happens without documented approval, risk assessment, rollback plan, and post-implementation review. Organizations that skip this process end up with unauthorized changes that break production, or worse, systems modified by someone who "just needed to fix one thing quickly."</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 8: STUDY NOTES ===== -->
+<div class="section" id="study-notes">
+  <h2 class="sec-header">📝 High-Frequency Exam Notes</h2>
+  <p class="sec-sub">Planet Express briefing — the stuff that shows up most on SY0-701.</p>
+  <div class="sec-divider"></div>
+  <div class="note-card">
+    <h4>🔐 Ports You Must Know Cold</h4>
+    <ul>
+      <li><strong>22</strong> — SSH (secure terminal) | <strong>23</strong> — Telnet (insecure, avoid)</li>
+      <li><strong>25</strong> — SMTP | <strong>53</strong> — DNS | <strong>80</strong> — HTTP | <strong>443</strong> — HTTPS</li>
+      <li><strong>389</strong> — LDAP | <strong>636</strong> — LDAPS | <strong>3389</strong> — RDP</li>
+      <li><strong>514</strong> — Syslog | <strong>1812/1813</strong> — RADIUS | <strong>49</strong> — TACACS+</li>
+      <li><strong>123</strong> — NTP | <strong>67/68</strong> — DHCP | <strong>161/162</strong> — SNMP</li>
+    </ul>
+  </div>
+  <div class="note-card">
+    <h4>🏗️ Cloud & Shared Responsibility Quick Reference</h4>
+    <ul>
+      <li><strong>IaaS</strong>: You manage OS up. Provider manages hardware/network. (Hangar rental)</li>
+      <li><strong>PaaS</strong>: You manage app + data only. Provider manages OS, runtime. (Slurm Factory)</li>
+      <li><strong>SaaS</strong>: You manage only data/config. Provider manages everything. (Holoshed)</li>
+      <li><strong>Shared Responsibility</strong>: Always know what YOU own vs. what the provider owns.</li>
+    </ul>
+  </div>
+  <div class="note-card">
+    <h4>🔑 Cryptography Cheat Sheet</h4>
+    <ul>
+      <li><strong>AES</strong> — Symmetric, 128/192/256-bit, current gold standard</li>
+      <li><strong>RSA</strong> — Asymmetric, uses large prime numbers, slower but key exchange friendly</li>
+      <li><strong>ECC</strong> — Asymmetric, smaller keys = same security as RSA, great for mobile</li>
+      <li><strong>SHA-256</strong> — Hashing, one-way, used for integrity verification</li>
+      <li><strong>Diffie-Hellman</strong> — Key exchange over insecure channel, never transmits the key</li>
+      <li><strong>PFS</strong> — Perfect Forward Secrecy: past sessions safe even if long-term key compromised</li>
+      <li><strong>Salting</strong> — Random data added before hashing, defeats rainbow table attacks</li>
+    </ul>
+  </div>
+  <div class="note-card">
+    <h4>📡 Authentication & Access Controls</h4>
+    <ul>
+      <li><strong>MFA factors</strong>: Know (password), Have (token/smart card), Are (biometrics)</li>
+      <li><strong>RBAC</strong> — Role-Based Access Control: permissions by job function</li>
+      <li><strong>ABAC</strong> — Attribute-Based: permissions by attributes (location, time, clearance)</li>
+      <li><strong>802.1X</strong> — Port-based NAC: must authenticate BEFORE getting network access</li>
+      <li><strong>RADIUS</strong> — Authentication server for network access (ports 1812/1813)</li>
+      <li><strong>TACACS+</strong> — Cisco protocol, encrypts FULL payload, port 49</li>
+      <li><strong>SSO</strong> — Single Sign-On: one login, access to multiple systems</li>
+    </ul>
+  </div>
+  <div class="note-card">
+    <h4>🚨 Incident Response Quick Reference (Domain 4.8)</h4>
+    <ul>
+      <li><strong>1. Preparation</strong>: Policies, tools, team training before incident occurs</li>
+      <li><strong>2. Detection & Analysis</strong>: Identify and confirm the incident</li>
+      <li><strong>3. Containment</strong>: Short-term (isolate) + Long-term (patch/rebuild)</li>
+      <li><strong>4. Eradication</strong>: Remove root cause — malware, compromised account</li>
+      <li><strong>5. Recovery</strong>: Restore and verify systems are clean</li>
+      <li><strong>6. Lessons Learned</strong>: Post-incident review, update playbooks</li>
+    </ul>
+  </div>
+</div>
+
+<!-- ===== SECTION 9: IR LIFECYCLE ===== -->
+<div class="section" id="ir-lifecycle">
+  <h2 class="sec-header">🚨 Incident Response Lifecycle</h2>
+  <p class="sec-sub">Futurama edition — what happens when Planet Express gets breached?</p>
+  <div class="sec-divider"></div>
+  <div class="ir-grid">
+    <div class="ir-card">
+      <div class="ir-num">🛠️</div>
+      <h4>Preparation</h4>
+      <p>Hermes drafts the IR policy. Leela trains the crew. The Professor builds the forensics lab (in a parallel universe as a backup).</p>
+      <span class="ir-tag">Domain 4.8</span>
+    </div>
+    <div class="ir-card">
+      <div class="ir-num">🔍</div>
+      <h4>Detection & Analysis</h4>
+      <p>SIEM alerts fire. Leela reviews ship logs. She confirms Bender exfiltrated 47 TB of cargo manifests at 3 AM.</p>
+      <span class="ir-tag">Domain 4.8</span>
+    </div>
+    <div class="ir-card">
+      <div class="ir-num">🔒</div>
+      <h4>Containment</h4>
+      <p>Bender's ship access is revoked immediately (short-term). The compromised nav system is isolated from the main network (long-term).</p>
+      <span class="ir-tag">Domain 4.8</span>
+    </div>
+    <div class="ir-card">
+      <div class="ir-num">🧹</div>
+      <h4>Eradication</h4>
+      <p>The backdoor Bender installed is removed. Root cause identified: he exploited an unpatched firmware vulnerability in the cargo bay computer.</p>
+      <span class="ir-tag">Domain 4.8</span>
+    </div>
+    <div class="ir-card">
+      <div class="ir-num">✅</div>
+      <h4>Recovery</h4>
+      <p>Systems restored from backup. All crew credentials rotated. Ship systems verified clean before re-launch. Bender is given a stern talking-to.</p>
+      <span class="ir-tag">Domain 4.8</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 10: DETECTION DEEP DIVE ===== -->
+<div class="section" id="detection">
+  <h2 class="sec-header">🔍 Detection Deep Dive</h2>
+  <p class="sec-sub">Leela's one eye sees what others miss. Detection concepts for the exam.</p>
+  <div class="sec-divider"></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>IDS vs IPS</h3>
+      <p><strong>IDS (Intrusion Detection System):</strong> Alerts when Bender sneaks into the cargo bay — but doesn't stop him. Passive monitoring only.<br><br>
+      <strong>IPS (Intrusion Prevention System):</strong> Detects AND blocks the intrusion in real time. The ship's auto-defense system.</p>
+    </div>
+    <div class="card">
+      <h3>SIEM & Log Management</h3>
+      <p>SIEM aggregates logs from all ship systems (firewall, endpoints, network), applies correlation rules, and alerts on anomalies. Think of it as Hermes' ultimate audit dashboard — every event timestamped, indexed, and searchable for 90 days.</p>
+    </div>
+    <div class="card">
+      <h3>Threat Intelligence</h3>
+      <p>IOCs (Indicators of Compromise): IP addresses of known pirate vessels, malicious file hashes from Robot Mafia malware, suspicious domain names. TTP-based detection catches unknown threats by recognizing attack patterns, not just signatures.</p>
+    </div>
+    <div class="card">
+      <h3>SOAR & Automation</h3>
+      <p>SOAR (Security Orchestration, Automation & Response) automates repetitive tasks: block a malicious IP, quarantine an infected endpoint, open a ticket. Even Hermes appreciates automation — it means fewer forms to file manually.</p>
+    </div>
+  </div>
+  <div class="mini-quiz" id="mq-detect" style="max-width:600px;margin-top:16px;">
+    <p>🔍 Q: What is the PRIMARY difference between an IDS and an IPS?</p>
+    <button class="mini-opt" onclick="miniAnswer(this,'mq-detect',false)">A) IDS is hardware; IPS is software</button>
+    <button class="mini-opt" onclick="miniAnswer(this,'mq-detect',true)">B) IDS only alerts; IPS actively blocks threats</button>
+    <button class="mini-opt" onclick="miniAnswer(this,'mq-detect',false)">C) IPS monitors endpoints; IDS monitors networks</button>
+    <div class="mini-feedback" id="mq-detect-fb"></div>
+    <button class="mini-reset" onclick="resetMiniQuiz('mq-detect')">↩ Retake</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 11: ROLES & RESPONSIBILITIES ===== -->
+<div class="section" id="roles">
+  <h2 class="sec-header">🎭 Roles & Responsibilities</h2>
+  <p class="sec-sub">Every delivery requires the right crew member. Every security program requires the right role.</p>
+  <div class="sec-divider"></div>
+  <div class="roles-grid">
+    <div class="role-card"><h4>Data Owner</h4><p>Accountable for data — typically the business unit leader. At Planet Express: the Professor owns research data, Hermes owns HR records.</p></div>
+    <div class="role-card"><h4>Data Custodian</h4><p>Technically manages and protects data on behalf of the owner — implements encryption, backups, and access controls.</p></div>
+    <div class="role-card"><h4>Data Controller</h4><p>GDPR term — decides WHY and HOW personal data is processed. Planet Express as an organization is the controller for employee data.</p></div>
+    <div class="role-card"><h4>Data Processor</h4><p>GDPR term — processes data on behalf of the controller. Third-party payroll service handling Hermes' salary data.</p></div>
+    <div class="role-card"><h4>CISO</h4><p>Chief Information Security Officer — owns the security program, reports to the board, manages risk at the enterprise level. Leela is born for this role.</p></div>
+    <div class="role-card"><h4>SOC Analyst</h4><p>Monitors SIEM alerts, investigates incidents, escalates critical issues. The overnight crew watching the ship's security dashboard.</p></div>
+    <div class="role-card"><h4>Privacy Officer / DPO</h4><p>Data Protection Officer — ensures GDPR compliance, handles breach notifications to regulators, advises on privacy impact assessments.</p></div>
+    <div class="role-card"><h4>Incident Responder</h4><p>Leads IR during active breaches — contains, eradicates, recovers. When Bender's malware fires, the IR team springs into action.</p></div>
+  </div>
+  <div class="mini-quiz" id="mq-roles" style="max-width:600px;margin-top:20px;">
+    <p>🎭 Q: Under GDPR, who decides WHY and HOW personal data is processed?</p>
+    <button class="mini-opt" onclick="miniAnswer(this,'mq-roles',false)">A) Data Custodian</button>
+    <button class="mini-opt" onclick="miniAnswer(this,'mq-roles',false)">B) Data Processor</button>
+    <button class="mini-opt" onclick="miniAnswer(this,'mq-roles',true)">C) Data Controller</button>
+    <div class="mini-feedback" id="mq-roles-fb"></div>
+    <button class="mini-reset" onclick="resetMiniQuiz('mq-roles')">↩ Retake</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 12: REPORTING REQUIREMENTS ===== -->
+<div class="section" id="reporting">
+  <h2 class="sec-header">📋 Reporting Requirements</h2>
+  <p class="sec-sub">Hermes Conrad's favorite topic — when, what, and to whom you report.</p>
+  <div class="sec-divider"></div>
+  <div class="card">
+    <h3>Internal Reporting</h3>
+    <p>When a breach occurs, Planet Express must notify: CISO (Leela) immediately → Senior Management within hours → Legal and PR → Affected department heads. Internal timelines are defined in the IR policy — typically within 1 hour of confirmed breach for critical incidents.</p>
+  </div>
+  <table class="rep-table" style="width:100%;margin-top:16px;">
+    <tr><th>Regulation</th><th>Report To</th><th>Timeline</th><th>Trigger</th></tr>
+    <tr><td>GDPR</td><td>Supervisory Authority (DPA)</td><td>72 hours</td><td>Personal data breach affecting EU residents</td></tr>
+    <tr><td>HIPAA</td><td>HHS (and individuals)</td><td>60 days</td><td>PHI breach affecting 500+ patients</td></tr>
+    <tr><td>PCI-DSS</td><td>Card Brands, Acquiring Bank</td><td>Immediately</td><td>Cardholder data compromise</td></tr>
+    <tr><td>SEC (US)</td><td>SEC + Public disclosure</td><td>4 business days</td><td>Material cybersecurity incident</td></tr>
+    <tr><td>State Laws</td><td>State AG + Individuals</td><td>Varies (30–90 days)</td><td>PII breach per state definition</td></tr>
+  </table>
+  <div class="mini-quiz" id="mq-report" style="max-width:600px;margin-top:20px;">
+    <p>📋 Q: Under GDPR, what is the breach notification deadline to the supervisory authority?</p>
+    <button class="mini-opt" onclick="miniAnswer(this,'mq-report',false)">A) 24 hours</button>
+    <button class="mini-opt" onclick="miniAnswer(this,'mq-report',false)">B) 7 days</button>
+    <button class="mini-opt" onclick="miniAnswer(this,'mq-report',true)">C) 72 hours</button>
+    <div class="mini-feedback" id="mq-report-fb"></div>
+    <button class="mini-reset" onclick="resetMiniQuiz('mq-report')">↩ Retake</button>
+  </div>
+</div>
+
+<!-- ===== SECTION 13: POST-INCIDENT ACTIVITY ===== -->
+<div class="section" id="post-incident">
+  <h2 class="sec-header">📊 Post-Incident Activity</h2>
+  <p class="sec-sub">Lessons Learned — so Planet Express doesn't make the same mistake twice (they will).</p>
+  <div class="sec-divider"></div>
+  <div class="grid-2">
+    <div class="card">
+      <h3>📖 Lessons Learned Meeting</h3>
+      <ul>
+        <li>Conduct within 2 weeks of incident closure</li>
+        <li>Who was affected? What was the root cause?</li>
+        <li>What worked in the response? What didn't?</li>
+        <li>What controls failed? What new ones are needed?</li>
+        <li>Update IR playbook with findings</li>
+        <li>Bendergate debrief: mandatory annual recurrence</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📈 Key Metrics to Track</h3>
+      <ul>
+        <li><strong>MTTD</strong> — Mean Time to Detect: how long until we knew?</li>
+        <li><strong>MTTR</strong> — Mean Time to Respond/Recover: how long to fix it?</li>
+        <li><strong>MTBF</strong> — Mean Time Between Failures: system reliability</li>
+        <li><strong>Number of incidents</strong> per quarter (trending up? Bad sign.)</li>
+        <li><strong>False positive rate</strong>: alert fatigue is real and dangerous</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>📚 Training & Awareness Updates</h3>
+      <ul>
+        <li>Update security awareness training after each significant incident</li>
+        <li>Tabletop exercises — practice the scenario before it happens for real</li>
+        <li>Red team/blue team exercises simulate real attacks in a controlled environment</li>
+        <li>Fry gets phishing simulation emails monthly. He fails every time. Monthly training continues.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>🔄 Playbook & Process Updates</h3>
+      <ul>
+        <li>Revise runbooks and playbooks based on gaps found in the response</li>
+        <li>Update detection rules in SIEM based on new IOCs discovered</li>
+        <li>Review and tighten access controls for affected systems</li>
+        <li>Hermes files three new forms. This is mandatory and non-negotiable.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 14: INTERACTIVE ADVENTURE ===== -->
+<div class="section" id="adventure">
+  <h2 class="sec-header">🚀 Planet Express IR Adventure</h2>
+  <p class="sec-sub">Guide Leela through a live security incident. Make the right calls!</p>
+  <div class="sec-divider"></div>
+  <div id="adventure-box">
+    <!-- Scene 1: Detection -->
+    <div class="adv-scene active" id="adv-s1">
+      <h3>🔍 Scene 1: Detection — The SIEM Screams</h3>
+      <p>It's 2:47 AM. The Planet Express SIEM fires a Priority 1 alert: <em>"Unusual outbound data transfer — 200 GB — from Bender's terminal to an unknown external IP."</em> You're the on-call SOC analyst. What's your first action?</p>
+      <button class="adv-btn" onclick="advWrong(1)">A) Ignore it — Bender often does weird things at night. Check in the morning.</button>
+      <button class="adv-btn" onclick="advRight(1)">B) Escalate to the IR team immediately and begin logging all activity from Bender's terminal.</button>
+      <button class="adv-btn" onclick="advWrong(1)">C) Call Bender and ask him what he's doing.</button>
+      <div class="adv-wrong-msg" id="adv-wrong-1">❌ Try the other option!</div>
+    </div>
+    <!-- Scene 2: Containment -->
+    <div class="adv-scene" id="adv-s2">
+      <h3>🔒 Scene 2: Containment — Isolate the Threat</h3>
+      <p>IR team confirms it's a real breach. Bender's terminal is actively exfiltrating Planet Express client data. The ship is mid-flight to Omicron Persei 8. What do you do?</p>
+      <button class="adv-btn" onclick="advWrong(2)">A) Wait until landing to avoid disrupting the delivery. Client data can be recovered later.</button>
+      <button class="adv-btn" onclick="advWrong(2)">B) Wipe Bender's entire system immediately to stop the transfer.</button>
+      <button class="adv-btn" onclick="advRight(2)">C) Isolate Bender's terminal from the network now (short-term containment), preserve forensic evidence, and maintain ship operations.</button>
+      <div class="adv-wrong-msg" id="adv-wrong-2">❌ Try the other option!</div>
+    </div>
+    <!-- Scene 3: Eradication -->
+    <div class="adv-scene" id="adv-s3">
+      <h3>🧹 Scene 3: Eradication — Root Cause</h3>
+      <p>Forensics reveals Bender installed a backdoor six months ago via an unpatched firmware vulnerability in the cargo bay computer. The same firmware runs on ALL Planet Express ships. What's the correct eradication approach?</p>
+      <button class="adv-btn" onclick="advRight(3)">A) Patch all ships, revoke all Bender's credentials, remove the backdoor, and scan for any lateral movement or persistence mechanisms across the entire fleet.</button>
+      <button class="adv-btn" onclick="advWrong(3)">B) Patch only Bender's ship since that's the affected system. Monitor for new alerts.</button>
+      <button class="adv-btn" onclick="advWrong(3)">C) Fire Bender and consider the incident resolved.</button>
+      <div class="adv-wrong-msg" id="adv-wrong-3">❌ Try the other option!</div>
+    </div>
+    <!-- Scene 4: Lessons Learned -->
+    <div class="adv-scene" id="adv-s4">
+      <h3>📖 Scene 4: Lessons Learned — The Debrief</h3>
+      <p>Two weeks post-incident. You're running the lessons learned meeting. The team asks: "What's the single most important process improvement to prevent this happening again?" What do you recommend?</p>
+      <button class="adv-btn" onclick="advWrong(4)">A) Ban Bender from the building permanently. Problem solved.</button>
+      <button class="adv-btn" onclick="advWrong(4)">B) Add more SIEM alerts. The current ones clearly weren't enough.</button>
+      <button class="adv-btn" onclick="advRight(4)">C) Implement a formal patch management program with SLA-based patching windows, combined with improved privileged account monitoring and separation of duties for firmware updates.</button>
+      <div class="adv-wrong-msg" id="adv-wrong-4">❌ Try the other option!</div>
+    </div>
+    <!-- Finale -->
+    <div class="adv-finale" id="adv-finale">
+      <h3>🎉 Mission Accomplished, Meatbag!</h3>
+      <p>You successfully guided Planet Express through a full Incident Response cycle! Bender is in robot jail. Hermes filed 47 forms. The Professor invented a new anti-Bender firewall. And Fry is still clicking suspicious links.</p>
+      <div class="phases-list">
+        <span class="phase-tag">✅ Detection</span>
+        <span class="phase-tag">✅ Containment</span>
+        <span class="phase-tag">✅ Eradication</span>
+        <span class="phase-tag">✅ Lessons Learned</span>
+      </div>
+      <p style="margin-top:14px;color:var(--pe-teal);font-weight:800;">IR Lifecycle: Domain 4.8 — Complete! 🚀</p>
+      <button onclick="resetAdventure()" style="margin-top:16px;background:var(--pe-teal);color:var(--pe-dark);border:none;padding:10px 24px;border-radius:999px;font-weight:900;cursor:pointer;font-family:inherit;font-size:14px;">↩ Play Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SECTION 15: STUDY LINKS ===== -->
+<div class="section" id="links">
+  <h2 class="sec-header">🔗 Study Resources</h2>
+  <p class="sec-sub">Everything you need to pass SY0-701. Good news, everyone — it's free (mostly)!</p>
+  <div class="sec-divider"></div>
+  <div class="grid-3">
+    <a class="link-card" href="Futurama_FullPDF.txt" target="_blank">
+      <div class="link-icon">📄</div>
+      <h4>Futurama Security+ PDF</h4>
+      <p>Full study guide — activates on GitHub upload</p>
+    </a>
+    <a class="link-card" href="The_Planet_Express_Guide_to_Cloud_Service_Models.txt" target="_blank">
+      <div class="link-icon">☁️</div>
+      <h4>Cloud Service Models Guide</h4>
+      <p>IaaS, PaaS, SaaS — Futurama style</p>
+    </a>
+    <a class="link-card" href="https://www.comptia.org/training/resources/exam-objectives/comptia-security-sy0-701-exam-objectives" target="_blank">
+      <div class="link-icon">🎯</div>
+      <h4>Official Exam Objectives</h4>
+      <p>CompTIA SY0-701 PDF — the definitive source</p>
+    </a>
+    <a class="link-card" href="https://amzn.to/4nVi25Y" target="_blank">
+      <div class="link-icon">📚</div>
+      <h4>Study Book (Amazon)</h4>
+      <p>Recommended Security+ prep book</p>
+    </a>
+    <a class="link-card" href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank">
+      <div class="link-icon">🎓</div>
+      <h4>Professor Messer</h4>
+      <p>Free SY0-701 video training course</p>
+    </a>
+    <a class="link-card" href="https://quizlet.com/search?query=security+plus+sy0-701&type=sets" target="_blank">
+      <div class="link-icon">🃏</div>
+      <h4>Quizlet Flashcards</h4>
+      <p>Search SY0-701 community flashcard sets</p>
+    </a>
+    <a class="link-card" href="security-notes.html">
+      <div class="link-icon">🏠</div>
+      <h4>Main Study Hub</h4>
+      <p>Back to security-notes.html — all cartoons</p>
+    </a>
+  </div>
+</div>
+
+<!-- ===== SECTION 16: FLASHCARDS ===== -->
+<div class="section" id="flashcards">
+  <h2 class="sec-header">🃏 Leitner Flashcard Deck</h2>
+  <p class="sec-sub">60+ cards across all 5 domains. Space, flip, 1/2/3 to sort. <span class="egg-trigger" onclick="openHypno()">🐸 Need help studying?</span></p>
+  <div class="sec-divider"></div>
+  <div id="flashcard-deck">
+    <div id="fc-card" class="fc-card" onclick="flipCard()">
+      <div class="fc-domain-tag" id="fc-dtag"></div>
+      <div class="fc-front">
+        <div class="fc-q" id="fc-q">Loading...</div>
+      </div>
+      <div class="fc-back">
+        <div class="fc-a" id="fc-a"></div>
+      </div>
+    </div>
+    <div class="fc-controls">
+      <button class="fc-btn btn-flip" onclick="flipCard()">⬆ Flip (Space)</button>
+      <button class="fc-btn btn-again" onclick="fcAgain()">❌ Again (1)</button>
+      <button class="fc-btn btn-gotit" onclick="fcGotIt()">✓ Got It (2)</button>
+      <button class="fc-btn btn-easy" onclick="fcEasy()">⭐ Easy (3)</button>
+      <button class="fc-btn btn-skip" onclick="fcSkip()">→ Skip (S)</button>
+    </div>
+    <div class="box-bars">
+      <div class="box-bar b1" id="bb1">Box 1: 0</div>
+      <div class="box-bar b2" id="bb2">Box 2: 0</div>
+      <div class="box-bar b3" id="bb3">Box 3: 0</div>
+      <div class="box-bar b4" id="bb4">Box 4: 0</div>
+      <div class="box-bar b5" id="bb5">Box 5: 0</div>
+    </div>
+    <div class="fc-info" id="fc-info"></div>
+    <div class="fc-shortcuts">⌨️ Keyboard: Space = Flip | 1 = Again | 2 = Got It | 3 = Easy | S = Skip</div>
+  </div>
+</div>
+
+<!-- ===== SECTION 17: FINAL QUIZ ===== -->
+<div class="section" id="quiz">
+  <h2 class="sec-header">🎯 10-Question Security+ Quiz</h2>
+  <p class="sec-sub">One question per domain area. Beat Bender's score (he got 0/10 on purpose).</p>
+  <div class="sec-divider"></div>
+  <div id="quiz-box">
+    <div class="quiz-progress"><div class="quiz-progress-fill" id="q-prog" style="width:0%"></div></div>
+    <div id="quiz-area">
+      <div class="quiz-q" id="q-text"></div>
+      <div id="q-opts"></div>
+      <div class="quiz-nav"><button class="quiz-next-btn" id="q-next-btn" onclick="quizNext()">Next Question →</button></div>
+    </div>
+    <div class="quiz-result" id="quiz-result">
+      <h3 id="quiz-score-text"></h3>
+      <p id="quiz-feedback"></p>
+      <button class="quiz-reset-btn" onclick="resetQuiz()">↩ Retake Quiz</button>
+    </div>
+  </div>
+</div>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>🤖 <strong style="color:var(--pe-yellow)">Futurama – Security+ SY0-701 Study Hub</strong></p>
+  <p>
+    <a href="security-notes.html">📚 Study Hub</a> &nbsp;|&nbsp;
+    <a href="https://charleneluequee.github.io/" target="_blank">🌐 Portfolio</a>
+  </p>
+  <p style="margin-top:8px;">© 2025 Charlene Luequee · <a href="https://charleneluequee.github.io/">charleneluequee.github.io</a></p>
+  <p style="margin-top:4px;font-size:11px;color:#556;">Futurama characters are property of Matt Groening / 20th Century Fox. Used for educational purposes only. All glory to the Hypnotoad.</p>
+</footer>
+
+</div><!-- /content -->
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+// ==================== PARTICLES ====================
+(function(){
+  const container = document.getElementById('particles');
+  const emojis = ['🤖','🚀','⭐','🌙','🪐','💫','🔧','📡'];
+  for(let i=0;i<22;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = emojis[i % emojis.length];
+    p.style.left = Math.random()*100+'%';
+    p.style.animationDuration = (12+Math.random()*20)+'s';
+    p.style.animationDelay = (Math.random()*18)+'s';
+    p.style.fontSize = (14+Math.random()*14)+'px';
+    container.appendChild(p);
+  }
+})();
+
+// ==================== SOUND ====================
+let soundOn = false;
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let ctx;
+function getCtx(){ if(!ctx && AudioCtx){ ctx = new AudioCtx(); } return ctx; }
+function playTone(freq, dur, type='sine', vol=0.15){
+  if(!soundOn) return;
+  try {
+    const c = getCtx(); if(!c) return;
+    const o = c.createOscillator(), g = c.createGain();
+    o.connect(g); g.connect(c.destination);
+    o.type = type; o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, c.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, c.currentTime+dur);
+    o.start(); o.stop(c.currentTime+dur);
+  } catch(e){}
+}
+function playCorrect(){ playTone(523,0.1); setTimeout(()=>playTone(659,0.1),100); setTimeout(()=>playTone(784,0.2),200); }
+function playWrong(){ playTone(200,0.3,'sawtooth'); }
+function playVictory(){
+  [523,587,659,698,784,880].forEach((f,i)=>setTimeout(()=>playTone(f,.15),i*80));
+}
+function toggleSound(){
+  soundOn = !soundOn;
+  document.getElementById('sound-toggle').textContent = soundOn ? '🔊' : '🔇';
+  if(soundOn && AudioCtx && !ctx){ ctx = new AudioCtx(); }
+}
+
+// ==================== ACCORDION ====================
+function toggleAcc(btn){
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  // Close all same-level accordions
+  const parent = btn.parentElement;
+  parent.querySelectorAll('.accordion-body').forEach(b=>{b.classList.remove('open');});
+  parent.querySelectorAll('.accordion-btn').forEach(b=>{const s=b.querySelector('span:last-child');if(s)s.textContent='▾';});
+  if(!isOpen){
+    body.classList.add('open');
+    const arrow = btn.querySelector('span:last-child');
+    if(arrow) arrow.textContent = '▴';
+  }
+}
+function toggleMnemonic(btn){
+  const body = btn.nextElementSibling;
+  const isOpen = body.classList.contains('open');
+  document.querySelectorAll('.mnemonic-body').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.acc-mnemonic span:last-child').forEach(s=>s.textContent='▾');
+  if(!isOpen){
+    body.classList.add('open');
+    btn.querySelector('span:last-child').textContent='▴';
+  }
+}
+
+// ==================== MINI QUIZ ====================
+function miniAnswer(btn, id, correct){
+  const quiz = document.getElementById(id);
+  const opts = quiz.querySelectorAll('.mini-opt');
+  opts.forEach(o=>o.disabled=true);
+  const fb = document.getElementById(id+'-fb');
+  if(correct){
+    btn.classList.add('correct');
+    fb.textContent = '✅ Correct! Great job, crew member!';
+    fb.style.color = '#2ECC71';
+    playCorrect();
+  } else {
+    btn.classList.add('wrong');
+    fb.textContent = '❌ Not quite — review your notes and try again!';
+    fb.style.color = '#F01428';
+    playWrong();
+  }
+}
+function resetMiniQuiz(id){
+  const quiz = document.getElementById(id);
+  quiz.querySelectorAll('.mini-opt').forEach(o=>{ o.disabled=false; o.className='mini-opt'; });
+  const fb = document.getElementById(id+'-fb');
+  if(fb) fb.textContent='';
+}
+
+// ==================== SLURM & HYPNOTOAD ====================
+function openSlurm(){ document.getElementById('slurm-modal').classList.add('show'); }
+function closeSlurm(){ document.getElementById('slurm-modal').classList.remove('show'); }
+function openHypno(){ document.getElementById('hypno-modal').classList.add('show'); playTone(80,2,'sawtooth',0.08); }
+function closeHypno(){ document.getElementById('hypno-modal').classList.remove('show'); }
+document.getElementById('slurm-modal').addEventListener('click',function(e){ if(e.target===this) closeSlurm(); });
+document.getElementById('hypno-modal').addEventListener('click',function(e){ if(e.target===this) closeHypno(); });
+
+// ==================== ADVENTURE ====================
+let advScene = 1;
+function advRight(scene){
+  playCorrect();
+  document.getElementById('adv-wrong-'+scene).style.display='none';
+  document.getElementById('adv-s'+scene).classList.remove('active');
+  advScene = scene+1;
+  if(advScene<=4){
+    document.getElementById('adv-s'+advScene).classList.add('active');
+  } else {
+    document.getElementById('adv-finale').style.display='block';
+    launchConfetti();
+    playVictory();
+  }
+}
+function advWrong(scene){
+  playWrong();
+  document.getElementById('adv-wrong-'+scene).style.display='block';
+}
+function resetAdventure(){
+  advScene=1;
+  document.querySelectorAll('.adv-scene').forEach(s=>s.classList.remove('active'));
+  document.getElementById('adv-s1').classList.add('active');
+  document.getElementById('adv-finale').style.display='none';
+  document.querySelectorAll('.adv-wrong-msg').forEach(m=>m.style.display='none');
+}
+
+// ==================== CONFETTI ====================
+function launchConfetti(){
+  const colors=['#F01428','#FFF064','#0DA5CD','#6B21A8','#F08D43','#64A050'];
+  for(let i=0;i<70;i++){
+    setTimeout(()=>{
+      const c=document.createElement('div');
+      c.className='confetti-piece';
+      c.style.left=Math.random()*100+'vw';
+      c.style.background=colors[Math.floor(Math.random()*colors.length)];
+      c.style.animationDuration=(2+Math.random()*2)+'s';
+      c.style.animationDelay=(Math.random()*.5)+'s';
+      c.style.transform=`rotate(${Math.random()*360}deg)`;
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),4000);
+    },i*30);
+  }
+}
+
+// ==================== FLASHCARDS ====================
+const FC_KEY = 'ltr_cartoon-futurama';
+const fcCards = [
+  // D1 - General Security
+  {q:"CIA Triad — What is CONFIDENTIALITY?",a:"Keeping Planet Express delivery routes secret from space pirates and rivals.\nConfidentiality protects data from unauthorized access.",d:"D1"},
+  {q:"CIA Triad — What is INTEGRITY?",a:"Ensuring delivery manifests aren't altered by Bender for personal gain.\nIntegrity prevents unauthorized changes to data.",d:"D1"},
+  {q:"CIA Triad — What is AVAILABILITY?",a:"The Planet Express ship must be operational when a delivery needs to launch.\nAvailability keeps systems accessible to authorized users.",d:"D1"},
+  {q:"What are the three security control CATEGORIES?",a:"Administrative (Managerial): Hermes' policies.\nTechnical: Firewalls, encryption, access controls.\nPhysical: Hangar locks, security doors, guards.",d:"D1"},
+  {q:"What are the five security control TYPES?",a:"Preventive, Detective, Corrective, Deterrent, Compensating.\nEach addresses attacks differently — before, during, or after.",d:"D1"},
+  {q:"What is LEAST PRIVILEGE?",a:"Fry doesn't get full navigation access — only Leela can pilot.\nLimit access to only what's needed for the job.",d:"D1"},
+  {q:"What is DEFENSE IN DEPTH?",a:"Hangar security → hull → airlock → cockpit access → encrypted nav AI.\nMultiple overlapping layers — no single point of failure.",d:"D1"},
+  {q:"What is ZERO TRUST?",a:"Never trust, always verify — even Leela needs to re-authenticate.\nAssume every device and user is potentially compromised.",d:"D1"},
+  {q:"What is NON-REPUDIATION?",a:"Can't deny you pressed the ship's self-destruct button if it's logged.\nDigital signatures and audit logs prove actions occurred.",d:"D1"},
+  {q:"What are the three MFA FACTORS?",a:"Something you KNOW (password/PIN).\nSomething you HAVE (smart card, token).\nSomething you ARE (biometrics — Leela's iris scan).",d:"D1"},
+  {q:"What is SYMMETRIC encryption? Example?",a:"One key encrypts AND decrypts. Fast, efficient.\nExample: AES (128/192/256-bit) — current gold standard.",d:"D1"},
+  {q:"What is ASYMMETRIC encryption? Example?",a:"Public key encrypts, private key decrypts.\nExamples: RSA, ECC. Slower but enables key exchange.",d:"D1"},
+  {q:"What does HASHING do? Examples?",a:"Creates a fixed-length fingerprint from data — one-way, cannot reverse.\nMD5 (broken), SHA-1 (legacy), SHA-256 (current standard).",d:"D1"},
+  {q:"What is SALTING in cryptography?",a:"Random data added to a password before hashing.\nDefeats rainbow table and pre-computation attacks.",d:"D1"},
+  {q:"What is PERFECT FORWARD SECRECY (PFS)?",a:"Compromise of long-term keys does NOT expose past session keys.\nEach session generates unique ephemeral keys.",d:"D1"},
+  {q:"What is a CERTIFICATE AUTHORITY (CA)?",a:"Trusted entity that verifies identities and signs digital certificates.\nRoot CA stays OFFLINE to maximize security.",d:"D1"},
+  {q:"What is a CRL?",a:"Certificate Revocation List — published by CAs.\nLists certificates revoked before their expiration date.",d:"D1"},
+  {q:"What is OCSP STAPLING?",a:"Server proves certificate validity by 'stapling' status into the TLS handshake.\nFaster and more private than checking CRL each time.",d:"D1"},
+  {q:"What is Diffie-Hellman?",a:"Key exchange protocol — two parties establish a shared secret over an insecure channel WITHOUT transmitting the key itself.",d:"D1"},
+  {q:"What advantage does ECC have over RSA?",a:"Equivalent security with MUCH smaller key sizes.\nBetter for mobile devices and IoT with limited resources.",d:"D1"},
+  // D2 - Threats
+  {q:"What is a THREAT ACTOR? Types?",a:"Entity that poses a threat. Types: Nation-state, criminal, hacktivist, insider, script kiddie, competitor.",d:"D2"},
+  {q:"What is an INSIDER THREAT?",a:"Bender using legitimate access to steal, sabotage, or exfiltrate data.\nMisuse of authorized access — hardest to detect.",d:"D2"},
+  {q:"What is PHISHING? Variants?",a:"Deceptive emails tricking users into revealing credentials.\nSpear phishing (targeted), Whaling (executives), Vishing (voice), Smishing (SMS).",d:"D2"},
+  {q:"What is a ZERO-DAY vulnerability?",a:"Unknown flaw in the ship's AI — no patch exists yet.\nAttackers exploit it before the vendor is even aware.",d:"D2"},
+  {q:"What is RANSOMWARE?",a:"Malware that encrypts victim data and demands payment for the key.\nBackups are the primary defense — test them regularly.",d:"D2"},
+  {q:"What is SQL INJECTION (SQLi)?",a:"Attacker inserts malicious SQL into input fields to manipulate the database.\nPrevented by parameterized queries and input validation.",d:"D2"},
+  {q:"What is CROSS-SITE SCRIPTING (XSS)?",a:"Attacker injects malicious scripts into a web page viewed by other users.\nTypes: Stored, Reflected, DOM-based.",d:"D2"},
+  {q:"What is a MAN-IN-THE-MIDDLE (MitM) attack?",a:"Adversary positions between two parties to intercept or modify communication.\nAlso called an 'On-path attack' in newer Security+ terminology.",d:"D2"},
+  {q:"What is DNS POISONING?",a:"Attacker modifies a DNS server's cache to redirect users to a malicious IP.\nAlso called DNS cache poisoning or DNS spoofing.",d:"D2"},
+  {q:"What is a DDoS attack?",a:"Distributed Denial of Service — large number of compromised devices overwhelm a service.\nBotnet of compromised robots firing at Planet Express HQ.",d:"D2"},
+  {q:"What is a HONEYPOT?",a:"Decoy system designed to attract and observe potential attackers.\nUsed for threat intelligence gathering and early detection.",d:"D2"},
+  {q:"What is TAILGATING?",a:"Physical attack — following an authorized person through a secured door.\nMantrap (two-door airlock) is the countermeasure.",d:"D2"},
+  {q:"What is a BUFFER OVERFLOW?",a:"Attack that writes more data to a buffer than it can hold, overwriting adjacent memory.\nCan enable arbitrary code execution.",d:"D2"},
+  {q:"What is PRETEXTING?",a:"Creating a fabricated scenario to manipulate someone into divulging information.\nExample: Bender pretending to be a robot safety inspector.",d:"D2"},
+  // D3 - Architecture
+  {q:"What is IaaS? Shared responsibility?",a:"Infrastructure as a Service — provider manages hardware/network/storage.\nCustomer manages: OS, middleware, runtime, apps, data.\n(Planet Express Hangar — you install the crew.)",d:"D3"},
+  {q:"What is PaaS? Shared responsibility?",a:"Platform as a Service — provider manages OS, runtime, middleware.\nCustomer manages: apps and data only.\n(Slurm Factory — you bring your secret ingredient.)",d:"D3"},
+  {q:"What is SaaS? Shared responsibility?",a:"Software as a Service — provider manages everything.\nCustomer manages: data and user configuration only.\n(Holoshed — you just walk in and use it.)",d:"D3"},
+  {q:"What is a DMZ / Screened Subnet?",a:"Network segment housing public-facing servers.\nBuffer zone between the internet and the internal network.\nClients interact here — not with internal ship systems.",d:"D3"},
+  {q:"What is NETWORK SEGMENTATION?",a:"Dividing a network into zones — cockpit, engine room, cargo bay, office.\nLimits lateral movement if one zone is compromised.",d:"D3"},
+  {q:"What is a VLAN?",a:"Virtual Local Area Network — logically segments a physical network into multiple broadcast domains at Layer 2.\nReduces attack surface and broadcast traffic.",d:"D3"},
+  {q:"What is an AIR GAP?",a:"Complete physical isolation of a computer or network from all other networks.\nHighest security level — Root CAs are kept air-gapped.",d:"D3"},
+  {q:"What is a WAF?",a:"Web Application Firewall — protects against application-layer attacks like SQL injection and XSS.\nSits in front of web servers.",d:"D3"},
+  {q:"What is ZERO TRUST ARCHITECTURE?",a:"Never trust, always verify — every access request authenticated regardless of location.\nAssumes the internal network is already compromised.",d:"D3"},
+  {q:"What is a LOAD BALANCER?",a:"Distributes incoming network traffic across a group of redundant servers.\nEnsures high availability and prevents single points of failure.",d:"D3"},
+  {q:"What is an HSM?",a:"Hardware Security Module — dedicated hardware appliance for secure storage and management of digital keys and certificates.\nTamper-resistant physical device.",d:"D3"},
+  {q:"What is a TPM?",a:"Trusted Platform Module — chip embedded on a motherboard.\nProvides hardware-based cryptographic functions and secure key storage.",d:"D3"},
+  {q:"What is SPLIT TUNNELING in VPN?",a:"Only corporate traffic goes through the encrypted VPN tunnel.\nInternet traffic goes direct — reduces bandwidth on the VPN.",d:"D3"},
+  // D4 - Operations
+  {q:"What is a SIEM?",a:"Security Information and Event Management — centralized logging, real-time monitoring, and correlation of security events.\nAlerting hub for the SOC team.",d:"D4"},
+  {q:"What port does SYSLOG use?",a:"Port 514 (UDP typically, TCP for reliable delivery).\nUsed for centralized logging of system events.",d:"D4"},
+  {q:"What is EDR?",a:"Endpoint Detection and Response — monitors endpoints for malicious activity and provides automated response capabilities.\nGoes beyond traditional antivirus.",d:"D4"},
+  {q:"What is DLP?",a:"Data Loss Prevention — identifies and prevents unauthorized transfer of sensitive data.\nStops Bender emailing cargo manifests to competitors.",d:"D4"},
+  {q:"What is 802.1X?",a:"IEEE standard for port-based Network Access Control (NAC).\nDevice must authenticate BEFORE gaining network access.\nUses a Supplicant, Authenticator, and Authentication Server.",d:"D4"},
+  {q:"What are RADIUS ports?",a:"Port 1812 — Authentication and Authorization.\nPort 1813 — Accounting.\nUsed for network access authentication.",d:"D4"},
+  {q:"What is TACACS+?",a:"Cisco-proprietary authentication protocol.\nPort 49. Encrypts the ENTIRE payload (vs RADIUS which only encrypts the password).",d:"D4"},
+  {q:"What is SSO?",a:"Single Sign-On — user logs in once and gains access to multiple independent systems.\nReduces password fatigue and attack surface.",d:"D4"},
+  {q:"What is a JUMP SERVER?",a:"Highly secured host used by administrators to 'jump' into a protected network segment for management tasks.\nAlso called a jump box or bastion host.",d:"D4"},
+  {q:"The 6 phases of INCIDENT RESPONSE?",a:"1. Preparation\n2. Detection & Analysis\n3. Containment\n4. Eradication\n5. Recovery\n6. Lessons Learned",d:"D4"},
+  {q:"What is CHAIN OF CUSTODY?",a:"Documentation tracking who collected, handled, and analyzed digital evidence.\nCritical for admissibility in legal proceedings.",d:"D4"},
+  {q:"What is PENETRATION TESTING? Phases?",a:"Authorized simulated attack to find vulnerabilities.\nPhases: Reconnaissance → Scanning → Exploitation → Post-exploitation → Reporting",d:"D4"},
+  {q:"What is HARDENING?",a:"Removing unnecessary software and disabling unused services to reduce the attack surface.\nPrinciple: if you don't need it, turn it off.",d:"D4"},
+  {q:"What is a CREDENTIALED SCAN?",a:"Vulnerability scan that logs into systems with valid credentials.\nMore thorough than unauthenticated scans — finds more vulnerabilities.",d:"D4"},
+  // D5 - Governance
+  {q:"Policy vs Standard vs Procedure?",a:"Policy: High-level mandatory rule — 'no unauthorized access.'\nStandard: Specific technical requirement — 'use AES-256.'\nProcedure: Step-by-step instructions Hermes follows before launch.",d:"D5"},
+  {q:"What is RISK MANAGEMENT? Formula?",a:"Risk = Likelihood × Impact.\nStrategies: Accept, Avoid, Transfer (insurance), Mitigate.\nRisk appetite: how much risk is acceptable.",d:"D5"},
+  {q:"What is RTO?",a:"Recovery Time Objective — maximum tolerable downtime after a failure before operations are critically impacted.",d:"D5"},
+  {q:"What is RPO?",a:"Recovery Point Objective — maximum age of data that must be recovered from backup for operations to resume.\n(How old can the backup be?)",d:"D5"},
+  {q:"What is HIPAA?",a:"Health Insurance Portability and Accountability Act.\nProtects PHI (Protected Health Information).\nZoidberg's patient data must comply — report breaches within 60 days.",d:"D5"},
+  {q:"What is GDPR?",a:"General Data Protection Regulation (EU).\nProtects personal data of EU residents.\nBreach notification to DPA within 72 hours.",d:"D5"},
+  {q:"What is PCI-DSS?",a:"Payment Card Industry Data Security Standard.\nProtects cardholder data.\nFry's credit card transactions must be encrypted.",d:"D5"},
+  {q:"What is a BIA?",a:"Business Impact Analysis — identifies critical business functions and quantifies the impact of disruptions.\nInput to BCP and DR planning.",d:"D5"},
+  {q:"What is MTTR?",a:"Mean Time to Recover/Repair — average time to restore a system after failure.\nKey metric for measuring operational resilience.",d:"D5"},
+  {q:"What is MTBF?",a:"Mean Time Between Failures — average time between system failures.\nHigher MTBF = more reliable system.",d:"D5"},
+  {q:"Data Owner vs Data Custodian?",a:"Owner: Accountable for data — business decision-maker (the Professor owns research data).\nCustodian: Technically manages and protects data — implements controls.",d:"D5"},
+  {q:"Data Controller vs Data Processor (GDPR)?",a:"Controller: Decides WHY and HOW data is processed.\nProcessor: Processes data on behalf of the controller.",d:"D5"},
+  {q:"What is a DPO?",a:"Data Protection Officer — ensures GDPR compliance, advises on PIAs, handles regulator communication.",d:"D5"},
+  {q:"SPF, DKIM, DMARC — what do they do?",a:"SPF: Lists authorized mail servers for a domain.\nDKIM: Digital signature verifying email came from the domain.\nDMARC: Policy telling receivers what to do when SPF/DKIM fail.",d:"D5"},
+];
+
+let fcBoxes = {1:[],2:[],3:[],4:[],5:[]};
+let fcCurrentIdx = null;
+let fcCurrentBox = 1;
+let fcFlipped = false;
+
+function fcInit(){
+  try {
+    const saved = localStorage.getItem(FC_KEY);
+    if(saved){
+      const s = JSON.parse(saved);
+      if(s && s[1] !== undefined) { fcBoxes = s; }
+      else resetFcBoxes();
+    } else resetFcBoxes();
+  } catch(e){ resetFcBoxes(); }
+  fcPickCard();
+  fcUpdateBars();
+}
+function resetFcBoxes(){
+  fcBoxes={1:[],2:[],3:[],4:[],5:[]};
+  fcCards.forEach((_,i)=>fcBoxes[1].push(i));
+}
+function fcSave(){
+  try { localStorage.setItem(FC_KEY, JSON.stringify(fcBoxes)); } catch(e){}
+}
+function fcPickCard(){
+  for(let b=1;b<=5;b++){
+    if(fcBoxes[b].length){ fcCurrentBox=b; break; }
+    if(b===5){ document.getElementById('fc-q').textContent="🎉 All cards mastered! Reset to start over."; return; }
+  }
+  const arr=fcBoxes[fcCurrentBox];
+  fcCurrentIdx=arr[Math.floor(Math.random()*arr.length)];
+  const card=fcCards[fcCurrentIdx];
+  document.getElementById('fc-dtag').textContent=card.d+' | Box '+fcCurrentBox;
+  document.getElementById('fc-q').textContent=card.q;
+  document.getElementById('fc-a').textContent=card.a;
+  const el=document.getElementById('fc-card');
+  el.classList.remove('flipped');
+  fcFlipped=false;
+  document.getElementById('fc-info').textContent='Card from Box '+fcCurrentBox+' | '+fcCards.length+' total cards';
+}
+function flipCard(){
+  const el=document.getElementById('fc-card');
+  if(!fcFlipped){ el.classList.add('flipped'); fcFlipped=true; }
+  else { el.classList.remove('flipped'); fcFlipped=false; }
+}
+function fcMove(to){
+  const arr=fcBoxes[fcCurrentBox];
+  const pos=arr.indexOf(fcCurrentIdx);
+  if(pos!==-1) arr.splice(pos,1);
+  if(!fcBoxes[to]) fcBoxes[to]=[];
+  fcBoxes[to].push(fcCurrentIdx);
+  fcSave();
+  fcPickCard();
+  fcUpdateBars();
+}
+function fcAgain(){ playWrong(); fcMove(1); }
+function fcGotIt(){ playCorrect(); fcMove(Math.min(fcCurrentBox+1,5)); }
+function fcEasy(){ playCorrect(); fcMove(5); }
+function fcSkip(){ fcPickCard(); }
+function fcUpdateBars(){
+  for(let i=1;i<=5;i++){
+    document.getElementById('bb'+i).textContent='Box '+i+': '+(fcBoxes[i]?fcBoxes[i].length:0);
+  }
+}
+document.addEventListener('keydown',function(e){
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA') return;
+  if(e.code==='Space'){e.preventDefault();flipCard();}
+  else if(e.key==='1') fcAgain();
+  else if(e.key==='2') fcGotIt();
+  else if(e.key==='3') fcEasy();
+  else if(e.key==='s'||e.key==='S') fcSkip();
+});
+
+// ==================== FINAL QUIZ ====================
+const quizData = [
+  // Q1 D1 - correct: B
+  {
+    q:"Which security principle ensures that data remains accurate and has not been altered by unauthorized users?",
+    opts:["Availability","Integrity","Confidentiality","Non-repudiation"],
+    correct:1, topic:"D1: CIA Triad – Integrity"
+  },
+  // Q2 D1 crypto - correct: D
+  {
+    q:"Which encryption algorithm is the current global standard and supports key sizes of 128, 192, and 256 bits?",
+    opts:["RSA","3DES","Blowfish","AES"],
+    correct:3, topic:"D1: Cryptography – AES"
+  },
+  // Q3 D2 - correct: A
+  {
+    q:"Which type of attack involves an adversary positioning themselves between two parties to intercept or modify communications?",
+    opts:["Man-in-the-Middle (MitM)","DDoS","SQL Injection","Ransomware"],
+    correct:0, topic:"D2: Network Attacks – MitM"
+  },
+  // Q4 D2 social eng - correct: C
+  {
+    q:"Which social engineering attack specifically targets high-level executives with highly personalized phishing messages?",
+    opts:["Smishing","Vishing","Whaling","Pretexting"],
+    correct:2, topic:"D2: Social Engineering – Whaling"
+  },
+  // Q5 D3 - correct: B
+  {
+    q:"In which cloud service model does the customer ONLY manage their application code and data?",
+    opts:["IaaS","PaaS","SaaS","On-premises"],
+    correct:1, topic:"D3: Cloud Models – PaaS"
+  },
+  // Q6 D3 network - correct: D
+  {
+    q:"Which network security zone houses public-facing servers to provide a buffer between the internet and the internal network?",
+    opts:["VLAN","Air Gap","Zero Trust Zone","DMZ"],
+    correct:3, topic:"D3: Architecture – DMZ"
+  },
+  // Q7 D4 - correct: A
+  {
+    q:"Which security solution provides centralized logging, real-time monitoring, and correlation of security events across an enterprise?",
+    opts:["SIEM","EDR","DLP","WAF"],
+    correct:0, topic:"D4: Monitoring – SIEM"
+  },
+  // Q8 D4 IR - correct: C
+  {
+    q:"During which phase of Incident Response is the ROOT CAUSE of the breach removed?",
+    opts:["Detection & Analysis","Containment","Eradication","Recovery"],
+    correct:2, topic:"D4: Incident Response – Eradication Phase"
+  },
+  // Q9 D5 - correct: B
+  {
+    q:"Under GDPR, what is the maximum timeframe for reporting a personal data breach to the supervisory authority?",
+    opts:["24 hours","72 hours","7 days","30 days"],
+    correct:1, topic:"D5: Compliance – GDPR Breach Notification"
+  },
+  // Q10 D5 BCP - correct: D
+  {
+    q:"Which metric defines the maximum amount of data loss (measured in time) that is acceptable after a disaster?",
+    opts:["MTTR","RTO","MTBF","RPO"],
+    correct:3, topic:"D5: BCP/DR – Recovery Point Objective"
+  }
+];
+
+let qIdx=0, qScore=0, qAnswered=false, qMissed=[];
+
+function renderQuestion(){
+  const q=quizData[qIdx];
+  document.getElementById('q-prog').style.width=((qIdx/quizData.length)*100)+'%';
+  document.getElementById('q-text').textContent='Q'+(qIdx+1)+'/'+quizData.length+': '+q.q;
+  const optsDiv=document.getElementById('q-opts');
+  optsDiv.innerHTML='';
+  q.opts.forEach((opt,i)=>{
+    const btn=document.createElement('button');
+    btn.className='quiz-opt';
+    btn.textContent='ABCD'[i]+') '+opt;
+    btn.onclick=()=>quizAnswer(i,btn);
+    optsDiv.appendChild(btn);
+  });
+  document.getElementById('q-next-btn').style.display='none';
+  qAnswered=false;
+}
+function quizAnswer(idx,btn){
+  if(qAnswered) return;
+  qAnswered=true;
+  const q=quizData[qIdx];
+  const opts=document.querySelectorAll('.quiz-opt');
+  opts.forEach(o=>o.disabled=true);
+  if(idx===q.correct){
+    btn.classList.add('q-correct');
+    qScore++;
+    playCorrect();
+  } else {
+    btn.classList.add('q-wrong');
+    opts[q.correct].classList.add('q-correct');
+    qMissed.push(q.topic);
+    playWrong();
+  }
+  document.getElementById('q-next-btn').style.display='block';
+}
+function quizNext(){
+  qIdx++;
+  if(qIdx<quizData.length){
+    renderQuestion();
+  } else {
+    showQuizResult();
+  }
+}
+function showQuizResult(){
+  document.getElementById('quiz-area').style.display='none';
+  const result=document.getElementById('quiz-result');
+  result.style.display='block';
+  document.getElementById('q-prog').style.width='100%';
+  const pct=Math.round((qScore/quizData.length)*100);
+  let emoji = pct===100?'🎉 Perfect Score!':pct>=80?'🚀 Great Work!':pct>=60?'📡 Keep Studying':'💥 Back to the Lab';
+  document.getElementById('quiz-score-text').textContent=emoji+' — '+qScore+'/'+quizData.length+' ('+pct+'%)';
+  let fb='';
+  if(pct===100){
+    fb='Flawless victory! Professor Farnsworth has declared you "Good news, everyone — this one\'s competent!" Leela is impressed.';
+    launchConfetti(); playVictory();
+  } else if(qMissed.length){
+    fb='Review these topics before your exam:\n• '+qMissed.join('\n• ');
+  } else {
+    fb='Excellent performance! Hermes would file a commendation form on your behalf.';
+  }
+  document.getElementById('quiz-feedback').style.whiteSpace='pre-line';
+  document.getElementById('quiz-feedback').textContent=fb;
+}
+function resetQuiz(){
+  qIdx=0; qScore=0; qAnswered=false; qMissed=[];
+  document.getElementById('quiz-area').style.display='block';
+  document.getElementById('quiz-result').style.display='none';
+  renderQuestion();
+}
+
+// ==================== INIT ====================
+fcInit();
+renderQuestion();
+</script>
+</body>
+</html>
