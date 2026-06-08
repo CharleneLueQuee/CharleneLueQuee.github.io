@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Danny Phantom 👻 Security+ SY0-701 Study Hub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800;900&display=swap');
+:root{
+  --bg:#F0F8FF;
+  --nav:#1A1A3E;
+  --accent:#00B4FF;
+  --accent2:#00FF87;
+  --ghost-green:#00FF87;
+  --ghost-blue:#00B4FF;
+  --ghost-purple:#7C4DFF;
+  --dp-white:#FFFFFF;
+  --dp-black:#1A1A2E;
+  --text:#1A1A2E;
+  --muted:#5A6080;
+  --card-bg:#FFFFFF;
+  --border:#C8E8FF;
+  --surface:#EAF5FF;
+  --hero-bg:linear-gradient(135deg,#0D1B4E 0%,#1A0A4E 40%,#0A2E4E 100%);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+a{color:var(--ghost-blue);text-decoration:none}
+a:hover{text-decoration:underline}
+h1,h2,h3{font-family:'Bangers',cursive;letter-spacing:1px}
+
+/* ═══ PARTICLES ═══ */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.particle{position:absolute;font-size:1.6rem;opacity:0;animation:floatUp 8s linear infinite}
+@keyframes floatUp{0%{transform:translateY(100vh) rotate(0deg);opacity:0}10%{opacity:.35}90%{opacity:.2}100%{transform:translateY(-10vh) rotate(360deg);opacity:0}}
+
+/* ═══ NAV ═══ */
+nav{background:var(--nav);display:flex;align-items:center;padding:10px 20px;gap:10px;flex-wrap:wrap;position:sticky;top:0;z-index:500;box-shadow:0 3px 20px rgba(0,0,0,.5);border-bottom:3px solid var(--ghost-green)}
+.nav-brand{font-family:'Bangers',cursive;font-size:1.3rem;color:var(--ghost-green);white-space:nowrap;text-shadow:0 0 10px rgba(0,255,135,.5);letter-spacing:2px}
+.nav-links{display:flex;gap:4px;flex-wrap:wrap;align-items:center;margin-left:auto}
+.tnl{color:rgba(255,255,255,.85);font-size:.8rem;padding:5px 12px;border-radius:8px;transition:all .2s;white-space:nowrap;text-decoration:none!important;font-weight:700;border:1.5px solid transparent}
+.tnl:hover{background:rgba(0,255,135,.15);color:var(--ghost-green);border-color:rgba(0,255,135,.3);text-decoration:none!important}
+.cnd{position:relative;display:inline-block}
+.cnb{background:rgba(0,180,255,.2);border:1.5px solid rgba(0,180,255,.5);color:#fff;font-size:.8rem;padding:5px 12px;border-radius:8px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;transition:all .2s;white-space:nowrap}
+.cnb:hover{background:rgba(0,180,255,.35)}
+.cnm{display:none;position:absolute;top:calc(100% + 6px);right:0;background:#1A1A3E;border:2px solid var(--ghost-blue);border-radius:12px;min-width:240px;z-index:600;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.cnm a{display:block;padding:9px 16px;font-size:.82rem;color:rgba(255,255,255,.8);border-bottom:1px solid rgba(255,255,255,.08);transition:background .15s;text-decoration:none!important;font-weight:600}
+.cnm a:last-child{border-bottom:none}
+.cnm a:hover{background:rgba(0,180,255,.2);color:#fff}
+.cnm a.active-page{color:var(--ghost-green);font-weight:800}
+
+/* ═══ JUMP BAR ═══ */
+.jbar{background:var(--nav);border-bottom:2px solid var(--ghost-blue);padding:8px 16px;display:flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.jbtn{background:rgba(0,180,255,.12);border:1.5px solid rgba(0,180,255,.4);color:rgba(255,255,255,.85);padding:4px 12px;border-radius:20px;font-size:.72rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;text-decoration:none!important;display:inline-block;font-family:'Nunito',sans-serif}
+.jbtn:hover{border-color:var(--ghost-green);color:var(--ghost-green);background:rgba(0,255,135,.12);text-decoration:none!important}
+
+/* ═══ HERO ═══ */
+.hero{background:var(--hero-bg);padding:50px 20px 40px;text-align:center;position:relative;overflow:hidden;border-bottom:4px solid var(--ghost-green)}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 30% 50%,rgba(0,180,255,.15) 0%,transparent 60%),radial-gradient(circle at 70% 50%,rgba(0,255,135,.1) 0%,transparent 60%)}
+.hero-icon{width:110px;height:110px;border-radius:50%;background:radial-gradient(circle,#0D3B6E,#050A1A);border:4px solid var(--ghost-green);display:flex;align-items:center;justify-content:center;font-size:3.5rem;margin:0 auto 20px;box-shadow:0 0 30px rgba(0,255,135,.5),0 0 60px rgba(0,180,255,.2);animation:pulse 3s ease-in-out infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 30px rgba(0,255,135,.5),0 0 60px rgba(0,180,255,.2)}50%{box-shadow:0 0 50px rgba(0,255,135,.8),0 0 90px rgba(0,180,255,.4)}}
+.hero-badge{display:inline-block;background:linear-gradient(135deg,var(--ghost-green),var(--ghost-blue));color:#050A1A;padding:6px 20px;border-radius:30px;font-size:.78rem;font-weight:900;letter-spacing:.5px;margin-bottom:18px;box-shadow:0 4px 15px rgba(0,255,135,.4)}
+.hero h1{font-family:'Bangers',cursive;font-size:3.2rem;color:#fff;text-shadow:0 0 20px rgba(0,255,135,.4),3px 3px 0 rgba(0,0,0,.5);letter-spacing:3px;margin-bottom:8px}
+.hero p{color:rgba(255,255,255,.8);font-size:1rem;max-width:600px;margin:0 auto;font-weight:600}
+
+/* ═══ SECTION CONTAINER ═══ */
+.ps{padding:36px 20px;max-width:1000px;margin:0 auto;position:relative;z-index:1}
+.section-title{font-family:'Bangers',cursive;font-size:2rem;color:var(--dp-black);display:flex;align-items:center;gap:10px;margin-bottom:6px;letter-spacing:1px}
+.section-sub{color:var(--muted);font-size:.88rem;margin-bottom:20px}
+hr.divider{border:none;border-top:3px solid var(--border);margin:0}
+
+/* ═══ CARDS ═══ */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--card-bg);border:2.5px solid var(--border);border-radius:16px;padding:18px;transition:all .25s;box-shadow:0 4px 12px rgba(0,0,0,.06)}
+.card:hover{transform:translateY(-4px) rotate(-0.5deg);border-color:var(--ghost-blue);box-shadow:0 10px 30px rgba(0,180,255,.2)}
+.card-icon{font-size:2rem;margin-bottom:8px}
+.card h4{font-family:'Bangers',cursive;font-size:1.3rem;color:var(--dp-black);margin-bottom:6px;letter-spacing:.5px}
+.card p{font-size:.85rem;color:var(--muted);line-height:1.6}
+.role-badge{display:inline-block;padding:3px 12px;border-radius:20px;font-size:.72rem;font-weight:800;margin-bottom:8px;letter-spacing:.3px}
+
+/* ═══ ACCORDION ═══ */
+.acc-item{background:var(--card-bg);border:2.5px solid var(--border);border-radius:14px;margin-bottom:10px;overflow:hidden;transition:all .3s}
+.acc-item.open{border-color:var(--ghost-blue);box-shadow:0 6px 20px rgba(0,180,255,.15)}
+.acc-head{padding:16px 20px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--surface);transition:background .2s}
+.acc-head:hover{background:#E0F0FF}
+.acc-title{font-family:'Bangers',cursive;font-size:1.3rem;color:var(--dp-black);letter-spacing:.5px;display:flex;align-items:center;gap:8px}
+.acc-arrow{font-size:1.2rem;transition:transform .3s;color:var(--ghost-blue)}
+.acc-item.open .acc-arrow{transform:rotate(180deg)}
+.acc-body{display:none;padding:0 20px 20px;animation:slideIn .25s ease}
+.acc-item.open .acc-body{display:block}
+@keyframes slideIn{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.topic-tag{display:inline-block;padding:3px 10px;border-radius:12px;font-size:.72rem;font-weight:700;margin:3px;cursor:default}
+
+/* ═══ DOMAIN COLORS ═══ */
+.d1{background:#E8F4FF;color:#0077CC;border:1.5px solid #99CCFF}
+.d2{background:#FFF0E8;color:#CC5500;border:1.5px solid #FFAA77}
+.d3{background:#E8FFE8;color:#007730;border:1.5px solid #77CC77}
+.d4{background:#F0E8FF;color:#6600CC;border:1.5px solid #AA77FF}
+.d5{background:#FFF8E8;color:#CC8800;border:1.5px solid #FFCC55}
+
+/* ═══ INLINE MINI QUIZ ═══ */
+.mini-q{background:linear-gradient(135deg,#EAF5FF,#F0F8E8);border:2px solid var(--border);border-radius:12px;padding:14px;margin-top:14px}
+.mini-q p.qtext{font-size:.88rem;font-weight:800;color:var(--dp-black);margin-bottom:10px}
+.mini-opt{display:block;padding:7px 12px;border-radius:8px;border:1.5px solid var(--border);background:#fff;cursor:pointer;font-size:.82rem;color:var(--text);margin-bottom:6px;transition:all .2s;font-weight:600;text-align:left;width:100%;font-family:'Nunito',sans-serif}
+.mini-opt:hover:not(:disabled){border-color:var(--ghost-blue);background:#EAF5FF}
+.mini-opt.correct{border-color:#00AA44;background:#DDFFEE;color:#006622;font-weight:800}
+.mini-opt.wrong{border-color:#CC3355;background:#FFEEEE;color:#881122;font-weight:800}
+.mini-opt:disabled{cursor:default}
+.mini-fb{font-size:.8rem;margin-top:6px;padding:8px;border-radius:8px;font-weight:700;display:none}
+.mini-fb.show{display:block}
+.mini-reset{margin-top:8px;padding:4px 14px;border-radius:8px;border:none;background:var(--surface);color:var(--muted);cursor:pointer;font-size:.75rem;font-weight:700;font-family:'Nunito',sans-serif;display:none}
+.mini-reset.show{display:inline-block}
+
+/* ═══ FLASHCARDS ═══ */
+.fc-deck-wrap{background:var(--card-bg);border:2.5px solid var(--border);border-radius:16px;padding:24px;margin-bottom:28px}
+.leitner-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:14px}
+.lbox{background:var(--surface);border:2px solid var(--border);border-radius:10px;padding:8px 14px;font-size:.72rem;text-align:center;min-width:70px}
+.lbox span{display:block;font-size:1.3rem;font-weight:900;line-height:1.2}
+.lb1 span{color:#D4788F}.lb2 span{color:#C75E00}.lb3 span{color:#008855}.lb4 span{color:#5533BB}.lb5 span{color:#0088CC}
+.fc-toolbar{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.fc-tbtn{padding:5px 14px;border-radius:8px;border:2px solid var(--border);cursor:pointer;font-size:.8rem;font-weight:700;background:var(--surface);color:var(--muted);font-family:'Nunito',sans-serif;transition:all .2s}
+.fc-tbtn:hover{border-color:var(--ghost-blue);color:var(--ghost-blue)}
+.fc-tbtn.active{background:var(--ghost-blue);color:#fff;border-color:var(--ghost-blue)}
+.fc-counter{text-align:center;font-size:.83rem;color:var(--muted);margin-bottom:8px;font-weight:700}
+.fc-prog{height:8px;background:var(--border);border-radius:4px;overflow:hidden;margin-bottom:14px}
+.fc-prog-fill{height:100%;border-radius:4px;transition:width .4s;background:linear-gradient(90deg,var(--ghost-blue),var(--ghost-green))}
+.fc-card{perspective:1200px;cursor:pointer;height:220px;margin-bottom:16px}
+.fc-inner{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d}
+.fc-card.flipped .fc-inner{transform:rotateY(180deg)}
+.fc-front,.fc-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;flex-direction:column;border:2.5px solid}
+.fc-front{background:linear-gradient(135deg,#E8F4FF,#F8FFEE);border-color:var(--ghost-blue)}
+.fc-front::before{content:'❓ QUESTION';position:absolute;top:12px;left:14px;font-size:.62rem;letter-spacing:1.5px;color:var(--muted);font-weight:800}
+.fc-back{transform:rotateY(180deg);background:linear-gradient(135deg,#E8FFEE,#E8F4FF);border-color:var(--ghost-green)}
+.fc-back::before{content:'✅ ANSWER';position:absolute;top:12px;left:14px;font-size:.62rem;letter-spacing:1.5px;font-weight:800;color:#00885A}
+.fc-front p,.fc-back p{font-size:.92rem;line-height:1.6;color:var(--text);font-weight:700}
+.fc-hint{position:absolute;bottom:10px;font-size:.65rem;color:var(--muted);font-weight:600}
+.fc-box-ind{position:absolute;top:12px;right:14px;font-size:.65rem;font-weight:800;padding:2px 8px;border-radius:8px}
+.fc-btn-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.fc-btn{padding:9px 20px;border-radius:10px;border:none;cursor:pointer;font-size:.85rem;font-weight:800;transition:all .2s;font-family:'Nunito',sans-serif}
+.fc-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.fc-again{background:#FFE8EE;color:#CC3355;border:2px solid #FFAACC}
+.fc-good{background:#E8FFEE;color:#006633;border:2px solid #77DDAA}
+.fc-easy{background:#E8F8FF;color:#0066AA;border:2px solid #77BBFF}
+.fc-skip{background:#F5F5F5;color:#888;border:2px solid #CCC}
+.fc-done-screen{text-align:center;padding:32px 16px}
+.fc-done-score{font-size:3rem;font-weight:900;font-family:'Bangers',cursive;letter-spacing:2px}
+.key-hint{text-align:center;font-size:.72rem;color:var(--muted);margin-top:8px;font-weight:600}
+
+/* ═══ QUIZ ═══ */
+.quiz-wrap{background:var(--card-bg);border:2.5px solid var(--border);border-radius:16px;padding:24px;margin-bottom:28px}
+.qz-meta{font-size:.8rem;color:var(--muted);font-weight:700}
+.qz-q-text{font-size:.95rem;font-weight:800;color:var(--dp-black);margin-bottom:14px;line-height:1.5}
+.qz-choice{display:flex;align-items:flex-start;gap:10px;padding:11px 16px;border-radius:10px;border:2px solid var(--border);background:var(--surface);cursor:pointer;transition:all .2s;font-size:.87rem;color:var(--text);line-height:1.5;margin-bottom:8px;font-weight:600;width:100%;text-align:left;font-family:'Nunito',sans-serif}
+.qz-choice:hover:not(:disabled){border-color:var(--ghost-blue);background:#E8F4FF}
+.qz-choice.correct{border-color:#00AA44;background:#DDFFEE;color:#005522;font-weight:800}
+.qz-choice.wrong{border-color:#CC3355;background:#FFEEEE;color:#881122;font-weight:800}
+.qz-choice:disabled{cursor:default}
+.qz-exp{margin-top:10px;background:#F0F8FF;border-left:4px solid var(--ghost-blue);border-radius:0 10px 10px 0;padding:10px 14px;font-size:.83rem;color:var(--muted);line-height:1.6;display:none;font-weight:600}
+.quiz-nav{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.qbtn{padding:8px 18px;border-radius:10px;border:none;cursor:pointer;font-size:.82rem;font-weight:800;transition:all .2s;font-family:'Nunito',sans-serif}
+.qbtn-submit{background:var(--ghost-blue);color:#fff}
+.qbtn-next{background:var(--dp-black);color:#fff}
+.qbtn-reset{background:var(--surface);color:var(--muted);border:2px solid var(--border)}
+.qbtn:hover{transform:translateY(-1px);filter:brightness(1.1)}
+.quiz-final{text-align:center;padding:24px}
+.quiz-score-big{font-family:'Bangers',cursive;font-size:4rem;letter-spacing:3px}
+.missed-list{text-align:left;margin-top:12px;background:var(--surface);border-radius:10px;padding:12px 16px;font-size:.84rem;line-height:1.8}
+
+/* ═══ ADVENTURE ═══ */
+.adv-scene{background:var(--card-bg);border:2.5px solid var(--border);border-radius:16px;padding:24px;display:none;animation:fadeIn .4s ease}
+.adv-scene.active{display:block}
+.adv-narr{font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:18px;font-weight:600}
+.adv-choice{display:block;padding:10px 16px;border-radius:10px;border:2px solid var(--border);background:var(--surface);cursor:pointer;font-size:.87rem;color:var(--text);margin-bottom:8px;transition:all .2s;font-weight:700;text-align:left;width:100%;font-family:'Nunito',sans-serif}
+.adv-choice:hover{border-color:var(--ghost-blue);background:#E8F4FF;transform:translateX(4px)}
+.adv-wrong{color:#CC3355;font-size:.85rem;font-weight:800;margin:8px 0;display:none}
+.adv-phase-badge{display:inline-block;padding:4px 14px;border-radius:20px;font-size:.75rem;font-weight:800;margin-bottom:12px}
+
+/* ═══ IR PHASES ═══ */
+.ir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px}
+.ir-card{padding:16px;border-radius:14px;text-align:center;border:2.5px solid}
+.ir-card h4{font-family:'Bangers',cursive;font-size:1.2rem;margin-bottom:6px;letter-spacing:.5px}
+.ir-card p{font-size:.8rem;line-height:1.5}
+.ir-tag{display:inline-block;font-size:.68rem;font-weight:800;padding:2px 10px;border-radius:10px;margin-top:8px;background:rgba(0,0,0,.08)}
+
+/* ═══ STUDY LINKS ═══ */
+.link-card{background:var(--card-bg);border:2.5px solid var(--border);border-radius:14px;padding:18px;text-align:center;transition:all .25s}
+.link-card:hover{transform:translateY(-3px);border-color:var(--ghost-blue);box-shadow:0 8px 24px rgba(0,180,255,.15)}
+.link-card .lc-icon{font-size:2.2rem;margin-bottom:8px}
+.link-card h4{font-family:'Bangers',cursive;font-size:1.2rem;color:var(--dp-black);margin-bottom:5px;letter-spacing:.5px}
+.link-card p{font-size:.8rem;color:var(--muted);margin-bottom:10px}
+.link-card a.go-btn{display:inline-block;padding:7px 18px;border-radius:20px;background:linear-gradient(135deg,var(--ghost-blue),var(--ghost-green));color:#050A1A;font-weight:800;font-size:.8rem;text-decoration:none!important}
+
+/* ═══ CHRISTMAS PORT GAME ═══ */
+.xmas-game{background:linear-gradient(135deg,#E8F4FF 0%,#E8FFEE 100%);border:3px solid #77BBEE;border-radius:18px;padding:24px;position:relative;overflow:hidden}
+.xmas-game::before{content:'❄️⛄🎄🎁❄️⛄🎄🎁❄️⛄🎄🎁';position:absolute;top:8px;left:0;width:200%;font-size:1.2rem;opacity:.3;white-space:nowrap;animation:snowScroll 15s linear infinite}
+@keyframes snowScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.xmas-title{font-family:'Bangers',cursive;font-size:2rem;color:#0055AA;text-align:center;margin-bottom:6px;letter-spacing:2px;text-shadow:1px 1px 0 #fff}
+.xmas-sub{text-align:center;color:#3366AA;font-size:.88rem;font-weight:700;margin-bottom:18px}
+.port-q{background:#fff;border:2px solid #99CCFF;border-radius:12px;padding:16px;margin-bottom:14px}
+.port-q-text{font-weight:800;color:var(--dp-black);margin-bottom:12px;font-size:.92rem;line-height:1.5}
+.port-input{width:100%;padding:10px 14px;border:2px solid var(--border);border-radius:10px;font-size:.92rem;font-family:'Nunito',sans-serif;font-weight:700;color:var(--text);background:#F8FCFF;transition:border-color .2s}
+.port-input:focus{outline:none;border-color:var(--ghost-blue)}
+.port-check{padding:8px 20px;border-radius:20px;border:none;background:linear-gradient(135deg,#0088CC,#00AAFF);color:#fff;font-weight:800;cursor:pointer;font-size:.85rem;font-family:'Nunito',sans-serif;margin-top:8px}
+.port-fb{font-size:.82rem;font-weight:800;margin-top:8px;padding:6px 12px;border-radius:8px;display:none}
+.port-fb.correct{background:#DDFFEE;color:#005522;display:block}
+.port-fb.wrong{background:#FFEEEE;color:#881122;display:block}
+.xmas-score{font-family:'Bangers',cursive;font-size:1.8rem;text-align:center;color:#0055AA;margin-top:16px}
+.xmas-progress{height:10px;background:#C8E8FF;border-radius:5px;overflow:hidden;margin-bottom:16px}
+.xmas-progress-fill{height:100%;background:linear-gradient(90deg,#0088CC,#00CCAA);border-radius:5px;transition:width .5s}
+#xmas-confetti{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;display:none}
+
+/* ═══ SOUND TOGGLE ═══ */
+#sound-toggle{position:fixed;bottom:24px;right:24px;background:var(--nav);border:2.5px solid var(--ghost-green);color:var(--ghost-green);width:46px;height:46px;border-radius:50%;font-size:1.3rem;cursor:pointer;z-index:800;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 16px rgba(0,0,0,.3);transition:all .2s}
+#sound-toggle:hover{transform:scale(1.1);box-shadow:0 6px 20px rgba(0,255,135,.3)}
+
+/* ═══ CONFETTI ═══ */
+.confetti-piece{position:absolute;width:10px;height:10px;border-radius:2px;animation:confettiFall 3s ease-in forwards}
+@keyframes confettiFall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(100vh) rotate(720deg);opacity:0}}
+
+/* ═══ FOOTER ═══ */
+footer{background:var(--nav);padding:28px 20px;text-align:center;color:rgba(255,255,255,.5);font-size:.78rem;border-top:3px solid var(--ghost-green)}
+footer a{color:var(--ghost-green);font-weight:700}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:600px){.hero h1{font-size:2.2rem}.ps{padding:20px 14px}.cgrid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- SOUND TOGGLE -->
+<button id="sound-toggle" title="Toggle Sound" onclick="toggleSound()">🔇</button>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">👻 Danny Phantom</div>
+  <div class="nav-links">
+    <a href="https://charleneluequee.github.io/" class="tnl">🏠 Portfolio</a>
+    <a href="security-notes.html" class="tnl">📚 Study Hub</a>
+    <div class="cnd">
+      <button class="cnb" onclick="toggleCN(this)">🎭 All Cartoons ▾</button>
+      <div class="cnm">
+        <a href="cartoon-spongebob.html">🧽 SpongeBob SquarePants</a>
+        <a href="cartoon-ben10.html">⌚ Ben 10</a>
+        <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+        <a href="cartoon-avatar.html">🌊 Avatar: The Last Airbender</a>
+        <a href="cartoon-knd.html">🔢 Codename: Kids Next Door</a>
+        <a href="cartoon-xmen.html">⚡ X-Men '97</a>
+        <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+        <a href="cartoon-futurama.html">🤖 Futurama</a>
+        <a href="cartoon-danny.html" class="active-page">👻 Danny Phantom</a>
+        <a href="cartoon-fairyodd.html">🌟 The Fairly OddParents</a>
+        <a href="cartoon-magicbus.html">🚌 The Magic School Bus</a>
+        <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+        <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+        <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+        <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero" id="top">
+  <div class="hero-icon">👻</div>
+  <div class="hero-badge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <h1>Ghost Zone Security+</h1>
+  <p>Danny Fenton can't tell anyone he's half ghost — just like you can't let threat actors steal your secrets. Study all 5 Security+ domains through the lens of Amity Park's greatest ghostly defender.</p>
+</div>
+
+<!-- JUMP BAR -->
+<div class="jbar" id="jumpbar">
+  <a href="#topics" class="jbtn">📋 Topics</a>
+  <a href="#study-guide" class="jbtn">📖 Study Guide</a>
+  <a href="#characters" class="jbtn">🧑‍🤝‍🧑 Characters</a>
+  <a href="#analogies" class="jbtn">🔍 Analogies</a>
+  <a href="#notes" class="jbtn">📝 Study Notes</a>
+  <a href="#ir-lifecycle" class="jbtn">🚨 IR Lifecycle</a>
+  <a href="#detection" class="jbtn">🔭 Detection</a>
+  <a href="#roles" class="jbtn">🎭 Roles</a>
+  <a href="#reporting" class="jbtn">📊 Reporting</a>
+  <a href="#post-incident" class="jbtn">📋 Post-Incident</a>
+  <a href="#adventure" class="jbtn">⚔️ Adventure</a>
+  <a href="#links" class="jbtn">🔗 Links</a>
+  <a href="#flashcards" class="jbtn">🃏 Flashcards</a>
+  <a href="#xmas-game" class="jbtn">🎄 Port Game</a>
+  <a href="#quiz" class="jbtn">🧠 Quiz</a>
+</div>
+
+<!-- SECTION 4: TOPICS -->
+<hr class="divider" id="topics">
+<div class="ps">
+  <div class="section-title">📋 Topics Covered</div>
+  <p class="section-sub">All 5 CompTIA Security+ SY0-701 domains mapped to Ghost Zone concepts.</p>
+  <div id="topics-acc"></div>
+</div>
+
+<!-- SECTION 5: STUDY GUIDE -->
+<hr class="divider" id="study-guide">
+<div class="ps" style="background:linear-gradient(180deg,#EAF5FF 0%,transparent 100%)">
+  <div class="section-title">📖 Domain Study Guide</div>
+  <p class="section-sub">Mnemonics to lock in all 5 domains — Danny Phantom style!</p>
+  <div id="study-acc"></div>
+</div>
+
+<!-- SECTION 6: CHARACTERS -->
+<hr class="divider" id="characters">
+<div class="ps">
+  <div class="section-title">🧑‍🤝‍🧑 Character Security Mapping</div>
+  <p class="section-sub">Every character in Amity Park plays a security role in your enterprise.</p>
+  <div class="cgrid" id="char-grid"></div>
+</div>
+
+<!-- SECTION 7: ANALOGIES -->
+<hr class="divider" id="analogies">
+<div class="ps" style="background:linear-gradient(180deg,#F0FFF0 0%,transparent 100%)">
+  <div class="section-title">🔍 Deep-Dive Analogies</div>
+  <p class="section-sub">Ghost Zone scenarios that make Security+ click.</p>
+  <div class="cgrid" id="analogy-grid"></div>
+</div>
+
+<!-- SECTION 8: STUDY NOTES -->
+<hr class="divider" id="notes">
+<div class="ps">
+  <div class="section-title">📝 Study Notes</div>
+  <p class="section-sub">High-frequency exam topics you need to nail.</p>
+  <div class="cgrid" id="notes-grid"></div>
+</div>
+
+<!-- SECTION 9: IR LIFECYCLE -->
+<hr class="divider" id="ir-lifecycle">
+<div class="ps" style="background:linear-gradient(180deg,#FFF8E0 0%,transparent 100%)">
+  <div class="section-title">🚨 Incident Response Lifecycle</div>
+  <p class="section-sub">Domain 4.8 — The 5 phases every analyst must know.</p>
+  <div class="ir-grid" id="ir-grid"></div>
+</div>
+
+<!-- SECTION 10: DETECTION -->
+<hr class="divider" id="detection">
+<div class="ps">
+  <div class="section-title">🔭 Detection Deep Dive</div>
+  <p class="section-sub">How Danny's ghost sense maps to real-world detection tools.</p>
+  <div class="card" style="margin-bottom:16px">
+    <p style="font-size:.9rem;line-height:1.8;color:var(--text);font-weight:600">
+      Danny's <strong>Ghost Sense</strong> tingles when a ghost is near — this is <strong>passive detection</strong>, like an IDS (Intrusion Detection System). It alerts but doesn't act automatically. When Danny actively hunts ghosts, he becomes an <strong>IPS</strong> (Intrusion Prevention System) — he intercepts and blocks threats in real time.<br><br>
+      <strong>SIEM</strong> correlates multiple ghost sightings (log sources) to identify patterns. Tucker's <strong>PDA/laptop</strong> is the SIEM console — aggregating alerts from Danny's ghost sense, the Fenton Ghost Scanner, and news reports.<br><br>
+      <strong>Key tools:</strong> Ghost Catcher (EDR) · Fenton Thermos (containment/quarantine) · Specter Speeder (jump server for Ghost Zone access) · Fenton Portal (network gateway with authentication)
+    </p>
+  </div>
+  <div id="detect-quiz"></div>
+</div>
+
+<!-- SECTION 11: ROLES -->
+<hr class="divider" id="roles">
+<div class="ps">
+  <div class="section-title">🎭 Roles & Responsibilities</div>
+  <p class="section-sub">Domain 5.1 — Who owns what in Amity Park's security org chart?</p>
+  <div class="cgrid" id="roles-grid"></div>
+  <div id="roles-quiz" style="margin-top:16px"></div>
+</div>
+
+<!-- SECTION 12: REPORTING -->
+<hr class="divider" id="reporting">
+<div class="ps" style="background:linear-gradient(180deg,#F0F8FF 0%,transparent 100%)">
+  <div class="section-title">📊 Reporting Requirements</div>
+  <p class="section-sub">Internal vs External reporting — what, when, and to whom.</p>
+  <div class="cgrid">
+    <div class="card">
+      <div class="card-icon">🏢</div>
+      <h4>Internal Reporting</h4>
+      <p>Danny reports ghost breaches to Jazz (mental health/awareness), Jack & Maddie (technical response), and Tucker/Sam (operations team). Immediate reporting to the Security team. Log all incidents in the Fenton Ghost Log within <strong>1 hour</strong> of detection.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📡</div>
+      <h4>External Reporting</h4>
+      <p>Major ghost attacks on Amity Park infrastructure require reporting to <strong>GIW</strong> (Governmental cyber authorities) within <strong>72 hours</strong> (GDPR-style). Public announcements coordinated via Mayor Montez. Regulatory bodies notified when critical infrastructure is impacted.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">⏱️</div>
+      <h4>Timeline Standards</h4>
+      <p><strong>Immediate:</strong> Contain active ghost breach.<br><strong>1 hour:</strong> Internal team notified.<br><strong>24 hours:</strong> Management briefed.<br><strong>72 hours:</strong> External regulators (if applicable).<br><strong>30 days:</strong> Final post-incident report.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📋</div>
+      <h4>Documentation</h4>
+      <p>Every incident logged with: timestamp, threat actor (ghost name), attack vector, affected systems, containment actions, eradication steps, chain of custody for any ghost evidence, and remediation recommendations.</p>
+    </div>
+  </div>
+  <div id="report-quiz" style="margin-top:16px"></div>
+</div>
+
+<!-- SECTION 13: POST-INCIDENT -->
+<hr class="divider" id="post-incident">
+<div class="ps">
+  <div class="section-title">📋 Post-Incident Activity</div>
+  <p class="section-sub">Domain 4.8 — What Danny learns after every ghost battle.</p>
+  <div class="cgrid">
+    <div class="card"><div class="card-icon">🎓</div><h4>Lessons Learned</h4><p>After the Ghost Writer incident, Danny learned <em>not</em> to destroy evidence impulsively. Post-incident reviews identify root causes and process gaps. Every ghost battle = a tabletop exercise debrief.</p></div>
+    <div class="card"><div class="card-icon">📈</div><h4>Metrics & KPIs</h4><p>Mean Time To Detect (MTTD) ghost incursions. Mean Time To Respond (MTTR). Number of ghost escapes (false negatives). Fenton Portal uptime (availability metric). Thermos capacity utilization.</p></div>
+    <div class="card"><div class="card-icon">🛡️</div><h4>Training Updates</h4><p>Sam updates the ghost-fighting playbooks. Tucker patches ghost detection software. Jazz delivers security awareness training to Amity Park citizens. Jack & Maddie update the Fenton Works security architecture based on lessons learned.</p></div>
+    <div class="card"><div class="card-icon">🔄</div><h4>Process Improvement</h4><p>Each incident drives updates to: access control policies (who can use the Ghost Portal), monitoring rules (new ghost signatures in the SIEM), containment procedures (better Thermos protocols), and vendor assessments (FrightStuff.com supply chain).</p></div>
+  </div>
+</div>
+
+<!-- SECTION 14: ADVENTURE -->
+<hr class="divider" id="adventure">
+<div class="ps" style="background:linear-gradient(180deg,#EAF5FF 0%,transparent 100%)">
+  <div class="section-title">⚔️ Ghost Zone Incident Response Adventure</div>
+  <p class="section-sub">Guide Danny through a full IR lifecycle — wrong answers will be challenged!</p>
+  <div id="adv-container"></div>
+</div>
+
+<!-- SECTION 15: STUDY LINKS -->
+<hr class="divider" id="links">
+<div class="ps">
+  <div class="section-title">🔗 Study Links</div>
+  <p class="section-sub">Every resource you need to pass SY0-701.</p>
+  <div class="cgrid">
+    <div class="link-card"><div class="lc-icon">📄</div><h4>Study Notes PDF</h4><p>Full study notes (activates on GitHub upload)</p><a href="CompTIA_Security___Study_Notes_.pdf" class="go-btn">Open PDF</a></div>
+    <div class="link-card"><div class="lc-icon">🎯</div><h4>Exam Objectives PDF</h4><p>Official SY0-701 objectives document</p><a href="CompTIA-Security-SY0-701-Exam-Objectives-1.pdf" class="go-btn">Open PDF</a></div>
+    <div class="link-card"><div class="lc-icon">📚</div><h4>Study Guide Book</h4><p>Recommended Security+ study book on Amazon</p><a href="https://amzn.to/4nVi25Y" target="_blank" class="go-btn">View on Amazon</a></div>
+    <div class="link-card"><div class="lc-icon">🎬</div><h4>Professor Messer</h4><p>Free SY0-701 video course — the gold standard</p><a href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank" class="go-btn">Watch Free</a></div>
+    <div class="link-card"><div class="lc-icon">🃏</div><h4>Quizlet Flashcards</h4><p>More community flashcard sets for SY0-701</p><a href="https://quizlet.com/search?query=CompTIA+Security+SY0-701&type=sets" target="_blank" class="go-btn">Search Quizlet</a></div>
+    <div class="link-card"><div class="lc-icon">🏠</div><h4>Study Hub</h4><p>Back to the main Security+ study hub</p><a href="security-notes.html" class="go-btn">Go to Hub</a></div>
+  </div>
+</div>
+
+<!-- SECTION 16: FLASHCARDS -->
+<hr class="divider" id="flashcards">
+<div class="ps">
+  <div class="section-title">🃏 Ghost Zone Leitner Flashcards</div>
+  <p class="section-sub">60+ cards across all 5 domains. Space=Flip, 1=Again, 2=Got It, 3=Easy, S=Skip</p>
+  <div class="fc-deck-wrap" id="fc-main"></div>
+</div>
+
+<!-- CHRISTMAS PORT GAME -->
+<hr class="divider" id="xmas-game">
+<div class="ps">
+  <div class="section-title">🎄 The Fright Before Port Numbers</div>
+  <p class="section-sub">Ghost Writer trapped Danny in a Christmas port-number puzzle! Help him escape by answering every question.</p>
+  <div class="xmas-game">
+    <div class="xmas-title">🎄 Ghost Writer's Port Puzzle 🎄</div>
+    <div class="xmas-sub">"Danny Fenton hates exam prep, he hates it a lot — so I've trapped him inside this port-memorization plot!"</div>
+    <div class="xmas-progress"><div class="xmas-progress-fill" id="xmas-prog-fill" style="width:0%"></div></div>
+    <div id="xmas-score-display" class="xmas-score">Score: 0 / 0</div>
+    <div id="xmas-container"></div>
+    <div id="xmas-final" style="display:none;text-align:center;padding:20px">
+      <div style="font-size:3rem">🎉</div>
+      <div class="xmas-title" id="xmas-final-msg"></div>
+      <p style="color:#3366AA;font-weight:700;margin:8px 0">Danny escaped the Ghost Writer's spell!</p>
+      <button onclick="resetXmas()" style="padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,#0088CC,#00AAFF);color:#fff;font-weight:800;cursor:pointer;font-size:.9rem;font-family:'Nunito',sans-serif;margin-top:8px">🔄 Play Again</button>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 17: QUIZ -->
+<hr class="divider" id="quiz">
+<div class="ps">
+  <div class="section-title">🧠 10-Domain Knowledge Quiz</div>
+  <p class="section-sub">One question per domain area — randomized answers — personalized missed-topic feedback!</p>
+  <div class="quiz-wrap" id="main-quiz-wrap"></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>🛡️ <a href="security-notes.html">Study Hub</a> &nbsp;·&nbsp; <a href="https://charleneluequee.github.io/">Portfolio</a> &nbsp;·&nbsp; Built by Charlene LueQuee</p>
+  <p style="margin-top:6px">Danny Phantom characters are property of their respective owners — used for educational analogy purposes only.</p>
+  <div style="margin-top:12px;display:inline-block;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:8px;padding:6px 20px;font-size:.7rem;letter-spacing:.5px">&copy; 2025 Charlene LueQuee &nbsp;·&nbsp; All Rights Reserved</div>
+</footer>
+
+<canvas id="xmas-confetti"></canvas>
+
+<script>
+/* ═══════════════════════════════════════
+   GLOBAL UTILS
+═══════════════════════════════════════ */
+function toggleCN(btn){var m=btn.nextElementSibling;m.style.display=m.style.display==='block'?'none':'block';}
+document.addEventListener('click',function(e){if(!e.target.closest('.cnd'))document.querySelectorAll('.cnm').forEach(function(m){m.style.display='none';});});
+window.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1);var el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}});});});
+
+/* ═══ PARTICLES ═══ */
+(function(){
+  var emojis=['👻','💚','🌀','⚡','✨','🔮','💙'];
+  var c=document.getElementById('particles');
+  for(var i=0;i<20;i++){
+    var p=document.createElement('div');
+    p.className='particle';
+    p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+    p.style.left=Math.random()*100+'vw';
+    p.style.animationDelay=Math.random()*8+'s';
+    p.style.animationDuration=(6+Math.random()*6)+'s';
+    p.style.fontSize=(1+Math.random()*1.2)+'rem';
+    c.appendChild(p);
+  }
+})();
+
+/* ═══ SOUND ═══ */
+var soundOn=false;
+var AudioContext=window.AudioContext||window.webkitAudioContext;
+var ctx=null;
+function getCtx(){if(!ctx&&AudioContext)ctx=new AudioContext();return ctx;}
+function playTone(freq,type,dur,vol){
+  if(!soundOn)return;
+  var c=getCtx();if(!c)return;
+  var o=c.createOscillator(),g=c.createGain();
+  o.connect(g);g.connect(c.destination);
+  o.type=type||'sine';o.frequency.setValueAtTime(freq,c.currentTime);
+  g.gain.setValueAtTime(vol||0.3,c.currentTime);
+  g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+(dur||0.3));
+  o.start(c.currentTime);o.stop(c.currentTime+(dur||0.3));
+}
+function playCorrect(){playTone(523,'triangle',.15,.2);setTimeout(function(){playTone(659,'triangle',.15,.2);},120);setTimeout(function(){playTone(784,'triangle',.2,.2);},240);}
+function playWrong(){playTone(220,'sawtooth',.15,.2);setTimeout(function(){playTone(196,'sawtooth',.2,.15);},150);}
+function playVictory(){var notes=[523,659,784,1047];notes.forEach(function(n,i){setTimeout(function(){playTone(n,'triangle',.3,.25);},i*120);});}
+function playGhost(){playTone(300,'sine',.1,.15);setTimeout(function(){playTone(250,'sine',.2,.1);},100);}
+function toggleSound(){
+  soundOn=!soundOn;
+  document.getElementById('sound-toggle').textContent=soundOn?'🔊':'🔇';
+  if(soundOn){var c=getCtx();if(c&&c.state==='suspended')c.resume();playGhost();}
+}
+
+/* ═══ CONFETTI ═══ */
+function launchConfetti(){
+  var canvas=document.getElementById('xmas-confetti');
+  canvas.style.display='block';
+  var ctx2=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  var pieces=[];var colors=['#00B4FF','#00FF87','#FF6B9D','#FFD700','#7C4DFF','#FF4444'];
+  for(var i=0;i<150;i++){pieces.push({x:Math.random()*canvas.width,y:-20,vx:(Math.random()-0.5)*6,vy:Math.random()*4+2,color:colors[Math.floor(Math.random()*colors.length)],size:Math.random()*10+5,rot:Math.random()*360,vr:(Math.random()-0.5)*10});}
+  var frame=0;
+  function draw(){
+    ctx2.clearRect(0,0,canvas.width,canvas.height);
+    pieces.forEach(function(p){
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.vr;
+      ctx2.save();ctx2.translate(p.x,p.y);ctx2.rotate(p.rot*Math.PI/180);
+      ctx2.fillStyle=p.color;ctx2.fillRect(-p.size/2,-p.size/2,p.size,p.size);
+      ctx2.restore();
+    });
+    frame++;
+    if(frame<180)requestAnimationFrame(draw);else canvas.style.display='none';
+  }
+  draw();
+  playVictory();
+}
+
+/* ═══════════════════════════════════════
+   SECTION 4: TOPICS ACCORDION
+═══════════════════════════════════════ */
+var topicsData=[
+  {title:'Domain 1 — General Security Concepts',cls:'d1',emoji:'🔐',items:['1.1 Security controls (preventive, detective, corrective, deterrent, compensating, directive)','1.2 CIA Triad, Non-repudiation, AAA, Zero Trust, Physical security','1.3 Change management processes and security impact','1.4 Cryptography: PKI, encryption types, obfuscation, steganography, tokenization, data masking, hashing, digital signatures, certificates']},
+  {title:'Domain 2 — Threats, Vulnerabilities & Mitigations',cls:'d2',emoji:'⚠️',items:['2.1 Threat actors: nation-state, hacktivist, insider threat, organized crime, shadow IT','2.2 Threat vectors: phishing, vishing, smishing, watering hole, supply chain, removable device','2.3 Vulnerabilities: buffer overflow, SQLi, XSS, zero-day, VM escape, misconfigurations','2.4 Indicators of malicious activity: ransomware, trojans, logic bombs, DDoS, on-path attacks','2.5 Mitigation: segmentation, patching, least privilege, hardening, monitoring, encryption']},
+  {title:'Domain 3 — Security Architecture',cls:'d3',emoji:'🏗️',items:['3.1 Architecture models: cloud, IaC, serverless, microservices, air-gapped, segmentation','3.2 Security principles: device placement, zones, firewalls (WAF/NGFW/UTM), IDS/IPS, VPN','3.3 Data protection: classifications, data at rest/transit/use, masking, tokenization, obfuscation','3.4 Resilience: HA, hot/warm/cold sites, backups (3-2-1 rule), RTO/RPO, tabletop exercises']},
+  {title:'Domain 4 — Security Operations',cls:'d4',emoji:'🛡️',items:['4.1 Secure baselines, hardening targets (mobile, workstation, IoT, SCADA)','4.2 Asset management: acquisition, classification, disposal, sanitization','4.3 Vulnerability management: scans, CVSS, CVE, false positives, patch management','4.4 Monitoring: SIEM, DLP, SNMP, NetFlow, EDR/XDR, log aggregation','4.5 Security capabilities: firewall rules, IDS/IPS, DNS filtering, email security (DMARC/DKIM/SPF)','4.6 IAM: MFA, SSO, LDAP, SAML, RBAC, privileged access management, password policies','4.7 Automation: SOAR, scripting, API integrations, orchestration','4.8 Incident response: preparation, detection, containment, eradication, recovery, lessons learned','4.9 Digital forensics: chain of custody, legal hold, e-discovery, acquisition']},
+  {title:'Domain 5 — Security Program Management & Oversight',cls:'d5',emoji:'📊',items:['5.1 Governance: AUP, BCP, DRP, SDLC, change management, roles (owners, controllers, processors)','5.2 Risk management: qualitative/quantitative, SLE/ALE/ARO, risk register, risk appetite','5.3 Third-party risk: vendor assessment, SLA, MOU, NDA, right-to-audit','5.4 Compliance: GDPR, PCI-DSS, HIPAA, data sovereignty, privacy rights','5.5 Audits & assessments: penetration testing (known/unknown/partial), internal/external audit','5.6 Security awareness: phishing simulations, anomalous behavior, user training']}
+];
+(function(){
+  var c=document.getElementById('topics-acc');
+  topicsData.forEach(function(d,i){
+    var el=document.createElement('div');
+    el.className='acc-item';
+    el.id='tacc-'+i;
+    el.innerHTML='<div class="acc-head" onclick="toggleAcc(\'tacc-\'+'+i+',\'tacc\')"><div class="acc-title"><span>'+d.emoji+'</span>'+d.title+'</div><span class="acc-arrow">▼</span></div><div class="acc-body"><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px">'+d.items.map(function(it){return'<span class="topic-tag '+d.cls+'">'+it+'</span>';}).join('')+'</div></div>';
+    c.appendChild(el);
+  });
+})();
+
+/* ═══════════════════════════════════════
+   SECTION 5: STUDY GUIDE MNEMONICS
+═══════════════════════════════════════ */
+var studyData=[
+  {title:'Domain 1 — D·A·N·N·Y',cls:'d1',emoji:'👻',mnemonic:'D·A·N·N·Y',spelled:['D — Defense controls: preventive, detective, corrective, deterrent, compensating, directive','A — Authentication & AAA: who you are, what you can do, what you did','N — Non-repudiation: digital signatures prove identity, can\'t deny actions','N — Network deception: honeypots, honeynets, honeytokens trap attackers','Y — You need crypto: PKI, certs, keys, hashing, obfuscation, steganography'],bullets:[['CIA Triad: Confidentiality (Danny\'s identity secret), Integrity (ghost data unaltered), Availability (Fenton tech works when needed)','Zero Trust: Never trust, always verify — even ghosts who look friendly','Control types: Technical (firewalls), Managerial (policies), Operational (procedures), Physical (locks)'],['PKI: Jack & Maddie = Certificate Authority; Danny\'s ghost form = public key; Danny\'s true identity = private key','Hashing is one-way; salting prevents rainbow table attacks; key stretching makes passwords harder to crack','Steganography = hiding data inside media (ghost artifact in normal-looking locker)'],['Change management: Approval → Testing → Backout plan → Maintenance window → Documentation','Data masking: Danny P****** = only last 4 visible, like a credit card receipt','Obfuscation vs Masking: Obfuscation scrambles meaning; masking hides specific values']],miniQ:{q:'Which technique replaces real data with random tokens that map back via a secure vault?',opts:['Hashing','Encryption','Tokenization','Data masking'],ans:2,fb:'Tokenization replaces sensitive data with non-sensitive tokens. No math relationship — only the vault knows the mapping. Danny\'s ghost form is a token for his real identity!'}},
+  {title:'Domain 2 — P·H·A·N·T·O·M',cls:'d2',emoji:'⚠️',mnemonic:'P·H·A·N·T·O·M',spelled:['P — Phishing / social engineering: ghost impersonation attacks','H — Hacktivists & threat actors: Skulker (APT), Box Ghost (unskilled)','A — Attack surface: every Fenton Works invention is an entry point','N — Network attacks: DDoS (ghost army), DNS poisoning, on-path attacks','T — Trojans & malware: ghost-possessed objects (logic bombs in disguise)','O — OSINT: Vlad researching Danny\'s identity from public sources','M — Mitigations: segmentation, patching, least privilege, hardening'],bullets:[['Threat actors: Nation-state (Vlad with resources), Hacktivist (ideological), Insider threat (possessed Tucker), Unskilled (Box Ghost)','Social engineering: ghost impersonation (pretexting), phishing emails that look like GIW memos, vishing calls from fake officials','Zero-day: unknown vulnerability in Fenton Portal exploited before anyone patches it'],['Malware types: Ransomware (ghost holds portal hostage), RAT (remote access trojan = ghost remote control), Keylogger (Tucker\'s PDA spyware), Logic bomb (dormant ghost-possessed device)','Physical attacks: RFID cloning of Fenton Works badge, tailgating through ghost portal, brute-forcing access codes','DDoS: Ghost army simultaneously attacking — amplified and reflected DDoS using ghost energy'],['Hardening: disable unused Fenton ghost ports, change default ghost portal password, install ghost endpoint protection, remove unnecessary ghost-summoning software','Segmentation: Ghost Zone sectors = VLANs; Amity Park = DMZ; Fenton Works internals = internal LAN; Ghost Portal = gateway','Least privilege: Danny only has permissions he needs for each mission — no standing root access']],miniQ:{q:'Vlad researches Danny\'s identity using public news articles and social media. This is:',opts:['Spear phishing','Active reconnaissance','OSINT','Watering hole attack'],ans:2,fb:'OSINT (Open Source Intelligence) uses publicly available information. Vlad mines public sources — news, social media — to learn about Danny without directly interacting with systems.'}},
+  {title:'Domain 3 — G·H·O·S·T',cls:'d3',emoji:'🏗️',mnemonic:'G·H·O·S·T',spelled:['G — Ghost Zone segmentation: VLANs, DMZ screened subnet, air-gapping','H — High availability: hot/warm/cold Ghost Zones for DR','O — On-path attacks & firewall placement: WAF, NGFW, UTM','S — Secure communication: VPN tunnels between Amity Park zones','T — Trust zones: Zero Trust architecture, implicit vs explicit trust'],bullets:[['Cloud models: Ghost Zone as IaaS (infrastructure), Tucker\'s PDA as SaaS (app), Fenton Portal as PaaS (platform)','Firewall types: WAF protects ghost-fighting web apps; NGFW does deep packet inspection of ecto-energy; UTM combines IDS/IPS/antivirus','Segmentation: Ghost Zone (untrusted external), Amity Park (DMZ), Fenton Works (trusted internal), Ghost Lab (highest security zone)'],['VPN: Danny uses intangibility (tunneling) to travel securely through walls — encrypted tunnel between segments','Fail modes: Fail-open = ghost escapes if Thermos breaks; Fail-closed = portal locks down on breach (safer!)','Inline vs Tap: IPS is inline (blocks Danny\'s ghost sense triggers); IDS is tap/monitor (passive detection only)'],['High availability: Multiple Fenton Thermoses = clustering; Ghost portal backup at FentonWorks2 = warm site; offsite ghost containment = cold site','RTO: How fast can Danny respond to a ghost attack? Recovery Time Objective','RPO: How much ghost damage is acceptable before last clean backup? Recovery Point Objective']],miniQ:{q:'The Fenton Portal crashes and LOCKS DOWN, preventing all ghost activity. This is:',opts:['Fail-open — allows traffic when system fails','Fail-closed — denies traffic when system fails','High availability failover','Load balancing'],ans:1,fb:'Fail-closed (fail-secure) = denies all traffic when a system fails. The opposite, fail-open, would let ghosts pass through — safer in life-safety contexts, but not for security!'}},
+  {title:'Domain 4 — F·E·N·T·O·N',cls:'d4',emoji:'🛡️',mnemonic:'F·E·N·T·O·N',spelled:['F — Forensics & IR: Danny\'s evidence chain of custody for captured ghosts','E — EDR/Endpoint protection: Ghost Catcher for every device','N — Network monitoring: Tucker\'s SIEM aggregating ghost alerts','T — Threat hunting: actively searching Ghost Zone for threats','O — Operations: hardening, vulnerability management, patch cycles','N — Non-repudiation & logging: every ghost breach logged with timestamps'],bullets:[['Incident Response phases: Preparation (Fenton gear ready), Detection (Ghost Sense triggers), Analysis (identify ghost type), Containment (Thermos), Eradication (banish ghost), Recovery (repair damage), Lessons Learned (debrief)','SIEM: Tucker\'s PDA aggregates alerts from ghost sensor, portal logs, news feeds — correlation identifies attack patterns','Vulnerability management: CVSS scores ghost threats by severity; CVE-2025-VLAD = critical insider threat vulnerability'],['Asset management: Every piece of Fenton tech inventoried, classified, tracked — disposal requires full ghost-energy sanitization','Mobile security: MDM on Tucker\'s PDA — remote wipe if ghost-possessed; BYOD policy for ghost-hunting gear','IAM: Danny = privileged user (ghost powers); Sam = standard user (strategy); Tucker = administrator (tech access); Jazz = read-only (advisory)'],['MFA on Ghost Portal: Something Danny knows (portal code) + something he has (ghost gloves) + something he is (half-ghost biometrics)','Password policy: No default passwords on Fenton gadgets! Minimum 16 chars, MFA enforced, vaulted in password manager','PAM: Just-in-time permissions for Ghost Zone access; ephemeral credentials for temporary allies (Valerie Gray)']],miniQ:{q:'Tucker remotely wipes his ghost-possessed PDA before Skulker can extract data. This uses:',opts:['EDR response action','MDM remote wipe capability','SIEM alert','DLP policy'],ans:1,fb:'MDM (Mobile Device Management) provides remote wipe, lock, and policy enforcement for mobile devices. Essential for BYOD and COPE scenarios — exactly what Tucker needs when his PDA is compromised!'}},
+  {title:'Domain 5 — P·O·R·T·A·L',cls:'d5',emoji:'📊',mnemonic:'P·O·R·T·A·L',spelled:['P — Policies & governance: AUP, BCP, DRP, SDLC, change management','O — Oversight: audit committees, compliance monitoring, attestation','R — Risk management: SLE, ALE, ARO, risk register, risk appetite','T — Third-party: vendor assessments, SLA, NDA, right-to-audit clause','A — Awareness training: phishing simulations, anomalous behavior','L — Legal & compliance: GDPR, data sovereignty, privacy rights'],bullets:[['Risk formula: SLE × ARO = ALE (Annual Loss Expectancy). If one ghost attack costs $10K (SLE) and happens 3x/year (ARO), ALE = $30K','Risk strategies: Transfer (ghost insurance), Accept (small ghost = tolerable), Avoid (close Ghost Portal), Mitigate (better Thermos design)','Risk appetite: Expansionary (accept more ghost risk for more missions), Conservative (minimize all ghost exposure), Neutral (balanced approach)'],['Third-party risk: FrightStuff.com supply chain — right-to-audit vendor, NDA for ghost tech specs, SLA for Thermos delivery times','Vendor agreements: MSA (master contract with FentonWorks suppliers), MOU (partnership with GIW), SOW (specific ghost containment project scope)','Penetration testing: GIW tests Fenton Works defenses (known environment), outside red team tests unknown paths (black box)'],['Governance roles: Jack & Maddie = Data Owners; Tucker = Data Custodian; Danny = Data Processor; Jazz = Privacy Officer/DPO','Compliance: GDPR right-to-be-forgotten applies to ghost identity records; HIPAA if ghost attacks cause physical injury/medical data','Security awareness: Monthly phishing simulations sent to Amity Park staff; anomalous behavior = suddenly acting like a ghost villain']],miniQ:{q:'Amity Park calculates: one ghost breach costs $50K, and they expect 2 per year. The ALE is:',opts:['$50,000','$25,000','$100,000','$150,000'],ans:2,fb:'ALE = SLE × ARO = $50,000 × 2 = $100,000. This quantitative risk analysis helps justify security spending — if countermeasures cost less than $100K/year, they\'re worth it!'}},
+];
+
+(function(){
+  var c=document.getElementById('study-acc');
+  studyData.forEach(function(d,i){
+    var mq=d.miniQ;
+    var mqId='smq-'+i;
+    var bsHtml=d.bullets.map(function(grp,gi){
+      return '<ul style="margin:6px 0 10px 16px;font-size:.84rem;color:var(--muted);line-height:1.8">'+grp.map(function(b){return'<li>'+b+'</li>';}).join('')+'</ul>';
+    }).join('<hr style="border:none;border-top:1px dashed var(--border);margin:8px 0">');
+    var spelled=d.spelled.map(function(s){return'<div style="padding:4px 0;font-size:.87rem;font-weight:700;color:var(--text)">'+s+'</div>';}).join('');
+    var html='<div class="acc-item" id="sacc-'+i+'"><div class="acc-head" onclick="toggleAcc(\'sacc-'+i+'\',\'sacc\')"><div class="acc-title"><span>'+d.emoji+'</span>'+d.title+'</div><span class="acc-arrow">▼</span></div><div class="acc-body"><div style="background:var(--surface);border-radius:10px;padding:12px;margin-bottom:12px;border:2px solid var(--border)"><div style="font-family:\'Bangers\',cursive;font-size:1.4rem;color:var(--ghost-blue);letter-spacing:3px;margin-bottom:8px">'+d.mnemonic+'</div>'+spelled+'</div>'+bsHtml+'<div class="mini-q" id="mq-'+mqId+'"><p class="qtext">'+mq.q+'</p>'+mq.opts.map(function(o,oi){return'<button class="mini-opt" onclick="miniAnswer(\''+mqId+'\','+oi+','+mq.ans+')" id="mopt-'+mqId+'-'+oi+'">'+String.fromCharCode(65+oi)+'. '+o+'</button>';}).join('')+'<div class="mini-fb" id="mfb-'+mqId+'"></div><button class="mini-reset" id="mrst-'+mqId+'" onclick="miniReset(\''+mqId+'\','+mq.opts.length+')">🔄 Try Again</button></div></div></div>';
+    c.insertAdjacentHTML('beforeend',html);
+  });
+})();
+
+/* ═══════════════════════════════════════
+   SECTION 6: CHARACTERS
+═══════════════════════════════════════ */
+var chars=[
+  {emoji:'👻',name:'Danny Phantom',role:'CISO / Incident Responder',color:'#00B4FF',bg:'#E8F8FF',desc:'Danny is the Chief Information Security Officer and primary incident responder. He detects threats (Ghost Sense = IDS), responds to incidents, contains breaches with the Thermos, and coordinates with his security team. His dual identity is the ultimate obfuscation technique.'},
+  {emoji:'💻',name:'Tucker Foley',role:'SOC Analyst / SIEM Operator',color:'#00AA55',bg:'#E8FFE8',desc:'Tucker is the Security Operations Center analyst who monitors all ghost-related alerts on his PDA/laptop. He manages the SIEM, analyzes log data, runs vulnerability scans, and maintains the ghost detection infrastructure. Without Tucker\'s tech, Danny is flying blind.'},
+  {emoji:'🌿',name:'Sam Manson',role:'GRC Analyst / Security Governance',color:'#7C4DFF',bg:'#F0E8FF',desc:'Sam handles governance, risk, and compliance. She writes the ghost-fighting policies, conducts risk assessments, ensures the team operates ethically, and manages the security awareness program. Her risk-averse attitude keeps the team from making reckless decisions.'},
+  {emoji:'🎓',name:'Jazz Fenton',role:'Security Awareness Officer / DPO',color:'#FF6B9D',bg:'#FFF0F5',desc:'Jazz is the Data Protection Officer and Security Awareness trainer. She educates Amity Park citizens about ghost threats (security awareness), protects Danny\'s personal identity data (privacy), and conducts tabletop exercises disguised as "family conversations."'},
+  {emoji:'🔬',name:'Jack & Maddie Fenton',role:'Security Architects / Engineers',color:'#FF8C00',bg:'#FFF8E8',desc:'Jack and Maddie design and build the security architecture — the Ghost Portal (network gateway), Fenton Thermos (containment tool), Ghost Catcher (EDR), and all ghost-fighting gear. They represent the security engineering team who builds the defenses Danny uses.'},
+  {emoji:'🦅',name:'Vlad Masters',role:'APT / Insider Threat',color:'#CC3355',bg:'#FFF0F0',desc:'Vlad is the classic Advanced Persistent Threat — highly skilled, well-funded, with long-term goals and insider knowledge of Fenton technology. He represents nation-state-level threat actors who use social engineering, supply chain attacks, and insider access to compromise targets.'},
+  {emoji:'💀',name:'Skulker',role:'Threat Actor / Persistent Hunter',color:'#884400',bg:'#FFF5E8',desc:'Skulker is a persistent threat actor focused on tracking and capturing Danny. He represents targeted attacks — reconnaissance, surveillance, tracking — similar to a red-team operator or corporate espionage agent who hunts specific high-value targets.'},
+  {emoji:'👮',name:'Walker (Ghost Warden)',role:'Security Policy Enforcer / Auditor',color:'#005588',bg:'#E8F0FF',desc:'Walker enforces Ghost Zone law with zero tolerance — representing strict compliance auditors and policy enforcement mechanisms. He conducts audits, enforces access controls, and imprisons policy violators (ghost criminals). No exceptions, no appeals. Pure rule-based access control.'},
+];
+(function(){
+  var g=document.getElementById('char-grid');
+  chars.forEach(function(c){
+    var d=document.createElement('div');
+    d.className='card';
+    d.style.borderColor=c.color+'55';
+    d.innerHTML='<div class="card-icon">'+c.emoji+'</div><div class="role-badge" style="background:'+c.bg+';color:'+c.color+';border:1.5px solid '+c.color+'55">'+c.role+'</div><h4 style="color:'+c.color+'">'+c.name+'</h4><p>'+c.desc+'</p>';
+    g.appendChild(d);
+  });
+})();
+
+/* ═══════════════════════════════════════
+   SECTION 7: ANALOGIES
+═══════════════════════════════════════ */
+var analogies=[
+  {emoji:'🔮',title:'Going Ghost → Obfuscation',concept:'Domain 1 · Cryptography',desc:'When Danny says "I\'m going ghost!" and transforms, he\'s performing obfuscation — making his true identity unreadable to observers. His hair turns white, eyes glow green, suit appears — the source code of "Danny Fenton" is scrambled. Obfuscation makes data deliberately difficult to understand without a mathematical key, unlike encryption.'},
+  {emoji:'🏺',title:'Fenton Thermos → Containment & Quarantine',concept:'Domain 4 · Incident Response',desc:'The Fenton Thermos is the perfect containment tool — it isolates the ghost threat in a secure environment while preserving it for analysis. In IR, containment stops the threat from spreading while keeping evidence intact for forensics. Breaking containment early risks re-infection; keeping evidence preserves chain of custody.'},
+  {emoji:'🕵️',name:'Vlad\'s Intelligence → OSINT & Threat Intel',emoji2:'',title2:'',concept2:'',desc2:'',concept:'Domain 2 · Threat Intelligence',desc:'Vlad obsessively researches Danny\'s weaknesses using public sources — news articles, social media, public records. This is OSINT (Open-Source Intelligence). Threat actors use OSINT before active attacks; defenders use OSINT to understand their own exposure and proactively reduce attack surface.'},
+  {emoji:'🚪',title:'Ghost Portal → Network Gateway & IAM',concept:'Domain 3 · Security Architecture',desc:'The Ghost Portal is the network gateway between the human world and Ghost Zone — it requires authentication (only Fentons can activate it), enforces access controls (only certain entities pass through), and logs all traffic. An unauthorized activation = unauthenticated access attempt. 802.1X at the portal would require ghost certificates before entry.'},
+  {emoji:'📝',title:'Ghost Writer\'s Poem → Logic Bomb',concept:'Domain 2 · Malware Analysis',desc:'Ghost Writer\'s cursed Christmas poem is a logic bomb — dormant until a trigger condition (Danny destroying the manuscript) activates it, then executes malicious code (trapping Danny in rhyme). Logic bombs are pre-planted malware that activates when specific conditions are met, like a fired employee\'s code that triggers when their login is disabled.'},
+  {emoji:'🛡️',title:'Danny\'s Ghost Sense → IDS vs IPS',concept:'Domain 4 · Security Monitoring',desc:'Danny\'s breath turns blue and chills when ghosts are near — this is passive detection, exactly like an IDS. It alerts Danny but doesn\'t automatically stop the ghost. When Danny then flies in and fights, he becomes an IPS — actively blocking the threat. The key difference: detection alerts, prevention acts. Both are necessary in layered defense.'},
+];
+(function(){
+  var g=document.getElementById('analogy-grid');
+  analogies.forEach(function(a){
+    var d=document.createElement('div');
+    d.className='card';
+    d.innerHTML='<div class="card-icon">'+a.emoji+'</div><div class="topic-tag d4" style="margin-bottom:8px">'+a.concept+'</div><h4>'+a.title+'</h4><p style="margin-top:8px">'+a.desc+'</p>';
+    g.appendChild(d);
+  });
+})();
+
+/* ═══════════════════════════════════════
+   SECTION 8: STUDY NOTES
+═══════════════════════════════════════ */
+var notesData=[
+  {emoji:'🔑',title:'Crypto Essentials',color:'#0077CC',bg:'#E8F4FF',content:'<strong>Symmetric:</strong> same key encrypt/decrypt (AES-256 fastest, key management hardest)<br><strong>Asymmetric:</strong> public key encrypts, private key decrypts (RSA, ECC)<br><strong>Hashing:</strong> one-way, SHA-256 for integrity (not encryption)<br><strong>Salting:</strong> random data + password before hashing → defeats rainbow tables<br><strong>Key exchange:</strong> Diffie-Hellman lets two parties agree on shared secret over insecure channel'},
+  {emoji:'🚨',title:'Incident Response Phases',color:'#CC5500',bg:'#FFF0E8',content:'<strong>1. Preparation:</strong> IR plan, Thermos ready, team trained<br><strong>2. Detection & Analysis:</strong> Ghost Sense triggers, Tucker identifies ghost type<br><strong>3. Containment:</strong> Thermos deployed, ghost isolated, evidence preserved<br><strong>4. Eradication:</strong> Ghost banished, all possessed objects cleansed<br><strong>5. Recovery:</strong> Amity Park restored, systems back to normal<br><strong>6. Lessons Learned:</strong> What failed? Update policies and tools'},
+  {emoji:'🏗️',title:'Network Architecture',color:'#007730',bg:'#E8FFE8',content:'<strong>DMZ/Screened Subnet:</strong> public-facing servers buffer zone<br><strong>VLAN:</strong> logical segmentation, Layer 2<br><strong>Air gap:</strong> total physical isolation<br><strong>Zero Trust:</strong> never trust, always verify — even internal users<br><strong>Jump server:</strong> secure admin access to protected zones (Specter Speeder to Ghost Zone)<br><strong>Proxy server:</strong> intermediary — masks origin, filters content'},
+  {emoji:'🎯',title:'Attack Types You Must Know',color:'#6600CC',bg:'#F0E8FF',content:'<strong>SQL injection:</strong> malicious input manipulates database<br><strong>XSS:</strong> scripts injected into web pages viewed by users<br><strong>Buffer overflow:</strong> more data than buffer can hold → code execution<br><strong>On-path/MitM:</strong> attacker intercepts communication between two parties<br><strong>DDoS:</strong> overwhelm with traffic from many sources (amplified, reflected)<br><strong>DNS poisoning:</strong> corrupt DNS cache → redirect to malicious IP'},
+  {emoji:'📋',title:'Risk Management Formulas',color:'#CC8800',bg:'#FFF8E8',content:'<strong>SLE:</strong> Single Loss Expectancy = Asset Value × Exposure Factor<br><strong>ARO:</strong> Annualized Rate of Occurrence = how many times/year<br><strong>ALE:</strong> Annual Loss Expectancy = SLE × ARO<br><strong>Risk strategies:</strong> Transfer (insurance), Accept (live with it), Avoid (stop activity), Mitigate (reduce)<br><strong>Risk appetite:</strong> how much risk the org tolerates<br><strong>Risk threshold:</strong> point where risk becomes unacceptable'},
+];
+(function(){
+  var g=document.getElementById('notes-grid');
+  notesData.forEach(function(n){
+    var d=document.createElement('div');
+    d.className='card';
+    d.style.borderColor=n.color+'55';
+    d.innerHTML='<div class="card-icon">'+n.emoji+'</div><h4 style="color:'+n.color+';margin-bottom:8px">'+n.title+'</h4><p style="font-size:.84rem;line-height:1.8">'+n.content+'</p>';
+    g.appendChild(d);
+  });
+})();
+
+/* ═══════════════════════════════════════
+   SECTION 9: IR LIFECYCLE
+═══════════════════════════════════════ */
+var irData=[
+  {phase:'1. Preparation',emoji:'🛠️',color:'#0077CC',bg:'#E8F4FF',border:'#99CCFF',danny:'Jack & Maddie stock up Fenton gear; Danny trains with the Thermos; Tucker sets up ghost monitoring alerts.',exam:'Domain 4.8'},
+  {phase:'2. Detection & Analysis',emoji:'🔭',color:'#CC5500',bg:'#FFF0E8',border:'#FFAA77',danny:'Danny\'s Ghost Sense chills. Tucker\'s SIEM fires an alert. Sam identifies the ghost type from threat intel.',exam:'Domain 4.8'},
+  {phase:'3. Containment',emoji:'🫙',color:'#007730',bg:'#E8FFE8',border:'#77CC77',danny:'Danny uses the Fenton Thermos — isolating the ghost, preserving evidence, stopping spread to other systems.',exam:'Domain 4.8'},
+  {phase:'4. Eradication & Recovery',emoji:'🌟',color:'#6600CC',bg:'#F0E8FF',border:'#AA77FF',danny:'Ghost banished. Possessed items cleansed. Amity Park restored. Systems patched and hardened against repeat attack.',exam:'Domain 4.8'},
+  {phase:'5. Lessons Learned',emoji:'📋',color:'#CC8800',bg:'#FFF8E8',border:'#FFCC55',danny:'Team debrief. Danny\'s mistakes documented. Tucker updates ghost signatures. Jazz delivers awareness training update.',exam:'Domain 4.8'},
+];
+(function(){
+  var g=document.getElementById('ir-grid');
+  irData.forEach(function(ir){
+    var d=document.createElement('div');
+    d.className='ir-card';
+    d.style.background=ir.bg;d.style.borderColor=ir.border;
+    d.innerHTML='<div style="font-size:2rem;margin-bottom:8px">'+ir.emoji+'</div><h4 style="color:'+ir.color+'">'+ir.phase+'</h4><p style="font-size:.8rem;color:var(--muted)">'+ir.danny+'</p><span class="ir-tag" style="color:'+ir.color+'">'+ir.exam+'</span>';
+    g.appendChild(d);
+  });
+})();
+
+/* ═══════════════════════════════════════
+   MINI QUIZ ENGINE (detection, roles, reporting)
+═══════════════════════════════════════ */
+function buildMiniQ(containerId, qData){
+  var id=containerId+'-mq';
+  var html='<div class="mini-q" id="mq-'+id+'"><p class="qtext">'+qData.q+'</p>'+qData.opts.map(function(o,i){return'<button class="mini-opt" onclick="miniAnswer(\''+id+'\','+i+','+qData.ans+')" id="mopt-'+id+'-'+i+'">'+String.fromCharCode(65+i)+'. '+o+'</button>';}).join('')+'<div class="mini-fb" id="mfb-'+id+'"></div><button class="mini-reset" id="mrst-'+id+'" onclick="miniReset(\''+id+'\','+qData.opts.length+')">🔄 Try Again</button></div>';
+  document.getElementById(containerId).innerHTML=html;
+}
+buildMiniQ('detect-quiz',{q:'Danny\'s Ghost Sense alerts him to a ghost nearby but he\'s busy. The ghost slips through undetected. Which monitoring gap does this illustrate?',opts:['False positive — system flagged something harmless','False negative — system missed a real threat','Alert fatigue — too many alerts causing misses','Log rotation — evidence deleted too soon'],ans:2,fb:'Alert fatigue occurs when too many alerts cause analysts to miss real threats. Even with detection capability, high noise leads to missed incidents. SOCs need proper tuning and tiered alert priority.'});
+buildMiniQ('roles-quiz',{q:'Jack Fenton builds new ghost weapons without security review. This violates which governance principle?',opts:['Least privilege','Change management process','Data classification','Incident response'],ans:1,fb:'Change management requires approval, impact analysis, testing, and a backout plan before changes go live. Jack bypassing this process is exactly why security incidents happen!'});
+buildMiniQ('report-quiz',{q:'A ghost attack affects Amity Park\'s power grid (critical infrastructure). Regulatory reporting to authorities is required within:',opts:['1 hour','24 hours','72 hours','30 days'],ans:2,fb:'72 hours is the GDPR-aligned regulatory reporting standard for significant breaches. Many regulations (GDPR, CCPA, breach notification laws) use this window. Internal reporting is faster (1-24 hours).'});
+
+/* ═══════════════════════════════════════
+   SECTION 11: ROLES
+═══════════════════════════════════════ */
+var rolesData=[
+  {emoji:'👑',role:'Data Owner',color:'#0077CC',bg:'#E8F4FF',desc:'Jack Fenton — owns the ghost research data. Makes classification decisions. Accountable for data protection. Sets access control policies.'},
+  {emoji:'🗄️',role:'Data Custodian',color:'#007730',bg:'#E8FFE8',desc:'Tucker Foley — maintains and protects the data day-to-day. Implements backups, access controls, encryption. Reports to the Data Owner.'},
+  {emoji:'⚙️',role:'Data Processor',color:'#6600CC',bg:'#F0E8FF',desc:'Fenton Works Lab Systems — processes ghost data on behalf of the owner. Subject to data processing agreements and GDPR processor requirements.'},
+  {emoji:'📋',role:'Data Steward',color:'#CC8800',bg:'#FFF8E8',desc:'Maddie Fenton — ensures data quality, accuracy, and proper use. Creates and maintains data standards and metadata for ghost research datasets.'},
+  {emoji:'🔒',role:'Privacy Officer (DPO)',color:'#CC3355',bg:'#FFF0F0',desc:'Jazz Fenton — Data Protection Officer. Ensures GDPR compliance, handles data subject requests, conducts privacy impact assessments for new ghost tech.'},
+  {emoji:'🕵️',role:'Security Analyst',color:'#884400',bg:'#FFF5E8',desc:'Sam Manson — monitors for threats, conducts risk assessments, reviews logs, runs phishing simulations, and keeps the governance documentation current.'},
+];
+(function(){
+  var g=document.getElementById('roles-grid');
+  rolesData.forEach(function(r){
+    var d=document.createElement('div');
+    d.className='card';
+    d.style.borderColor=r.color+'55';
+    d.innerHTML='<div class="card-icon">'+r.emoji+'</div><div class="role-badge" style="background:'+r.bg+';color:'+r.color+';border:1.5px solid '+r.color+'55">'+r.role+'</div><p>'+r.desc+'</p>';
+    g.appendChild(d);
+  });
+})();
+
+/* ═══════════════════════════════════════
+   SECTION 14: ADVENTURE
+═══════════════════════════════════════ */
+var advScenes=[
+  {id:0,phase:'🛠️ Preparation',phaseCls:'#0077CC',bg:'#E8F4FF',narr:'It\'s a normal Tuesday in Amity Park when Tucker\'s laptop screams an alert: the Fenton Ghost Portal has logged 47 unauthorized activation attempts in the last hour. Someone — or something — is trying to brute-force their way into the Ghost Zone. Danny and the team need to respond NOW.',q:'What\'s the FIRST thing the team should do?',choices:[{text:'A. Immediately shut down the Ghost Portal and eradicate the threat',correct:false},{text:'B. Check the IR plan and assign team roles before acting',correct:true},{text:'C. Call the GIW for help right away',correct:false}],wrong:'Try the other option! Jumping straight to eradication skips critical preparation steps — you might destroy evidence or make things worse.',right:'Correct! Preparation means having your IR plan ready and assigning roles BEFORE acting. Danny = incident responder, Tucker = SIEM/monitoring, Sam = documentation, Jazz = communications.'},
+  {id:1,phase:'🔭 Detection & Analysis',phaseCls:'#CC5500',bg:'#FFF0E8',narr:'With roles assigned, Tucker pulls up the SIEM dashboard. The logs show port scanning from inside the Ghost Zone, followed by a spike in ecto-energy readings at 3:47 AM. Danny\'s Ghost Sense tingles — this is a real incursion. Tucker identifies the attack signature: it matches Skulker\'s ghost energy pattern.',q:'Tucker sees BOTH legitimate GIW scans AND Skulker\'s attacks in the logs. What is Skulker\'s activity an example of?',choices:[{text:'A. False positive — the system incorrectly flagging Skulker as malicious',correct:false},{text:'B. True positive — a real threat correctly identified',correct:true},{text:'C. Alert fatigue — too many alerts masking the real threat',correct:false}],wrong:'Try the other option! Think about what "true positive" means in detection analysis.',right:'Correct! A true positive is a real threat that\'s correctly identified. Skulker IS malicious, and the SIEM correctly flagged him. False positives are benign events wrongly flagged as threats.'},
+  {id:2,phase:'🫙 Containment',phaseCls:'#007730',bg:'#E8FFE8',narr:'Skulker has breached the portal and is now in Amity Park, hunting Danny. He\'s already possessed three Fenton gadgets remotely. The team needs to contain the breach before Skulker can access the Ghost Lab\'s sensitive research data or harm civilians.',q:'Danny finds Skulker. What\'s the BEST containment action?',choices:[{text:'A. Destroy Skulker immediately to end the threat',correct:false},{text:'B. Let Skulker wander to gather more intelligence',correct:false},{text:'C. Use the Fenton Thermos to isolate Skulker while preserving evidence',correct:true}],wrong:'Try the other option! Remember: containment isolates the threat AND preserves evidence for forensics.',right:'Excellent! The Thermos = containment + evidence preservation. Destroying the threat (eradication) comes LATER. Containment stops spread while maintaining forensic chain of custody.'},
+  {id:3,phase:'🌟 Eradication & Recovery',phaseCls:'#6600CC',bg:'#F0E8FF',narr:'Skulker is contained in the Thermos. Now the team needs to eradicate his presence from all affected systems and restore Amity Park to normal operations. Tucker finds Skulker left behind a logic bomb in the Fenton Ghost Tracker — a dormant script set to activate on Christmas Eve.',q:'What should the team do about the logic bomb FIRST?',choices:[{text:'A. Wait until Christmas Eve to see if it activates, then respond',correct:false},{text:'B. Identify all affected systems, remove the malicious code, and verify clean state before restoring',correct:true},{text:'C. Restore from backup without checking for the logic bomb first',correct:false}],wrong:'Try the other option! Restoring without removing the threat guarantees re-infection. Waiting is never the right answer.',right:'Perfect! Eradication = remove ALL traces of the threat from ALL systems BEFORE recovery. Verify clean state, then restore from known-good backups. The logic bomb must be removed before the system goes back online.'},
+  {id:4,phase:'📋 Lessons Learned',phaseCls:'#CC8800',bg:'#FFF8E8',narr:'Skulker is banished, Amity Park is restored, and the Ghost Tracker is patched. The team gathers for the post-incident review. Danny admits he almost panicked and skipped containment. Tucker finds the portal had a default password still in place — that\'s how Skulker got through. Sam wants to document everything.',q:'What\'s the MOST important outcome of the lessons learned phase?',choices:[{text:'A. Punish whoever left the default password in place',correct:false},{text:'B. Identify root cause, update controls, and improve the IR plan for next time',correct:true},{text:'C. Classify the incident as resolved and close the ticket',correct:false}],wrong:'Try the other option! Blame doesn\'t improve security. And closing the ticket without improvement means the same attack succeeds next time.',right:'Outstanding! Lessons learned = identify root cause (default password), update controls (password policy enforcement), improve the IR playbook, and train the team. This is how security gets better over time!'},
+];
+(function(){
+  var c=document.getElementById('adv-container');
+  var phasesDone=[];
+  function renderScene(idx){
+    c.innerHTML='';
+    if(idx>=advScenes.length){
+      // finale
+      var fin=document.createElement('div');
+      fin.style.cssText='background:linear-gradient(135deg,#E8F4FF,#E8FFE8);border:3px solid var(--ghost-green);border-radius:18px;padding:30px;text-align:center';
+      fin.innerHTML='<div style="font-size:4rem">🎉</div><div style="font-family:Bangers,cursive;font-size:2.5rem;color:#005588;letter-spacing:2px;margin-bottom:10px">Ghost Incident Resolved!</div><p style="color:var(--muted);font-size:.95rem;margin-bottom:16px">Danny successfully guided the team through all 5 IR phases. Amity Park is safe — for now. Skulker\'s in the Thermos, the default password is gone, and the team is stronger for the experience.</p><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:16px">'+irData.map(function(ir){return'<span style="background:'+ir.bg+';color:'+ir.color+';border:2px solid '+ir.border+';padding:5px 14px;border-radius:20px;font-size:.82rem;font-weight:800">'+ir.phase+'</span>';}).join('')+'</div><button onclick="renderScene(0)" style="padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,var(--ghost-blue),var(--ghost-green));color:#050A1A;font-weight:800;cursor:pointer;font-size:.9rem;font-family:\'Nunito\',sans-serif">🔄 Play Again</button>';
+      c.appendChild(fin);
+      launchConfetti();
+      return;
+    }
+    var s=advScenes[idx];
+    var div=document.createElement('div');
+    div.style.cssText='background:'+s.bg+';border:2.5px solid '+s.phaseCls+'55;border-radius:16px;padding:24px;animation:fadeIn .4s ease';
+    var badgeHtml='<div style="display:inline-block;background:'+s.phaseCls+';color:#fff;padding:5px 16px;border-radius:20px;font-size:.78rem;font-weight:800;margin-bottom:12px;letter-spacing:.5px">'+s.phase+'</div>';
+    var wrongDiv='<div id="adv-wrong-'+idx+'" style="color:#CC3355;font-size:.85rem;font-weight:800;margin:8px 0;display:none;padding:8px 12px;background:#FFEEEE;border-radius:8px">❌ Try the other option!</div>';
+    var choicesHtml=s.choices.map(function(ch,ci){return'<button class="adv-choice" id="advc-'+idx+'-'+ci+'" onclick="advAnswer('+idx+','+ci+','+ch.correct+')"  >'+ch.text+'</button>';}).join('');
+    div.innerHTML=badgeHtml+'<p style="font-size:.95rem;color:var(--muted);line-height:1.7;margin-bottom:18px;font-weight:600">'+s.narr+'</p><p style="font-size:.92rem;font-weight:800;color:var(--dp-black);margin-bottom:12px">'+s.q+'</p>'+choicesHtml+wrongDiv;
+    c.appendChild(div);
+  }
+  window.advAnswer=function(sceneIdx,choiceIdx,correct){
+    if(correct){
+      playCorrect();
+      var btns=document.querySelectorAll('[id^="advc-'+sceneIdx+'-"]');
+      btns.forEach(function(b){b.disabled=true;b.style.opacity='0.6';});
+      var rightBtn=document.getElementById('advc-'+sceneIdx+'-'+choiceIdx);
+      rightBtn.style.background='#DDFFEE';rightBtn.style.borderColor='#00AA44';rightBtn.style.color='#005522';
+      var rightMsg=document.createElement('div');
+      rightMsg.style.cssText='background:#DDFFEE;border:2px solid #00AA44;border-radius:10px;padding:12px 16px;margin-top:10px;font-size:.87rem;color:#005522;font-weight:700';
+      rightMsg.textContent='✅ '+advScenes[sceneIdx].right;
+      document.getElementById('adv-container').querySelector('div').appendChild(rightMsg);
+      var nextBtn=document.createElement('button');
+      nextBtn.style.cssText='margin-top:12px;padding:10px 24px;border-radius:20px;border:none;background:linear-gradient(135deg,var(--ghost-blue),var(--ghost-green));color:#050A1A;font-weight:800;cursor:pointer;font-size:.88rem;font-family:\'Nunito\',sans-serif';
+      nextBtn.textContent=(sceneIdx<advScenes.length-1)?'Next Scene →':'🎉 See Results';
+      nextBtn.onclick=function(){renderScene(sceneIdx+1);};
+      document.getElementById('adv-container').querySelector('div').appendChild(nextBtn);
+    } else {
+      playWrong();
+      document.getElementById('adv-wrong-'+sceneIdx).style.display='block';
+    }
+  };
+  renderScene(0);
+})();
+
+/* ═══════════════════════════════════════
+   ACCORDION ENGINE
+═══════════════════════════════════════ */
+function toggleAcc(id,group){
+  var el=document.getElementById(id);
+  var isOpen=el.classList.contains('open');
+  document.querySelectorAll('[id^="'+group+'"]').forEach(function(a){a.classList.remove('open');});
+  if(!isOpen)el.classList.add('open');
+}
+
+/* ═══════════════════════════════════════
+   MINI QUIZ ENGINE
+═══════════════════════════════════════ */
+function miniAnswer(id,chosen,correct){
+  var opts=document.querySelectorAll('[id^="mopt-'+id+'-"]');
+  opts.forEach(function(o){o.disabled=true;});
+  var fb=document.getElementById('mfb-'+id);
+  var rst=document.getElementById('mrst-'+id);
+  if(chosen===correct){
+    document.getElementById('mopt-'+id+'-'+chosen).classList.add('correct');
+    fb.textContent='✅ Correct! '+getMiniFb(id,correct);
+    fb.style.background='#DDFFEE';fb.style.color='#005522';
+    playCorrect();
+  } else {
+    document.getElementById('mopt-'+id+'-'+chosen).classList.add('wrong');
+    document.getElementById('mopt-'+id+'-'+correct).classList.add('correct');
+    fb.textContent='❌ Not quite. The correct answer is '+String.fromCharCode(65+correct)+'. '+getMiniFb(id,correct);
+    fb.style.background='#FFEEEE';fb.style.color='#881122';
+    playWrong();
+  }
+  fb.classList.add('show');
+  rst.classList.add('show');
+}
+function getMiniFb(id,correct){
+  // Extract feedback from the study data if we can match
+  return '';
+}
+function miniReset(id,count){
+  for(var i=0;i<count;i++){
+    var o=document.getElementById('mopt-'+id+'-'+i);
+    if(o){o.disabled=false;o.classList.remove('correct','wrong');}
+  }
+  var fb=document.getElementById('mfb-'+id);
+  if(fb){fb.classList.remove('show');}
+  var rst=document.getElementById('mrst-'+id);
+  if(rst){rst.classList.remove('show');}
+}
+
+/* ═══════════════════════════════════════
+   SECTION 16: FLASHCARDS
+═══════════════════════════════════════ */
+var allCards=[
+  // DOMAIN 1
+  {q:'What are the 3 components of the CIA Triad?',a:'Confidentiality (Danny\'s secret identity hidden), Integrity (ghost data unaltered by Vlad), Availability (Fenton tech works when needed). The foundation of all security.',d:1},
+  {q:'What is the difference between Obfuscation and Data Masking?',a:'Obfuscation makes the whole message/code difficult to understand (Danny "going ghost" = entire identity transformed). Masking hides specific values with placeholders like asterisks (Danny P****** showing only partial data).',d:1},
+  {q:'What is Steganography?',a:'Hiding data INSIDE another media type — like embedding a document inside an image file. Danny hiding a ghost artifact inside a normal school locker. The container looks benign; only the informed observer finds what\'s hidden.',d:1},
+  {q:'What is Tokenization and how does it differ from encryption?',a:'Tokenization replaces sensitive data with a random token. No mathematical relationship — only the secure vault knows the mapping. Unlike encryption, you can\'t reverse-engineer the original data from the token alone.',d:1},
+  {q:'What are the 6 security control types?',a:'Preventive (stops threats), Detective (identifies threats), Corrective (fixes damage), Deterrent (discourages attackers), Compensating (alternative control), Directive (guides behavior). Danny uses all of them!',d:1},
+  {q:'What is Non-repudiation?',a:'Preventing someone from denying an action they performed. Digital signatures provide non-repudiation — if Vlad signs an email, he can\'t later deny sending it. Achieved through public key cryptography and audit logs.',d:1},
+  {q:'Explain Zero Trust architecture.',a:'Never trust, always verify — even internal users. Control Plane (Policy Engine, Policy Administrator) makes decisions. Data Plane (Policy Enforcement Point) enforces them. Adaptive identity, least privilege, micro-segmentation.',d:1},
+  {q:'What is the difference between symmetric and asymmetric encryption?',a:'Symmetric: same key encrypts AND decrypts (faster, key distribution problem). Asymmetric: public key encrypts, private key decrypts (slower, solves key distribution). TLS uses asymmetric to exchange a symmetric session key.',d:1},
+  {q:'What is hashing and what is salting?',a:'Hashing: one-way transformation that creates a fixed-length digest. Used for integrity verification, NOT encryption. Salting: random data added to a password BEFORE hashing, defeating rainbow table and pre-computed hash attacks.',d:1},
+  {q:'What is a PKI Certificate Authority?',a:'A trusted entity that verifies identities and signs digital certificates (Jack & Maddie = CA for Fenton Tech). CA creates certificate binding a public key to an identity. Revoked certs appear on CRL or checked via OCSP.',d:1},
+  // DOMAIN 2
+  {q:'What is an Advanced Persistent Threat (APT)?',a:'Highly skilled, well-funded threat actor (usually nation-state) with long-term goals. Vlad Masters = APT: deep resources, insider knowledge of Fenton tech, patient and strategic. Will maintain access for extended periods.',d:2},
+  {q:'What is social engineering and name 5 types.',a:'Manipulating humans rather than hacking systems. Types: Phishing (email), Vishing (voice), Smishing (SMS), Pretexting (false scenario), Impersonation, Watering hole (compromise sites targets visit), Business Email Compromise.',d:2},
+  {q:'What is a zero-day vulnerability?',a:'A vulnerability unknown to the vendor/defender — no patch exists yet. Like an undiscovered flaw in the Fenton Portal that ghosts exploit before Jack and Maddie even know it\'s there. CVSS score is critical for zero-days.',d:2},
+  {q:'What is the difference between a worm and a virus?',a:'Virus: requires user action to spread (attaches to files, activated when run). Worm: self-replicating, spreads automatically across networks without user interaction. Both are malware; worms spread faster.',d:2},
+  {q:'What is a logic bomb?',a:'Dormant malicious code that activates when a specific condition is met (like a date, user action, or login event). Ghost Writer\'s cursed poem = logic bomb triggered by Danny destroying the manuscript.',d:2},
+  {q:'What is a supply chain attack?',a:'Compromising a trusted third-party vendor or software to attack downstream targets. Like adding malware to FrightStuff.com before Fenton Works purchases ghost-hunting components. NotPetya spread via accounting software update.',d:2},
+  {q:'Describe an on-path (man-in-the-middle) attack.',a:'Attacker positions between two communicating parties to intercept/modify data. Like Vlad intercepting communications between Danny and Jazz. Mitigated by TLS/HTTPS, certificate pinning, and mutual authentication.',d:2},
+  {q:'What is DDoS and what are amplified and reflected DDoS attacks?',a:'DDoS: flood target with traffic from many sources. Amplified: exploit protocols that return more data than sent (DNS, NTP amplification). Reflected: spoof source IP to make servers send responses to the victim.',d:2},
+  {q:'What is OSINT?',a:'Open-Source Intelligence — gathering information from publicly available sources (news, social media, public records, job postings). Vlad uses OSINT to research Danny. Defenders use OSINT to understand their own exposure.',d:2},
+  {q:'What are indicators of compromise (IoC)?',a:'Evidence that a system has been breached: account lockouts, impossible travel (logins from two countries simultaneously), blocked content access, resource consumption spikes, missing logs, out-of-cycle logging.',d:2},
+  // DOMAIN 3
+  {q:'What is the difference between a DMZ and a screened subnet?',a:'A DMZ (Demilitarized Zone) / Screened Subnet is a network segment between the internet and internal network. Houses public-facing servers (web, email, DNS). Provides a buffer — attackers must breach the DMZ before reaching internal systems.',d:3},
+  {q:'What is network segmentation and why does it matter?',a:'Dividing a network into isolated segments (VLANs, subnets, zones). Limits lateral movement — a breach in one segment doesn\'t automatically compromise others. Ghost Zone, Amity Park, Fenton Works = three segments.',d:3},
+  {q:'What is the difference between IDS and IPS?',a:'IDS (Intrusion Detection System): passive, monitors and ALERTS only — Danny\'s Ghost Sense. IPS (Intrusion Prevention System): inline, BLOCKS threats automatically. IDS = tap/monitor mode; IPS = inline mode.',d:3},
+  {q:'Explain fail-open vs fail-closed.',a:'Fail-open: system allows all traffic when it fails (dangerous for security, acceptable for high availability like hospital doors). Fail-closed (fail-secure): system DENIES all traffic when it fails. Ghost Portal locking down on breach = fail-closed.',d:3},
+  {q:'What is a jump server / bastion host?',a:'A hardened server that acts as a secure gateway for administrators to access protected network segments. Like the Specter Speeder providing controlled access to the Ghost Zone. Logs all admin actions; reduces attack surface.',d:3},
+  {q:'What is the difference between hot, warm, and cold disaster recovery sites?',a:'Hot: fully operational, real-time replication, immediate failover (most expensive). Warm: partially configured, some data, hours to bring online. Cold: facility only, no equipment/data, days/weeks to bring online (cheapest).',d:3},
+  {q:'What is RTO and RPO?',a:'RTO (Recovery Time Objective): maximum acceptable downtime before business is impacted — "how fast must we recover?" RPO (Recovery Point Objective): maximum acceptable data loss — "how old can the backup be?"',d:3},
+  {q:'What is a WAF vs a NGFW vs UTM?',a:'WAF (Web App Firewall): Layer 7, protects against SQLi/XSS. NGFW (Next-Gen Firewall): deep packet inspection, application awareness, IPS functions. UTM (Unified Threat Management): all-in-one device — firewall + IPS + AV + content filtering.',d:3},
+  {q:'What is the 3-2-1 backup rule?',a:'3 copies of data, on 2 different media types, with 1 copy offsite. Protects against drive failure, local disaster, ransomware. Amity Park example: 3 copies of ghost research, on disk and tape, one copy in underground vault.',d:3},
+  {q:'What is TLS and what problem does it solve?',a:'Transport Layer Security — provides encryption, authentication, and integrity for data in transit. Replaced SSL. Uses asymmetric crypto to exchange symmetric session keys. Protects web traffic (HTTPS), email, and VPN connections.',d:3},
+  // DOMAIN 4
+  {q:'What are the 7 phases of the NIST Incident Response process?',a:'Preparation → Detection & Analysis → Containment → Eradication → Recovery → Lessons Learned. (Some frameworks split Detection/Analysis as one phase, making 6.) Each phase is critical — skipping containment before eradication is a major mistake.',d:4},
+  {q:'What is a SIEM?',a:'Security Information and Event Management — aggregates and correlates log data from multiple sources (firewalls, endpoints, apps). Tucker\'s PDA as SIEM: all ghost alerts in one dashboard, correlation identifies patterns invisible in individual logs.',d:4},
+  {q:'What is chain of custody in digital forensics?',a:'Documented record of who handled evidence, when, and how. Maintains evidence integrity for legal proceedings. If chain is broken, evidence may be inadmissible in court. Applies to captured ghost evidence too.',d:4},
+  {q:'What is the difference between EDR and XDR?',a:'EDR (Endpoint Detection and Response): monitors endpoints (laptops, servers) for malicious activity + automated response. XDR (Extended): EDR + network + cloud + email — broader visibility across the entire environment.',d:4},
+  {q:'What is CVSS and what does it measure?',a:'Common Vulnerability Scoring System — standardized 0-10 score for vulnerabilities based on: Base (inherent characteristics), Temporal (exploit availability, patches), Environmental (impact to your specific org). 9.0+ = Critical.',d:4},
+  {q:'What is MDM and what are BYOD, COPE, CYOD?',a:'MDM (Mobile Device Management): enforces policies, enables remote wipe. BYOD (Bring Your Own Device): personal device, company data — high risk. COPE (Corporate-Owned, Personally Enabled): company buys, employee personalizes. CYOD (Choose Your Own Device): employee picks from approved list.',d:4},
+  {q:'What is the principle of least privilege?',a:'Users/systems should have only the minimum permissions needed for their job — no more. Danny only has permissions for ghost-fighting tasks, not Ghost Lab research data. Reduces blast radius if an account is compromised.',d:4},
+  {q:'What is MFA and what are the 4 authentication factors?',a:'Multifactor Authentication: requires 2+ factors. Something you know (password/PIN), Something you have (security key/token), Something you are (biometrics), Somewhere you are (location-based). Ghost Portal: password + ghost glove + half-ghost biometrics.',d:4},
+  {q:'What is SOAR?',a:'Security Orchestration, Automation, and Response — automates repetitive security tasks (ticket creation, user provisioning/deprovisioning, alert triage). Tucker\'s automation scripts = SOAR. Frees analysts for complex work.',d:4},
+  {q:'What is SSO and how does it work with SAML?',a:'Single Sign-On: authenticate once, access multiple systems. SAML (Security Assertion Markup Language): XML-based standard where an Identity Provider (IdP) sends authentication assertions to Service Providers. Reduces password fatigue, centralizes access control.',d:4},
+  // DOMAIN 5
+  {q:'What is the difference between SLE, ARO, and ALE?',a:'SLE (Single Loss Expectancy) = Asset Value × Exposure Factor. ARO (Annualized Rate of Occurrence) = expected frequency per year. ALE = SLE × ARO. If SLE=$50K and ARO=2, ALE=$100K. Security spend justified up to ALE.',d:5},
+  {q:'What are the 4 risk management strategies?',a:'Transfer (buy cyber insurance — shift financial risk), Accept (tolerate residual risk — exemption or exception), Avoid (stop the risky activity entirely), Mitigate (reduce likelihood or impact through controls).',d:5},
+  {q:'What is risk appetite vs risk tolerance vs risk threshold?',a:'Risk Appetite: how much risk the org is willing to accept in pursuit of objectives (strategic). Risk Tolerance: acceptable variation from risk appetite. Risk Threshold: the specific level at which risk becomes unacceptable and triggers action.',d:5},
+  {q:'What is a Business Impact Analysis (BIA)?',a:'Identifies critical business functions and determines the impact of their disruption. Establishes RTO, RPO, MTTR, MTBF. If the Ghost Portal goes down, how long before Amity Park is overrun? That\'s your BIA question.',d:5},
+  {q:'What is the difference between a policy, standard, procedure, and guideline?',a:'Policy: high-level mandatory requirement ("Ghost Portal must require authentication"). Standard: specific mandatory technical requirement ("AES-256 encryption required"). Procedure: step-by-step instructions. Guideline: recommended (not mandatory) best practice.',d:5},
+  {q:'What is a right-to-audit clause?',a:'Contract provision giving your organization the right to audit a vendor\'s security controls. Essential in third-party risk management. Maddie insisting on auditing FrightStuff.com\'s manufacturing security = right-to-audit in action.',d:5},
+  {q:'What is GDPR\'s "right to be forgotten"?',a:'Data subjects can request deletion of their personal data under GDPR (EU). Organizations must comply within 30 days (with exceptions for legal obligations). Applies globally if you handle EU resident data.',d:5},
+  {q:'What is an AUP (Acceptable Use Policy)?',a:'Policy defining acceptable use of organizational resources (computers, internet, email). "No using company systems to communicate with ghosts." Employees sign AUP during onboarding. Violation can lead to termination.',d:5},
+  {q:'What is the difference between penetration testing types (known/partially known/unknown environment)?',a:'Known (White Box): tester has full knowledge of infrastructure. Partially Known (Grey Box): tester has some information (like a regular employee). Unknown (Black Box): no prior knowledge — simulates an external attacker.',d:5},
+  {q:'What is a tabletop exercise?',a:'Discussion-based simulation where the team walks through a hypothetical incident scenario. No actual systems affected. Identifies gaps in the IR plan, clarifies roles, and tests decision-making. Lower cost than live drills.',d:5},
+  // BONUS PORT NUMBERS
+  {q:'Ports 20/21 — what protocol and what\'s the security concern?',a:'FTP (File Transfer Protocol) — unencrypted file transfer. Security concern: credentials and data transmitted in plaintext. Use SFTP (port 22) or FTPS (port 990) instead.',d:3},
+  {q:'Port 22 — protocol and use case?',a:'SSH (Secure Shell) — encrypted remote terminal access and file transfer (SFTP/SCP). Replaces unencrypted Telnet (port 23). Danny uses SSH tunnels to securely access ghost monitoring systems remotely.',d:3},
+  {q:'Ports 80 vs 443 — what\'s the difference?',a:'Port 80: HTTP — unencrypted web traffic (avoid for sensitive data). Port 443: HTTPS — HTTP over TLS, encrypted web traffic. Always use 443 for any site handling credentials or sensitive data.',d:3},
+  {q:'Port 53 — what protocol runs here and what attack targets it?',a:'DNS (Domain Name System) — translates domain names to IP addresses. DNS Poisoning (cache poisoning) attacks target port 53 to redirect users to malicious IPs. DNSSEC adds cryptographic validation.',d:3},
+  {q:'Port 389 vs 636 — LDAP security comparison.',a:'Port 389: LDAP (Lightweight Directory Access Protocol) — unencrypted directory queries. Port 636: LDAPS — LDAP over SSL/TLS, encrypted. Always use 636 for Active Directory queries in production.',d:4},
+  {q:'Port 3389 — what is it and why is it a high-value target?',a:'RDP (Remote Desktop Protocol) — Windows remote desktop access. High-value target because: exposed to internet = easy brute-force. Should be behind VPN, use NLA (Network Level Authentication), and change default port.',d:4},
+  {q:'Ports 1812/1813 vs Port 49 — RADIUS vs TACACS+.',a:'RADIUS (1812 auth, 1813 accounting): industry standard, encrypts only password. TACACS+ (49): Cisco proprietary, encrypts entire payload, separates authentication/authorization/accounting. TACACS+ preferred for network device management.',d:4},
+  {q:'Port 514 — Syslog. Why does this matter for security?',a:'Syslog (UDP 514): centralized logging protocol. Security relevance: all devices send logs to a central SIEM via syslog. UDP means no guaranteed delivery — use TCP syslog (514 TCP or 6514 TLS) for critical security logs.',d:4},
+];
+
+(function(){
+  var LS_KEY='ltr_cartoon-danny';
+  var stored=null;
+  try{stored=localStorage.getItem(LS_KEY);}catch(e){}
+  var boxes={1:[],2:[],3:[],4:[],5:[]};
+  var domFilter=0;
+  var curIdx=null,curBox=1;
+  var flipped=false;
+  var sessionSeen=0,sessionCorrect=0;
+
+  function getFiltered(){
+    var result=[];
+    allCards.forEach(function(c,i){
+      if(domFilter===0||c.d===domFilter)result.push(i);
+    });
+    return result;
+  }
+
+  function initDeck(){
+    boxes={1:[],2:[],3:[],4:[],5:[]};
+    var filtered=getFiltered();
+    filtered.forEach(function(i){boxes[1].push(i);});
+    try{localStorage.removeItem(LS_KEY);}catch(e){}
+    render();
+  }
+
+  function pickCard(){
+    var filtered=getFiltered();
+    var inBoxes=[];
+    for(var b=1;b<=5;b++){
+      boxes[b].forEach(function(i){if(filtered.indexOf(i)>=0)inBoxes.push({idx:i,box:b});});
+    }
+    // Weight toward lower boxes
+    var weighted=[];
+    inBoxes.forEach(function(it){
+      var w=6-it.box;
+      for(var j=0;j<w;j++)weighted.push(it);
+    });
+    if(weighted.length===0)return null;
+    return weighted[Math.floor(Math.random()*weighted.length)];
+  }
+
+  function render(){
+    var c=document.getElementById('fc-main');
+    if(!c)return;
+    var picked=pickCard();
+    var total=getFiltered().length;
+    var done=0;for(var b=2;b<=5;b++){boxes[b].forEach(function(i){if(getFiltered().indexOf(i)>=0)done++;});}
+    var pct=total>0?Math.round(done/total*100):0;
+
+    var leitnerHtml='<div class="leitner-row">';
+    for(var b=1;b<=5;b++){
+      var cnt=0;boxes[b].forEach(function(i){if(getFiltered().indexOf(i)>=0)cnt++;});
+      leitnerHtml+='<div class="lbox lb'+b+'"><span>'+cnt+'</span>Box '+b+'</div>';
+    }
+    leitnerHtml+='</div>';
+
+    var toolbarHtml='<div class="fc-toolbar"><button class="fc-tbtn'+(domFilter===0?' active':'')+'" onclick="fcFilter(0)">All</button><button class="fc-tbtn'+(domFilter===1?' active':'')+'" onclick="fcFilter(1)">D1</button><button class="fc-tbtn'+(domFilter===2?' active':'')+'" onclick="fcFilter(2)">D2</button><button class="fc-tbtn'+(domFilter===3?' active':'')+'" onclick="fcFilter(3)">D3</button><button class="fc-tbtn'+(domFilter===4?' active':'')+'" onclick="fcFilter(4)">D4</button><button class="fc-tbtn'+(domFilter===5?' active':'')+'" onclick="fcFilter(5)">D5</button></div>';
+
+    if(!picked){
+      c.innerHTML='<div style="text-align:center;padding:40px"><div style="font-family:Bangers,cursive;font-size:2.5rem;color:var(--ghost-blue);letter-spacing:2px">🎉 Deck Complete!</div><p style="color:var(--muted);margin:12px 0;font-size:.9rem">You\'ve reviewed all cards in this filter!</p><button class="fc-btn fc-skip" onclick="fcReset()">🔄 Start Over</button></div>';
+      return;
+    }
+
+    curIdx=picked.idx;curBox=picked.box;flipped=false;
+    var card=allCards[curIdx];
+    var dColors=['','#0077CC','#CC5500','#007730','#6600CC','#CC8800'];
+    var dBgs=['','#E8F4FF','#FFF0E8','#E8FFE8','#F0E8FF','#FFF8E8'];
+
+    var html='<div style="margin-bottom:10px;display:flex;justify-content:space-between;align-items:center"><h3 style="font-family:Bangers,cursive;font-size:1.4rem;color:var(--dp-black);letter-spacing:1px">👻 Ghost Zone Study Deck</h3><span style="font-size:.78rem;color:var(--muted);font-weight:700">Session: '+sessionCorrect+'/'+sessionSeen+'</span></div>'+leitnerHtml+toolbarHtml+'<div class="fc-counter">Card '+curIdx+1+' of '+total+' | '+pct+'% promoted</div><div class="fc-prog"><div class="fc-prog-fill" style="width:'+pct+'%"></div></div>';
+
+    html+='<div class="fc-card" id="fc-card-main" onclick="fcFlip()" tabindex="0"><div class="fc-inner"><div class="fc-front"><div class="fc-box-ind" style="background:'+dBgs[card.d]+';color:'+dColors[card.d]+'">D'+card.d+'</div><p>'+card.q+'</p><div class="fc-hint">Press Space or click to reveal</div></div><div class="fc-back" style="border-color:'+dColors[card.d]+'"><div class="fc-box-ind" style="background:'+dBgs[card.d]+';color:'+dColors[card.d]+'">Box '+curBox+'</div><p>'+card.a+'</p></div></div></div>';
+
+    html+='<div class="fc-btn-row" id="fc-ans-btns" style="display:none"><button class="fc-btn fc-again" onclick="fcRate(1)">😓 Again (1)</button><button class="fc-btn fc-good" onclick="fcRate(2)">✅ Got It (2)</button><button class="fc-btn fc-easy" onclick="fcRate(3)">⭐ Easy (3)</button><button class="fc-btn fc-skip" onclick="fcSkip()">⏭ Skip (S)</button></div>';
+    html+='<div class="fc-btn-row"><button class="fc-btn fc-good" style="background:#E8F4FF;color:var(--ghost-blue);border:2px solid var(--border)" onclick="fcFlip()" id="fc-flip-btn">👁 Reveal Answer (Space)</button><button class="fc-btn fc-skip" onclick="fcReset()">🔄 Reset Deck</button></div>';
+    html+='<div class="key-hint">Keyboard: Space=Flip · 1=Again · 2=Got It · 3=Easy · S=Skip</div>';
+
+    c.innerHTML=html;
+  }
+
+  window.fcFlip=function(){
+    var el=document.getElementById('fc-card-main');
+    if(!el)return;
+    el.classList.toggle('flipped');
+    flipped=!flipped;
+    if(flipped){
+      document.getElementById('fc-ans-btns').style.display='flex';
+      document.getElementById('fc-flip-btn').style.display='none';
+    }
+  };
+
+  window.fcRate=function(rating){
+    if(curIdx===null)return;
+    sessionSeen++;
+    if(rating===1){// Again — back to box 1
+      var pos=boxes[curBox].indexOf(curIdx);
+      if(pos>=0)boxes[curBox].splice(pos,1);
+      boxes[1].push(curIdx);
+      playWrong();
+    } else if(rating===2){// Got It — promote one box
+      var pos=boxes[curBox].indexOf(curIdx);
+      if(pos>=0)boxes[curBox].splice(pos,1);
+      var nb=Math.min(curBox+1,5);
+      boxes[nb].push(curIdx);
+      sessionCorrect++;
+      playCorrect();
+    } else {// Easy — promote two boxes
+      var pos=boxes[curBox].indexOf(curIdx);
+      if(pos>=0)boxes[curBox].splice(pos,1);
+      var nb=Math.min(curBox+2,5);
+      boxes[nb].push(curIdx);
+      sessionCorrect++;
+      playCorrect();
+    }
+    try{localStorage.setItem(LS_KEY,JSON.stringify(boxes));}catch(e){}
+    render();
+  };
+
+  window.fcSkip=function(){render();};
+  window.fcFilter=function(d){domFilter=d;initDeck();};
+  window.fcReset=function(){sessionSeen=0;sessionCorrect=0;initDeck();};
+
+  document.addEventListener('keydown',function(e){
+    if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA')return;
+    if(e.code==='Space'){e.preventDefault();fcFlip();}
+    else if(e.key==='1')fcRate(1);
+    else if(e.key==='2')fcRate(2);
+    else if(e.key==='3')fcRate(3);
+    else if(e.key==='s'||e.key==='S')fcSkip();
+  });
+
+  // Load saved state
+  if(stored){
+    try{
+      var saved=JSON.parse(stored);
+      boxes=saved;
+    }catch(e){initDeck();return;}
+  } else {
+    initDeck();return;
+  }
+  render();
+})();
+
+/* ═══════════════════════════════════════
+   CHRISTMAS PORT GAME
+═══════════════════════════════════════ */
+(function(){
+  var questions=[
+    {q:'👻 The Ghost Writer sends a poem via secure terminal. Which port does SSH use?',keyword:'22',hint:'Think: "SSH = 22 — two ghost portals side by side"'},
+    {q:'🎄 Maddie streams ghost research over encrypted HTTPS. Which port?',keyword:'443',hint:'Think: "443 = 4 for 4th quarter, 43 = Christmas gift #43"'},
+    {q:'📦 The Box Ghost\'s holiday package is delivered via DNS lookup. Which port?',keyword:'53',hint:'Think: "DNS = 53 = 5 ghosts, 3 portals"'},
+    {q:'🎅 Jack Fenton clocks the ghost reindeer via NTP time sync. Which port?',keyword:'123',hint:'Think: "NTP 123 = countdown: 1-2-3 sync!"'},
+    {q:'⛄ Tucker needs Remote Desktop access to the ghost lab from home. Which port?',keyword:'3389',hint:'Think: "RDP 3389 = 3 rings, 3-8-9 steps to remote Christmas"'},
+    {q:'🌟 Sam configures LDAP for Amity Park directory lookup. Unencrypted port?',keyword:'389',hint:'Think: "LDAP = 389 = 3 elves, 8 reindeer, 9 presents"'},
+    {q:'❄️ Encrypted LDAPS (LDAP over SSL) uses which port?',keyword:'636',hint:'Think: "636 = 6 days before Christmas, 3 wisemen, 6 weeks of cold"'},
+    {q:'🔔 The Fenton Portal logs ghost events via Syslog. Default UDP port?',keyword:'514',hint:'Think: "Syslog 514 = 5 ghosts, 1 portal, 4 Christmas cookies eaten"'},
+    {q:'🎁 RADIUS authentication for ghost hunters at the portal. Auth port?',keyword:'1812',hint:'Think: "RADIUS 1812 = year of a famous battle, auth first"'},
+    {q:'🕯️ TACACS+ encrypts the ENTIRE ghost portal login payload. Which port?',keyword:'49',hint:'Think: "TACACS+ 49 = 7 × 7 = 49 ghost types to authenticate"'},
+    {q:'🦌 Web traffic to FentonWorks.com goes over unencrypted HTTP. Port?',keyword:'80',hint:'Think: "HTTP 80 = 80 mph flying ghost speed, no protection"'},
+    {q:'🎶 Tucker transfers ghost files with FTP (unencrypted). Data channel port?',keyword:'20',hint:'Think: "FTP data = 20 = twenty presents unencrypted under the tree"'},
+  ];
+  var current=0,score=0,totalAnswered=0;
+  var shuffled=questions.slice().sort(function(){return Math.random()-.5;});
+
+  function renderQ(){
+    var c=document.getElementById('xmas-container');
+    var fin=document.getElementById('xmas-final');
+    if(current>=shuffled.length){
+      c.innerHTML='';
+      fin.style.display='block';
+      document.getElementById('xmas-final-msg').textContent='Score: '+score+' / '+shuffled.length+' 🎄';
+      document.getElementById('xmas-prog-fill').style.width='100%';
+      if(score===shuffled.length)launchConfetti();
+      return;
+    }
+    fin.style.display='none';
+    var q=shuffled[current];
+    document.getElementById('xmas-score-display').textContent='Score: '+score+' / '+shuffled.length;
+    document.getElementById('xmas-prog-fill').style.width=(current/shuffled.length*100)+'%';
+    c.innerHTML='<div class="port-q"><div class="port-q-text">'+q.q+'</div><div style="font-size:.8rem;color:#3366AA;font-weight:600;margin-bottom:8px">💡 Hint: '+q.hint+'</div><input type="text" class="port-input" id="port-ans" placeholder="Type the port number..." onkeydown="if(event.key===\'Enter\')checkPort()"><br><button class="port-check" onclick="checkPort()">🎄 Check Answer</button><div class="port-fb" id="port-fb"></div></div>';
+    setTimeout(function(){var el=document.getElementById('port-ans');if(el)el.focus();},100);
+  }
+
+  window.checkPort=function(){
+    var input=document.getElementById('port-ans');
+    if(!input)return;
+    var ans=input.value.trim();
+    var q=shuffled[current];
+    var fb=document.getElementById('port-fb');
+    // Accept various formats
+    var clean=ans.replace(/[^0-9]/g,'');
+    var correct=q.keyword.replace(/[^0-9]/g,'');
+    if(clean===correct||ans.toLowerCase().indexOf(clean)>=0){
+      fb.textContent='✅ Correct! Port '+q.keyword+' is right!';
+      fb.className='port-fb correct';
+      score++;totalAnswered++;
+      playCorrect();
+      input.disabled=true;
+      document.querySelector('.port-check').disabled=true;
+      setTimeout(function(){current++;renderQ();},1200);
+    } else {
+      fb.textContent='❌ Not quite! The answer is Port '+q.keyword+'. '+q.hint;
+      fb.className='port-fb wrong';
+      totalAnswered++;
+      playWrong();
+      input.disabled=true;
+      document.querySelector('.port-check').disabled=true;
+      setTimeout(function(){current++;renderQ();},2000);
+    }
+  };
+
+  window.resetXmas=function(){current=0;score=0;totalAnswered=0;shuffled=questions.slice().sort(function(){return Math.random()-.5;});renderQ();};
+  renderQ();
+})();
+
+/* ═══════════════════════════════════════
+   SECTION 17: MAIN QUIZ (10 QUESTIONS)
+═══════════════════════════════════════ */
+(function(){
+  var questions=[
+    {domain:'D1 — General Security',q:'Danny hides his ghost powers by looking completely human. In cryptographic terms, making data unreadable without disguising specific fields is:',choices:['Encryption','Steganography','Obfuscation','Tokenization'],ans:2,topic:'Obfuscation (Domain 1)',exp:'Obfuscation makes data/code deliberately difficult to understand without using encryption. Steganography hides data INSIDE other media. Encryption uses keys. Tokenization replaces data with tokens.'},
+    {domain:'D1 — Cryptography',q:'Tucker stores ghost research passwords in a database. He adds random data to each password before hashing it. What is this technique?',choices:['Key stretching','Salting','Tokenization','Digital signature'],ans:1,topic:'Salting (Domain 1)',exp:'Salting adds random data to a password BEFORE hashing, defeating rainbow table attacks. Key stretching (like PBKDF2) is different — it applies the hash function many times to slow brute-force. Both are used for password storage.'},
+    {domain:'D2 — Threats',q:'Vlad has been silently inside Fenton Works systems for 18 months, slowly exfiltrating ghost research without triggering alerts. This represents:',choices:['A zero-day vulnerability','An Advanced Persistent Threat (APT)','A DDoS attack','An insider threat script kiddie'],ans:1,topic:'APT / Threat Actors (Domain 2)',exp:'APT = well-resourced, patient, stealthy, long-term presence. Vlad\'s 18-month dwell time, nation-state-level resources, and targeted objectives perfectly match the APT profile. Script kiddies are unskilled and loud.'},
+    {domain:'D2 — Malware',q:'Ghost Writer\'s cursed poem lies dormant until Danny destroys the manuscript — then it activates and controls Amity Park. Which malware type does this model?',choices:['Ransomware','Rootkit','Logic bomb','Worm'],ans:2,topic:'Logic Bomb (Domain 2)',exp:'A logic bomb is dormant malicious code that activates when a specific trigger condition is met (deleting a file, a date, a user action). Unlike ransomware (demands payment) or worms (self-replicating), it waits patiently for its trigger.'},
+    {domain:'D3 — Architecture',q:'The Fenton Ghost Portal fails during a midnight ghost attack — and immediately stops all ghost traffic from passing through. This is:',choices:['Fail-open — allows traffic on failure','Fail-closed (fail-secure) — denies traffic on failure','High availability failover','Load balancing redirect'],ans:1,topic:'Fail-Closed Architecture (Domain 3)',exp:'Fail-closed (fail-secure) denies all traffic when the system fails — safer for security. Fail-open allows traffic through on failure (used in life-safety systems like hospital doors). For security gateways, fail-closed is preferred.'},
+    {domain:'D3 — Network',q:'Tucker needs to securely access the ghost lab servers remotely without exposing them to the internet. He should use:',choices:['Port forwarding the RDP port to the internet','A VPN + jump server (bastion host)','Opening port 3389 on the firewall','Using HTTP instead of HTTPS to reduce complexity'],ans:1,topic:'VPN + Jump Server (Domain 3)',exp:'Exposing RDP to the internet is extremely dangerous (ransomware entry point). The secure solution is VPN (encrypted tunnel) + jump server (controlled single entry point with full logging). This minimizes attack surface.'},
+    {domain:'D4 — Incident Response',q:'After capturing Skulker in the Thermos, Danny carefully documents: "Ghost captured at 2:47 AM, Thermos sealed, transferred to ghost lab at 3:12 AM." What IR principle does this represent?',choices:['Recovery phase','Chain of custody','Eradication phase','Risk register entry'],ans:1,topic:'Chain of Custody (Domain 4)',exp:'Chain of custody documents who handled evidence, when, and how — maintaining integrity for potential legal proceedings. If the chain is broken, evidence may be inadmissible. This is a core digital forensics principle.'},
+    {domain:'D4 — IAM',q:'Danny\'s Ghost Portal requires: (1) entering a password, (2) using his ghost gloves (hardware token), AND (3) a half-ghost biometric scan. This is:',choices:['Single Sign-On','Privileged Access Management','Multifactor Authentication using all 4 factor types','Password spraying defense'],ans:2,topic:'Multifactor Authentication (Domain 4)',exp:'MFA requires 2+ factors from different categories. Danny\'s setup uses: something you know (password), something you have (gloves = hardware token), something you are (ghost biometrics). This is strong MFA with 3 factors.'},
+    {domain:'D5 — Risk Management',q:'A ghost breach has SLE of $40,000 and is expected to occur 3 times per year. The ALE is:',choices:['$40,000','$13,333','$120,000','$160,000'],ans:2,topic:'ALE = SLE × ARO (Domain 5)',exp:'ALE (Annual Loss Expectancy) = SLE × ARO = $40,000 × 3 = $120,000. This quantitative risk formula determines how much annual loss you expect from a specific threat. Any countermeasure costing less than $120K/year is cost-justified.'},
+    {domain:'D5 — Governance',q:'After the Ghost Writer incident, Jazz discovers the Ghost Portal vendor\'s contract has no clause allowing Fenton Works to audit their security practices. Which risk management gap does this represent?',choices:['Missing AUP','Missing right-to-audit clause','Missing disaster recovery plan','Missing SLE calculation'],ans:1,topic:'Right-to-Audit (Domain 5)',exp:'A right-to-audit clause gives your organization the contractual right to audit a vendor\'s security controls. Without it, you have no visibility into third-party risk. Essential for supply chain security and compliance (PCI-DSS, HIPAA often require this).'},
+  ];
+
+  var cur=0,score=0,answered=false,missed=[];
+  var c=document.getElementById('main-quiz-wrap');
+
+  function renderQ(){
+    if(cur>=questions.length){showFinal();return;}
+    var q=questions[cur];
+    answered=false;
+    var html='<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px"><h3 style="font-family:Bangers,cursive;font-size:1.5rem;color:var(--dp-black);letter-spacing:1px">🧠 Knowledge Quiz</h3><div class="qz-meta">Question '+(cur+1)+' of '+questions.length+' &nbsp;·&nbsp; <span style="color:var(--ghost-blue)">'+q.domain+'</span></div></div>';
+    html+='<div style="font-size:.95rem;font-weight:800;color:var(--dp-black);margin-bottom:14px;line-height:1.5">'+q.q+'</div>';
+    q.choices.forEach(function(ch,i){
+      html+='<button class="qz-choice" id="qzm-'+i+'" onclick="qzChoose('+i+')">'+String.fromCharCode(65+i)+'. '+ch+'</button>';
+    });
+    html+='<div id="qz-exp" class="qz-exp">💡 '+q.exp+'</div>';
+    html+='<div class="quiz-nav"><button class="qbtn qbtn-submit" id="qz-sub" onclick="qzSubmit()" style="display:none">Check Answer</button><button class="qbtn qbtn-next" id="qz-next" onclick="qzNext()" style="display:none">'+(cur<questions.length-1?'Next →':'See Results')+'</button></div>';
+    c.innerHTML=html;
+  }
+
+  var chosen=-1;
+  window.qzChoose=function(idx){
+    if(answered)return;
+    chosen=idx;
+    document.querySelectorAll('.qz-choice').forEach(function(el,i){
+      el.style.borderColor=i===idx?'var(--ghost-blue)':'';
+      el.style.background=i===idx?'#E8F4FF':'';
+    });
+    document.getElementById('qz-sub').style.display='inline-block';
+  };
+
+  window.qzSubmit=function(){
+    if(answered||chosen<0)return;
+    answered=true;
+    var q=questions[cur];
+    var correct=chosen===q.ans;
+    if(correct){score++;playCorrect();}else{missed.push(q.topic);playWrong();}
+    document.querySelectorAll('.qz-choice').forEach(function(el,i){
+      el.disabled=true;
+      if(i===q.ans)el.classList.add('correct');
+      else if(i===chosen&&!correct)el.classList.add('wrong');
+    });
+    document.getElementById('qz-exp').style.display='block';
+    document.getElementById('qz-sub').style.display='none';
+    document.getElementById('qz-next').style.display='inline-block';
+  };
+
+  window.qzNext=function(){cur++;renderQ();};
+
+  function showFinal(){
+    var pct=Math.round(score/questions.length*100);
+    var color=pct>=90?'#00885A':pct>=70?'#0077CC':pct>=50?'#CC8800':'#CC3355';
+    var msg=pct===100?'👻 Perfect Score! You\'re the Ghost Zone CISO!':pct>=90?'🌟 Excellent! Almost perfect!':pct>=70?'✅ Good work — review the missed topics below.':pct>=50?'📚 Keep studying — you\'re getting there!':'🔄 Head back to the study guide and try again!';
+    var html='<div class="quiz-final"><div class="quiz-score-big" style="color:'+color+'">'+pct+'%</div><p style="color:var(--muted);font-size:.9rem;margin:8px 0;font-weight:700">'+score+' of '+questions.length+' correct · '+msg+'</p>';
+    if(missed.length>0){
+      html+='<div class="missed-list"><strong style="color:var(--dp-black)">📋 Topics to Review:</strong><br>'+missed.map(function(m){return'• '+m;}).join('<br>')+'</div>';
+    } else {
+      html+='<div style="margin-top:12px;font-size:2rem">🎉</div>';
+    }
+    html+='<div class="quiz-nav" style="justify-content:center;margin-top:16px"><button class="qbtn qbtn-reset" onclick="qzReset()">🔄 Retake Quiz</button></div></div>';
+    c.innerHTML=html;
+    if(pct===100)launchConfetti();
+  }
+
+  window.qzReset=function(){cur=0;score=0;answered=false;missed=[];chosen=-1;renderQ();};
+  renderQ();
+})();
+</script>
+</body>
+</html>
