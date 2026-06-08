@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chain of Custody — Bikini Bottom Edition</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap');
+
+  :root {
+    --deep: #030d2e;
+    --ocean: #0a2a6e;
+    --mid: #0e4fa0;
+    --surf: #1a7fc4;
+    --foam: #5bbfea;
+    --bubble: #a8e4ff;
+    --gold: #f7c948;
+    --coral: #ff6b6b;
+    --kelp: #2ecc71;
+    --sand: #f0d9a0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--deep);
+    font-family: 'Nunito', sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* === BACKGROUND === */
+  .ocean-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background: linear-gradient(180deg, #020b1f 0%, #030d2e 30%, #061840 60%, #0a2a6e 100%);
+    overflow: hidden;
+  }
+
+  .bubbles-layer { position: absolute; inset: 0; }
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(168,228,255,0.5), rgba(91,191,234,0.1));
+    border: 1px solid rgba(168,228,255,0.3);
+    animation: rise linear infinite;
+  }
+  @keyframes rise {
+    0%   { transform: translateY(110vh) translateX(0) scale(1); opacity: 0.6; }
+    50%  { transform: translateY(50vh) translateX(30px) scale(1.05); opacity: 0.8; }
+    100% { transform: translateY(-10vh) translateX(-20px) scale(0.8); opacity: 0; }
+  }
+
+  .fish { position: absolute; font-size: 2rem; animation: swim linear infinite; opacity: 0.4; }
+  @keyframes swim {
+    0%   { transform: translateX(-120px) scaleX(1); }
+    49%  { transform: translateX(calc(100vw + 120px)) scaleX(1); }
+    50%  { transform: translateX(calc(100vw + 120px)) scaleX(-1); }
+    99%  { transform: translateX(-120px) scaleX(-1); }
+    100% { transform: translateX(-120px) scaleX(1); }
+  }
+
+  .seaweed {
+    position: absolute; bottom: 0; font-size: 3rem;
+    animation: sway 3s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  @keyframes sway {
+    0%, 100% { transform: rotate(-8deg); }
+    50%       { transform: rotate(8deg); }
+  }
+
+  /* === LAYOUT === */
+  .page { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 40px 20px 80px; }
+
+  /* === HEADER === */
+  .header {
+    text-align: center;
+    margin-bottom: 50px;
+    animation: fadeDown 1s ease both;
+  }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(247,201,72,0.5), 0 4px 0 rgba(0,0,0,0.4);
+    letter-spacing: 1px;
+    line-height: 1.1;
+  }
+  .header .subtitle {
+    margin-top: 10px;
+    font-size: 1.1rem;
+    color: var(--bubble);
+    font-weight: 600;
+    opacity: 0.85;
+  }
+  .evidence-badge {
+    display: inline-block;
+    margin-top: 14px;
+    background: rgba(247,201,72,0.15);
+    border: 2px solid var(--gold);
+    border-radius: 30px;
+    padding: 6px 20px;
+    font-size: 0.9rem;
+    color: var(--gold);
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* === STEP CARDS === */
+  .steps { display: flex; flex-direction: column; gap: 0; position: relative; }
+
+  .connector {
+    width: 4px; height: 40px;
+    background: linear-gradient(to bottom, var(--surf), var(--foam));
+    margin: 0 auto;
+    border-radius: 2px;
+    position: relative;
+  }
+  .connector::after {
+    content: '▼';
+    position: absolute;
+    bottom: -18px; left: 50%;
+    transform: translateX(-50%);
+    color: var(--foam);
+    font-size: 14px;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  .step-card {
+    background: linear-gradient(135deg, rgba(10,42,110,0.85), rgba(6,24,64,0.9));
+    border: 2px solid rgba(91,191,234,0.3);
+    border-radius: 20px;
+    padding: 28px 30px;
+    display: flex;
+    align-items: flex-start;
+    gap: 22px;
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: opacity 0.7s ease, transform 0.7s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .step-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(91,191,234,0.05), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .step-card:hover::before { opacity: 1; }
+  .step-card:hover {
+    box-shadow: 0 8px 40px rgba(91,191,234,0.25);
+    border-color: rgba(91,191,234,0.6);
+    transform: translateX(6px) !important;
+  }
+  .step-card.visible { opacity: 1; transform: translateX(0); }
+  .step-card.even { transform: translateX(60px); }
+  .step-card.even.visible { transform: translateX(0); }
+  .step-card.even:hover { transform: translateX(-6px) !important; }
+
+  .step-number {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2.2rem;
+    color: var(--gold);
+    text-shadow: 0 0 15px rgba(247,201,72,0.5);
+    line-height: 1;
+    min-width: 40px;
+    text-align: center;
+  }
+  .step-emoji {
+    font-size: 3rem;
+    line-height: 1;
+    animation: bob 2.5s ease-in-out infinite;
+    min-width: 55px;
+    text-align: center;
+  }
+  @keyframes bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+
+  .step-content { flex: 1; }
+  .step-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    color: var(--foam);
+    margin-bottom: 6px;
+    letter-spacing: 0.5px;
+  }
+  .step-who {
+    font-size: 0.8rem;
+    color: var(--gold);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 8px;
+    opacity: 0.9;
+  }
+  .step-desc {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+  }
+  .step-tag {
+    display: inline-block;
+    margin-top: 10px;
+    background: rgba(91,191,234,0.15);
+    border: 1px solid rgba(91,191,234,0.4);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.75rem;
+    color: var(--bubble);
+    font-weight: 700;
+  }
+
+  /* === BREAKS SECTION === */
+  .breaks-section {
+    margin-top: 50px;
+    background: linear-gradient(135deg, rgba(255,107,107,0.1), rgba(6,24,64,0.9));
+    border: 2px solid rgba(255,107,107,0.4);
+    border-radius: 20px;
+    padding: 30px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .breaks-section.visible { opacity: 1; transform: translateY(0); }
+
+  .breaks-title {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.6rem;
+    color: var(--coral);
+    text-align: center;
+    margin-bottom: 20px;
+    text-shadow: 0 0 20px rgba(255,107,107,0.4);
+  }
+  .break-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: rgba(255,107,107,0.08);
+    border-left: 4px solid var(--coral);
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 12px;
+    transition: background 0.2s;
+  }
+  .break-item:hover { background: rgba(255,107,107,0.15); }
+  .break-item:last-child { margin-bottom: 0; }
+  .break-emoji { font-size: 2rem; min-width: 40px; }
+  .break-label { font-weight: 700; color: var(--coral); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px; }
+  .break-text { font-size: 0.9rem; color: rgba(255,255,255,0.8); line-height: 1.5; }
+
+  /* === QUIZ === */
+  .quiz-section {
+    margin-top: 60px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .quiz-section.visible { opacity: 1; transform: translateY(0); }
+
+  .quiz-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .quiz-header h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 2rem;
+    color: var(--gold);
+    text-shadow: 0 0 20px rgba(247,201,72,0.3);
+  }
+  .quiz-header p {
+    color: var(--bubble);
+    font-size: 0.95rem;
+    margin-top: 6px;
+    opacity: 0.8;
+  }
+  .comptia-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    border-radius: 8px;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-left: 10px;
+    vertical-align: middle;
+    text-transform: uppercase;
+  }
+
+  .question-card {
+    background: linear-gradient(135deg, rgba(10,42,110,0.85), rgba(6,24,64,0.9));
+    border: 2px solid rgba(91,191,234,0.25);
+    border-radius: 16px;
+    padding: 24px 26px;
+    margin-bottom: 20px;
+    transition: border-color 0.3s;
+  }
+  .question-card.correct-card { border-color: var(--kelp); }
+  .question-card.wrong-card   { border-color: var(--coral); }
+
+  .question-text {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .q-num {
+    font-family: 'Fredoka One', cursive;
+    color: var(--gold);
+    font-size: 1.1rem;
+    margin-right: 6px;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.05);
+    border: 1.5px solid rgba(91,191,234,0.2);
+    border-radius: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.85);
+    user-select: none;
+  }
+  .option:hover { background: rgba(91,191,234,0.12); border-color: rgba(91,191,234,0.5); }
+  .option.selected { background: rgba(91,191,234,0.2); border-color: var(--foam); }
+  .option.correct  { background: rgba(46,204,113,0.2); border-color: var(--kelp); color: #fff; }
+  .option.wrong    { background: rgba(255,107,107,0.2); border-color: var(--coral); color: #fff; }
+  .option.disabled { cursor: not-allowed; }
+  .option-letter {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    color: var(--gold);
+    min-width: 22px;
+  }
+  .option.correct .option-letter { color: var(--kelp); }
+  .option.wrong   .option-letter { color: var(--coral); }
+
+  .feedback {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: none;
+    line-height: 1.5;
+  }
+  .feedback.show { display: block; }
+  .feedback.correct-fb { background: rgba(46,204,113,0.15); color: #2ecc71; border-left: 3px solid #2ecc71; }
+  .feedback.wrong-fb   { background: rgba(255,107,107,0.15); color: #ff6b6b; border-left: 3px solid #ff6b6b; }
+
+  /* === GRADE BUTTON & SCORE === */
+  .grade-btn {
+    display: block; margin: 30px auto 0;
+    background: linear-gradient(135deg, var(--gold), #e6a800);
+    color: #030d2e;
+    border: none;
+    border-radius: 50px;
+    padding: 16px 50px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(247,201,72,0.4);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .grade-btn:hover { transform: scale(1.05); box-shadow: 0 6px 30px rgba(247,201,72,0.6); }
+  .grade-btn:active { transform: scale(0.98); }
+
+  .score-box {
+    display: none;
+    text-align: center;
+    margin-top: 30px;
+    background: linear-gradient(135deg, rgba(247,201,72,0.1), rgba(6,24,64,0.95));
+    border: 2px solid var(--gold);
+    border-radius: 20px;
+    padding: 30px;
+  }
+  .score-box.show { display: block; animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both; }
+  @keyframes popIn {
+    from { opacity: 0; transform: scale(0.7); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  .score-num {
+    font-family: 'Fredoka One', cursive;
+    font-size: 4rem;
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(247,201,72,0.6);
+  }
+  .score-label { font-size: 1rem; color: var(--bubble); margin-top: 6px; font-weight: 600; }
+  .score-emoji { font-size: 3rem; margin-top: 12px; }
+  .score-msg { margin-top: 10px; font-size: 1rem; color: rgba(255,255,255,0.8); }
+
+  .retry-btn {
+    display: inline-block; margin-top: 20px;
+    background: transparent;
+    border: 2px solid var(--foam);
+    color: var(--foam);
+    border-radius: 50px;
+    padding: 10px 30px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .retry-btn:hover { background: var(--foam); color: var(--deep); }
+
+  /* === FOOTER === */
+  .footer { text-align: center; margin-top: 60px; color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+</style>
+</head>
+<body>
+
+<!-- Animated background -->
+<div class="ocean-bg">
+  <div class="bubbles-layer" id="bubblesLayer"></div>
+  <div id="seaweeds"></div>
+  <div id="fishes"></div>
+</div>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="evidence-badge">🔐 Evidence Log #BB-001</div>
+    <h1>Chain of Custody<br>🌊 Bikini Bottom Edition 🌊</h1>
+    <p class="subtitle">The Krabby Patty Secret Formula is the evidence. Don't let Plankton tamper with it.</p>
+  </div>
+
+  <!-- STEPS -->
+  <div class="steps" id="steps">
+
+    <div class="step-card" data-delay="0">
+      <div class="step-number">1</div>
+      <div class="step-emoji">🥜</div>
+      <div class="step-content">
+        <div class="step-title">Collection</div>
+        <div class="step-who">🔬 Sandy Cheeks — First Responder</div>
+        <div class="step-desc">Sandy discovers the Secret Formula at a crime scene and seals it in an evidence bag. She is the very first link in the chain — and every link matters. Nothing is touched without documentation.</div>
+        <span class="step-tag">📋 Who touched it first?</span>
+      </div>
+    </div>
+
+    <div class="connector"></div>
+
+    <div class="step-card even" data-delay="200">
+      <div class="step-number">2</div>
+      <div class="step-emoji">🧽</div>
+      <div class="step-content">
+        <div class="step-title">Transfer</div>
+        <div class="step-who">🧽 SpongeBob — Recipient</div>
+        <div class="step-desc">Sandy hands the formula to SpongeBob, who signs the log: <em>"I, SpongeBob, received this formula at 3:00 PM."</em> Every single handoff gets dated, timed, and signed. No exceptions, no shortcuts.</div>
+        <span class="step-tag">✍️ Signed, sealed, delivered</span>
+      </div>
+    </div>
+
+    <div class="connector"></div>
+
+    <div class="step-card" data-delay="400">
+      <div class="step-number">3</div>
+      <div class="step-emoji">🦀</div>
+      <div class="step-content">
+        <div class="step-title">Storage</div>
+        <div class="step-who">💰 Mr. Krabs' Safe — Secure Custody</div>
+        <div class="step-desc">SpongeBob locks the formula in Mr. Krabs' safe. Access is logged every time the safe is opened. Plankton can't just waltz in and touch it — all access requires authorization and documentation.</div>
+        <span class="step-tag">🔒 Access control is everything</span>
+      </div>
+    </div>
+
+    <div class="connector"></div>
+
+    <div class="step-card even" data-delay="600">
+      <div class="step-number">4</div>
+      <div class="step-emoji">🔍</div>
+      <div class="step-content">
+        <div class="step-title">Integrity</div>
+        <div class="step-who">⚖️ Integrity Check — Tamper Evidence</div>
+        <div class="step-desc">The formula must look identical throughout the entire process. If the bag is opened, the seal is broken, or anything looks different — that's a red flag defense lawyers will pounce on in court.</div>
+        <span class="step-tag">🔏 Same in, same out</span>
+      </div>
+    </div>
+
+    <div class="connector"></div>
+
+    <div class="step-card" data-delay="800">
+      <div class="step-number">5</div>
+      <div class="step-emoji">🎤</div>
+      <div class="step-content">
+        <div class="step-title">Testimony</div>
+        <div class="step-who">🏛️ Courtroom — The Final Link</div>
+        <div class="step-desc">In court, everyone in the chain — Sandy → SpongeBob → Mr. Krabs — must testify that they handled the evidence properly and did not tamper with it. Every person is accountable for their link in the chain.</div>
+        <span class="step-tag">🗣️ Every link testifies</span>
+      </div>
+    </div>
+
+  </div><!-- /steps -->
+
+  <!-- WHAT BREAKS THE CHAIN -->
+  <div class="breaks-section" id="breaksSection">
+    <div class="breaks-title">🚨 What Breaks the Chain? 🚨</div>
+
+    <div class="break-item">
+      <div class="break-emoji">🐌</div>
+      <div>
+        <div class="break-label">Gap in Chain</div>
+        <div class="break-text">Gary the snail is found holding the formula with no record of how he got it. An unexplained gap in the chain means the evidence can be challenged — where was it? Who had it?</div>
+      </div>
+    </div>
+
+    <div class="break-item">
+      <div class="break-emoji">⭐</div>
+      <div>
+        <div class="break-label">Integrity Compromised</div>
+        <div class="break-text">Patrick was alone with the formula for an hour and can't remember what he did with it. Unaccounted time with evidence = integrity destroyed. The defense will have a field day.</div>
+      </div>
+    </div>
+
+    <div class="break-item">
+      <div class="break-emoji">🎸</div>
+      <div>
+        <div class="break-label">Disputed Transfer</div>
+        <div class="break-text">The log says Squidward signed for the formula — but Squidward says he never touched it. Conflicting records poison the entire chain. If signatures don't match reality, nothing is trustworthy.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUIZ -->
+  <div class="quiz-section" id="quizSection">
+    <div class="quiz-header">
+      <h2>🧠 Knowledge Check <span class="comptia-badge">CompTIA</span></h2>
+      <p>Answer all 5 questions, then submit for your score.</p>
+    </div>
+
+    <div id="quizContainer"></div>
+
+    <button class="grade-btn" id="gradeBtn" onclick="gradeQuiz()">🐙 Grade My Answers</button>
+
+    <div class="score-box" id="scoreBox">
+      <div class="score-num" id="scoreNum"></div>
+      <div class="score-label">out of 5 correct</div>
+      <div class="score-emoji" id="scoreEmoji"></div>
+      <div class="score-msg" id="scoreMsg"></div>
+      <button class="retry-btn" onclick="resetQuiz()">🔄 Try Again</button>
+    </div>
+  </div>
+
+  <div class="footer">🌊 Bikini Bottom Forensics Academy · Chain of Custody Training Module 🌊</div>
+</div><!-- /page -->
+
+<script>
+// ===========================
+// BACKGROUND GENERATION
+// ===========================
+(function() {
+  const layer = document.getElementById('bubblesLayer');
+  for (let i = 0; i < 25; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = 6 + Math.random() * 30;
+    b.style.cssText = `
+      width:${size}px; height:${size}px;
+      left:${Math.random()*100}%;
+      bottom:-${size}px;
+      animation-duration:${8+Math.random()*14}s;
+      animation-delay:${Math.random()*12}s;
+    `;
+    layer.appendChild(b);
+  }
+
+  const sw = document.getElementById('seaweeds');
+  const swEmojis = ['🌿','🪸','🌊'];
+  for (let i = 0; i < 8; i++) {
+    const s = document.createElement('div');
+    s.className = 'seaweed';
+    s.textContent = swEmojis[i % swEmojis.length];
+    s.style.cssText = `left:${5+i*13}%; animation-delay:${Math.random()*2}s; animation-duration:${2.5+Math.random()*2}s;`;
+    sw.appendChild(s);
+  }
+
+  const fishLayer = document.getElementById('fishes');
+  const fishEmojis = ['🐟','🐠','🐡','🦈','🐙'];
+  for (let i = 0; i < 5; i++) {
+    const f = document.createElement('div');
+    f.className = 'fish';
+    f.textContent = fishEmojis[i];
+    const topPct = 5 + Math.random() * 70;
+    f.style.cssText = `top:${topPct}%; animation-duration:${20+Math.random()*25}s; animation-delay:${Math.random()*20}s;`;
+    fishLayer.appendChild(f);
+  }
+})();
+
+// ===========================
+// SCROLL ANIMATIONS
+// ===========================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.15 });
+
+document.querySelectorAll('.step-card, .breaks-section, .quiz-section').forEach(el => observer.observe(el));
+
+// ===========================
+// QUIZ DATA
+// ===========================
+const questions = [
+  {
+    q: "Q1. A forensic investigator collects a USB drive from a crime scene, logs it, and transfers it to the lab. The next morning, the USB is found on an analyst's desk with no transfer record. Which chain of custody principle was MOST likely violated?",
+    options: [
+      "A. Integrity — the USB may have been physically altered",
+      "B. Continuity — there is an undocumented gap in possession",
+      "C. Admissibility — the evidence was not court-approved",
+      "D. Non-repudiation — the investigator denied the transfer"
+    ],
+    answer: 1,
+    fb: "✅ Correct! Continuity requires every transfer to be documented. An undocumented gap breaks the chain of custody and can render evidence inadmissible."
+  },
+  {
+    q: "Q2. During a trial, a defense attorney argues that a hard drive submitted as evidence shows a different serial number than what was recorded at the scene. This BEST represents a failure in which chain of custody element?",
+    options: [
+      "A. Collection — the wrong device was collected",
+      "B. Storage — the device was stored improperly",
+      "C. Integrity — evidence does not match the original documented state",
+      "D. Testimony — the witness provided false information"
+    ],
+    answer: 2,
+    fb: "✅ Correct! Integrity means evidence must remain unaltered. A mismatched serial number indicates the item may have been swapped or tampered with — an integrity failure."
+  },
+  {
+    q: "Q3. A security analyst is documenting chain of custody for a seized laptop. Which action is MOST critical to perform FIRST?",
+    options: [
+      "A. Decrypt any encrypted volumes on the device",
+      "B. Photograph the device and record its state before touching it",
+      "C. Power off the device to preserve volatile memory",
+      "D. Transfer the device to the legal team immediately"
+    ],
+    answer: 1,
+    fb: "✅ Correct! Photographing and documenting the device's exact state BEFORE touching it establishes the baseline for integrity and is the first critical step in chain of custody."
+  },
+  {
+    q: "Q4. Which of the following scenarios would MOST likely result in digital evidence being declared inadmissible in court?",
+    options: [
+      "A. The evidence was collected by a certified forensic examiner",
+      "B. The hash value of the evidence matches the original at every stage",
+      "C. One person in the custody chain cannot account for a 6-hour period of possession",
+      "D. The evidence was stored in a locked, access-controlled evidence room"
+    ],
+    answer: 2,
+    fb: "✅ Correct! An unexplained 6-hour gap in possession breaks the chain of custody. The defense can argue tampering occurred during that window, making the evidence inadmissible."
+  },
+  {
+    q: "Q5. A cybersecurity team hashes a disk image with SHA-256 immediately after acquisition. Later in court, the same hash is verified and matches. What does this PRIMARILY demonstrate?",
+    options: [
+      "A. The evidence was collected with proper authorization",
+      "B. The integrity of the evidence has been preserved",
+      "C. The chain of custody documentation is complete",
+      "D. The evidence is relevant to the crime being prosecuted"
+    ],
+    answer: 1,
+    fb: "✅ Correct! A matching hash value is the gold-standard proof of integrity — it demonstrates the data has not been modified from the moment of acquisition to its presentation in court."
+  }
+];
+
+// ===========================
+// RENDER QUIZ
+// ===========================
+const container = document.getElementById('quizContainer');
+const userAnswers = new Array(questions.length).fill(null);
+
+function renderQuiz() {
+  container.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card';
+    card.id = `qcard-${qi}`;
+
+    const qText = document.createElement('div');
+    qText.className = 'question-text';
+    qText.innerHTML = `<span class="q-num">${qi+1}.</span> ${q.q.replace(/^Q\d+\. /,'')}`;
+    card.appendChild(qText);
+
+    const opts = document.createElement('div');
+    opts.className = 'options';
+
+    q.options.forEach((opt, oi) => {
+      const btn = document.createElement('div');
+      btn.className = 'option';
+      btn.id = `opt-${qi}-${oi}`;
+      btn.innerHTML = `<span class="option-letter">${opt[0]}</span><span>${opt.slice(3)}</span>`;
+      btn.onclick = () => selectAnswer(qi, oi);
+      opts.appendChild(btn);
+    });
+    card.appendChild(opts);
+
+    const fb = document.createElement('div');
+    fb.className = 'feedback';
+    fb.id = `fb-${qi}`;
+    card.appendChild(fb);
+
+    container.appendChild(card);
+  });
+}
+
+function selectAnswer(qi, oi) {
+  // If already graded, no changes
+  if (document.getElementById(`opt-${qi}-0`).classList.contains('correct') ||
+      document.getElementById(`opt-${qi}-0`).classList.contains('wrong')) return;
+
+  userAnswers[qi] = oi;
+  // Update UI
+  for (let i = 0; i < questions[qi].options.length; i++) {
+    const el = document.getElementById(`opt-${qi}-${i}`);
+    el.classList.toggle('selected', i === oi);
+  }
+}
+
+function gradeQuiz() {
+  let score = 0;
+  questions.forEach((q, qi) => {
+    const ans = userAnswers[qi];
+    const card = document.getElementById(`qcard-${qi}`);
+    const fb = document.getElementById(`fb-${qi}`);
+
+    if (ans === null) {
+      fb.className = 'feedback wrong-fb show';
+      fb.textContent = '⚠️ No answer selected for this question.';
+      card.className = 'question-card wrong-card';
+      return;
+    }
+
+    for (let i = 0; i < q.options.length; i++) {
+      const el = document.getElementById(`opt-${qi}-${i}`);
+      el.classList.add('disabled');
+      el.onclick = null;
+      if (i === q.answer) { el.classList.add('correct'); el.classList.remove('selected'); }
+      else if (i === ans && ans !== q.answer) { el.classList.add('wrong'); el.classList.remove('selected'); }
+      else { el.classList.remove('selected'); }
+    }
+
+    if (ans === q.answer) {
+      score++;
+      fb.className = 'feedback correct-fb show';
+      fb.textContent = q.fb;
+      card.className = 'question-card correct-card';
+    } else {
+      fb.className = 'feedback wrong-fb show';
+      fb.textContent = `❌ Incorrect. ${q.fb}`;
+      card.className = 'question-card wrong-card';
+    }
+  });
+
+  showScore(score);
+  document.getElementById('gradeBtn').style.display = 'none';
+}
+
+function showScore(score) {
+  const box = document.getElementById('scoreBox');
+  box.classList.add('show');
+  document.getElementById('scoreNum').textContent = `${score}/5`;
+
+  const emojis = ['😱','😓','🤔','👍','🌟','🏆'];
+  const msgs = [
+    "Plankton tampered with your knowledge! Study more! 🦠",
+    "Sandy would suggest more lab time! Keep studying! 🥜",
+    "Not bad, but Mr. Krabs expects more! Keep going! 🦀",
+    "Pretty good! SpongeBob is proud! 🧽",
+    "Excellent! You're almost ready for Bikini Bottom court! 🎤",
+    "PERFECT! You are the Sandy Cheeks of chain of custody! 🏆"
+  ];
+  document.getElementById('scoreEmoji').textContent = emojis[score];
+  document.getElementById('scoreMsg').textContent = msgs[score];
+  box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function resetQuiz() {
+  for (let i = 0; i < questions.length; i++) userAnswers[i] = null;
+  document.getElementById('scoreBox').classList.remove('show');
+  document.getElementById('gradeBtn').style.display = 'block';
+  renderQuiz();
+}
+
+renderQuiz();
+</script>
+</body>
+</html>

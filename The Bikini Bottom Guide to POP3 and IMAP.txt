@@ -1,0 +1,14 @@
+﻿In the world of Bikini Bottom, the difference between POP3 and IMAP is all about where your "mail" stays after you've read it. While the sources list these as Post Office Protocol (POP) 1 and Internet Message Access Protocol (IMAP) 2, they don't detail the technical differences.
+Using information from outside the sources to clarify:
+POP3: The "Patrick’s Rock" Method
+Think of POP3 like Patrick Star receiving a physical letter.
+* How it works: Patrick goes to his mailbox, picks up the letter, and takes it inside his rock. Once he has it inside, it is no longer in the mailbox.
+* The Catch: If Patrick tries to check his mail from a different rock, he won’t see that letter because he already "downloaded" it to his primary home. If he loses that letter (or his rock is destroyed), the mail is gone forever because there is no copy left on the server.
+IMAP: The "Krusty Krab Menu" Method
+Think of IMAP like the Krusty Krab Menu board behind the counter.
+* How it works: No matter if Squidward is at the register, SpongeBob is in the kitchen, or Mr. Krabs is in his office, they are all looking at the same menu on the wall (the server).
+* The Benefit: If SpongeBob uses his phone to move an email to a "Fry Cook" folder, Squidward will see that same change when he logs in from the register. The mail stays on the server, allowing for synchronization across all your devices.
+Summary for the Exam
+* POP3 (Post Office Protocol): Downloads the email to your device and usually deletes it from the server. It’s better for people who only use one device and want to save server space. 1
+* IMAP (Internet Message Access Protocol): Keeps the email on the server and syncs changes across all devices. It is the modern standard for most users who switch between phones, tablets, and computers. 2
+You can find these protocols listed in the CompTIA Security+ Acronym List in the sources to ensure you recognize them on test day. 1, 2
