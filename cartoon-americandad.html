@@ -1,0 +1,1647 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🇺🇸 American Dad – Security+ SY0-701 Study Hub</title>
+<style>
+:root {
+  --red: #B22234;
+  --blue: #002868;
+  --white: #FFFFFF;
+  --gold: #FFFFFF;
+  --darkblue: #001A4D;
+  --lightred: #D63B4B;
+  --cream: #F5F0E8;
+  --text-dark: #0A0A1A;
+  --card-bg: #001A4D;
+  --border: #B22234;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Georgia',serif;
+  background: #002868;
+  color: var(--white);
+  overflow-x:hidden;
+}
+
+/* STARS & STRIPES BACKGROUND */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.07) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+  background-size: 40px 40px, 80px 80px;
+  background-position: 0 0, 20px 20px;
+  pointer-events:none;
+  z-index:0;
+}
+
+/* PARTICLES */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1;overflow:hidden;}
+.particle{
+  position:absolute;
+  font-size:22px;
+  opacity:0.18;
+  animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+  0%{transform:translateY(110vh) rotate(0deg);opacity:0;}
+  10%{opacity:0.18;}
+  90%{opacity:0.18;}
+  100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}
+}
+
+/* NAV */
+nav{
+  position:sticky;top:0;z-index:1000;
+  background:var(--red);
+  border-bottom:6px solid var(--gold);
+  padding:0 16px;
+  display:flex;align-items:center;gap:12px;
+  flex-wrap:wrap;
+  box-shadow:0 4px 20px rgba(0,0,0,0.5);
+}
+.nav-brand{
+  font-family:'Impact',sans-serif;
+  font-size:22px;letter-spacing:2px;
+  color:var(--white);
+  text-shadow:2px 2px 0 var(--blue);
+  padding:10px 0;
+  white-space:nowrap;
+}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:8px 0;}
+.nav-links a{
+  color:var(--white);font-weight:700;font-family:'Impact',sans-serif;
+  text-decoration:none;padding:6px 14px;border-radius:4px;
+  border:2px solid rgba(255,255,255,0.5);
+  transition:0.2s;font-size:13px;letter-spacing:1px;
+  background:rgba(0,0,0,0.2);
+}
+.nav-links a:hover{background:var(--blue);border-color:var(--gold);color:var(--gold);}
+.nav-special{background:var(--blue)!important;border-color:var(--white)!important;color:var(--white)!important;font-weight:900!important;letter-spacing:2px!important;}
+.nav-special:hover{background:var(--white)!important;color:var(--blue)!important;border-color:var(--red)!important;}
+.dropdown{position:relative;}
+.dropdown-btn{
+  color:var(--white);font-weight:700;font-family:'Impact',sans-serif;
+  background:rgba(0,0,0,0.3);border:2px solid rgba(255,255,255,0.5);
+  padding:6px 14px;border-radius:4px;cursor:pointer;font-size:13px;
+  letter-spacing:1px;
+}
+.dropdown-btn:hover{background:var(--blue);border-color:var(--gold);}
+.dropdown-menu{
+  display:none;position:absolute;top:110%;left:0;
+  background:var(--darkblue);border:2px solid var(--gold);
+  border-radius:6px;min-width:240px;z-index:2000;
+  box-shadow:0 8px 30px rgba(0,0,0,0.6);
+}
+.dropdown-menu a{
+  display:block;padding:8px 14px;color:var(--white);
+  text-decoration:none;font-size:13px;border-bottom:1px solid rgba(255,255,255,0.1);
+  transition:0.15s;
+}
+.dropdown-menu a:hover{background:var(--red);color:var(--gold);}
+.dropdown:hover .dropdown-menu{display:block;}
+
+/* SECTIONS */
+.section{
+  position:relative;z-index:2;
+  background:var(--darkblue);
+  border:4px solid var(--red);
+  border-radius:8px;
+  padding:30px 28px;
+  margin:28px auto;
+  width:92%;max-width:1000px;
+  box-shadow:6px 6px 0 var(--red), 12px 12px 0 rgba(178,34,52,0.3);
+}
+.section-alt{border-color:var(--gold);box-shadow:6px 6px 0 var(--gold);}
+h1{font-family:'Impact',sans-serif;font-size:2.4em;letter-spacing:3px;color:var(--gold);text-shadow:3px 3px 0 var(--red);}
+h2{font-family:'Impact',sans-serif;font-size:1.8em;letter-spacing:2px;color:var(--gold);margin-bottom:18px;border-bottom:3px solid var(--red);padding-bottom:8px;}
+h3{font-family:'Impact',sans-serif;font-size:1.2em;color:var(--gold);margin-bottom:10px;}
+p{line-height:1.7;margin-bottom:12px;}
+a{color:var(--gold);}
+ul{padding-left:22px;line-height:1.8;}
+li{margin-bottom:4px;}
+
+/* HERO */
+#hero{
+  position:relative;z-index:2;
+  text-align:center;
+  padding:50px 20px 40px;
+  background:var(--blue);
+  border-bottom:8px solid var(--red);
+  border-top:4px solid var(--gold);
+}
+.hero-emoji{
+  font-size:90px;
+  display:inline-block;
+  background:var(--red);
+  border:6px solid var(--white);
+  border-radius:50%;
+  width:150px;height:150px;
+  line-height:138px;
+  margin-bottom:20px;
+  box-shadow:0 0 0 8px var(--blue), 0 0 0 14px var(--white), 0 0 40px rgba(255,255,255,0.2);
+  animation:flagWave 3s ease-in-out infinite;
+}
+@keyframes flagWave{0%,100%{transform:rotate(-3deg);}50%{transform:rotate(3deg);}}
+.stars-strip{
+  background:var(--blue);
+  padding:7px 0;
+  text-align:center;
+  font-size:18px;
+  letter-spacing:10px;
+  color:var(--white);
+  border-top:4px solid var(--red);
+  border-bottom:4px solid var(--red);
+  position:relative;z-index:2;
+  opacity:0.85;
+}
+.hero-badge{
+  display:inline-block;
+  background:var(--red);
+  color:var(--white);
+  font-family:'Impact',sans-serif;
+  letter-spacing:2px;
+  font-size:13px;
+  padding:8px 22px;
+  border:3px solid var(--gold);
+  border-radius:4px;
+  margin:14px 0;
+}
+.hero-title{
+  font-family:'Impact',sans-serif;
+  font-size:3em;letter-spacing:4px;
+  color:var(--white);
+  text-shadow:4px 4px 0 var(--red), 8px 8px 0 var(--darkblue);
+  margin-bottom:10px;
+}
+
+/* JUMP BAR */
+#jumpbar{
+  position:relative;z-index:2;
+  background:var(--red);
+  padding:14px 20px;
+  display:flex;flex-wrap:wrap;gap:8px;
+  justify-content:center;
+  border-bottom:4px solid var(--gold);
+}
+#jumpbar a{
+  background:var(--blue);
+  color:var(--white);
+  font-family:'Impact',sans-serif;
+  letter-spacing:1px;
+  font-size:12px;
+  padding:6px 14px;
+  border:2px solid var(--gold);
+  border-radius:4px;
+  text-decoration:none;
+  transition:0.2s;
+}
+#jumpbar a:hover{background:var(--gold);color:var(--blue);}
+
+/* TAGS */
+.tag{
+  display:inline-block;
+  padding:3px 10px;
+  border-radius:4px;
+  font-size:11px;font-weight:700;font-family:'Impact',sans-serif;
+  letter-spacing:1px;margin:3px;
+}
+.tag-red{background:var(--red);color:var(--white);}
+.tag-blue{background:var(--blue);color:var(--gold);}
+.tag-gold{background:var(--gold);color:var(--blue);}
+.tag-white{background:var(--white);color:var(--red);border:1px solid var(--red);}
+
+/* ACCORDION */
+.accordion-item{margin-bottom:10px;}
+.accordion-btn{
+  width:100%;text-align:left;
+  background:var(--red);
+  color:var(--white);
+  font-family:'Impact',sans-serif;letter-spacing:1px;font-size:1em;
+  border:3px solid var(--gold);
+  padding:12px 18px;
+  cursor:pointer;border-radius:4px;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:0.2s;
+}
+.accordion-btn:hover{background:var(--blue);border-color:var(--gold);}
+.accordion-body{
+  display:none;
+  background:rgba(0,0,50,0.5);
+  border:3px solid var(--red);
+  border-top:none;
+  padding:18px;
+  border-radius:0 0 4px 4px;
+}
+.accordion-body.open{display:block;}
+
+/* CARDS */
+.card-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;}
+.card{
+  background:var(--blue);
+  border:3px solid var(--red);
+  border-radius:6px;
+  padding:18px;
+  transition:0.2s;
+}
+.card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:4px 4px 0 var(--gold);}
+.card-icon{font-size:2em;margin-bottom:8px;}
+.card-title{font-family:'Impact',sans-serif;color:var(--gold);letter-spacing:1px;font-size:1.1em;margin-bottom:6px;}
+.card-role{font-size:11px;color:var(--red);font-family:'Impact',sans-serif;letter-spacing:2px;margin-bottom:8px;text-transform:uppercase;}
+
+/* MINI QUIZ */
+.mini-quiz{background:rgba(0,0,80,0.4);border:2px solid var(--gold);border-radius:6px;padding:14px;margin-top:14px;}
+.mq-question{font-weight:700;margin-bottom:10px;color:var(--gold);}
+.mq-opt{
+  display:block;width:100%;text-align:left;
+  background:var(--blue);color:var(--white);
+  border:2px solid rgba(255,255,255,0.3);
+  padding:8px 14px;margin-bottom:6px;
+  border-radius:4px;cursor:pointer;font-family:'Georgia',serif;
+  transition:0.2s;
+}
+.mq-opt:hover:not(:disabled){background:var(--red);border-color:var(--gold);}
+.mq-opt.correct{background:#155724!important;border-color:#28a745!important;color:#d4edda!important;}
+.mq-opt.wrong{background:#7b1c1c!important;border-color:#dc3545!important;opacity:0.7;}
+.mq-opt:disabled{cursor:default;}
+.mq-reset{
+  background:var(--gold);color:var(--blue);border:none;
+  font-family:'Impact',sans-serif;letter-spacing:1px;
+  padding:7px 18px;border-radius:4px;cursor:pointer;margin-top:6px;
+  font-size:13px;
+}
+.mq-reset:hover{background:var(--white);}
+
+/* PHASE CARDS */
+.phase-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px;}
+.phase-card{
+  background:var(--blue);
+  border:3px solid var(--gold);
+  border-radius:6px;padding:16px;text-align:center;
+}
+.phase-card h3{color:var(--gold);font-size:1em;}
+.phase-num{
+  font-family:'Impact',sans-serif;font-size:2.5em;
+  color:var(--red);display:block;margin-bottom:6px;
+}
+.exam-tag{
+  font-size:10px;background:var(--red);color:var(--white);
+  padding:2px 8px;border-radius:3px;font-family:'Impact',sans-serif;
+  letter-spacing:1px;margin-top:8px;display:inline-block;
+}
+
+/* ADVENTURE */
+.scene{
+  display:none;
+  background:rgba(0,0,60,0.5);
+  border:3px solid var(--red);
+  border-radius:6px;padding:22px;
+  margin-bottom:12px;
+}
+.scene.active{display:block;}
+.scene-title{font-family:'Impact',sans-serif;font-size:1.3em;color:var(--gold);margin-bottom:10px;}
+.scene-text{margin-bottom:14px;line-height:1.7;}
+.adv-btn{
+  background:var(--blue);color:var(--white);
+  border:2px solid var(--gold);
+  padding:8px 16px;margin:5px;border-radius:4px;
+  cursor:pointer;font-family:'Georgia',serif;
+  transition:0.2s;
+}
+.adv-btn:hover{background:var(--red);}
+.adv-feedback{margin-top:10px;font-weight:700;padding:8px;border-radius:4px;}
+.adv-finale{
+  display:none;text-align:center;
+  background:var(--blue);border:4px solid var(--gold);
+  border-radius:8px;padding:30px;
+}
+
+/* FLASHCARD */
+#fc-card{
+  background:var(--blue);
+  border:4px solid var(--gold);
+  border-radius:8px;
+  min-height:180px;
+  padding:24px;
+  display:flex;flex-direction:column;justify-content:center;
+  cursor:pointer;
+  transition:0.2s;
+  box-shadow:6px 6px 0 var(--red);
+}
+#fc-card:hover{transform:translateY(-2px);}
+#fc-front{font-size:1.1em;font-weight:700;color:var(--gold);}
+#fc-back{margin-top:14px;color:#b3c6ff;font-size:0.97em;line-height:1.6;border-top:2px solid var(--red);padding-top:12px;}
+.fc-controls{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px;}
+.fc-btn{padding:9px 18px;border-radius:4px;border:2px solid;cursor:pointer;font-family:'Impact',sans-serif;letter-spacing:1px;font-size:13px;transition:0.2s;}
+.fc-show{background:var(--gold);color:var(--blue);border-color:var(--gold);}
+.fc-again{background:#7b1c1c;color:var(--white);border-color:#dc3545;}
+.fc-got{background:#155724;color:var(--white);border-color:#28a745;}
+.fc-easy{background:#0c4a6e;color:var(--white);border-color:#38bdf8;}
+.fc-skip{background:rgba(255,255,255,0.1);color:var(--white);border-color:rgba(255,255,255,0.3);}
+.fc-btn:hover{opacity:0.85;transform:translateY(-1px);}
+.box-display{margin-top:12px;font-size:13px;color:rgba(255,255,255,0.6);font-family:'Georgia',serif;}
+.fc-progress{
+  height:8px;background:rgba(255,255,255,0.15);border-radius:4px;margin-top:10px;
+}
+.fc-bar{height:100%;background:var(--gold);border-radius:4px;transition:0.4s;}
+.keyboard-hint{font-size:11px;color:rgba(255,255,255,0.4);margin-top:8px;}
+
+/* BIG QUIZ */
+.bq-question{margin-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.1);padding-bottom:18px;}
+.bq-q{font-weight:700;margin-bottom:10px;color:var(--gold);}
+.bq-opt{
+  display:block;width:100%;text-align:left;
+  background:var(--blue);color:var(--white);
+  border:2px solid rgba(255,255,255,0.2);
+  padding:9px 16px;margin-bottom:6px;
+  border-radius:4px;cursor:pointer;transition:0.2s;
+}
+.bq-opt:hover:not(:disabled){background:var(--red);border-color:var(--gold);}
+.bq-opt.correct{background:#155724!important;border-color:#28a745!important;}
+.bq-opt.wrong{background:#7b1c1c!important;border-color:#dc3545!important;opacity:0.7;}
+.bq-opt:disabled{cursor:default;}
+#bq-score{
+  display:none;margin-top:20px;
+  background:var(--blue);border:4px solid var(--gold);
+  border-radius:8px;padding:24px;text-align:center;
+}
+#bq-score h3{color:var(--gold);font-size:1.6em;}
+#retake-btn{
+  background:var(--red);color:var(--white);
+  border:3px solid var(--gold);
+  font-family:'Impact',sans-serif;letter-spacing:2px;
+  padding:12px 28px;border-radius:6px;cursor:pointer;
+  font-size:16px;margin-top:14px;transition:0.2s;
+}
+#retake-btn:hover{background:var(--gold);color:var(--blue);}
+
+/* CONFETTI */
+.confetti-piece{
+  position:fixed;width:10px;height:10px;
+  pointer-events:none;z-index:9999;
+  animation:confettiFall 3s ease-in forwards;
+}
+@keyframes confettiFall{
+  0%{transform:translateY(-100px) rotate(0deg);opacity:1;}
+  100%{transform:translateY(110vh) rotate(720deg);opacity:0;}
+}
+
+/* LINKS */
+.link-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;}
+.link-card{
+  background:var(--blue);border:3px solid var(--gold);
+  border-radius:6px;padding:18px;text-align:center;
+  transition:0.2s;text-decoration:none;color:var(--white);
+  display:block;
+}
+.link-card:hover{background:var(--red);border-color:var(--white);transform:translateY(-3px);}
+.link-card h3{color:var(--gold);margin-bottom:6px;}
+.link-card p{font-size:13px;opacity:0.8;}
+
+/* STAR DIVIDER */
+.star-divider{
+  text-align:center;font-size:20px;
+  margin:8px 0;color:var(--gold);
+  letter-spacing:4px;
+}
+
+/* SOUND TOGGLE */
+#sound-toggle{
+  position:fixed;right:16px;bottom:16px;
+  background:var(--red);color:var(--white);
+  border:3px solid var(--gold);
+  border-radius:50%;width:50px;height:50px;
+  font-size:22px;line-height:44px;text-align:center;
+  cursor:pointer;z-index:9000;
+  box-shadow:3px 3px 0 var(--darkblue);
+}
+#sound-toggle:hover{background:var(--blue);}
+
+/* EASTER EGG */
+#easter-egg-trigger{
+  display:inline-block;cursor:pointer;
+  color:rgba(255,255,255,0.15);
+  font-size:11px;font-family:'Georgia',serif;
+  transition:0.3s;
+  text-decoration:none;
+}
+#easter-egg-trigger:hover{color:var(--gold);}
+#easter-modal{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,0.85);z-index:9999;
+  align-items:center;justify-content:center;
+}
+#easter-modal.open{display:flex;}
+#easter-inner{
+  background:var(--blue);border:6px solid var(--white);
+  border-radius:12px;padding:36px;max-width:500px;width:90%;
+  text-align:center;position:relative;
+}
+#easter-inner h2{color:var(--gold);font-size:1.8em;margin-bottom:14px;}
+#easter-inner p{line-height:1.7;margin-bottom:14px;}
+#easter-close{
+  position:absolute;top:12px;right:16px;
+  background:var(--red);color:var(--white);border:none;
+  font-size:18px;cursor:pointer;border-radius:4px;
+  padding:4px 10px;font-family:'Impact',sans-serif;
+}
+#easter-link{
+  display:inline-block;background:var(--red);color:var(--white);
+  border:3px solid var(--gold);padding:10px 22px;
+  border-radius:6px;font-family:'Impact',sans-serif;
+  letter-spacing:1px;text-decoration:none;margin-top:8px;
+  transition:0.2s;
+}
+#easter-link:hover{background:var(--gold);color:var(--blue);}
+
+/* NOTES CARDS */
+.note-card{
+  background:rgba(255,255,255,0.04);
+  border-left:6px solid var(--red);
+  border-radius:0 6px 6px 0;
+  padding:16px 18px;margin-bottom:14px;
+}
+.note-card h3{color:var(--gold);margin-bottom:8px;}
+
+/* ROLE TABLE */
+.role-table{width:100%;border-collapse:collapse;margin-top:12px;}
+.role-table th{background:var(--red);color:var(--white);font-family:'Impact',sans-serif;letter-spacing:1px;padding:10px;text-align:left;}
+.role-table td{padding:9px 10px;border-bottom:1px solid rgba(255,255,255,0.1);}
+.role-table tr:nth-child(even) td{background:rgba(0,0,80,0.3);}
+
+/* FOOTER */
+footer{
+  position:relative;z-index:2;
+  background:var(--red);
+  border-top:6px solid var(--gold);
+  text-align:center;
+  padding:24px;
+  font-size:13px;
+}
+footer a{color:var(--gold);}
+
+/* RESPONSIVE */
+@media(max-width:600px){
+  .hero-title{font-size:1.8em;}
+  .section{padding:18px 14px;}
+  nav{gap:6px;}
+}
+</style>
+</head>
+<body>
+
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- SOUND TOGGLE -->
+<div id="sound-toggle" onclick="toggleSound()" title="Sound On/Off">🔇</div>
+
+<!-- EASTER EGG MODAL -->
+<div id="easter-modal">
+  <div id="easter-inner">
+    <button id="easter-close" onclick="closeEaster()">✕ CLOSE</button>
+    <div style="font-size:50px;margin-bottom:10px;">🎵📺</div>
+    <h2>STUDY BREAK: STAN IS GODDAMN GIFTED</h2>
+    <p>Even the CIA Director needs a study break. Stan once realized he was "goddamn gifted" — and so are you for making it this far through Security+ prep.</p>
+    <p style="font-size:13px;opacity:0.7;">S7E5 — one of the community's favorite moments. You deserve this.</p>
+    <a id="easter-link" href="https://www.reddit.com/r/americandad/comments/1bl4927/s7e5_stan_is_goddamn_gifted/" target="_blank" rel="noopener">🔗 TAKE YOUR BREAK, SOLDIER →</a>
+    <p style="font-size:11px;opacity:0.4;margin-top:14px;">Now get back to studying. Bullock's watching.</p>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">🇺🇸 AMERICAN DAD SEC+</div>
+  <div class="nav-links">
+    <a href="https://charleneluequee.github.io/" target="_blank" class="nav-special">⭐ Portfolio</a>
+    <a href="security-notes.html" class="nav-special">⭐ Study Hub</a>
+    <div class="dropdown">
+      <button class="dropdown-btn">📺 All Shows ▾</button>
+      <div class="dropdown-menu">
+        <a href="cartoon-spongebob.html">🧽 SpongeBob SquarePants</a>
+        <a href="cartoon-ben10.html">⌚ Ben 10</a>
+        
+        <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+        <a href="cartoon-avatar.html">🌊 Avatar: The Last Airbender</a>
+        <a href="cartoon-knd.html">🔢 Codename: Kids Next Door</a>
+        <a href="cartoon-xmen.html">⚡ X-Men '97</a>
+        <a href="cartoon-simpsons.html">🍩 The Simpsons</a>
+        <a href="cartoon-futurama.html">🤖 Futurama</a>
+        <a href="cartoon-danny.html">👻 Danny Phantom</a>
+        <a href="cartoon-fairyodd.html">🌟 The Fairly OddParents</a>
+        <a href="cartoon-magicbus.html">🚌 The Magic School Bus</a>
+        <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+        <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+        <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+        <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div id="hero">
+  <div class="hero-emoji">🇺🇸</div>
+  <div class="hero-title">AMERICAN DAD<br>SECURITY+</div>
+  <div class="hero-badge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <p style="max-width:680px;margin:14px auto;font-size:1em;opacity:0.9;">The Smith family's chaotic household — a CIA agent dad, alien houseguest, anthropomorphic fish, and suburban family — maps surprisingly well to enterprise security. Stan enforces policy, Roger breaks every rule, and Hayley questions everything. Let's learn Security+ the American Dad way.</p>
+</div>
+
+<!-- STARS STRIP -->
+<div class="stars-strip">★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★</div>
+
+<!-- JUMP BAR -->
+<div id="jumpbar">
+  <a href="#topics">📋 Topics</a>
+  <a href="#mnemonics">🧠 Mnemonics</a>
+  <a href="#characters">👥 Characters</a>
+  <a href="#analogies">🎭 Analogies</a>
+  <a href="#notes">📝 Notes</a>
+  <a href="#ir-lifecycle">🚨 IR Lifecycle</a>
+  <a href="#detection">🔍 Detection</a>
+  <a href="#roles">🎖️ Roles</a>
+  <a href="#reporting">📊 Reporting</a>
+  <a href="#post-incident">📋 Post-Incident</a>
+  <a href="#adventure">🗺️ Adventure</a>
+  <a href="#links">🔗 Links</a>
+  <a href="#flashcards">🃏 Flashcards</a>
+  <a href="#quiz">❓ Quiz</a>
+</div>
+
+<!-- SECTION 1: TOPICS COVERED -->
+<div class="section" id="topics">
+  <h2>📋 TOPICS COVERED — ALL 5 DOMAINS</h2>
+  <div class="star-divider">★ ★ ★</div>
+
+  <div class="accordion-item">
+    <button class="accordion-btn" onclick="toggleAccordion(this)">
+      <span>🔒 Domain 1: General Security Concepts (12%)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <span class="tag tag-red">1.1 Security Controls</span>
+      <span class="tag tag-blue">1.2 Fundamental Concepts</span>
+      <span class="tag tag-gold">1.3 Change Management</span>
+      <span class="tag tag-white">1.4 Cryptography</span>
+      <ul style="margin-top:12px;">
+        <li>CIA Triad · Non-repudiation · AAA · Zero Trust</li>
+        <li>Control categories: Technical, Managerial, Operational, Physical</li>
+        <li>Control types: Preventive, Deterrent, Detective, Corrective, Compensating, Directive</li>
+        <li>PKI, Encryption (symmetric/asymmetric), Hashing, Salting, Digital Signatures</li>
+        <li>TPM, HSM, Certificates, CRL, OCSP, Key management</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-btn" onclick="toggleAccordion(this)">
+      <span>⚠️ Domain 2: Threats, Vulnerabilities & Mitigations (22%)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <span class="tag tag-red">2.1 Threat Actors</span>
+      <span class="tag tag-blue">2.2 Attack Surfaces</span>
+      <span class="tag tag-gold">2.3 Vulnerability Types</span>
+      <span class="tag tag-white">2.4 Malicious Activity</span>
+      <span class="tag tag-red">2.5 Mitigations</span>
+      <ul style="margin-top:12px;">
+        <li>Nation-state, Insider threat, Hacktivist, Organized crime</li>
+        <li>Phishing, Vishing, Smishing, Social Engineering, Pretexting</li>
+        <li>Ransomware, Trojans, Worms, Rootkits, Keyloggers, Logic Bombs</li>
+        <li>SQLi, XSS, Buffer Overflow, DDoS, On-path attacks</li>
+        <li>Segmentation, Least privilege, Patching, Hardening</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-btn" onclick="toggleAccordion(this)">
+      <span>🏗️ Domain 3: Security Architecture (18%)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <span class="tag tag-red">3.1 Architecture Models</span>
+      <span class="tag tag-blue">3.2 Enterprise Infrastructure</span>
+      <span class="tag tag-gold">3.3 Data Protection</span>
+      <span class="tag tag-white">3.4 Resilience & Recovery</span>
+      <ul style="margin-top:12px;">
+        <li>Cloud, IaC, Serverless, Microservices, Virtualization, IoT, SCADA</li>
+        <li>DMZ, VLAN, Air gap, Firewalls (WAF, NGFW, UTM), IDS/IPS</li>
+        <li>VPN, SD-WAN, SASE, Zero Trust architecture</li>
+        <li>Data states (at rest, in transit, in use), Classification, Tokenization</li>
+        <li>RTO, RPO, Hot/Warm/Cold sites, Backups, HA, Load balancing</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-btn" onclick="toggleAccordion(this)">
+      <span>⚙️ Domain 4: Security Operations (28%)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <span class="tag tag-red">4.1 Security Techniques</span>
+      <span class="tag tag-blue">4.2 Asset Management</span>
+      <span class="tag tag-gold">4.3 Vulnerability Mgmt</span>
+      <span class="tag tag-white">4.4 Monitoring</span>
+      <span class="tag tag-red">4.5–4.6 IAM</span>
+      <span class="tag tag-blue">4.7 Automation</span>
+      <span class="tag tag-gold">4.8 IR</span>
+      <ul style="margin-top:12px;">
+        <li>SIEM, EDR, DLP, SOAR, vulnerability scanning</li>
+        <li>MFA, SSO, LDAP, SAML, OAuth, RBAC, PAM</li>
+        <li>IR: Preparation → Detection → Analysis → Containment → Eradication → Recovery → Lessons</li>
+        <li>Digital forensics: chain of custody, legal hold, e-discovery</li>
+        <li>Automation, scripting, API integrations for security</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-btn" onclick="toggleAccordion(this)">
+      <span>📜 Domain 5: Security Program Management & Oversight (20%)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <span class="tag tag-red">5.1 Governance</span>
+      <span class="tag tag-blue">5.2 Risk Management</span>
+      <span class="tag tag-gold">5.3 Third-Party Risk</span>
+      <span class="tag tag-white">5.4 Compliance</span>
+      <span class="tag tag-red">5.5 Audits</span>
+      <span class="tag tag-blue">5.6 Awareness</span>
+      <ul style="margin-top:12px;">
+        <li>Policies, Standards, Procedures, Guidelines · Governance structures</li>
+        <li>Risk: SLE, ALE, ARO, qualitative vs quantitative analysis</li>
+        <li>SLA, MOU, NDA, BPA · Vendor assessment, right-to-audit</li>
+        <li>GDPR, PCI-DSS, HIPAA compliance · Data sovereignty</li>
+        <li>Pen testing types: black/grey/white box · Phishing campaigns</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: DOMAIN STUDY GUIDE / MNEMONICS -->
+<div class="section section-alt" id="mnemonics">
+  <h2>🧠 DOMAIN STUDY GUIDE — CIA MNEMONICS</h2>
+  <p style="opacity:0.8;margin-bottom:16px;">Stan's CIA training manual — each domain has a Smith family mnemonic to lock it in your memory.</p>
+
+  <div class="accordion-item" id="mnemonic-group">
+    <button class="accordion-btn" onclick="toggleMnemonic(this)">
+      <span>🔒 D1 General Security — "STAN" (Controls & Crypto)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong style="color:var(--gold);font-size:1.3em;">S-T-A-N</strong></p>
+      <p><strong>S</strong>ecurity controls (Technical, Managerial, Operational, Physical)<br>
+      <strong>T</strong>rust models: Zero Trust — never assume, always verify<br>
+      <strong>A</strong>uthentication, Authorization, Accounting (AAA)<br>
+      <strong>N</strong>on-repudiation via digital signatures & PKI</p>
+      <hr style="border-color:var(--red);margin:12px 0;">
+      <p><strong>Key bullets:</strong></p>
+      <ul><li>CIA Triad = Confidentiality + Integrity + Availability</li><li>Symmetric = same key both ways (AES 128/192/256)</li><li>Asymmetric = public encrypts, private decrypts (RSA)</li></ul>
+      <div class="mini-quiz">
+        <div class="mq-question">Stan locks the CIA server room and only he has the key. This is which control category?</div>
+        <button class="mq-opt" onclick="miniQ(this,false)">A. Technical</button>
+        <button class="mq-opt" onclick="miniQ(this,true)">B. Physical</button>
+        <button class="mq-opt" onclick="miniQ(this,false)">C. Managerial</button>
+        <button class="mq-reset" onclick="resetMiniQ(this)" style="display:none;">↺ Retake</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-btn" onclick="toggleMnemonic(this)">
+      <span>⚠️ D2 Threats & Mitigations — "ROGER" (Attack Vectors)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong style="color:var(--gold);font-size:1.3em;">R-O-G-E-R</strong></p>
+      <p><strong>R</strong>ansomware & malware types (worm, trojan, rootkit, logic bomb)<br>
+      <strong>O</strong>n-path attacks, DNS poisoning, credential replay<br>
+      <strong>G</strong>rooming via social engineering (phishing, vishing, pretexting)<br>
+      <strong>E</strong>xploits: SQLi, XSS, buffer overflow, privilege escalation<br>
+      <strong>R</strong>emediation: patch, segment, least privilege, harden</p>
+      <hr style="border-color:var(--red);margin:12px 0;">
+      <ul><li>APT = Advanced Persistent Threat (nation-state level)</li><li>Indicators: account lockout, impossible travel, out-of-cycle logging</li><li>DDoS = amplified/reflected — overwhelming traffic</li></ul>
+      <div class="mini-quiz">
+        <div class="mq-question">Roger sends fake CIA emails to steal credentials. This is:</div>
+        <button class="mq-opt" onclick="miniQ(this,false)">A. Vishing</button>
+        <button class="mq-opt" onclick="miniQ(this,false)">B. Smishing</button>
+        <button class="mq-opt" onclick="miniQ(this,true)">C. Phishing</button>
+        <button class="mq-reset" onclick="resetMiniQ(this)" style="display:none;">↺ Retake</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-btn" onclick="toggleMnemonic(this)">
+      <span>🏗️ D3 Architecture — "HAYLEY" (Network & Data)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong style="color:var(--gold);font-size:1.3em;">H-A-Y-L-E-Y</strong></p>
+      <p><strong>H</strong>igh availability: clustering, load balancing, hot/warm/cold sites<br>
+      <strong>A</strong>ir gaps & network segmentation (DMZ, VLANs)<br>
+      <strong>Y</strong>our data states: at rest, in transit, in use<br>
+      <strong>L</strong>ayers of protection: firewalls, WAF, IDS/IPS, VPN<br>
+      <strong>E</strong>ncryption everywhere: TLS, IPSec, full-disk, database<br>
+      <strong>Y</strong>ield to recovery metrics: RTO, RPO, MTTR, MTBF</p>
+      <hr style="border-color:var(--red);margin:12px 0;">
+      <ul><li>SD-WAN = software-defined wide area network</li><li>SASE = Secure Access Service Edge (cloud-native security)</li><li>Zero Trust = never trust, always verify, least privilege</li></ul>
+      <div class="mini-quiz">
+        <div class="mq-question">CIA HQ separates its classified network from the public internet. This is a:</div>
+        <button class="mq-opt" onclick="miniQ(this,true)">A. DMZ / Screened Subnet</button>
+        <button class="mq-opt" onclick="miniQ(this,false)">B. Honeynet</button>
+        <button class="mq-opt" onclick="miniQ(this,false)">C. NAT configuration</button>
+        <button class="mq-reset" onclick="resetMiniQ(this)" style="display:none;">↺ Retake</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-btn" onclick="toggleMnemonic(this)">
+      <span>⚙️ D4 Security Operations — "SMITH" (IR & Tools)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong style="color:var(--gold);font-size:1.3em;">S-M-I-T-H</strong></p>
+      <p><strong>S</strong>IEM: centralized log aggregation and alerting<br>
+      <strong>M</strong>FA: something you know + have + are<br>
+      <strong>I</strong>ncident Response lifecycle (Prep → Detect → Contain → Eradicate → Recover → Learn)<br>
+      <strong>T</strong>hreat hunting & digital forensics (chain of custody, legal hold)<br>
+      <strong>H</strong>ardening: patch, disable ports, remove unnecessary software, baseline configs</p>
+      <hr style="border-color:var(--red);margin:12px 0;">
+      <ul><li>EDR monitors endpoints for threats + auto-responds</li><li>DLP prevents unauthorized data exfiltration</li><li>RBAC: permissions based on job role</li></ul>
+      <div class="mini-quiz">
+        <div class="mq-question">Hayley notices "RickySpanish" logged in from 3 countries simultaneously. This is an indicator of:</div>
+        <button class="mq-opt" onclick="miniQ(this,false)">A. False positive</button>
+        <button class="mq-opt" onclick="miniQ(this,true)">B. Impossible travel</button>
+        <button class="mq-opt" onclick="miniQ(this,false)">C. Account lockout</button>
+        <button class="mq-reset" onclick="resetMiniQ(this)" style="display:none;">↺ Retake</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="accordion-item">
+    <button class="accordion-btn" onclick="toggleMnemonic(this)">
+      <span>📜 D5 Governance & Risk — "BULLOCK" (Policy & Compliance)</span><span>▶</span>
+    </button>
+    <div class="accordion-body">
+      <p><strong style="color:var(--gold);font-size:1.3em;">B-U-L-L-O-C-K</strong></p>
+      <p><strong>B</strong>usiness impact analysis: RTO, RPO, MTTR, MTBF<br>
+      <strong>U</strong>nderstand risk: SLE × ARO = ALE<br>
+      <strong>L</strong>egal agreements: SLA, MOU, NDA, BPA, MSA<br>
+      <strong>L</strong>egislation: GDPR, PCI-DSS, HIPAA compliance<br>
+      <strong>O</strong>versight structures: boards, committees, centralized/decentralized<br>
+      <strong>C</strong>ompliance monitoring & audit types (internal, external, pen test)<br>
+      <strong>K</strong>eep training: phishing campaigns, security awareness</p>
+      <hr style="border-color:var(--red);margin:12px 0;">
+      <ul><li>Risk = Likelihood × Impact</li><li>Risk strategies: Avoid, Mitigate, Transfer, Accept</li><li>AUP = Acceptable Use Policy</li></ul>
+      <div class="mini-quiz">
+        <div class="mq-question">Director Bullock calculates ALE = $50,000 × 0.4. What is the ALE?</div>
+        <button class="mq-opt" onclick="miniQ(this,false)">A. $125,000</button>
+        <button class="mq-opt" onclick="miniQ(this,true)">B. $20,000</button>
+        <button class="mq-opt" onclick="miniQ(this,false)">C. $50,400</button>
+        <button class="mq-reset" onclick="resetMiniQ(this)" style="display:none;">↺ Retake</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: CHARACTER MAPPING -->
+<div class="section" id="characters">
+  <h2>👥 CHARACTER SECURITY MAPPING</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🕵️</div>
+      <div class="card-title">STAN SMITH</div>
+      <div class="card-role">CISO / Security Admin</div>
+      <p style="font-size:13px;">Stan enforces policy with an iron fist, sometimes too aggressively. He represents the CISO who implements controls, mandates MFA, and believes in defense-in-depth — even if the implementation is overkill.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👽</div>
+      <div class="card-title">ROGER</div>
+      <div class="card-role">Insider Threat / Threat Actor</div>
+      <p style="font-size:13px;">Roger has legitimate household access but abuses it constantly under different personas (like "RickySpanish"). He's the textbook insider threat — credentialed, unpredictable, and impossible to fully constrain with least privilege.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🌿</div>
+      <div class="card-title">HAYLEY SMITH</div>
+      <div class="card-role">SOC Analyst / Security Auditor</div>
+      <p style="font-size:13px;">Hayley questions every policy and challenges authority. In security terms, she's the internal auditor who finds gaps in Stan's controls, performs gap analysis, and advocates for privacy rights and compliance.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🧪</div>
+      <div class="card-title">STEVE SMITH</div>
+      <div class="card-role">Developer / End User (Vulnerability)</div>
+      <p style="font-size:13px;">Steve builds apps and gadgets without thinking through security implications — misconfigured settings, no input validation. He's the well-meaning developer who introduces vulnerabilities through poor secure coding practices.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🐟</div>
+      <div class="card-title">KLAUS</div>
+      <div class="card-role">Network Monitor / IDS</div>
+      <p style="font-size:13px;">Klaus watches everything from his fishbowl and reports suspicious activity. He's the passive IDS — always observing, logging what he sees, alerting the household, but unable to take direct action to stop threats.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">👩‍👧</div>
+      <div class="card-title">FRANCINE SMITH</div>
+      <div class="card-role">End User / General Staff</div>
+      <p style="font-size:13px;">Francine is the everyday user who follows (most) policies, falls for occasional social engineering, and needs regular security awareness training. She represents the importance of user education in a security program.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🎖️</div>
+      <div class="card-title">DIRECTOR BULLOCK</div>
+      <div class="card-role">Executive / Risk Owner</div>
+      <p style="font-size:13px;">Bullock sets organizational policy, owns risk decisions, and signs off on the security program. He represents executive leadership responsible for governance, risk appetite, and ensuring the security program aligns with business objectives.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: ANALOGIES -->
+<div class="section section-alt" id="analogies">
+  <h2>🎭 DEEP-DIVE ANALOGIES</h2>
+  <div class="card-grid">
+    <div class="card">
+      <div class="card-icon">🎭</div>
+      <div class="card-title">Roger's Personas → Identity Spoofing</div>
+      <p style="font-size:13px;">Roger adopts fake identities like "RickySpanish," "Ricky Spanish," and dozens more to bypass accountability. In security, this maps to identity spoofing, credential theft, and why strong authentication (MFA) and identity proofing matter — so that presenting a fake name doesn't grant access.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🔐</div>
+      <div class="card-title">CIA Headquarters → Defense in Depth</div>
+      <p style="font-size:13px;">The CIA HQ has badge readers, guards, cameras, mantraps, and classified network segmentation. This is defense in depth — multiple independent security layers so that bypassing one doesn't compromise everything. Stan's layered approach is textbook Security+ architecture.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">📡</div>
+      <div class="card-title">Steve's Unsecured App → Vulnerability Management</div>
+      <p style="font-size:13px;">Steve builds a CIA mission tracker app but leaves the admin panel open with default credentials. This illustrates why vulnerability scanning, credentialed scans, and patch management are critical — every application Steve ships needs a security review before deployment.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon">🚨</div>
+      <div class="card-title">Hayley's "I Told You So" Meeting → Lessons Learned</div>
+      <p style="font-size:13px;">After every security incident caused by Roger, Hayley holds a debrief where she documents what went wrong, what could have been prevented, and what policies need updating. This is the Lessons Learned phase of incident response — arguably the most valuable step for improving future security posture.</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: STUDY NOTES -->
+<div class="section" id="notes">
+  <h2>📝 HIGH-FREQUENCY EXAM STUDY NOTES</h2>
+  <div class="note-card">
+    <h3>🔑 CIA Triad & AAA</h3>
+    <p><strong>Confidentiality</strong> = only authorized parties see data (encryption, access controls)<br>
+    <strong>Integrity</strong> = data hasn't been tampered with (hashing, digital signatures)<br>
+    <strong>Availability</strong> = systems accessible when needed (redundancy, HA, backups)<br>
+    <strong>AAA</strong> = Authentication (who are you?) + Authorization (what can you do?) + Accounting (what did you do?)</p>
+  </div>
+  <div class="note-card">
+    <h3>🔐 Cryptography Quick Reference</h3>
+    <p><strong>Symmetric:</strong> same key encrypt/decrypt — fast, scalable issues (AES-256)<br>
+    <strong>Asymmetric:</strong> public key encrypts, private decrypts — slower, solves key distribution (RSA, ECC)<br>
+    <strong>Hashing:</strong> one-way, fixed length, integrity verification (SHA-256, MD5 legacy)<br>
+    <strong>Salting:</strong> random data added before hashing — defeats rainbow tables<br>
+    <strong>PFS:</strong> Perfect Forward Secrecy — compromise of long-term keys doesn't expose past sessions</p>
+  </div>
+  <div class="note-card">
+    <h3>⚠️ Attack Types Cheat Sheet</h3>
+    <p><strong>Phishing/Vishing/Smishing</strong> = email/voice/SMS social engineering<br>
+    <strong>SQL Injection</strong> = malicious SQL in input fields → database manipulation<br>
+    <strong>XSS</strong> = injecting scripts into pages viewed by other users<br>
+    <strong>DDoS</strong> = overwhelming a service with distributed traffic<br>
+    <strong>On-path (MitM)</strong> = attacker between two communicating parties<br>
+    <strong>Credential stuffing</strong> = using leaked username/password pairs at scale</p>
+  </div>
+  <div class="note-card">
+    <h3>📊 Risk Formula</h3>
+    <p><strong>SLE</strong> = Asset Value × Exposure Factor (single event loss)<br>
+    <strong>ARO</strong> = Annualized Rate of Occurrence (how often per year)<br>
+    <strong>ALE</strong> = SLE × ARO (annual expected loss)<br>
+    <strong>Risk strategies:</strong> Avoid (eliminate activity) · Mitigate (reduce likelihood/impact) · Transfer (insurance) · Accept (acknowledge and tolerate)</p>
+  </div>
+  <div class="note-card">
+    <h3>🔑 Must-Know Ports</h3>
+    <p>SSH=22 · FTP=21 · HTTP=80 · HTTPS=443 · DNS=53 · LDAP=389 · LDAPS=636<br>
+    RDP=3389 · RADIUS=1812/1813 · TACACS+=49 · Syslog=514 · NTP=123<br>
+    SMTP=25 · SMTPS=465 · IMAP=143 · IMAPS=993 · SNMP=161/162</p>
+  </div>
+</div>
+
+<!-- SECTION 6: IR LIFECYCLE -->
+<div class="section section-alt" id="ir-lifecycle">
+  <h2>🚨 INCIDENT RESPONSE LIFECYCLE — DOMAIN 4.8</h2>
+  <p style="margin-bottom:18px;opacity:0.85;">The Smith household's incident response plan — from Roger breaking in to Hayley's debrief.</p>
+  <div class="phase-grid">
+    <div class="phase-card">
+      <span class="phase-num">1</span>
+      <h3>Preparation</h3>
+      <p style="font-size:13px;">Build IR plan, train team, establish tools before incidents occur. Stan writes the policy.</p>
+      <span class="exam-tag">D4.8</span>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">2</span>
+      <h3>Detection & Analysis</h3>
+      <p style="font-size:13px;">Identify the incident via SIEM, IDS alerts, or anomalous behavior. Klaus sees it first.</p>
+      <span class="exam-tag">D4.8</span>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">3</span>
+      <h3>Containment</h3>
+      <p style="font-size:13px;">Limit damage — isolate systems, disable accounts, segment networks. Revoke Roger's badge.</p>
+      <span class="exam-tag">D4.8</span>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">4</span>
+      <h3>Eradication</h3>
+      <p style="font-size:13px;">Remove the threat entirely — patch vuln, delete malware, fix Steve's app, revoke all access.</p>
+      <span class="exam-tag">D4.8</span>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">5</span>
+      <h3>Recovery</h3>
+      <p style="font-size:13px;">Restore systems safely, verify integrity, monitor closely. CIA HQ comes back online.</p>
+      <span class="exam-tag">D4.8</span>
+    </div>
+    <div class="phase-card">
+      <span class="phase-num">6</span>
+      <h3>Lessons Learned</h3>
+      <p style="font-size:13px;">Document what happened, what worked, what didn't. Update policies. Hayley's debrief.</p>
+      <span class="exam-tag">D4.8</span>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 7: DETECTION DEEP DIVE -->
+<div class="section" id="detection">
+  <h2>🔍 DETECTION DEEP DIVE</h2>
+  <div class="card-grid" style="margin-bottom:18px;">
+    <div class="card">
+      <div class="card-title">SIEM</div>
+      <p style="font-size:13px;">Security Information and Event Management — aggregates logs from all sources, correlates events, generates alerts. The CIA's command center for all security data.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">IDS vs IPS</div>
+      <p style="font-size:13px;"><strong>IDS</strong> = detects and alerts (passive — like Klaus watching)<br><strong>IPS</strong> = detects and BLOCKS (inline, active prevention)</p>
+    </div>
+    <div class="card">
+      <div class="card-title">False Positive / Negative</div>
+      <p style="font-size:13px;"><strong>False Positive</strong> = alert triggered with no real threat (Stan flagging Francine)<br><strong>False Negative</strong> = real threat NOT detected (missing Roger entirely)</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Threat Hunting</div>
+      <p style="font-size:13px;">Proactively searching for threats that evaded detection. Hayley actively looking for Roger's activity rather than waiting for alerts.</p>
+    </div>
+  </div>
+  <div class="mini-quiz">
+    <div class="mq-question">Klaus notices unusual outbound traffic at 3 AM but cannot block it. Klaus is acting as a:</div>
+    <button class="mq-opt" onclick="miniQ(this,false)">A. IPS</button>
+    <button class="mq-opt" onclick="miniQ(this,true)">B. IDS</button>
+    <button class="mq-opt" onclick="miniQ(this,false)">C. Firewall</button>
+    <button class="mq-reset" onclick="resetMiniQ(this)" style="display:none;">↺ Retake</button>
+  </div>
+</div>
+
+<!-- SECTION 8: ROLES & RESPONSIBILITIES -->
+<div class="section section-alt" id="roles">
+  <h2>🎖️ ROLES & RESPONSIBILITIES</h2>
+  <table class="role-table">
+    <tr><th>Role</th><th>Security Responsibility</th><th>American Dad Character</th></tr>
+    <tr><td>CISO</td><td>Overall security program ownership</td><td>Stan Smith</td></tr>
+    <tr><td>Data Owner</td><td>Accountable for data classification & access</td><td>Director Bullock</td></tr>
+    <tr><td>Data Custodian</td><td>Day-to-day data management & backup</td><td>Francine</td></tr>
+    <tr><td>SOC Analyst</td><td>Monitor alerts, investigate incidents</td><td>Hayley</td></tr>
+    <tr><td>Developer</td><td>Secure coding, input validation, patching</td><td>Steve</td></tr>
+    <tr><td>Threat Actor</td><td>Exploits vulnerabilities for personal gain</td><td>Roger</td></tr>
+    <tr><td>IDS/Monitor</td><td>Passive observation and logging</td><td>Klaus</td></tr>
+  </table>
+  <div class="mini-quiz" style="margin-top:16px;">
+    <div class="mq-question">Who is responsible for classifying data and determining who can access it?</div>
+    <button class="mq-opt" onclick="miniQ(this,false)">A. Data Custodian</button>
+    <button class="mq-opt" onclick="miniQ(this,false)">B. SOC Analyst</button>
+    <button class="mq-opt" onclick="miniQ(this,true)">C. Data Owner</button>
+    <button class="mq-reset" onclick="resetMiniQ(this)" style="display:none;">↺ Retake</button>
+  </div>
+</div>
+
+<!-- SECTION 9: REPORTING REQUIREMENTS -->
+<div class="section" id="reporting">
+  <h2>📊 REPORTING REQUIREMENTS</h2>
+  <div class="card-grid" style="margin-bottom:16px;">
+    <div class="card">
+      <div class="card-title">Internal Reporting</div>
+      <p style="font-size:13px;">Report to CISO, management, IR team. Document timeline, affected systems, actions taken. Stan writes the internal CIA incident report.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">External Reporting</div>
+      <p style="font-size:13px;">May require notifying regulators (GDPR: 72 hours), law enforcement, affected individuals. Breach notification laws vary by jurisdiction.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Legal Hold</div>
+      <p style="font-size:13px;">Preserve all evidence — logs, emails, drives — during investigation. Deleting evidence after a legal hold is a serious violation with legal consequences.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Chain of Custody</div>
+      <p style="font-size:13px;">Document who handled evidence, when, and how. Every step must be logged to ensure evidence is admissible. Critical for digital forensics.</p>
+    </div>
+  </div>
+  <div class="mini-quiz">
+    <div class="mq-question">Under GDPR, organizations must report a data breach to supervisory authorities within:</div>
+    <button class="mq-opt" onclick="miniQ(this,false)">A. 24 hours</button>
+    <button class="mq-opt" onclick="miniQ(this,true)">B. 72 hours</button>
+    <button class="mq-opt" onclick="miniQ(this,false)">C. 30 days</button>
+    <button class="mq-reset" onclick="resetMiniQ(this)" style="display:none;">↺ Retake</button>
+  </div>
+</div>
+
+<!-- SECTION 10: POST-INCIDENT -->
+<div class="section section-alt" id="post-incident">
+  <h2>📋 POST-INCIDENT ACTIVITY</h2>
+  <div class="note-card">
+    <h3>📑 Lessons Learned Meeting</h3>
+    <p>Conducted within 2 weeks of incident closure. Attendees: IR team, affected stakeholders, management. Agenda: timeline review, root cause, what worked, what failed, action items. Hayley runs this meeting. Stan hates attending it.</p>
+  </div>
+  <div class="note-card">
+    <h3>📈 Key Metrics to Track</h3>
+    <p><strong>MTTD</strong> = Mean Time to Detect (how long before incident was spotted)<br>
+    <strong>MTTR</strong> = Mean Time to Respond/Repair<br>
+    <strong>MTBF</strong> = Mean Time Between Failures (system reliability)<br>
+    <strong>RTO/RPO</strong> = Recovery objectives — how fast and how much data loss is acceptable</p>
+  </div>
+  <div class="note-card">
+    <h3>🎓 Training Updates</h3>
+    <p>Every post-incident review should result in updated training materials. If Roger fooled staff with a fake CIA email, phishing simulation training gets added to the security awareness program. Recurring training is a D5.6 requirement.</p>
+  </div>
+</div>
+
+<!-- SECTION 11: INTERACTIVE ADVENTURE -->
+<div class="section" id="adventure">
+  <h2>🗺️ INTERACTIVE CIA ADVENTURE</h2>
+  <p style="margin-bottom:16px;opacity:0.85;">Roger has breached CIA systems using a stolen identity. Walk through the Incident Response lifecycle and make the right calls, Agent!</p>
+
+  <div class="scene active" id="scene-1">
+    <div class="scene-title">🚨 SCENE 1 — DETECTION: "RickySpanish" Is Back</div>
+    <div class="scene-text">Klaus alerts the team: an account named "RickySpanish" has logged into the CIA mainframe from three different countries simultaneously. Hayley confirms impossible travel indicators in the SIEM. It's clearly Roger — again. What's your first move?</div>
+    <button class="adv-btn" onclick="advAnswer(1, false)">A. Immediately delete all Roger's files to eradicate the threat</button>
+    <button class="adv-btn" onclick="advAnswer(1, true)">B. Escalate to the IR team and begin analysis to understand the scope</button>
+    <div class="adv-feedback" id="fb-1"></div>
+  </div>
+
+  <div class="scene" id="scene-2">
+    <div class="scene-title">🔒 SCENE 2 — CONTAINMENT: Locking It Down</div>
+    <div class="scene-text">Analysis confirms Roger used Steve's misconfigured app to escalate privileges. The breach touches three CIA systems. Stan wants to take everything offline immediately. Hayley argues that's too aggressive. What's the right containment approach?</div>
+    <button class="adv-btn" onclick="advAnswer(2, false)">A. Take all CIA systems offline to guarantee containment</button>
+    <button class="adv-btn" onclick="advAnswer(2, true)">B. Isolate only the affected systems and disable Roger's account while preserving evidence</button>
+    <div class="adv-feedback" id="fb-2"></div>
+  </div>
+
+  <div class="scene" id="scene-3">
+    <div class="scene-title">🧹 SCENE 3 — ERADICATION: Cleaning House</div>
+    <div class="scene-text">The affected systems are isolated. Now you need to remove the threat. Roger planted a logic bomb in Steve's app scheduled to trigger on Hayley's birthday. What's the correct eradication sequence?</div>
+    <button class="adv-btn" onclick="advAnswer(3, true)">A. Patch Steve's app vuln, remove the logic bomb, revoke all Roger's access tokens, reset affected accounts</button>
+    <button class="adv-btn" onclick="advAnswer(3, false)">B. Just reboot the server — that should clear it</button>
+    <div class="adv-feedback" id="fb-3"></div>
+  </div>
+
+  <div class="scene" id="scene-4">
+    <div class="scene-title">📋 SCENE 4 — LESSONS LEARNED: Hayley's Debrief</div>
+    <div class="scene-text">Systems are restored. Director Bullock wants a full report. Hayley schedules a lessons learned meeting. What should the meeting focus on to prevent the next Roger incident?</div>
+    <button class="adv-btn" onclick="advAnswer(4, false)">A. Focus on punishing Roger and moving on quickly</button>
+    <button class="adv-btn" onclick="advAnswer(4, true)">B. Document root cause, update Steve's SDLC process, add phishing training, and review access control policies</button>
+    <div class="adv-feedback" id="fb-4"></div>
+  </div>
+
+  <div class="adv-finale" id="adv-finale">
+    <div style="font-size:60px;margin-bottom:14px;">🎖️🇺🇸</div>
+    <h2 style="color:var(--gold);">MISSION ACCOMPLISHED, AGENT!</h2>
+    <p style="margin-bottom:14px;">You successfully walked through all IR phases:</p>
+    <p><span class="tag tag-red">Detection</span> <span class="tag tag-blue">Containment</span> <span class="tag tag-gold">Eradication</span> <span class="tag tag-white">Lessons Learned</span></p>
+    <p style="margin-top:14px;opacity:0.8;">Even Director Bullock is impressed. Stan is jealous. Roger is already plotting his next persona.</p>
+    <button onclick="resetAdventure()" style="margin-top:16px;background:var(--red);color:var(--white);border:3px solid var(--white);padding:10px 24px;border-radius:6px;cursor:pointer;font-family:'Impact',sans-serif;letter-spacing:2px;font-size:15px;">↺ REPLAY MISSION</button>
+    <div style="margin-top:24px;border-top:3px dashed var(--red);padding-top:20px;">
+      <p style="font-size:13px;opacity:0.7;margin-bottom:10px;">🕵️ <em>Psst... you earned this, Agent.</em></p>
+      <button onclick="openEaster()" style="background:var(--blue);color:var(--white);border:3px solid var(--white);padding:12px 28px;border-radius:6px;cursor:pointer;font-family:'Impact',sans-serif;letter-spacing:2px;font-size:15px;animation:flagWave 2s ease-in-out infinite;">🎵 CLAIM YOUR STUDY BREAK</button>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 12: STUDY LINKS -->
+<div class="section section-alt" id="links">
+  <h2>🔗 STUDY RESOURCES</h2>
+  <div class="link-grid">
+    <a class="link-card" href="professor_messer_sy0_701_comptia_security_plus_course_notes_v106.pdf" target="_blank">
+      <h3>📄 Messer Course Notes PDF</h3>
+      <p>Professor Messer SY0-701 notes (activates on GitHub upload)</p>
+    </a>
+    <a class="link-card" href="CompTIA-Security-Plus-SY0-701-Exam-Objectives__1_.pdf" target="_blank">
+      <h3>📋 Exam Objectives PDF</h3>
+      <p>Official CompTIA SY0-701 exam objectives (activates on GitHub upload)</p>
+    </a>
+    <a class="link-card" href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank">
+      <h3>🎓 Professor Messer</h3>
+      <p>Free SY0-701 video training course</p>
+    </a>
+    <a class="link-card" href="https://amzn.to/4nVi25Y" target="_blank">
+      <h3>📚 Study Book</h3>
+      <p>Recommended Security+ study guide on Amazon</p>
+    </a>
+    <a class="link-card" href="https://quizlet.com/search?query=comptia+security+plus+sy0-701&type=sets" target="_blank">
+      <h3>🃏 Quizlet Flashcards</h3>
+      <p>Community-made SY0-701 flashcard sets</p>
+    </a>
+    <a class="link-card" href="security-notes.html">
+      <h3>🏠 Study Hub Home</h3>
+      <p>Back to the main Security+ study hub</p>
+    </a>
+  </div>
+</div>
+
+<!-- SECTION 13: LEITNER FLASHCARDS -->
+<div class="section" id="flashcards">
+  <h2>🃏 LEITNER FLASHCARD SYSTEM — 60+ CARDS</h2>
+  <p style="margin-bottom:6px;opacity:0.8;">Spaced repetition across all 5 domains. Box 1 = needs work · Box 5 = "Bullock himself couldn't stump you."</p>
+  <div class="keyboard-hint">⌨️ Keyboard: <strong>Space</strong>=Flip · <strong>1</strong>=Again · <strong>2</strong>=Got It · <strong>3</strong>=Easy · <strong>S</strong>=Skip</div>
+
+  <div style="margin-top:14px;">
+    <div id="fc-card" onclick="fcFlip()">
+      <div id="fc-front">Loading flashcard...</div>
+      <div id="fc-back" style="display:none;"></div>
+    </div>
+    <div class="fc-progress"><div class="fc-bar" id="fc-bar" style="width:0%"></div></div>
+    <div class="box-display" id="fc-boxes"></div>
+    <div class="fc-controls">
+      <button class="fc-btn fc-show" onclick="fcFlip()">👁 Show Answer</button>
+      <button class="fc-btn fc-again" onclick="fcMark(false)">1 — Again</button>
+      <button class="fc-btn fc-got" onclick="fcMark(true)">2 — Got It</button>
+      <button class="fc-btn fc-easy" onclick="fcEasy()">3 — Easy</button>
+      <button class="fc-btn fc-skip" onclick="fcSkip()">S — Skip</button>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 14: 10-QUESTION QUIZ -->
+<div class="section section-alt" id="quiz">
+  <h2>❓ 10-QUESTION SECURITY+ QUIZ — AMERICAN DAD EDITION</h2>
+  <p style="margin-bottom:18px;opacity:0.8;">One question per domain area. Personalized feedback on completion. Good luck, Agent!</p>
+
+  <div id="bq-questions">
+
+    <div class="bq-question" data-topic="Insider Threat">
+      <div class="bq-q">1. Roger uses Stan's stolen CIA badge to access classified files. This is best described as:</div>
+      <button class="bq-opt" onclick="bqAnswer(this,false,0)">A. External nation-state attack</button>
+      <button class="bq-opt" onclick="bqAnswer(this,true,0)">B. Insider threat via credential misuse</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,0)">C. SQL injection attack</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,0)">D. Denial of service</button>
+    </div>
+
+    <div class="bq-question" data-topic="Social Engineering">
+      <div class="bq-q">2. Roger calls Francine pretending to be IT support and convinces her to give him her password. This is:</div>
+      <button class="bq-opt" onclick="bqAnswer(this,false,1)">A. Phishing</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,1)">B. Smishing</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,1)">C. SQL injection</button>
+      <button class="bq-opt" onclick="bqAnswer(this,true,1)">D. Vishing</button>
+    </div>
+
+    <div class="bq-question" data-topic="Network Architecture">
+      <div class="bq-q">3. The CIA places public-facing web servers in a separate network zone away from internal systems. This zone is called a:</div>
+      <button class="bq-opt" onclick="bqAnswer(this,true,2)">A. DMZ (Demilitarized Zone)</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,2)">B. VLAN</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,2)">C. VPN tunnel</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,2)">D. Air gap</button>
+    </div>
+
+    <div class="bq-question" data-topic="Cryptography">
+      <div class="bq-q">4. Stan needs to verify that mission briefing files have not been altered in transit. Which technique should he use?</div>
+      <button class="bq-opt" onclick="bqAnswer(this,false,3)">A. Symmetric encryption</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,3)">B. Tokenization</button>
+      <button class="bq-opt" onclick="bqAnswer(this,true,3)">C. Cryptographic hashing</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,3)">D. Data masking</button>
+    </div>
+
+    <div class="bq-question" data-topic="Incident Response">
+      <div class="bq-q">5. After identifying that Roger accessed classified systems, the IR team disables his account and isolates the affected servers. This IR phase is:</div>
+      <button class="bq-opt" onclick="bqAnswer(this,false,4)">A. Preparation</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,4)">B. Eradication</button>
+      <button class="bq-opt" onclick="bqAnswer(this,true,4)">C. Containment</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,4)">D. Recovery</button>
+    </div>
+
+    <div class="bq-question" data-topic="Access Control">
+      <div class="bq-q">6. Steve should only have access to systems required for his current mission. This principle is called:</div>
+      <button class="bq-opt" onclick="bqAnswer(this,false,5)">A. Defense in depth</button>
+      <button class="bq-opt" onclick="bqAnswer(this,true,5)">B. Least privilege</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,5)">C. Separation of duties</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,5)">D. Role aggregation</button>
+    </div>
+
+    <div class="bq-question" data-topic="Risk Management">
+      <div class="bq-q">7. Director Bullock calculates: Asset value = $200,000, Exposure factor = 50%, ARO = 2. What is the ALE?</div>
+      <button class="bq-opt" onclick="bqAnswer(this,false,6)">A. $100,000</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,6)">B. $400,000</button>
+      <button class="bq-opt" onclick="bqAnswer(this,true,6)">C. $200,000</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,6)">D. $50,000</button>
+    </div>
+
+    <div class="bq-question" data-topic="Authentication">
+      <div class="bq-q">8. The CIA requires agents to use a password AND a fingerprint scan to log in. This is an example of:</div>
+      <button class="bq-opt" onclick="bqAnswer(this,false,7)">A. Single Sign-On (SSO)</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,7)">B. Role-Based Access Control</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,7)">C. Federation</button>
+      <button class="bq-opt" onclick="bqAnswer(this,true,7)">D. Multifactor Authentication (MFA)</button>
+    </div>
+
+    <div class="bq-question" data-topic="Vulnerability Management">
+      <div class="bq-q">9. A CIA security analyst discovers a vulnerability in Steve's app by logging in with valid credentials. This type of scan is called:</div>
+      <button class="bq-opt" onclick="bqAnswer(this,true,8)">A. Credentialed scan</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,8)">B. Passive scan</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,8)">C. External reconnaissance</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,8)">D. Port scan only</button>
+    </div>
+
+    <div class="bq-question" data-topic="Compliance & Governance">
+      <div class="bq-q">10. The CIA requires all vendors to allow security inspections before being granted access to CIA systems. This is a:</div>
+      <button class="bq-opt" onclick="bqAnswer(this,false,9)">A. Business Partners Agreement</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,9)">B. NDA</button>
+      <button class="bq-opt" onclick="bqAnswer(this,true,9)">C. Right-to-audit clause</button>
+      <button class="bq-opt" onclick="bqAnswer(this,false,9)">D. SLA</button>
+    </div>
+
+  </div>
+
+  <div id="bq-score">
+    <h3 id="bq-score-text">Score: 0/10</h3>
+    <p id="bq-feedback"></p>
+    <button id="retake-btn" onclick="retakeQuiz()">↺ RETAKE QUIZ</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p style="margin-bottom:8px;">
+    <a href="security-notes.html" class="nav-special">⭐ Study Hub</a> &nbsp;|&nbsp;
+    <a href="https://charleneluequee.github.io/" target="_blank" class="nav-special">⭐ Portfolio</a> &nbsp;|&nbsp;
+    
+  </p>
+  <p style="opacity:0.7;">© 2024 Charlene Luequee · Security+ SY0-701 Study Hub</p>
+  <p style="opacity:0.5;font-size:11px;margin-top:6px;">American Dad characters & themes are property of 20th Television. Used for educational parody purposes only. Not affiliated with CompTIA.</p>
+</footer>
+
+<script>
+// ============================================================
+// PARTICLES
+// ============================================================
+(function(){
+  const container = document.getElementById('particles');
+  const emojis = ['🇺🇸','⭐','🦅','🔒','🛡️','🎖️'];
+  for(let i=0;i<22;i++){
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    p.style.left = Math.random()*100+'%';
+    p.style.animationDuration = (12+Math.random()*18)+'s';
+    p.style.animationDelay = (Math.random()*20)+'s';
+    container.appendChild(p);
+  }
+})();
+
+// ============================================================
+// SOUND
+// ============================================================
+let soundOn = false;
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+function toggleSound(){
+  soundOn=!soundOn;
+  document.getElementById('sound-toggle').textContent=soundOn?'🔊':'🔇';
+}
+function playTone(freq,dur,type='square'){
+  if(!soundOn)return;
+  try{
+    const ctx=new AudioCtx();
+    const o=ctx.createOscillator();
+    const g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.type=type;o.frequency.setValueAtTime(freq,ctx.currentTime);
+    g.gain.setValueAtTime(0.2,ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);
+    o.start();o.stop(ctx.currentTime+dur);
+  }catch(e){}
+}
+function playCorrect(){playTone(880,0.15);setTimeout(()=>playTone(1100,0.2),120);}
+function playWrong(){playTone(220,0.3,'sawtooth');}
+function playVictory(){
+  [523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,0.25),i*120));
+}
+
+// ============================================================
+// ACCORDION
+// ============================================================
+function toggleAccordion(btn){
+  const body=btn.nextElementSibling;
+  const isOpen=body.classList.contains('open');
+  document.querySelectorAll('.accordion-body.open').forEach(b=>b.classList.remove('open'));
+  document.querySelectorAll('.accordion-btn span:last-child').forEach(s=>s.textContent='▶');
+  if(!isOpen){
+    body.classList.add('open');
+    btn.querySelector('span:last-child').textContent='▼';
+  }
+}
+function toggleMnemonic(btn){toggleAccordion(btn);}
+
+// ============================================================
+// MINI QUIZ
+// ============================================================
+function miniQ(btn, correct){
+  const parent=btn.parentElement;
+  const opts=parent.querySelectorAll('.mq-opt');
+  if(btn.disabled)return;
+  opts.forEach(o=>o.disabled=true);
+  if(correct){btn.classList.add('correct');playCorrect();}
+  else{btn.classList.add('wrong');playWrong();}
+  const reset=parent.querySelector('.mq-reset');
+  if(reset)reset.style.display='inline-block';
+}
+function resetMiniQ(btn){
+  const parent=btn.parentElement;
+  const opts=parent.querySelectorAll('.mq-opt');
+  opts.forEach(o=>{o.disabled=false;o.classList.remove('correct','wrong');});
+  btn.style.display='none';
+}
+
+// ============================================================
+// ADVENTURE
+// ============================================================
+let advScene=1;
+function advAnswer(scene, correct){
+  const fb=document.getElementById('fb-'+scene);
+  if(correct){
+    fb.style.background='rgba(21,87,36,0.5)';fb.style.color='#d4edda';
+    fb.textContent='✅ Correct! Great work, Agent.';
+    playCorrect();
+    setTimeout(()=>{
+      if(scene<4){
+        document.getElementById('scene-'+scene).classList.remove('active');
+        document.getElementById('scene-'+(scene+1)).classList.add('active');
+      } else {
+        document.getElementById('scene-4').classList.remove('active');
+        document.getElementById('adv-finale').style.display='block';
+        launchConfetti();playVictory();
+      }
+    },1000);
+  } else {
+    fb.style.background='rgba(123,28,28,0.5)';fb.style.color='#f8d7da';
+    fb.textContent='❌ Try the other option!';
+    playWrong();
+  }
+}
+function resetAdventure(){
+  for(let i=1;i<=4;i++){
+    const s=document.getElementById('scene-'+i);
+    s.classList.remove('active');
+    document.getElementById('fb-'+i).textContent='';
+    document.getElementById('fb-'+i).style.background='';
+  }
+  document.getElementById('adv-finale').style.display='none';
+  document.getElementById('scene-1').classList.add('active');
+}
+
+// ============================================================
+// BIG QUIZ
+// ============================================================
+let bqAnswers=new Array(10).fill(null);
+let bqCorrect=new Array(10).fill(false);
+const bqTopics=['Insider Threat','Social Engineering','Network Architecture','Cryptography','Incident Response','Access Control','Risk Management','Authentication','Vulnerability Management','Compliance & Governance'];
+
+function bqAnswer(btn, correct, idx){
+  const q=btn.closest('.bq-question');
+  const opts=q.querySelectorAll('.bq-opt');
+  if(btn.disabled)return;
+  opts.forEach(o=>o.disabled=true);
+  bqAnswers[idx]=true;
+  bqCorrect[idx]=correct;
+  if(correct){btn.classList.add('correct');playCorrect();}
+  else{btn.classList.add('wrong');playWrong();}
+  if(bqAnswers.every(a=>a!==null)){showBQScore();}
+}
+
+function showBQScore(){
+  const score=bqCorrect.filter(Boolean).length;
+  const missed=bqTopics.filter((_,i)=>!bqCorrect[i]);
+  document.getElementById('bq-score').style.display='block';
+  document.getElementById('bq-score-text').textContent='Score: '+score+'/10 — '+
+    (score===10?'PERFECT — STAN SALUTES YOU! 🫡':
+     score>=8?'Excellent work, Agent! Almost there.':
+     score>=6?'Good effort. Review the missed topics.':
+     'Keep studying — even Stan needed training.');
+  document.getElementById('bq-feedback').innerHTML=
+    missed.length===0?'🎖️ No missed topics! You\'re ready for the exam!':
+    '<strong>Review these topics:</strong> '+missed.join(' · ');
+  if(score===10){launchConfetti();playVictory();}
+  document.getElementById('bq-score').scrollIntoView({behavior:'smooth'});
+}
+
+function retakeQuiz(){
+  bqAnswers=new Array(10).fill(null);
+  bqCorrect=new Array(10).fill(false);
+  document.querySelectorAll('.bq-opt').forEach(o=>{
+    o.disabled=false;
+    o.classList.remove('correct','wrong');
+  });
+  document.getElementById('bq-score').style.display='none';
+}
+
+// ============================================================
+// CONFETTI
+// ============================================================
+function launchConfetti(){
+  const colors=['#B22234','#002868','#FFFFFF','#FFFFFF','#D63B4B'];
+  for(let i=0;i<80;i++){
+    setTimeout(()=>{
+      const c=document.createElement('div');
+      c.className='confetti-piece';
+      c.style.left=Math.random()*100+'vw';
+      c.style.top='-20px';
+      c.style.background=colors[Math.floor(Math.random()*colors.length)];
+      c.style.width=(6+Math.random()*8)+'px';
+      c.style.height=(6+Math.random()*8)+'px';
+      c.style.borderRadius=Math.random()>0.5?'50%':'0';
+      c.style.animationDuration=(2+Math.random()*2)+'s';
+      document.body.appendChild(c);
+      setTimeout(()=>c.remove(),4000);
+    },i*30);
+  }
+}
+
+// ============================================================
+// FLASHCARDS
+// ============================================================
+const FC_KEY='ltr_cartoon-americandad';
+const fcCards=[
+  {f:"CIA Triad – three core elements?",b:"Confidentiality, Integrity, Availability.\n\nStan wants secrets safe (C), missions accurate (I), and systems online (A) even when Roger is being Roger."},
+  {f:"Confidentiality – definition?",b:"Keeping information accessible only to authorized parties.\n\nAnalogy: Not letting Roger read the file labeled 'Do NOT show Roger.'"},
+  {f:"Integrity – definition?",b:"Ensuring data is accurate and unaltered.\n\nAnalogy: Preventing Steve from 'improving' mission data."},
+  {f:"Availability – definition?",b:"Systems accessible when needed by authorized users.\n\nAnalogy: Stan can still log in after 'securing' everything too hard."},
+  {f:"What is an insider threat?",b:"A threat from someone with legitimate access.\n\nAnalogy: Roger with a CIA badge."},
+  {f:"What is phishing?",b:"Tricking users via email into divulging info or clicking malicious links.\n\nAnalogy: Roger sending fake CIA memos."},
+  {f:"What is vishing?",b:"Voice-call based social engineering.\n\nAnalogy: Roger calling Francine pretending to be IT support."},
+  {f:"What is smishing?",b:"SMS-based phishing attacks via text messages."},
+  {f:"What is social engineering?",b:"Manipulating people into giving access or information.\n\nAnalogy: Roger charming his way past security using a persona."},
+  {f:"Least privilege principle?",b:"Users only get access required for their job.\n\nAnalogy: Roger should have zero access to anything."},
+  {f:"Defense in depth?",b:"Multiple independent security layers.\n\nAnalogy: Badge + PIN + camera + 'Hayley watching Roger.'"},
+  {f:"What is a vulnerability?",b:"A weakness that can be exploited.\n\nAnalogy: Steve's app with no authentication."},
+  {f:"What is an exploit?",b:"Code or technique that takes advantage of a vulnerability."},
+  {f:"What is ransomware?",b:"Malware that encrypts data and demands payment.\n\nAnalogy: Roger encrypting CIA files until someone apologizes."},
+  {f:"What is a logic bomb?",b:"Malicious code that triggers on a specific condition (date, event, etc.)"},
+  {f:"What is a rootkit?",b:"Malware that hides itself and other malware from the OS and security tools."},
+  {f:"What is a keylogger?",b:"Malware that records keystrokes to steal credentials."},
+  {f:"What is a worm?",b:"Self-replicating malware that spreads across networks without user interaction."},
+  {f:"What is a trojan?",b:"Malware disguised as legitimate software. Looks innocent, causes harm."},
+  {f:"What is spyware?",b:"Software that secretly monitors and reports user activity."},
+  {f:"What is a policy?",b:"High-level rule set by management.\n\nAnalogy: 'Roger is not allowed in the server room.'"},
+  {f:"What is a procedure?",b:"Step-by-step instructions for completing a task.\n\nAnalogy: Steps to remove Roger from the server room."},
+  {f:"What is a standard?",b:"Mandatory specific requirement.\n\nAnalogy: 'Passwords must be 14+ characters.'"},
+  {f:"What is a guideline?",b:"Recommended (non-mandatory) practice.\n\nAnalogy: 'Maybe don't let Roger near production servers.'"},
+  {f:"Risk formula: SLE, ARO, ALE?",b:"SLE = Asset Value × Exposure Factor\nARO = Annual rate of occurrence\nALE = SLE × ARO\n\nAnalogy: Probability Roger finds Steve's app × how bad it will be."},
+  {f:"Risk treatment options?",b:"Avoid, Mitigate, Transfer, Accept.\n\nAnalogy: Avoid Roger, mitigate Roger, blame Roger, accept Roger."},
+  {f:"Network segmentation?",b:"Dividing networks to limit blast radius.\n\nAnalogy: CIA HQ separate from Smith house Wi-Fi."},
+  {f:"What is a SIEM?",b:"Security Information and Event Management — centralized log aggregation, correlation, and alerting."},
+  {f:"What is a SOAR?",b:"Security Orchestration, Automation, and Response — automates incident response workflows."},
+  {f:"What is EDR?",b:"Endpoint Detection and Response — monitors endpoints for threats and provides automated response."},
+  {f:"What is DLP?",b:"Data Loss Prevention — identifies and prevents unauthorized transfer of sensitive data."},
+  {f:"IR Phase 1?",b:"Preparation — build IR plan, train team, establish tools before incidents occur."},
+  {f:"IR Phase 2?",b:"Detection & Analysis — identify the incident, analyze scope and impact."},
+  {f:"IR Phase 3?",b:"Containment — limit damage, isolate systems, disable compromised accounts."},
+  {f:"IR Phase 4?",b:"Eradication — remove the threat, patch vulnerabilities, revoke access."},
+  {f:"IR Phase 5?",b:"Recovery — restore systems safely, verify integrity, monitor closely."},
+  {f:"IR Phase 6?",b:"Lessons Learned — document what happened, update policies and training."},
+  {f:"What is MFA?",b:"Multi-factor Authentication — requires 2+ factors from different categories."},
+  {f:"Three MFA factor categories?",b:"Something you know (password)\nSomething you have (badge, token)\nSomething you are (biometrics)"},
+  {f:"What is SSO?",b:"Single Sign-On — one login grants access to multiple systems."},
+  {f:"What is RBAC?",b:"Role-Based Access Control — permissions based on job role."},
+  {f:"What is LDAP?",b:"Lightweight Directory Access Protocol — used for directory services and authentication. Port 389 (636 encrypted)."},
+  {f:"What is SAML?",b:"Security Assertions Markup Language — XML-based standard for SSO between identity providers and service providers."},
+  {f:"What is a false positive?",b:"Alert triggered when no actual threat exists.\n\nAnalogy: Stan flagging Francine as suspicious."},
+  {f:"What is a false negative?",b:"A real threat that goes undetected — no alert fires.\n\nAnalogy: Missing Roger's activity entirely."},
+  {f:"What is symmetric encryption?",b:"Same key used to encrypt and decrypt. Fast. Key distribution is the challenge. Example: AES-256."},
+  {f:"What is asymmetric encryption?",b:"Public key encrypts, private key decrypts. Slower but solves key distribution. Example: RSA, ECC."},
+  {f:"What is hashing?",b:"One-way transformation to fixed-length output. Used for integrity verification. Examples: SHA-256, MD5 (legacy)."},
+  {f:"What is salting?",b:"Adding random data to a password before hashing. Defeats rainbow table attacks."},
+  {f:"What is Perfect Forward Secrecy?",b:"Compromise of long-term keys does not expose past session keys. Each session uses a fresh ephemeral key."},
+  {f:"What is a PKI?",b:"Public Key Infrastructure — system for creating, managing, distributing, and revoking digital certificates."},
+  {f:"What is a Certificate Authority?",b:"Trusted entity that issues and signs digital certificates, verifying identity."},
+  {f:"What is a CRL?",b:"Certificate Revocation List — periodic list published by CA of revoked certificates."},
+  {f:"What is OCSP?",b:"Online Certificate Status Protocol — real-time check of certificate validity. OCSP Stapling = server includes proof in handshake."},
+  {f:"What is a DMZ?",b:"Demilitarized Zone — network segment hosting public-facing servers, separating internet from internal network."},
+  {f:"What is a honeypot?",b:"Decoy system designed to attract and observe attacker behavior."},
+  {f:"What is a WAF?",b:"Web Application Firewall — protects web apps against application-layer attacks like SQLi and XSS."},
+  {f:"What is SQL injection?",b:"Inserting malicious SQL code into input fields to manipulate a backend database."},
+  {f:"What is XSS?",b:"Cross-Site Scripting — injecting malicious scripts into web pages viewed by other users."},
+  {f:"What is a DDoS attack?",b:"Distributed Denial of Service — overwhelming a service with traffic from many sources simultaneously."},
+  {f:"What is an on-path attack?",b:"Attacker positions between two parties to intercept or modify communications. Also called MitM (Man-in-the-Middle)."},
+  {f:"RTO vs RPO?",b:"RTO = Recovery Time Objective (max downtime allowed)\nRPO = Recovery Point Objective (max data loss allowed, measured in time)"},
+  {f:"What is MTTR?",b:"Mean Time to Repair — average time to fix a failed system."},
+  {f:"What is MTBF?",b:"Mean Time Between Failures — average time between system failures. Higher = more reliable."},
+  {f:"Port 22?",b:"SSH — Secure Shell. Encrypted terminal/command access."},
+  {f:"Port 443?",b:"HTTPS — encrypted web traffic via TLS."},
+  {f:"Port 3389?",b:"RDP — Remote Desktop Protocol for remote GUI access."},
+  {f:"Port 389 / 636?",b:"LDAP (389, unencrypted) / LDAPS (636, encrypted) — directory services."},
+  {f:"RADIUS ports?",b:"Port 1812 (authentication) and 1813 (accounting)."},
+  {f:"What is TACACS+?",b:"Terminal Access Controller Access Control System — Cisco proprietary, encrypts entire payload. Port 49."},
+  {f:"What is Zero Trust?",b:"Security model: never trust, always verify. No implicit trust even inside the network perimeter."},
+  {f:"What is change management in security?",b:"Controlled process for modifying systems: approval, impact analysis, backout plan, maintenance window."},
+  {f:"What is chain of custody?",b:"Documentation of who handled evidence, when, and how — essential for digital forensics admissibility."},
+  {f:"What is e-discovery?",b:"Electronically stored information identified, collected, and produced as evidence in legal proceedings."},
+  {f:"What is vulnerability scanning?",b:"Automated process to identify known vulnerabilities in systems. Credentialed = logs in for deeper results."},
+  {f:"What is penetration testing?",b:"Authorized simulated attack to find exploitable vulnerabilities before real attackers do."},
+  {f:"Types of pen testing environments?",b:"Known environment (white box) = full info\nPartially known (grey box) = some info\nUnknown (black box) = no prior info"}
+];
+
+let fcBoxes=[[],[],[],[],[]];
+let fcCurrent=null;
+let fcFlipped=false;
+
+function fcInit(){
+  const saved=localStorage.getItem(FC_KEY);
+  if(saved){try{fcBoxes=JSON.parse(saved);}catch(e){}}
+  const allIds=fcCards.map((_,i)=>i);
+  const inBoxes=fcBoxes.flat();
+  allIds.forEach(id=>{if(!inBoxes.includes(id))fcBoxes[0].push(id);});
+  fcNext();
+}
+function fcSave(){localStorage.setItem(FC_KEY,JSON.stringify(fcBoxes));}
+function fcNext(){
+  fcFlipped=false;
+  document.getElementById('fc-back').style.display='none';
+  for(let b=0;b<5;b++){
+    if(fcBoxes[b].length>0){
+      const arr=fcBoxes[b];
+      const idx=Math.floor(Math.random()*arr.length);
+      fcCurrent={box:b,pos:idx,id:arr[idx]};
+      const card=fcCards[fcCurrent.id];
+      document.getElementById('fc-front').textContent=card.f;
+      document.getElementById('fc-back').textContent=card.b;
+      fcUpdateDisplay();
+      return;
+    }
+  }
+  document.getElementById('fc-front').textContent='🎖️ All cards mastered! You could brief Director Bullock himself.';
+  document.getElementById('fc-back').style.display='none';
+  fcCurrent=null;
+}
+function fcFlip(){
+  if(!fcCurrent)return;
+  fcFlipped=!fcFlipped;
+  document.getElementById('fc-back').style.display=fcFlipped?'block':'none';
+}
+function fcMark(correct){
+  if(!fcCurrent)return;
+  const {box,id}=fcCurrent;
+  fcBoxes[box]=fcBoxes[box].filter(x=>x!==id);
+  if(correct){
+    if(box<4)fcBoxes[box+1].push(id);
+    else fcBoxes[4].push(id);
+    playCorrect();
+  } else {
+    fcBoxes[0].push(id);
+    playWrong();
+  }
+  fcSave();fcNext();
+}
+function fcEasy(){
+  if(!fcCurrent)return;
+  const {box,id}=fcCurrent;
+  fcBoxes[box]=fcBoxes[box].filter(x=>x!==id);
+  fcBoxes[4].push(id);
+  fcSave();fcNext();
+  playCorrect();
+}
+function fcSkip(){if(fcCurrent)fcNext();}
+function fcUpdateDisplay(){
+  const counts=fcBoxes.map(b=>b.length);
+  const total=counts.reduce((a,b)=>a+b,0);
+  const mastered=counts[4];
+  document.getElementById('fc-boxes').textContent=
+    'Box 1:'+counts[0]+' | Box 2:'+counts[1]+' | Box 3:'+counts[2]+' | Box 4:'+counts[3]+' | Box 5:'+counts[4];
+  document.getElementById('fc-bar').style.width=
+    (total>0?Math.round(mastered/total*100):0)+'%';
+}
+
+// KEYBOARD SHORTCUTS
+document.addEventListener('keydown',e=>{
+  if(['INPUT','TEXTAREA'].includes(document.activeElement.tagName))return;
+  if(e.code==='Space'){e.preventDefault();fcFlip();}
+  else if(e.key==='1')fcMark(false);
+  else if(e.key==='2')fcMark(true);
+  else if(e.key==='3')fcEasy();
+  else if(e.key.toLowerCase()==='s')fcSkip();
+});
+
+// ============================================================
+// EASTER EGG
+// ============================================================
+function openEaster(){document.getElementById('easter-modal').classList.add('open');}
+function closeEaster(){document.getElementById('easter-modal').classList.remove('open');}
+document.getElementById('easter-modal').addEventListener('click',function(e){
+  if(e.target===this)closeEaster();
+});
+
+// ============================================================
+// INIT
+// ============================================================
+fcInit();
+</script>
+</body>
+</html>
