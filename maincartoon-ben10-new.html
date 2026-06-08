@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ben 10 | Security+ SY0-701 Study Hub</title>
+<style>
+:root{
+  --g:#39FF14;--gl:#7FFF00;--gd:#1A7A00;--gg:rgba(57,255,20,.6);
+  --blk:#080E08;--drk:#0D150D;--sf:#182018;--sf2:#1E281E;--cd:#0C160C;
+  --txt:#EEF8E8;--mt:#5A9E50;--bd:rgba(57,255,20,.2);
+  --l1:#FF4466;--l2:#FF8C00;--l3:#39FF14;--l4:#9370DB;--l5:#00CED1;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--blk);color:var(--txt);font-family:"Segoe UI",system-ui,sans-serif;line-height:1.6;overflow-x:hidden;min-height:100vh;}
+a{color:var(--g);text-decoration:none}a:hover{color:var(--gl);text-decoration:underline}
+
+.ptcl{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.pt{position:absolute;bottom:-40px;opacity:0;animation:fup linear infinite;}
+@keyframes fup{0%{transform:translateY(0) rotate(0deg);opacity:.1;}80%{opacity:.07;}100%{transform:translateY(-110vh) rotate(360deg);opacity:0;}}
+
+nav{position:sticky;top:0;z-index:200;background:rgba(8,14,8,.96);backdrop-filter:blur(14px);border-bottom:2px solid var(--gd);display:flex;align-items:center;padding:9px 18px;gap:6px;flex-wrap:wrap;box-shadow:0 2px 24px rgba(57,255,20,.15);}
+.nb{font-size:1.2rem;font-weight:900;color:var(--g);letter-spacing:1px;text-shadow:0 0 14px var(--gg);white-space:nowrap;}
+.nb span{color:#fff;font-weight:500;font-size:.8rem;margin-left:4px;}
+.nls{margin-left:auto;display:flex;gap:4px;flex-wrap:wrap;align-items:center;}
+.nl{color:rgba(255,255,255,.65);font-size:.76rem;padding:4px 10px;border-radius:6px;transition:all .2s;text-decoration:none!important;}
+.nl:hover{background:rgba(57,255,20,.12);color:#fff;}
+.cnd{position:relative;}
+.cnb{background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.25);color:rgba(255,255,255,.75);font-size:.76rem;padding:4px 10px;border-radius:6px;cursor:pointer;font-family:inherit;transition:all .2s;}
+.cnb:hover{background:rgba(57,255,20,.2);color:#fff;}
+.cnm{display:none;position:absolute;top:calc(100% + 4px);right:0;background:#080E08;border:1px solid rgba(57,255,20,.18);border-radius:10px;min-width:215px;z-index:300;overflow:hidden;box-shadow:0 8px 28px rgba(0,0,0,.9);}
+.cnm a{display:block;padding:8px 14px;font-size:.78rem;color:rgba(255,255,255,.65);border-bottom:1px solid rgba(57,255,20,.07);transition:all .15s;text-decoration:none!important;}
+.cnm a:last-child{border-bottom:none}.cnm a:hover{background:rgba(57,255,20,.1);color:var(--g);}
+
+.omni{display:inline-flex;align-items:center;justify-content:center;width:88px;height:88px;border-radius:50%;background:radial-gradient(circle at 32% 28%,#7FFF00,#39FF14 48%,#1A6B00);border:4px solid #000;box-shadow:0 0 32px var(--gg),0 0 80px rgba(57,255,20,.3);margin:0 auto 22px;position:relative;z-index:2;animation:op 2.8s ease-in-out infinite;}
+.omni-i{position:absolute;inset:16%;border-radius:50%;border:4px solid #000;background:radial-gradient(circle,#1c1c1c,#000 60%);}
+.omni-c{position:absolute;inset:32%;border-radius:50%;background:#39FF14;box-shadow:0 0 18px rgba(57,255,20,1);}
+.omni-c::before,.omni-c::after{content:'';position:absolute;width:40%;height:120%;background:#000;top:-10%;left:30%;border-radius:999px;}
+.omni-c::after{transform:rotate(90deg);}
+@keyframes op{0%,100%{box-shadow:0 0 32px var(--gg),0 0 80px rgba(57,255,20,.3);}50%{box-shadow:0 0 55px var(--gg),0 0 140px rgba(57,255,20,.5);}}
+
+.hero{position:relative;z-index:1;text-align:center;padding:60px 20px 48px;background:radial-gradient(ellipse at 30% 50%,rgba(57,255,20,.12) 0%,transparent 58%),linear-gradient(180deg,#050905,#080E08);border-bottom:2px solid var(--gd);overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent,transparent 48px,rgba(57,255,20,.02) 49px,transparent 50px),repeating-linear-gradient(0deg,transparent,transparent 48px,rgba(57,255,20,.02) 49px,transparent 50px);pointer-events:none;}
+.hbadge{display:inline-block;background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.35);color:var(--gl);padding:5px 18px;border-radius:20px;font-size:.72rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:16px;position:relative;z-index:2;}
+.hero h1{font-size:3.4rem;font-weight:900;color:#fff;line-height:1.08;text-shadow:0 0 30px rgba(57,255,20,.4),3px 3px 0 #051505;position:relative;z-index:2;margin-bottom:12px;}
+.hero h1 span{color:var(--g);text-shadow:0 0 30px var(--gg);}
+.hero p{font-size:.97rem;color:rgba(255,255,255,.65);max-width:640px;margin:0 auto 22px;line-height:1.74;position:relative;z-index:2;}
+.hero p strong{color:var(--gl);}
+.chips{display:flex;justify-content:center;gap:7px;flex-wrap:wrap;position:relative;z-index:2;}
+.chip{background:rgba(57,255,20,.08);border:1px solid rgba(57,255,20,.22);color:rgba(255,255,255,.75);padding:4px 12px;border-radius:20px;font-size:.73rem;}
+
+.jbar{position:relative;z-index:1;background:#080E08;border-bottom:2px solid var(--gd);padding:9px 14px;display:flex;gap:5px;flex-wrap:wrap;justify-content:center;}
+.jb{background:var(--sf);border:1.5px solid var(--bd);color:var(--mt);padding:5px 12px;border-radius:20px;font-size:.71rem;font-weight:700;cursor:pointer;transition:all .2s;text-decoration:none!important;display:inline-block;font-family:inherit;}
+.jb:hover{border-color:var(--g);color:var(--g);background:rgba(57,255,20,.06);text-decoration:none!important;}
+
+.ps{position:relative;z-index:1;padding:30px 18px;max-width:1000px;margin:0 auto;}
+.pdiv{border:none;border-top:1px solid var(--bd);position:relative;z-index:1;}
+.sh{margin-bottom:18px;}
+.sh h2{font-size:1.5rem;font-weight:900;color:var(--g);display:flex;align-items:center;gap:9px;margin-bottom:5px;}
+.sh p{color:var(--mt);font-size:.83rem;}
+
+.ttag{background:var(--cd);border:1.5px solid var(--bd);padding:4px 12px;border-radius:20px;font-size:.73rem;color:var(--txt);font-weight:600;display:inline-block;margin:3px;transition:all .2s;}
+.ttag:hover{border-color:var(--g);color:var(--g);}
+
+.acc{background:var(--sf);border:1.5px solid var(--bd);border-radius:12px;overflow:hidden;margin-bottom:10px;}
+.ahd{padding:14px 17px;cursor:pointer;display:flex;align-items:center;gap:10px;user-select:none;}
+.ahd:hover{background:rgba(57,255,20,.04);}
+.at{font-weight:800;font-size:.9rem;color:var(--txt);flex:1;}
+.ap{background:rgba(57,255,20,.12);border:1px solid rgba(57,255,20,.28);border-radius:12px;padding:2px 10px;font-size:.7rem;font-weight:800;color:var(--gl);white-space:nowrap;}
+.ac{color:var(--mt);transition:transform .25s;font-size:.78rem;}
+.acc.open .ac{transform:rotate(180deg);}
+.ab{display:none;padding:14px 17px;border-top:1.5px solid var(--bd);background:rgba(57,255,20,.02);}
+.acc.open .ab{display:block;}
+.as{font-size:.79rem;color:var(--mt);line-height:1.72;margin-bottom:8px;}
+.as strong{color:var(--gl);}
+.tr{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px;}
+.gt{background:var(--cd);border:1px solid var(--bd);padding:3px 9px;border-radius:10px;font-size:.69rem;color:var(--txt);}
+
+.mw{font-size:1.5rem;font-weight:900;color:var(--g);letter-spacing:4px;text-shadow:0 0 10px var(--gg);margin-bottom:10px;}
+.mr{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px;}
+.ml{background:var(--cd);border:2px solid var(--gd);border-radius:8px;padding:6px 10px;text-align:center;min-width:44px;}
+.ml strong{display:block;font-size:1.1rem;color:var(--g);line-height:1;}
+.ml span{font-size:.6rem;color:var(--mt);display:block;margin-top:2px;}
+.mb{font-size:.79rem;color:var(--mt);line-height:1.72;padding-left:16px;margin-bottom:10px;}
+.mb li{margin-bottom:4px;}
+.mb strong{color:var(--gl);}
+
+.mq{background:var(--cd);border:1.5px solid var(--bd);border-radius:10px;padding:12px;margin-top:10px;}
+.mq p{font-size:.8rem;font-weight:700;color:var(--txt);margin-bottom:8px;}
+.mqo{display:flex;flex-direction:column;gap:5px;}
+.mo{background:var(--sf);border:1.5px solid var(--bd);border-radius:7px;padding:7px 11px;font-size:.77rem;color:var(--txt);cursor:pointer;transition:all .2s;text-align:left;font-family:inherit;}
+.mo:hover:not(:disabled){border-color:var(--g);color:var(--g);}
+.mo.mc{border-color:var(--g);background:rgba(57,255,20,.1);color:var(--g);font-weight:700;}
+.mo.mw2{border-color:#FF4466;background:rgba(255,68,102,.1);color:#FF4466;font-weight:700;}
+.me{margin-top:7px;font-size:.74rem;color:var(--mt);padding:6px 10px;border-left:3px solid var(--g);background:var(--sf);border-radius:0 6px 6px 0;display:none;}
+
+.cg{display:grid;grid-template-columns:repeat(auto-fill,minmax(265px,1fr));gap:13px;}
+.cc{background:var(--cd);border:1.5px solid var(--bd);border-left:4px solid var(--g);border-radius:12px;padding:16px;transition:all .25s;}
+.cc:hover{border-color:var(--g);box-shadow:0 5px 18px rgba(57,255,20,.12);transform:translateY(-2px);}
+.cl{font-size:.68rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:3px;}
+.cr{font-size:.7rem;color:var(--mt);margin-bottom:8px;font-weight:700;}
+.ct{font-size:.79rem;color:var(--txt);line-height:1.64;}
+
+.nt{background:var(--cd);border:1.5px solid var(--bd);border-left:4px solid var(--g);border-radius:0 10px 10px 0;padding:14px 16px;margin-bottom:10px;}
+.nt h4{font-size:.87rem;color:var(--g);margin-bottom:6px;font-weight:800;}
+.nt p{font-size:.79rem;color:var(--mt);line-height:1.7;}
+
+.pg{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:11px;}
+.pc{background:var(--cd);border:1.5px solid var(--bd);border-radius:12px;padding:14px;text-align:center;transition:all .2s;}
+.pc:hover{border-color:var(--g);transform:translateY(-2px);}
+.pn{font-size:1.5rem;font-weight:900;color:var(--g);line-height:1;margin-bottom:4px;}
+.pm{font-size:.78rem;font-weight:800;color:var(--txt);margin-bottom:5px;}
+.pt2{display:inline-block;background:rgba(57,255,20,.1);border:1px solid rgba(57,255,20,.25);border-radius:8px;padding:2px 8px;font-size:.64rem;color:var(--gl);margin-bottom:7px;}
+.pd{font-size:.73rem;color:var(--mt);line-height:1.6;}
+
+.as2{background:var(--cd);border:1.5px solid var(--bd);border-radius:12px;padding:18px;margin-bottom:12px;display:none;}
+.as2.active{display:block;}
+.as2 h4{color:var(--g);font-size:.95rem;margin-bottom:8px;}
+.as2 p{font-size:.82rem;color:var(--mt);line-height:1.7;margin-bottom:12px;}
+.ao{display:flex;flex-direction:column;gap:6px;}
+.aob{background:var(--sf);border:1.5px solid var(--bd);border-radius:8px;padding:8px 13px;font-size:.8rem;color:var(--txt);cursor:pointer;text-align:left;transition:all .2s;font-family:inherit;}
+.aob:hover:not(:disabled){border-color:var(--g);color:var(--g);}
+.afb{margin-top:8px;font-size:.78rem;padding:7px 11px;border-radius:8px;display:none;border:1px solid;}
+.afin{background:linear-gradient(135deg,rgba(57,255,20,.1),rgba(26,122,0,.08));border:2px solid var(--g);border-radius:14px;padding:24px;text-align:center;display:none;}
+
+.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:10px;}
+.lc{background:var(--cd);border:1.5px solid var(--bd);border-radius:10px;padding:13px 14px;transition:all .2s;display:flex;gap:10px;align-items:flex-start;}
+.lc:hover{border-color:var(--g);transform:translateY(-2px);box-shadow:0 4px 14px rgba(57,255,20,.1);}
+.li{font-size:1.2rem;flex-shrink:0;}
+.lc a{color:var(--txt);font-weight:700;font-size:.81rem;display:block;margin-bottom:3px;}
+.lc a:hover{color:var(--g);}
+.lc p{font-size:.72rem;color:var(--mt);}
+
+.fcw{background:var(--cd);border:1.5px solid var(--bd);border-radius:14px;padding:22px;}
+.flr{display:flex;gap:6px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;}
+.flb{background:var(--sf);border:1.5px solid var(--bd);border-radius:8px;padding:5px 10px;font-size:.72rem;text-align:center;min-width:56px;color:var(--mt);}
+.flb span{display:block;font-size:1.1rem;font-weight:900;line-height:1.2;}
+.fl1 span{color:var(--l1)}.fl2 span{color:var(--l2)}.fl3 span{color:var(--l3)}.fl4 span{color:var(--l4)}.fl5 span{color:var(--l5)}
+.fst{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;}
+.fs{background:var(--sf);border:1.5px solid var(--bd);border-radius:8px;padding:7px 14px;text-align:center;min-width:68px;}
+.fsn{font-size:1.2rem;font-weight:900;color:var(--txt);}
+.fsl{font-size:.65rem;color:var(--mt);text-transform:uppercase;}
+.ftb{display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:12px;}
+.ftb button{padding:5px 13px;border-radius:8px;border:1.5px solid var(--bd);cursor:pointer;font-size:.77rem;font-weight:700;background:var(--sf);color:var(--txt);font-family:inherit;transition:all .2s;}
+.ftb button:hover{border-color:var(--g);color:var(--g);}
+.ftb button.fa{background:var(--g);color:#000;border-color:var(--g);}
+.fctr{text-align:center;font-size:.79rem;color:var(--mt);margin-bottom:6px;}
+.fpb{height:6px;background:var(--bd);border-radius:3px;overflow:hidden;margin-bottom:12px;}
+.fpf{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--gd),var(--g));transition:width .35s;}
+.fcard{perspective:1200px;cursor:pointer;height:220px;margin-bottom:12px;}
+.fcin{position:relative;width:100%;height:100%;transition:transform .5s cubic-bezier(.4,0,.2,1);transform-style:preserve-3d;}
+.fcard.flip .fcin{transform:rotateY(180deg);}
+.ff,.fb{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:12px;display:flex;align-items:center;justify-content:center;padding:22px;text-align:center;flex-direction:column;border:2px solid;box-shadow:0 4px 16px rgba(0,0,0,.4);}
+.ff{border-color:rgba(57,255,20,.25);background:linear-gradient(135deg,var(--cd),#0A180A);}
+.ff::before{content:'❓ QUESTION';position:absolute;top:11px;left:13px;font-size:.6rem;letter-spacing:1.5px;color:var(--mt);font-weight:700;}
+.fb{transform:rotateY(180deg);border-color:rgba(57,255,20,.45);background:linear-gradient(135deg,#0A1E0A,#081408);}
+.fb::before{content:'✅ ANSWER';position:absolute;top:11px;left:13px;font-size:.6rem;letter-spacing:1.5px;font-weight:700;color:var(--g);}
+.ff p,.fb p{font-size:.88rem;line-height:1.62;color:var(--txt);}
+.fhi{position:absolute;bottom:9px;font-size:.64rem;color:var(--mt);}
+.fbi{position:absolute;top:11px;right:13px;font-size:.64rem;font-weight:700;padding:2px 8px;border-radius:8px;}
+.fbr{display:flex;gap:7px;justify-content:center;flex-wrap:wrap;margin-bottom:10px;}
+.fba{padding:8px 17px;border-radius:8px;border:none;cursor:pointer;font-size:.82rem;font-weight:700;font-family:inherit;transition:all .2s;}
+.fba:hover{transform:translateY(-2px);}
+.fag{background:rgba(255,68,102,.13);color:#FF4466;border:1.5px solid rgba(255,68,102,.34);}
+.fgo{background:rgba(57,255,20,.12);color:var(--gl);border:1.5px solid rgba(57,255,20,.32);}
+.fea{background:rgba(0,206,209,.1);color:var(--l5);border:1.5px solid rgba(0,206,209,.26);}
+.fsk{background:var(--sf);color:var(--mt);border:1.5px solid var(--bd);}
+.ffb{padding:9px 22px;border-radius:8px;border:none;cursor:pointer;font-size:.84rem;font-weight:800;font-family:inherit;background:linear-gradient(135deg,var(--gd),var(--g));color:#000;transition:all .2s;}
+.ffb:hover{transform:translateY(-2px);box-shadow:0 5px 16px rgba(57,255,20,.38);}
+.fdn{text-align:center;padding:28px 14px;}
+.fsc{font-size:3rem;font-weight:900;color:var(--g);line-height:1;margin-bottom:6px;}
+.fky{text-align:center;font-size:.69rem;color:var(--mt);margin-top:10px;padding:6px;border:1px solid var(--bd);border-radius:8px;background:var(--sf);}
+
+.qzw{background:var(--cd);border:1.5px solid var(--bd);border-radius:14px;padding:20px;}
+.qzc{display:flex;align-items:flex-start;gap:8px;padding:8px 11px;border-radius:8px;border:1.5px solid var(--bd);background:var(--sf);cursor:pointer;transition:all .2s;font-size:.8rem;color:var(--txt);line-height:1.5;margin-bottom:6px;}
+.qzc:hover{border-color:var(--g);background:rgba(57,255,20,.05);}
+.qzc.qcc{border-color:var(--g);background:rgba(57,255,20,.1);color:var(--gl);font-weight:700;}
+.qzc.qcw{border-color:#FF4466;background:rgba(255,68,102,.08);color:#FF4466;font-weight:700;}
+.qex{margin-top:7px;background:var(--sf);border-left:3px solid var(--g);border-radius:0 7px 7px 0;padding:7px 11px;font-size:.74rem;color:var(--mt);line-height:1.62;display:none;}
+
+#stog{position:fixed;bottom:22px;right:22px;z-index:500;background:var(--gd);border:2px solid var(--g);color:#fff;font-size:.78rem;font-weight:700;padding:8px 14px;border-radius:24px;cursor:pointer;font-family:inherit;box-shadow:0 4px 16px rgba(57,255,20,.3);transition:all .2s;}
+#stog:hover{background:var(--g);color:#000;}
+.cfp{position:fixed;top:-10px;width:9px;height:9px;border-radius:2px;animation:cff linear forwards;z-index:9999;pointer-events:none;}
+@keyframes cff{0%{transform:translateY(0) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+#sctop{position:fixed;bottom:22px;right:120px;z-index:400;background:var(--g);color:#000;border:none;width:40px;height:40px;border-radius:50%;font-size:1rem;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(57,255,20,.35);font-weight:900;}
+@media(max-width:600px){.hero h1{font-size:2.2rem;}.fcard{height:200px;}.ps{padding:18px 12px;}.pg{grid-template-columns:repeat(2,1fr);}}
+</style>
+</head>
+<body>
+<div class="ptcl" id="ptcl" aria-hidden="true"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nb">⬡ BEN 10 <span>Security+ Hub</span></div>
+  <div class="nls">
+    <a href="https://charleneluequee.github.io/" class="nl" target="_blank" rel="noopener">🏠 Portfolio</a>
+    <a href="security-notes.html" class="nl">📚 Study Hub</a>
+    <div class="cnd">
+      <button class="cnb" onclick="ndrop(this)">🎬 All Cartoons ▾</button>
+      <div class="cnm">
+        <a href="cartoon-spongebob.html">🧽 SpongeBob</a>
+        <a href="cartoon-ben10.html">⌚ Ben 10</a>
+        <a href="cartoon-scooby.html">🐕 Scooby-Doo</a>
+        <a href="cartoon-avatar.html">🌊 Avatar</a>
+        <a href="cartoon-knd.html">🔢 KND</a>
+        <a href="cartoon-xmen.html">⚡ X-Men 97</a>
+        <a href="cartoon-simpsons.html">🍩 Simpsons</a>
+        <a href="cartoon-futurama.html">🤖 Futurama</a>
+        <a href="cartoon-danny.html">👻 Danny Phantom</a>
+        <a href="cartoon-fairyodd.html">🌟 Fairly OddParents</a>
+        <a href="cartoon-magicbus.html">🚌 Magic School Bus</a>
+        <a href="cartoon-rugrats.html">🍼 Rugrats</a>
+        <a href="cartoon-gravityfalls.html">🌲 Gravity Falls</a>
+        <a href="cartoon-familyguy.html">🍺 Family Guy</a>
+        <a href="cartoon-americandad.html">🇺🇸 American Dad</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="omni"><div class="omni-i"></div><div class="omni-c"></div></div>
+  <div class="hbadge">Domains 1–5 · CompTIA Security+ SY0-701 · Full Exam Coverage</div>
+  <h1>It's <span>Hero</span> Time!</h1>
+  <p>The <strong>Omnitrix unlocks 10 alien powers</strong> — and every one maps to a Security+ concept. From Vilgax-level APTs to Ghostfreak rootkits, <strong>master all five SY0-701 domains through the world of Ben 10.</strong></p>
+  <div class="chips">
+    <span class="chip">🔥 Threat Actors</span><span class="chip">🦠 Malware Types</span><span class="chip">🔐 PAM &amp; IAM</span>
+    <span class="chip">🛡️ Hardening</span><span class="chip">🔍 Vuln Mgmt</span><span class="chip">🏗️ Architecture</span>
+  </div>
+</div>
+
+<!-- JUMP BAR -->
+<div class="jbar">
+  <a href="#topics" class="jb">📋 Topics</a><a href="#guide" class="jb">🧠 Study Guide</a>
+  <a href="#chars" class="jb">🎭 Characters</a><a href="#analogy" class="jb">🔍 Analogies</a>
+  <a href="#notes" class="jb">📖 Notes</a><a href="#ir" class="jb">🚨 IR Lifecycle</a>
+  <a href="#detect" class="jb">🔎 Detection</a><a href="#roles" class="jb">👥 Roles</a>
+  <a href="#report" class="jb">📊 Reporting</a><a href="#post" class="jb">📝 Post-Incident</a>
+  <a href="#adv" class="jb">⬡ Adventure</a><a href="#links" class="jb">🔗 Links</a>
+  <a href="#fc" class="jb">🃏 Flashcards</a><a href="#quiz" class="jb">🧠 Quiz</a>
+</div>
+
+<!-- 1. TOPICS -->
+<hr class="pdiv" id="topics">
+<div class="ps"><div class="sh"><h2>📋 Topics Covered</h2><p>All five SY0-701 domains through the Ben 10 universe.</p></div>
+  <div class="acc" id="t1"><div class="ahd" onclick="tacc('t1')"><span>🔵</span><span class="at">Domain 1 — General Security Concepts</span><span class="ap">12%</span><span class="ac">▾</span></div><div class="ab"><p class="as"><strong>1.1</strong> Controls: Technical, Managerial, Operational, Physical · Preventive, Deterrent, Detective, Corrective, Compensating, Directive</p><p class="as"><strong>1.2</strong> CIA Triad · Non-repudiation · AAA · Zero Trust (Control/Data Plane) · Physical security · Honeypots</p><p class="as"><strong>1.3</strong> Change management · Impact analysis · Backout plans · Version control</p><p class="as"><strong>1.4</strong> PKI · Symmetric/Asymmetric · Hashing · Salting · Digital signatures · TPM · HSM · Tokenization · CRL/OCSP</p><div class="tr"><span class="gt">CIA Triad</span><span class="gt">Zero Trust</span><span class="gt">PKI</span><span class="gt">Hashing</span><span class="gt">Honeypot</span><span class="gt">AAA</span><span class="gt">TPM/HSM</span></div></div></div>
+  <div class="acc" id="t2"><div class="ahd" onclick="tacc('t2')"><span>🔴</span><span class="at">Domain 2 — Threats, Vulnerabilities &amp; Mitigations</span><span class="ap">22%</span><span class="ac">▾</span></div><div class="ab"><p class="as"><strong>2.1</strong> Nation-state, Unskilled, Hacktivist, Insider, Organized Crime, Shadow IT</p><p class="as"><strong>2.2</strong> Phishing/Smishing/Vishing · BEC · Watering hole · Typosquatting · Supply chain</p><p class="as"><strong>2.3</strong> Buffer overflow · SQLi · XSS · Zero-day · Firmware · VM escape · TOCTOU</p><p class="as"><strong>2.4</strong> Virus · Worm · Trojan · Rootkit · Ransomware · Logic bomb · Keylogger · Fileless · IoCs</p><p class="as"><strong>2.5</strong> Segmentation · Patching · Least privilege · HIPS · EDR · Hardening</p><div class="tr"><span class="gt">APT</span><span class="gt">Rootkit</span><span class="gt">Ransomware</span><span class="gt">DDoS</span><span class="gt">Zero-day</span><span class="gt">CVE/CVSS</span><span class="gt">Phishing</span></div></div></div>
+  <div class="acc" id="t3"><div class="ahd" onclick="tacc('t3')"><span>🟠</span><span class="at">Domain 3 — Security Architecture</span><span class="ap">18%</span><span class="ac">▾</span></div><div class="ab"><p class="as"><strong>3.1</strong> Cloud (IaaS/PaaS/SaaS) · Serverless · Microservices · IaC · SDN · IoT · ICS/SCADA · RTOS</p><p class="as"><strong>3.2</strong> Device placement · Security zones · Fail-open/closed · Jump servers · WAF · NGFW · 802.1X · VPN · SASE</p><p class="as"><strong>3.3</strong> Data at rest/transit/use · Classification · Encryption · Tokenization · Masking</p><p class="as"><strong>3.4</strong> HA · Load balancing · Hot/warm/cold sites · Backups · RTO/RPO · Tabletop exercises</p><div class="tr"><span class="gt">Zero Trust</span><span class="gt">VPN</span><span class="gt">SASE</span><span class="gt">Air-gapped</span><span class="gt">Data States</span><span class="gt">RTO/RPO</span></div></div></div>
+  <div class="acc" id="t4"><div class="ahd" onclick="tacc('t4')"><span>🟡</span><span class="at">Domain 4 — Security Operations</span><span class="ap">28%</span><span class="ac">▾</span></div><div class="ab"><p class="as"><strong>4.1</strong> Secure baselines · Hardening · MDM · BYOD/COPE/CYOD · WPA3</p><p class="as"><strong>4.3</strong> Vuln mgmt: Scan→Analyze→Remediate→Validate→Report · Bug bounty · Pen testing</p><p class="as"><strong>4.4</strong> SIEM · DLP · NetFlow · EDR/XDR · UBA · Log aggregation · Alert tuning</p><p class="as"><strong>4.6</strong> IAM · SSO (LDAP/OAuth/SAML) · MFA · PAM (JIT/vaulting/ephemeral) · MAC/DAC/RBAC/ABAC · DMARC</p><p class="as"><strong>4.7–4.9</strong> SOAR · IR process · Digital forensics · Legal hold · Chain of custody</p><div class="tr"><span class="gt">SIEM</span><span class="gt">EDR/XDR</span><span class="gt">MFA</span><span class="gt">PAM</span><span class="gt">SOAR</span><span class="gt">IR Process</span><span class="gt">DMARC</span></div></div></div>
+  <div class="acc" id="t5"><div class="ahd" onclick="tacc('t5')"><span>🟢</span><span class="at">Domain 5 — Security Program Management &amp; Oversight</span><span class="ap">20%</span><span class="ac">▾</span></div><div class="ab"><p class="as"><strong>5.1</strong> Policies (AUP/BCP/DRP) · Standards · Procedures · Roles: Owners, Controllers, Processors, Custodians</p><p class="as"><strong>5.2</strong> Risk: SLE/ALE/ARO · Transfer/Accept/Avoid/Mitigate · Risk register · Risk appetite</p><p class="as"><strong>5.3</strong> Vendor assessment · Due diligence · SLA/MOA/MOU/NDA/BPA · Right-to-audit</p><p class="as"><strong>5.4–5.6</strong> Compliance (GDPR/PCI DSS/HIPAA) · Audits · Pen testing · Security awareness</p><div class="tr"><span class="gt">AUP</span><span class="gt">SLE/ALE/ARO</span><span class="gt">SLA/NDA</span><span class="gt">GDPR</span><span class="gt">BIA</span><span class="gt">RTO/RPO</span></div></div></div>
+</div>
+
+<!-- 2. DOMAIN STUDY GUIDE -->
+<hr class="pdiv" id="guide">
+<div class="ps"><div class="sh"><h2>🧠 Domain Study Guide — Mnemonics</h2><p>One Ben 10 mnemonic per domain. Click to open — others close automatically.</p></div>
+
+<div class="acc" id="m1"><div class="ahd" onclick="macc('m1')"><span>🔵</span><span class="at">Domain 1 — General Security Concepts</span><span class="ap" style="background:rgba(57,255,20,.12);color:var(--gl)">OMNITRIX</span><span class="ac">▾</span></div><div class="ab">
+  <div class="mw">O M N I T R I X</div>
+  <div class="mr"><div class="ml"><strong>O</strong><span>Ops</span></div><div class="ml"><strong>M</strong><span>Mgmt</span></div><div class="ml"><strong>N</strong><span>Non-rep</span></div><div class="ml"><strong>I</strong><span>Integrity</span></div><div class="ml"><strong>T</strong><span>Technical</span></div><div class="ml"><strong>R</strong><span>Risk</span></div><div class="ml"><strong>I</strong><span>Identity</span></div><div class="ml"><strong>X</strong><span>X-Auth</span></div></div>
+  <ul class="mb">
+    <li><strong>Security Controls:</strong> Technical (firewall), Managerial (policies), Operational (training), Physical (bollards). Types: Preventive, Deterrent, Detective, Corrective, Compensating, Directive.</li>
+    <li><strong>CIA + Non-repudiation:</strong> Confidentiality (Omnitrix locked), Integrity (untampered DNA), Availability (Ben can always transform). Non-repudiation = transformation logs that cannot be denied.</li>
+    <li><strong>Zero Trust:</strong> Control Plane: Policy Engine + Policy Administrator. Data Plane: Policy Enforcement Point. "Azmuth trusts no one — every request verified, even Ben's."</li>
+  </ul>
+  <div class="mq" id="mq1"><p>Which Zero Trust component actually enforces access at the point of entry?</p><div class="mqo"><button class="mo" onclick="mqans('mq1',this,false)">A. Policy Engine</button><button class="mo" onclick="mqans('mq1',this,true)">B. Policy Enforcement Point</button><button class="mo" onclick="mqans('mq1',this,false)">C. Policy Administrator</button></div><div class="me">✅ The <strong>Policy Enforcement Point (PEP)</strong> lives in the Data Plane and is the actual gatekeeper. The Policy Engine decides; the PEP enforces it.</div></div>
+</div></div>
+
+<div class="acc" id="m2"><div class="ahd" onclick="macc('m2')"><span>🔴</span><span class="at">Domain 2 — Threats, Vulnerabilities &amp; Mitigations</span><span class="ap" style="background:rgba(220,20,60,.12);color:#FF6B6B">VILGAX</span><span class="ac">▾</span></div><div class="ab">
+  <div class="mw" style="color:#DC143C">V I L G A X</div>
+  <div class="mr"><div class="ml" style="border-color:#DC143C"><strong style="color:#DC143C">V</strong><span>Vectors</span></div><div class="ml" style="border-color:#DC143C"><strong style="color:#DC143C">I</strong><span>IoCs</span></div><div class="ml" style="border-color:#DC143C"><strong style="color:#DC143C">L</strong><span>Logic bomb</span></div><div class="ml" style="border-color:#DC143C"><strong style="color:#DC143C">G</strong><span>Galaxy APT</span></div><div class="ml" style="border-color:#DC143C"><strong style="color:#DC143C">A</strong><span>Attributes</span></div><div class="ml" style="border-color:#DC143C"><strong style="color:#DC143C">X</strong><span>eXploit</span></div></div>
+  <ul class="mb">
+    <li><strong>Threat Actors:</strong> Nation-state (Vilgax — APT), Unskilled attacker, Hacktivist, Insider (Kevin 11), Organized crime, Shadow IT. Key attributes: resources, sophistication, internal/external.</li>
+    <li><strong>Attack Vectors:</strong> Phishing/Smishing/Vishing · Watering hole · Typosquatting · BEC · Supply chain (Upgrade alien) · Default credentials · Open service ports · Removable devices.</li>
+    <li><strong>Malware:</strong> Virus (user-triggered), Worm (Ripjaws — self-propagating), Trojan (disguised), Rootkit (Ghostfreak — kernel stealth), Logic bomb (condition-triggered), Ransomware, Keylogger, Fileless (RAM-only).</li>
+  </ul>
+  <div class="mq" id="mq2"><p>Kevin 11 uses stolen credentials from a trusted Plumber to access classified alien files. What threat actor type is this?</p><div class="mqo"><button class="mo" onclick="mqans('mq2',this,false)">A. Nation-state</button><button class="mo" onclick="mqans('mq2',this,true)">B. Insider threat</button><button class="mo" onclick="mqans('mq2',this,false)">C. Hacktivist</button></div><div class="me">✅ <strong>Insider threat</strong> — someone using authorized access maliciously. Kevin had legitimate credentials, making this an insider-threat scenario.</div></div>
+</div></div>
+
+<div class="acc" id="m3"><div class="ahd" onclick="macc('m3')"><span>🟠</span><span class="at">Domain 3 — Security Architecture</span><span class="ap" style="background:rgba(0,206,209,.1);color:#00CED1">PLUMBER</span><span class="ac">▾</span></div><div class="ab">
+  <div class="mw" style="color:#00CED1">P L U M B E R</div>
+  <div class="mr"><div class="ml" style="border-color:#00CED1"><strong style="color:#00CED1">P</strong><span>Placement</span></div><div class="ml" style="border-color:#00CED1"><strong style="color:#00CED1">L</strong><span>Load Bal.</span></div><div class="ml" style="border-color:#00CED1"><strong style="color:#00CED1">U</strong><span>UPS</span></div><div class="ml" style="border-color:#00CED1"><strong style="color:#00CED1">M</strong><span>Micro-svc</span></div><div class="ml" style="border-color:#00CED1"><strong style="color:#00CED1">B</strong><span>Backup</span></div><div class="ml" style="border-color:#00CED1"><strong style="color:#00CED1">E</strong><span>Encrypt</span></div><div class="ml" style="border-color:#00CED1"><strong style="color:#00CED1">R</strong><span>Resilience</span></div></div>
+  <ul class="mb">
+    <li><strong>Infrastructure Security:</strong> Device placement, security zones. Fail-open (allows traffic on failure — less secure) vs fail-closed (denies all — safer). WAF, NGFW, jump servers, 802.1X port security.</li>
+    <li><strong>Architecture Models:</strong> Cloud (IaaS/PaaS/SaaS), Serverless, Microservices, IaC, SDN, IoT, ICS/SCADA, RTOS, Embedded, Containerization, Virtualization, High availability.</li>
+    <li><strong>Resilience:</strong> Hot (live, real-time replication), Warm (partial), Cold (empty shell). RTO = max downtime tolerated. RPO = max data loss tolerated.</li>
+  </ul>
+  <div class="mq" id="mq3"><p>Plumber HQ loses power and the firewall allows ALL traffic. What failure mode is this?</p><div class="mqo"><button class="mo" onclick="mqans('mq3',this,true)">A. Fail-open</button><button class="mo" onclick="mqans('mq3',this,false)">B. Fail-closed</button><button class="mo" onclick="mqans('mq3',this,false)">C. Fail-safe</button></div><div class="me">✅ <strong>Fail-open</strong>: allows all traffic when device fails — prioritizes availability. Fail-closed blocks all traffic (safer, but risks downtime).</div></div>
+</div></div>
+
+<div class="acc" id="m4"><div class="ahd" onclick="macc('m4')"><span>🟡</span><span class="at">Domain 4 — Security Operations</span><span class="ap" style="background:rgba(255,140,0,.1);color:#FF8C00">GWEN</span><span class="ac">▾</span></div><div class="ab">
+  <div class="mw" style="color:#FF8C00">G W E N</div>
+  <div class="mr"><div class="ml" style="border-color:#FF8C00"><strong style="color:#FF8C00">G</strong><span>Guard/SIEM</span></div><div class="ml" style="border-color:#FF8C00"><strong style="color:#FF8C00">W</strong><span>Vuln Mgmt</span></div><div class="ml" style="border-color:#FF8C00"><strong style="color:#FF8C00">E</strong><span>EDR/SOAR</span></div><div class="ml" style="border-color:#FF8C00"><strong style="color:#FF8C00">N</strong><span>Net Ops</span></div></div>
+  <ul class="mb">
+    <li><strong>Vulnerability Management:</strong> Identify (scan/OSINT/pen test) → Analyze (CVSS/CVE, false pos/neg) → Remediate (patch/segment) → Validate (rescan) → Report. CVE = standard ID. CVSS 0.0–10.0.</li>
+    <li><strong>IAM/PAM:</strong> JIT permissions (Omnitrix 10-min timer), password vaulting, ephemeral credentials. SSO: LDAP/OAuth/SAML. MFA: Know/Have/Are/Somewhere. Access: MAC/DAC/RBAC/ABAC.</li>
+    <li><strong>IR Process:</strong> Preparation → Detection → Analysis → Containment → Eradication → Recovery → Lessons Learned. SOAR automates playbooks. Forensics: legal hold, chain of custody, e-discovery.</li>
+  </ul>
+  <div class="mq" id="mq4"><p>Gwen sees a Plumber login from Bellwood at 8AM, then Tokyo at 8:04AM. What IoC is this?</p><div class="mqo"><button class="mo" onclick="mqans('mq4',this,false)">A. Account lockout</button><button class="mo" onclick="mqans('mq4',this,false)">B. Out-of-cycle logging</button><button class="mo" onclick="mqans('mq4',this,true)">C. Impossible travel</button></div><div class="me">✅ <strong>Impossible travel</strong>: geographically impossible login timing indicates compromised credentials or account takeover.</div></div>
+</div></div>
+
+<div class="acc" id="m5"><div class="ahd" onclick="macc('m5')"><span>🟢</span><span class="at">Domain 5 — Governance, Risk &amp; Compliance</span><span class="ap" style="background:rgba(147,112,219,.1);color:#9370DB">AZMUTH</span><span class="ac">▾</span></div><div class="ab">
+  <div class="mw" style="color:#9370DB">A Z M U T H</div>
+  <div class="mr"><div class="ml" style="border-color:#9370DB"><strong style="color:#9370DB">A</strong><span>Audit</span></div><div class="ml" style="border-color:#9370DB"><strong style="color:#9370DB">Z</strong><span>Zero-risk</span></div><div class="ml" style="border-color:#9370DB"><strong style="color:#9370DB">M</strong><span>Monitor</span></div><div class="ml" style="border-color:#9370DB"><strong style="color:#9370DB">U</strong><span>Understand</span></div><div class="ml" style="border-color:#9370DB"><strong style="color:#9370DB">T</strong><span>Transfer</span></div><div class="ml" style="border-color:#9370DB"><strong style="color:#9370DB">H</strong><span>Handbooks</span></div></div>
+  <ul class="mb">
+    <li><strong>Governance:</strong> Policies (AUP, BCP, DRP, IR, SDLC), Standards (password/encryption), Procedures (playbooks, onboarding). Roles: Owners (Azmuth), Controllers, Processors (Gwen), Custodians (Max).</li>
+    <li><strong>Risk:</strong> SLE = cost of one event. ARO = frequency/year. <strong>ALE = SLE × ARO</strong>. Strategies: Transfer (insurance), Accept, Avoid, Mitigate. Risk appetite: expansionary/conservative/neutral.</li>
+    <li><strong>Compliance:</strong> GDPR: 72-hour breach notification. PCI DSS: notify card brands immediately. HIPAA: 60 days for 500+ person breaches. Right-to-audit clauses. NDA, SLA, MOU, BPA agreements.</li>
+  </ul>
+  <div class="mq" id="mq5"><p>SLE = $500K, ARO = 2. What is the ALE?</p><div class="mqo"><button class="mo" onclick="mqans('mq5',this,false)">A. $500,000</button><button class="mo" onclick="mqans('mq5',this,false)">B. $250,000</button><button class="mo" onclick="mqans('mq5',this,true)">C. $1,000,000</button></div><div class="me">✅ <strong>ALE = SLE × ARO = $500,000 × 2 = $1,000,000.</strong> This is the annual expected loss Azmuth uses to justify security spending.</div></div>
+</div></div>
+</div>
+
+<!-- 3. CHARACTER MAPPING -->
+<hr class="pdiv" id="chars">
+<div class="ps"><div class="sh"><h2>🎭 Character Mapping</h2><p>Every major Ben 10 character maps to a Security+ role or concept.</p></div>
+<div class="cg">
+  <div class="cc" style="border-left-color:#39FF14"><div class="cl" style="color:#39FF14">Ben Tennyson</div><div class="cr">Security Analyst / Operator</div><div class="ct">Ben manages the Omnitrix — selecting the right tool for each threat, under pressure, with imperfect information. Classic Tier 1 SOC analyst energy: hands-on, rapid decisions, sometimes impulsive.</div></div>
+  <div class="cc" style="border-left-color:#9370DB"><div class="cl" style="color:#9370DB">Ghostfreak / Zs'Skayr</div><div class="cr">Rootkit / Kernel Persistence</div><div class="ct">Hiding inside Omnitrix DNA at the most privileged layer, invisible to normal scans, waiting to seize control. Rootkits embed below the OS, survive reboots, and hide from AV — hardest malware to remove.</div></div>
+  <div class="cc" style="border-left-color:#DC143C"><div class="cl" style="color:#DC143C">Vilgax</div><div class="cr">Nation-State APT Actor</div><div class="ct">Well-funded, sophisticated, relentlessly persistent — profiling every Omnitrix vulnerability across decades. The textbook APT: external, well-resourced, single high-value target, long-term strategic patience.</div></div>
+  <div class="cc" style="border-left-color:#1E90FF"><div class="cl" style="color:#1E90FF">Kevin 11</div><div class="cr">Insider Threat</div><div class="ct">Trusted access established first, malice revealed later. Kevin had legitimate Omnitrix exposure before going rogue — the insider threat is most dangerous because trust was already built before it was weaponized.</div></div>
+  <div class="cc" style="border-left-color:#00E5FF"><div class="cl" style="color:#00E5FF">Azmuth</div><div class="cr">Root of Trust / CISO / Root CA</div><div class="ct">Creator of the Omnitrix with master override — the ultimate trusted entity. Like a PKI Root CA, all trust derives from Azmuth. He sets all security policy, holds veto power, and functions as the organization's CISO.</div></div>
+  <div class="cc" style="border-left-color:#7CFC00"><div class="cl" style="color:#7CFC00">Grandpa Max</div><div class="cr">Security Awareness Trainer / Governance</div><div class="ct">Constantly briefing the team with threat intel, teaching safe behaviors, enforcing the Plumber code of conduct. Max embodies both ongoing security awareness training and the governance function — the human layer.</div></div>
+  <div class="cc" style="border-left-color:#FF4500"><div class="cl" style="color:#FF4500">Heatblast</div><div class="cr">DDoS Attack / Amplified Flood</div><div class="ct">Overwhelming firepower from multiple directions simultaneously until availability collapses. Heatblast models a Distributed Denial of Service attack — volume from many sources, one target, relentless pressure.</div></div>
+  <div class="cc" style="border-left-color:#00CED1"><div class="cl" style="color:#00CED1">Ripjaws</div><div class="cr">Worm / Self-Propagating Malware</div><div class="ct">Moves through network pipelines with zero user interaction, spreading system to system autonomously. Ripjaws = worm: self-replicating, self-propagating — exploits open services without anyone clicking anything.</div></div>
+</div></div>
+
+<!-- 4. DEEP-DIVE ANALOGIES -->
+<hr class="pdiv" id="analogy">
+<div class="ps"><div class="sh"><h2>🔍 Deep-Dive Analogies</h2><p>Four show scenarios that illuminate real Security+ exam concepts.</p></div>
+<div class="cg">
+  <div class="cc" style="border-left-color:#9370DB"><div class="cl" style="color:#9370DB">🎬 Ghostfreak escapes the Omnitrix</div><div class="cr">→ Rootkit / Kernel Persistence</div><div class="ct">Ghostfreak was hiding inside Omnitrix DNA at the most privileged layer, undetected, waiting. Rootkits operate below the OS kernel, survive reboots, and actively hide from security tools — standard AV won't catch them. Full system reimaging is typically required for eradication. This is why rootkits score the highest on incident severity.</div></div>
+  <div class="cc" style="border-left-color:#39FF14"><div class="cl" style="color:#39FF14">🎬 Upgrade merges with Vilgax's ship</div><div class="cr">→ Firmware / Supply Chain Attack</div><div class="ct">Upgrade merges with the device and controls it from within the firmware — before any patch can reach it. Supply chain attacks compromise hardware or software at manufacture/distribution, so the victim's own trusted technology becomes the weapon. Mitigations: vendor assessment (Domain 5.3), right-to-audit clauses, and TPM hardware attestation.</div></div>
+  <div class="cc" style="border-left-color:#FF8C00"><div class="cl" style="color:#FF8C00">🎬 Omnitrix 10-minute timer expires</div><div class="cr">→ Just-in-Time Permissions / PAM</div><div class="ct">The Omnitrix grants elevated access for exactly the time needed, then auto-reverts. This is JIT permissions from Domain 4.6's PAM section: grant elevated privilege for minimum required time, then auto-revoke. Combined with password vaulting (alien DNA database) and ephemeral credentials (one-time sessions), the Omnitrix is textbook PAM design.</div></div>
+  <div class="cc" style="border-left-color:#7CFC00"><div class="cl" style="color:#7CFC00">🎬 Grandpa Max mission briefing</div><div class="cr">→ Security Awareness &amp; Governance</div><div class="ct">Before every mission, Max briefs the team on threat intel, known vulnerabilities, and rules of engagement — this is Domain 5.6 security awareness. The Plumber code of conduct is the AUP. Post-mission debriefs are lessons learned (Domain 4.8). Max isn't just a grandpa — he's the governance function that holds the whole program together.</div></div>
+</div></div>
+
+<!-- 5. STUDY NOTES -->
+<hr class="pdiv" id="notes">
+<div class="ps"><div class="sh"><h2>📖 Study Notes</h2><p>Five high-frequency exam topics — concise, exam-focused, Ben 10 flavored.</p></div>
+  <div class="nt"><h4>🔐 Cryptography Essentials — Domain 1.4</h4><p><strong style="color:var(--gl)">Symmetric (AES):</strong> Same key — fast, bulk data. <strong style="color:var(--gl)">Asymmetric (RSA/ECC):</strong> Public/private pair — key exchange, signatures. <strong style="color:var(--gl)">Hashing (SHA-256):</strong> One-way, integrity only. <strong style="color:var(--gl)">Salting:</strong> Defeats rainbow tables. <strong style="color:var(--gl)">PKI:</strong> CA signs certs → trust chain. CRL + OCSP verify revocation. TPM/HSM = hardware-backed keys. Azmuth's master key = root CA.</p></div>
+  <div class="nt"><h4>🦠 Malware Types — Domain 2.4</h4><p><strong style="color:var(--gl)">Virus:</strong> User-triggered spread. <strong style="color:var(--gl)">Worm (Ripjaws):</strong> Self-propagates, no user needed. <strong style="color:var(--gl)">Trojan:</strong> Disguised as legit. <strong style="color:var(--gl)">Rootkit (Ghostfreak):</strong> Kernel-level stealth — hardest to remove. <strong style="color:var(--gl)">Logic bomb:</strong> Condition-triggered dormant code. <strong style="color:var(--gl)">Ransomware:</strong> Encrypts, demands payment. <strong style="color:var(--gl)">Keylogger:</strong> Records keystrokes. <strong style="color:var(--gl)">Fileless:</strong> RAM-only, no disk artifacts. <strong style="color:var(--gl)">Botnet:</strong> Zombie army via C2 server.</p></div>
+  <div class="nt"><h4>🏗️ Security Architecture — Domain 3.0</h4><p><strong style="color:var(--gl)">Zero Trust:</strong> Never trust, always verify. Control Plane (Policy Engine + Admin) / Data Plane (PEP). <strong style="color:var(--gl)">Fail-open:</strong> Allows on failure (risky). <strong style="color:var(--gl)">Fail-closed:</strong> Denies on failure (safe, downtime risk). <strong style="color:var(--gl)">Air-gapped:</strong> Physically isolated. <strong style="color:var(--gl)">SASE:</strong> Converges networking + security in cloud. RTO = max downtime. RPO = max data loss.</p></div>
+  <div class="nt"><h4>🔑 PAM &amp; Identity — Domain 4.6</h4><p><strong style="color:var(--gl)">JIT:</strong> Grant elevated access only when needed, auto-revoke (Omnitrix timer). <strong style="color:var(--gl)">Ephemeral credentials:</strong> Auto-expiring. <strong style="color:var(--gl)">MFA:</strong> Know / Have / Are / Somewhere. <strong style="color:var(--gl)">SSO:</strong> LDAP (directory), OAuth (delegation), SAML (federation). <strong style="color:var(--gl)">Access models:</strong> MAC (labels), DAC (owner-set), RBAC (role), ABAC (attribute — most granular). DMARC stops BEC and spoofing.</p></div>
+  <div class="nt"><h4>📐 Risk Quantification — Domain 5.2</h4><p><strong style="color:var(--gl)">SLE</strong> = cost of one incident. <strong style="color:var(--gl)">ARO</strong> = frequency/year. <strong style="color:var(--gl)">ALE = SLE × ARO.</strong> Strategies: <strong style="color:var(--gl)">Transfer</strong> (insurance), <strong style="color:var(--gl)">Accept</strong> (tolerate), <strong style="color:var(--gl)">Avoid</strong> (eliminate activity), <strong style="color:var(--gl)">Mitigate</strong> (add controls). Risk appetite: expansionary / conservative / neutral. Risk register tracks key indicators, owners, thresholds.</p></div>
+</div>
+
+<!-- 6. IR LIFECYCLE -->
+<hr class="pdiv" id="ir">
+<div class="ps"><div class="sh"><h2>🚨 Incident Response Lifecycle</h2><p>Domain 4.8 — the six phases every exam scenario maps to.</p></div>
+<div class="pg">
+  <div class="pc"><div class="pn">1</div><div class="pm">Preparation</div><div class="pt2">Domain 4.8</div><div class="pd">Max trains the team before any incident. IR plans, playbooks, tools, tabletop exercises, and comms channels ready before Vilgax strikes.</div></div>
+  <div class="pc"><div class="pn">2</div><div class="pm">Detection &amp; Analysis</div><div class="pt2">Domain 4.8</div><div class="pd">Gwen's SIEM fires on anomalous Omnitrix activity. Correlate logs, identify IoCs, determine scope and severity. Document everything with timestamps.</div></div>
+  <div class="pc"><div class="pn">3</div><div class="pm">Containment</div><div class="pt2">Domain 4.8</div><div class="pd">Isolate compromised systems, block lateral movement. Preserve forensic evidence BEFORE eradication — don't wipe yet. Short-term vs long-term containment.</div></div>
+  <div class="pc"><div class="pn">4</div><div class="pm">Eradication</div><div class="pt2">Domain 4.8</div><div class="pd">Remove malware, close initial access vector (patch the vuln), delete unauthorized accounts, flash clean firmware. Confirm root cause fully addressed.</div></div>
+  <div class="pc"><div class="pn">5</div><div class="pm">Recovery</div><div class="pt2">Domain 4.8</div><div class="pd">Restore from clean backups, validate normal operation, monitor closely for recurrence. Return Omnitrix to operational status. Meet RTO/RPO targets.</div></div>
+  <div class="pc"><div class="pn">6</div><div class="pm">Lessons Learned</div><div class="pt2">Domain 4.8</div><div class="pd">Azmuth updates Omnitrix failsafes. Document what worked/didn't, update playbooks and policies, brief the team. Post-incident report feeds back into Phase 1.</div></div>
+</div></div>
+
+<!-- 7. DETECTION DEEP DIVE -->
+<hr class="pdiv" id="detect">
+<div class="ps"><div class="sh"><h2>🔎 Detection Deep Dive</h2><p>Domain 4.4 — monitoring tools, IoCs, and detection concepts.</p></div>
+  <div class="nt"><h4>👁️ Eye Guy = SIEM</h4><p>Eye Guy has eyes everywhere simultaneously — exactly how SIEM works. Aggregates logs from firewalls, endpoints, IDS/IPS, DNS, and apps — correlates events across all sources to surface IoCs. Key activities: <strong style="color:var(--gl)">Log aggregation</strong> · <strong style="color:var(--gl)">Alerting</strong> · <strong style="color:var(--gl)">Scanning</strong> · <strong style="color:var(--gl)">Archiving</strong> · <strong style="color:var(--gl)">Alert tuning</strong> · <strong style="color:var(--gl)">Quarantine</strong>. Tools: SCAP, DLP, antivirus, NetFlow, SNMP traps, EDR/XDR, UBA.</p></div>
+  <div class="nt"><h4>📊 Key Indicators of Compromise (IoC)</h4><p><strong style="color:var(--gl)">Account lockout:</strong> Brute force. <strong style="color:var(--gl)">Impossible travel:</strong> Bellwood then Tokyo in 4 min. <strong style="color:var(--gl)">Concurrent sessions:</strong> Same account, two locations. <strong style="color:var(--gl)">Resource consumption:</strong> CPU/bandwidth spike = crypto miner or DDoS bot. <strong style="color:var(--gl)">Out-of-cycle logging:</strong> 3AM activity on a weekday. <strong style="color:var(--gl)">Missing logs:</strong> Attacker deleted evidence — itself an IoC. <strong style="color:var(--gl)">Blocked content:</strong> Firewall blocked outbound to known C2 IP.</p></div>
+  <div class="mq" id="mqdet"><p>Which tool aggregates and correlates logs from firewalls, endpoints, and IDS to surface IoCs in real time?</p><div class="mqo"><button class="mo" onclick="mqans('mqdet',this,false)">A. DLP</button><button class="mo" onclick="mqans('mqdet',this,false)">B. EDR</button><button class="mo" onclick="mqans('mqdet',this,true)">C. SIEM</button></div><div class="me">✅ <strong>SIEM</strong> aggregates and correlates multi-source logs. DLP prevents exfiltration. EDR monitors endpoints only. SIEM is the "command center" — Eye Guy seeing everything at once.</div></div>
+</div>
+
+<!-- 8. ROLES & RESPONSIBILITIES -->
+<hr class="pdiv" id="roles">
+<div class="ps"><div class="sh"><h2>👥 Roles &amp; Responsibilities</h2><p>Domain 5.1 — data governance roles mapped to the Plumber organization.</p></div>
+<div class="cg" style="margin-bottom:16px">
+  <div class="cc" style="border-left-color:#00E5FF"><div class="cl" style="color:#00E5FF">Azmuth</div><div class="cr">Data Owner</div><div class="ct">Accountable for data classification and access decisions. Sets the highest-level access policy for alien DNA. The Owner defines the rules — they don't implement them operationally.</div></div>
+  <div class="cc" style="border-left-color:#7CFC00"><div class="cl" style="color:#7CFC00">Grandpa Max</div><div class="cr">Data Custodian / Steward</div><div class="ct">Implements and maintains security controls on behalf of the Owner. Max enforces Plumber regulations and maintains Rustbucket systems. Custodians don't set policy — they enforce it.</div></div>
+  <div class="cc" style="border-left-color:#FF8C00"><div class="cl" style="color:#FF8C00">Gwen Tennyson</div><div class="cr">Data Processor / SOC Analyst</div><div class="ct">Processes information — analyzing threats, running SIEM queries, correlating alerts — on behalf of the Owner's objectives. Operates strictly within defined policy boundaries.</div></div>
+  <div class="cc" style="border-left-color:#39FF14"><div class="cl" style="color:#39FF14">Ben Tennyson</div><div class="cr">End User / Security Operator</div><div class="ct">Uses the Omnitrix within policy constraints set by higher roles. Subject to AUP, security awareness training, and access controls. The human element — and the most common security vulnerability when undertrained.</div></div>
+</div>
+<div class="mq" id="mqroles"><p>Azmuth classifies alien DNA as "Restricted" and decides who may access it. What governance role is Azmuth performing?</p><div class="mqo"><button class="mo" onclick="mqans('mqroles',this,true)">A. Data Owner</button><button class="mo" onclick="mqans('mqroles',this,false)">B. Data Custodian</button><button class="mo" onclick="mqans('mqroles',this,false)">C. Data Processor</button></div><div class="me">✅ <strong>Data Owner</strong> — accountable for classification and access decisions. Custodian implements controls; Processor handles data operationally.</div></div>
+</div>
+
+<!-- 9. REPORTING REQUIREMENTS -->
+<hr class="pdiv" id="report">
+<div class="ps"><div class="sh"><h2>📊 Reporting Requirements</h2><p>Domain 4.9 / 5.4 — internal vs external reporting obligations and timelines.</p></div>
+<div class="cg" style="margin-bottom:16px">
+  <div class="cc" style="border-left-color:#7CFC00"><div class="cl" style="color:#7CFC00">🏢 Internal Reporting</div><div class="cr">Within the Plumber Organization</div><div class="ct"><strong style="color:var(--gl)">Immediate:</strong> Alert security team, escalate to Azmuth (CISO), activate IR plan. <strong style="color:var(--gl)">Short-term:</strong> Incident timeline, scope, affected systems, containment status. <strong style="color:var(--gl)">Post-incident:</strong> Root cause analysis, lessons learned, policy updates. Feeds risk register and vulnerability management program.</div></div>
+  <div class="cc" style="border-left-color:#00E5FF"><div class="cl" style="color:#00E5FF">🌍 External Reporting</div><div class="cr">Regulators, Partners, Public</div><div class="ct"><strong style="color:var(--gl)">GDPR:</strong> 72-hour notification to supervisory authority. <strong style="color:var(--gl)">PCI DSS:</strong> Notify card brands and acquiring bank immediately. <strong style="color:var(--gl)">HIPAA:</strong> 60 days for 500+ individual breaches; HHS notification required. <strong style="color:var(--gl)">ISACs:</strong> Share threat intel with sector information-sharing groups.</div></div>
+</div>
+<div class="mq" id="mqrep"><p>Plumber HQ suffers a breach exposing EU citizen data. Under GDPR, how many hours to notify the supervisory authority?</p><div class="mqo"><button class="mo" onclick="mqans('mqrep',this,false)">A. 24 hours</button><button class="mo" onclick="mqans('mqrep',this,false)">B. 30 days</button><button class="mo" onclick="mqans('mqrep',this,true)">C. 72 hours</button></div><div class="me">✅ <strong>GDPR requires 72-hour notification.</strong> HIPAA's window is 60 days for large breaches — don't confuse these on the exam.</div></div>
+</div>
+
+<!-- 10. POST-INCIDENT -->
+<hr class="pdiv" id="post">
+<div class="ps"><div class="sh"><h2>📝 Post-Incident Activity</h2><p>Domain 4.8 — what happens after the threat is neutralized.</p></div>
+  <div class="nt"><h4>📋 Lessons Learned Report</h4><p>Conducted within 2 weeks while memory is fresh. Documents: full incident timeline, root cause, what controls failed, what worked, improvements needed. Feeds directly back into Preparation (Phase 1). Azmuth's debrief: "Why did Ghostfreak escape? What failsafe was missing? Update the DNA isolation protocol now."</p></div>
+  <div class="nt"><h4>📈 Key Metrics</h4><p><strong style="color:var(--gl)">MTTD</strong> (Mean Time to Detect) — how long before the alert fired. <strong style="color:var(--gl)">MTTR</strong> (Mean Time to Respond/Repair) — how long to contain and eradicate. <strong style="color:var(--gl)">MTBF</strong> (Mean Time Between Failures) — system reliability metric. <strong style="color:var(--gl)">Recurrence rate</strong> — is the same attack type repeating? Improving trends = program is working.</p></div>
+  <div class="nt"><h4>🎓 Training &amp; Program Updates</h4><p>Post-incident training is mandatory per Domain 4.8. Update: IR playbooks with new attacker TTPs, security awareness modules (new phishing simulations), hardening baselines (patch exploited vuln everywhere), vendor questionnaires (if supply chain was involved), and risk register entries for newly identified risks. Ben gets recertified. Gwen updates threat intel feeds. Max revises mission briefing templates.</p></div>
+</div>
+
+<!-- 11. INTERACTIVE ADVENTURE -->
+<hr class="pdiv" id="adv">
+<div class="ps"><div class="sh"><h2>⬡ Interactive IR Adventure</h2><p>Walk a full IR scenario with Ben's team — 4 scenes + finale. Wrong answers won't advance you!</p></div>
+<div id="advwrap">
+  <div class="as2 active" id="as1"><h4>🚨 Scene 1 — Detection: The Omnitrix Glitch</h4><p>Gwen's SIEM fires: the Omnitrix is logging transformation attempts from a Null Void IP — somewhere Ben definitely isn't. Impossible travel detected: Bellwood at 9AM and two galactic coordinates simultaneously. What should the team do <strong>first?</strong></p><div class="ao"><button class="aob" onclick="adv(1,false,this)">A. Immediately wipe and reinstall the Omnitrix firmware</button><button class="aob" onclick="adv(1,true,this)">B. Preserve evidence, isolate Omnitrix remote access, and analyze the logs</button><button class="aob" onclick="adv(1,false,this)">C. Ignore it — probably a scanner false positive</button></div><div class="afb" id="af1"></div></div>
+  <div class="as2" id="as2"><h4>🔒 Scene 2 — Containment: Stopping the Spread</h4><p>Analysis confirms: Kevin 11 obtained valid Plumber credentials and is accessing Omnitrix remote diagnostics. He's already pivoted to two other ship systems. The malware hasn't yet reached the central DNA database. Correct containment action?</p><div class="ao"><button class="aob" onclick="adv(2,false,this)">A. Delete Kevin's account and patch all systems right now</button><button class="aob" onclick="adv(2,false,this)">B. Notify the press and begin full system recovery</button><button class="aob" onclick="adv(2,true,this)">C. Segment compromised systems, disable Kevin's credentials, preserve forensic images before any changes</button></div><div class="afb" id="af2"></div></div>
+  <div class="as2" id="as3"><h4>🧹 Scene 3 — Eradication: Purging the Threat</h4><p>Forensic analysis reveals: a rootkit in the Omnitrix firmware AND a logic bomb set to delete the alien DNA database at midnight. What is the correct eradication order?</p><div class="ao"><button class="aob" onclick="adv(3,false,this)">A. Restore from backup and skip forensics entirely</button><button class="aob" onclick="adv(3,true,this)">B. Defuse the logic bomb, remove rootkit via clean firmware flash, close initial access vector, verify with rescan</button><button class="aob" onclick="adv(3,false,this)">C. Defuse the logic bomb only, deal with the rootkit later</button></div><div class="afb" id="af3"></div></div>
+  <div class="as2" id="as4"><h4>🔄 Scene 4 — Lessons Learned</h4><p>Omnitrix is clean. Systems restored from verified clean backups. Ben is back online. Azmuth wants to ensure this never happens again. Which action BEST represents Lessons Learned?</p><div class="ao"><button class="aob" onclick="adv(4,false,this)">A. Declare victory — no documentation needed, it's handled</button><button class="aob" onclick="adv(4,false,this)">B. Only notify Vilgax's defense team since they caused it</button><button class="aob" onclick="adv(4,true,this)">C. Conduct post-incident review, update IR playbooks, patch exploited vuln everywhere, retrain the team</button></div><div class="afb" id="af4"></div></div>
+  <div class="afin" id="advfin">
+    <div style="font-size:1.6rem;font-weight:900;color:var(--g);margin-bottom:8px">⬡ Hero Time Complete!</div>
+    <p style="color:var(--mt);margin-bottom:14px">You guided Ben's team through the full IR lifecycle like a certified Security+ professional!</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:16px">
+      <span class="gt" style="background:rgba(57,255,20,.15);color:var(--g);border:1px solid rgba(57,255,20,.3);padding:4px 10px">✅ Preparation</span>
+      <span class="gt" style="background:rgba(57,255,20,.15);color:var(--g);border:1px solid rgba(57,255,20,.3);padding:4px 10px">✅ Detection &amp; Analysis</span>
+      <span class="gt" style="background:rgba(57,255,20,.15);color:var(--g);border:1px solid rgba(57,255,20,.3);padding:4px 10px">✅ Containment</span>
+      <span class="gt" style="background:rgba(57,255,20,.15);color:var(--g);border:1px solid rgba(57,255,20,.3);padding:4px 10px">✅ Eradication</span>
+      <span class="gt" style="background:rgba(57,255,20,.15);color:var(--g);border:1px solid rgba(57,255,20,.3);padding:4px 10px">✅ Recovery</span>
+      <span class="gt" style="background:rgba(57,255,20,.15);color:var(--g);border:1px solid rgba(57,255,20,.3);padding:4px 10px">✅ Lessons Learned</span>
+    </div>
+    <button onclick="cfetti();sfxV();" style="background:var(--g);color:#000;border:none;padding:9px 22px;border-radius:8px;font-size:.85rem;font-weight:800;cursor:pointer;font-family:inherit;">🎉 Celebrate!</button>
+  </div>
+</div></div>
+
+<!-- 12. STUDY LINKS -->
+<hr class="pdiv" id="links">
+<div class="ps"><div class="sh"><h2>🔗 Study Resources</h2><p>Curated links for your SY0-701 prep.</p></div>
+<div class="lg">
+  <div class="lc"><span class="li">📄</span><div><a href="ben10-notes.pdf" target="_blank">Ben 10 Study Notes PDF</a><p>Local PDF — activates after uploading to GitHub Pages.</p></div></div>
+  <div class="lc"><span class="li">📄</span><div><a href="ben10-flashcards.pdf" target="_blank">Ben 10 Flashcards PDF</a><p>Printable flashcard set — activates after GitHub upload.</p></div></div>
+  <div class="lc"><span class="li">📋</span><div><a href="https://www.comptia.org/certifications/security" target="_blank" rel="noopener">CompTIA Exam Objectives PDF</a><p>Official SY0-701 exam objectives direct from CompTIA.</p></div></div>
+  <div class="lc"><span class="li">📚</span><div><a href="https://amzn.to/4nVi25Y" target="_blank" rel="noopener">CompTIA Security+ Study Guide</a><p>Recommended Sybex study kit — Amazon affiliate link.</p></div></div>
+  <div class="lc"><span class="li">🎓</span><div><a href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-training-course/" target="_blank" rel="noopener">Professor Messer SY0-701</a><p>Free complete video course covering every SY0-701 objective.</p></div></div>
+  <div class="lc"><span class="li">📝</span><div><a href="https://quizlet.com/search?query=security%2B+sy0-701&type=sets" target="_blank" rel="noopener">Quizlet — SY0-701 Sets</a><p>Community flashcard sets for Security+ terms.</p></div></div>
+  <div class="lc"><span class="li">🏠</span><div><a href="security-notes.html">← Back to Study Hub</a><p>Return to the main Security+ cartoon study hub.</p></div></div>
+  <div class="lc"><span class="li">🌐</span><div><a href="https://charleneluequee.github.io/" target="_blank" rel="noopener">Charlene's Portfolio</a><p>Full cybersecurity learning portfolio and project showcase.</p></div></div>
+</div></div>
+
+<!-- 13. FLASHCARDS -->
+<hr class="pdiv" id="fc">
+<div class="ps"><div class="sh"><h2>🃏 Leitner Flashcard System</h2><p>Spaced repetition — cards advance through 5 boxes as you master them. Key: <strong style="color:var(--gl)">ltr_cartoon-ben10</strong></p></div>
+<div class="fcw">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;flex-wrap:wrap"><strong style="color:var(--g);font-size:1rem">⬡ Ben 10 — Full Security+ Deck</strong><span style="font-size:.73rem;color:var(--mt)">68 cards · All 5 domains</span></div>
+  <div class="flr"><div class="flb fl1">Box 1<span id="lb1">0</span></div><div class="flb fl2">Box 2<span id="lb2">0</span></div><div class="flb fl3">Box 3<span id="lb3">0</span></div><div class="flb fl4">Box 4<span id="lb4">0</span></div><div class="flb fl5">Box 5<span id="lb5">0</span></div></div>
+  <div class="fst"><div class="fs"><div class="fsn" id="fct">0</div><div class="fsl">Total</div></div><div class="fs"><div class="fsn" id="fcl" style="color:var(--l2)">0</div><div class="fsl">Learning</div></div><div class="fs"><div class="fsn" id="fcr" style="color:var(--l4)">0</div><div class="fsl">Reviewing</div></div><div class="fs"><div class="fsn" id="fcm" style="color:var(--g)">0</div><div class="fsl">Mastered</div></div></div>
+  <div class="ftb"><button class="fa" id="bdp" onclick="fcmode('due')">📅 Due</button><button id="bal" onclick="fcmode('all')">📚 All</button><button onclick="fcrs()">🔄 Restart</button><button onclick="fcrst()" style="color:var(--l1)">⚠️ Reset All</button></div>
+  <div class="fctr" id="fcctr">Loading...</div>
+  <div class="fpb"><div class="fpf" id="fcpf" style="width:0%"></div></div>
+  <div id="fcmain">
+    <div class="fcard" id="fcard" onclick="fcfl()"><div class="fcin"><div class="ff"><span class="fbi" id="fcbi"></span><p id="fcq"></p><span class="fhi">Click to flip · Space/F</span></div><div class="fb"><p id="fca"></p><span class="fhi">Rate your answer</span></div></div></div>
+    <div id="fcemp" style="display:none;text-align:center;padding:28px;color:var(--mt)">⬡ All caught up! Return tomorrow for due cards.</div>
+    <div class="fbr"><button class="ffb" id="fcfb" onclick="fcfl()">🔄 Flip Card</button></div>
+    <div class="fbr" id="fcab" style="display:none"><button class="fba fag" onclick="fcgr('again')">✗ Again (1)</button><button class="fba fgo" onclick="fcgr('good')">✓ Got It (2)</button><button class="fba fea" onclick="fcgr('easy')">⚡ Easy (3)</button><button class="fba fsk" onclick="fcsk()">→ Skip (S)</button></div>
+  </div>
+  <div id="fcdone" style="display:none"><div class="fdn"><h3 style="color:var(--txt);margin-bottom:8px">⬡ Session Complete!</h3><div class="fsc" id="fcsc">0%</div><p style="color:var(--mt);font-size:.84rem;margin-bottom:14px" id="fcsd"></p><div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap"><button class="ffb" onclick="fcrs()">🔄 Study Again</button><button style="padding:5px 13px;border-radius:8px;border:1.5px solid var(--bd);cursor:pointer;font-size:.77rem;font-weight:700;background:var(--sf);color:var(--txt);font-family:inherit;" onclick="fcmode('all')">📚 All Cards</button></div></div></div>
+  <div class="fky">⌨️ Space/F = flip · 1 = Again · 2 = Got It · 3 = Easy · S = Skip</div>
+</div></div>
+
+<!-- 14. QUIZ -->
+<hr class="pdiv" id="quiz">
+<div class="ps"><div class="sh"><h2>🧠 10-Question Quiz</h2><p>One question per domain area. Personalized missed-topic feedback. 100% triggers confetti + sound!</p></div>
+<div class="qzw">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;margin-bottom:16px"><strong style="color:var(--g);font-size:1rem">⬡ Ben 10 Security+ Quiz</strong><div id="qzpg" style="font-size:.74rem;color:var(--mt);font-weight:700"></div></div>
+  <div id="qzbd"></div>
+  <div id="qznv" style="display:flex;gap:7px;flex-wrap:wrap;margin-top:12px">
+    <button id="qzck" onclick="qzcheck()" style="background:var(--g);color:#000;padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-size:.8rem;font-weight:800;display:none;font-family:inherit;">Check Answer</button>
+    <button id="qznx" onclick="qznxt()" style="background:var(--sf2);color:#fff;padding:7px 16px;border-radius:8px;border:none;cursor:pointer;font-size:.8rem;font-weight:700;display:none;font-family:inherit;">Next →</button>
+  </div>
+  <div id="qzrs" style="display:none;text-align:center;padding:22px 0">
+    <div id="qzsc" style="font-size:3rem;font-weight:900;color:var(--g);letter-spacing:2px"></div>
+    <p id="qzdt" style="color:var(--mt);margin:6px 0 8px;font-size:.84rem"></p>
+    <div id="qzms" style="text-align:left;margin-bottom:14px"></div>
+    <button onclick="qzreset()" style="background:var(--g);color:#000;border:none;padding:8px 20px;border-radius:8px;font-size:.84rem;font-weight:800;cursor:pointer;font-family:inherit;">🔄 Retake Quiz</button>
+  </div>
+</div></div>
+
+<!-- FOOTER -->
+<footer style="position:relative;z-index:1;background:#050905;padding:28px 18px;text-align:center;color:rgba(255,255,255,.3);font-size:.72rem;margin-top:60px;border-top:2px solid var(--gd);">
+  <div style="margin-bottom:10px;font-size:1.1rem;font-weight:900;letter-spacing:3px;color:rgba(57,255,20,.4)">⬡ BEN 10 SECURITY+ STUDY HUB ⬡</div>
+  <p>🛡️ <a href="security-notes.html" style="color:var(--g)">Security+ Study Hub</a> &nbsp;·&nbsp; <a href="https://charleneluequee.github.io/" style="color:var(--g)" target="_blank" rel="noopener">Charlene's Portfolio</a></p>
+  <p style="margin-top:6px;font-size:.67rem">Ben 10 characters are property of Cartoon Network / Man of Action Studios — used for educational analogy purposes only. No affiliation with CompTIA.</p>
+  <div style="margin-top:12px;display:inline-block;background:rgba(57,255,20,.04);border:1px solid rgba(57,255,20,.1);border-radius:8px;padding:6px 20px;font-size:.66rem">&copy; 2025 Charlene LueQuee · All Rights Reserved</div>
+</footer>
+
+<button id="sctop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button id="stog" onclick="stoggle()">🔇 Sound Off</button>
+
+<script>
+/* SOUND — off by default */
+var SND=false,_AC=null;
+function _ctx(){if(!_AC){try{_AC=new(window.AudioContext||window.webkitAudioContext)();}catch(e){}}return _AC;}
+function _b(f,d,t,v){var a=_ctx();if(!a||!SND)return;try{var o=a.createOscillator(),g=a.createGain();o.connect(g);g.connect(a.destination);o.type=t||'sine';o.frequency.value=f;g.gain.setValueAtTime(v||.14,a.currentTime);g.gain.exponentialRampToValueAtTime(.001,a.currentTime+d);o.start();o.stop(a.currentTime+d);}catch(e){}}
+function sfxFl(){_b(520,.09,'square',.1);setTimeout(function(){_b(700,.07,'square',.07);},55);}
+function sfxOk(){_b(523,.08,'sine',.12);setTimeout(function(){_b(659,.08,'sine',.1);},90);setTimeout(function(){_b(784,.18,'sine',.08);},180);}
+function sfxBd(){_b(200,.15,'sawtooth',.1);setTimeout(function(){_b(155,.2,'sawtooth',.07);},100);}
+function sfxV(){_b(523,.1,'sine',.12);setTimeout(function(){_b(659,.1,'sine',.1);},120);setTimeout(function(){_b(784,.1,'sine',.09);},240);setTimeout(function(){_b(1047,.3,'sine',.11);},360);}
+function stoggle(){SND=!SND;var b=document.getElementById('stog');b.textContent=SND?'🔊 Sound On':'🔇 Sound Off';if(SND)sfxOk();}
+
+/* PARTICLES */
+(function(){var p=document.getElementById('ptcl'),e=['⬡','◈','⚡','🔥','⬡'];for(var i=0;i<18;i++){var d=document.createElement('div');d.className='pt';d.textContent=e[i%e.length];d.style.cssText='left:'+Math.random()*100+'%;font-size:'+(0.9+Math.random()*0.8)+'rem;animation-duration:'+(14+Math.random()*18)+'s;animation-delay:-'+(Math.random()*18)+'s';p.appendChild(d);}})();
+
+/* NAV */
+function ndrop(b){var m=b.nextElementSibling;m.style.display=m.style.display==='block'?'none':'block';}
+document.addEventListener('click',function(e){if(!e.target.closest('.cnd'))document.querySelectorAll('.cnm').forEach(function(m){m.style.display='none';});});
+
+/* SMOOTH SCROLL */
+document.addEventListener('DOMContentLoaded',function(){document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){var id=a.getAttribute('href').slice(1),el=document.getElementById(id);if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}});});});
+
+/* ACCORDIONS */
+function tacc(id){document.getElementById(id).classList.toggle('open');}
+var _mo=null;
+function macc(id){if(_mo&&_mo!==id){var p=document.getElementById(_mo);if(p)p.classList.remove('open');}var el=document.getElementById(id);el.classList.toggle('open');_mo=el.classList.contains('open')?id:null;}
+
+/* MINI QUIZ */
+function mqans(id,btn,ok){var w=document.getElementById(id);w.querySelectorAll('.mo').forEach(function(b){b.disabled=true;});btn.classList.add(ok?'mc':'mw2');w.querySelector('.me').style.display='block';ok?sfxOk():sfxBd();}
+
+/* ADVENTURE */
+var _AMS=['✅ Correct! Preserve and analyze first — Detection & Analysis best practice (Domain 4.8).',
+  '✅ Right! Segment + preserve forensics BEFORE making changes. Containment done properly.',
+  '✅ Perfect — address both threats, close the initial access vector, then validate with a rescan.',
+  '✅ That\'s Lessons Learned done right — the IR cycle feeds back into Preparation.'];
+function adv(sc,ok,btn){
+  var fb=document.getElementById('af'+sc),opts=btn.parentElement.querySelectorAll('.aob');
+  if(ok){
+    opts.forEach(function(o){o.disabled=true;});
+    btn.style.borderColor='var(--g)';btn.style.color='var(--g)';
+    fb.style.cssText='display:block;background:rgba(57,255,20,.08);border-color:rgba(57,255,20,.3);color:var(--gl);padding:8px 11px;border-radius:8px;';
+    fb.textContent=_AMS[sc-1];sfxOk();
+    setTimeout(function(){
+      document.getElementById('as'+sc).classList.remove('active');
+      if(sc<4){var n=document.getElementById('as'+(sc+1));n.style.display='block';n.classList.add('active');}
+      else{var fin=document.getElementById('advfin');fin.style.display='block';cfetti();}
+    },1400);
+  } else {
+    btn.style.borderColor='#FF4466';btn.style.color='#FF4466';
+    fb.style.cssText='display:block;background:rgba(255,68,102,.08);border-color:rgba(255,68,102,.3);color:#FF7070;padding:8px 11px;border-radius:8px;';
+    fb.textContent='❌ Try the other option!';sfxBd();
+    setTimeout(function(){btn.style.borderColor='';btn.style.color='';fb.style.display='none';},2200);
+  }
+}
+
+/* CONFETTI */
+function cfetti(){var cols=['#39FF14','#FF4500','#00E5FF','#FF8C00','#9370DB','#DC143C','#ADFF2F','#00CED1'];for(var i=0;i<80;i++){var p=document.createElement('div');p.className='cfp';p.style.cssText='left:'+Math.random()*100+'vw;background:'+cols[~~(Math.random()*cols.length)]+';width:'+(6+Math.random()*8)+'px;height:'+(6+Math.random()*8)+'px;animation-duration:'+(1.5+Math.random()*2)+'s;animation-delay:'+(Math.random()*1.5)+'s;border-radius:'+(Math.random()>.5?'50%':'2px');document.body.appendChild(p);setTimeout(function(e){e.remove();},4000,p);}}
+
+/* SCROLL TOP */
+window.addEventListener('scroll',function(){var b=document.getElementById('sctop');if(b)b.style.display=window.scrollY>400?'flex':'none';});
+
+/* ════════════════════════════
+   FLASHCARDS — ltr_cartoon-ben10
+════════════════════════════ */
+var FK='ltr_cartoon-ben10',FS=FK+'_s',FI=[0,1,2,4,8,999];
+var FST={},FD=[],FP=0,FF=false,FA=false,FOK=0,FTT=0,FSN=1;
+var FC=[
+  {d:1,q:'What does the CIA Triad stand for?',a:'Confidentiality (only authorized access), Integrity (data not tampered), Availability (systems accessible when needed). The foundational security model for all of Security+.'},
+  {d:1,q:'What is non-repudiation?',a:'Proof that an action occurred and cannot be denied by the actor. The Omnitrix logs every transformation — Azmuth can prove Ben used it at any time and Ben cannot deny it.'},
+  {d:1,q:'Name the four categories of security controls.',a:'Technical (firewalls, encryption), Managerial (policies, risk assessments), Operational (training, guards), Physical (bollards, badge access, fencing, lighting).'},
+  {d:1,q:'What is a Compensating control?',a:'A control used when the primary control cannot be implemented. Example: the Rustbucket can\'t run a full NGFW, so Ben uses network monitoring as compensation for the missing control.'},
+  {d:1,q:'Name the two planes in Zero Trust and their components.',a:'Control Plane: Policy Engine (decides access) + Policy Administrator (instructs enforcement). Data Plane: Policy Enforcement Point (enforces access), implicit trust zones, subject/system.'},
+  {d:1,q:'What is a honeypot?',a:'A decoy system designed to attract attackers — used to study TTPs, detect intrusions, and gather threat intelligence without risk to real systems. Plumbers use fake alien databases as bait for Vilgax.'},
+  {d:1,q:'Symmetric vs Asymmetric encryption — key difference?',a:'Symmetric (AES): one shared key, fast, bulk data. Asymmetric (RSA/ECC): public/private key pair, slower, used for key exchange and digital signatures. They are often used together.'},
+  {d:1,q:'What does salting do in password hashing?',a:'Adds a unique random value to each password before hashing — prevents rainbow table attacks and ensures identical passwords produce different stored hashes even if the hash algorithm is the same.'},
+  {d:1,q:'CRL vs OCSP — what do they do and how do they differ?',a:'Both verify certificate revocation. CRL (Certificate Revocation List): downloadable list, can be stale. OCSP (Online Certificate Status Protocol): real-time status check per-certificate. OCSP is faster and more current.'},
+  {d:1,q:'What is the difference between a Deterrent and a Preventive control?',a:'Preventive: actually stops the attack (firewall blocks traffic). Deterrent: discourages attackers from trying (warning signs, security cameras). Both are proactive — only Preventive stops the attack itself.'},
+  {d:1,q:'What is tokenization?',a:'Replacing sensitive data with a random non-sensitive token. The original data is stored securely elsewhere and can be retrieved by authorized parties. Different from masking — tokenization is reversible.'},
+  {d:1,q:'What is steganography?',a:'Hiding secret data within ordinary files (images, audio, video) without a visible change. The data is concealed, not encrypted — it\'s a form of obfuscation, not confidentiality encryption.'},
+  {d:1,q:'What is key escrow?',a:'A system where cryptographic keys are stored by a trusted third party — enabling recovery if the key holder loses access or for lawful government interception. Used in enterprise PKI environments.'},
+  {d:1,q:'What is a backout plan in change management?',a:'A documented procedure to reverse a change if something goes wrong. Before Azmuth updates Omnitrix firmware, the previous version is preserved for rollback — that is the backout plan.'},
+  {d:2,q:'Name the six threat actor types from Domain 2.1.',a:'Nation-state (Vilgax — APT), Unskilled attacker (script kiddie), Hacktivist (ideological motive), Insider Threat (Kevin 11 — rogue trusted access), Organized Crime (financial), Shadow IT (unauthorized tech).'},
+  {d:2,q:'What is pretexting?',a:'Fabricating a convincing scenario to manipulate a target into providing access or information. An attacker calls Plumber HQ posing as an Omnitrix maintenance technician to extract access codes.'},
+  {d:2,q:'Phishing vs Smishing vs Vishing — what\'s the difference?',a:'Phishing: deceptive email. Smishing: deceptive SMS text. Vishing: deceptive voice call. All three use social engineering to steal credentials or deliver malware — only the delivery channel differs.'},
+  {d:2,q:'What is a watering hole attack?',a:'Compromising a website that the target group regularly visits, then infecting all visitors. If Vilgax knew all Plumbers visited "plumbertech.net," he would compromise that site to infect the entire organization.'},
+  {d:2,q:'What is typosquatting?',a:'Registering misspelled domains of legitimate sites (e.g., "plummerbase.com" vs "plumberbase.com") to intercept users who mistype URLs. A classic phishing infrastructure technique.'},
+  {d:2,q:'What is Business Email Compromise (BEC)?',a:'Attacker impersonates a trusted executive or vendor via email to authorize fraudulent wire transfers or data disclosure. Often uses a spoofed or compromised email account — DMARC/DKIM/SPF are the mitigations.'},
+  {d:2,q:'What type of malware is Ghostfreak and why?',a:'Rootkit — embeds at or below OS kernel level, invisible to standard AV, maintains persistent stealthy control. Ghostfreak hiding inside Omnitrix DNA = kernel-level persistence that survives reboots and hides itself.'},
+  {d:2,q:'What is the difference between a worm and a virus?',a:'Virus: requires user action (click/open file) to spread. Worm (Ripjaws): self-replicating and self-propagating — spreads automatically across networks with zero user interaction needed.'},
+  {d:2,q:'What is a logic bomb?',a:'Malicious code that remains dormant until a specific trigger condition is met (a date, a system event, a user action). Dangerous because it can sit undetected indefinitely before triggering.'},
+  {d:2,q:'What is fileless malware and why is it hard to detect?',a:'Malware that operates entirely in RAM, leaving no files on disk. Evades disk-based AV and most forensic tools. Detected via memory analysis or behavioral monitoring, not traditional signature scans.'},
+  {d:2,q:'What is a zero-day vulnerability?',a:'A vulnerability unknown to the vendor with no available patch — zero days of protection. Vilgax discovering an undocumented Omnitrix flaw = zero-day. Exploited before the vendor even knows it exists.'},
+  {d:2,q:'What is a TOCTOU race condition?',a:'Time-of-Check to Time-of-Use: attacker modifies a resource AFTER it has been verified as safe but BEFORE it is actually used. The security check passed on clean data, but the attacker swapped it in between.'},
+  {d:2,q:'Name five Indicators of Compromise (IoC).',a:'1) Impossible travel (Bellwood then Tokyo in 4 min), 2) Account lockout (brute force), 3) Concurrent sessions (same account, two locations), 4) Out-of-cycle logging (3AM activity), 5) Missing logs (attacker covered tracks).'},
+  {d:2,q:'What is an on-path (MitM) attack?',a:'Attacker secretly intercepts and relays communications between two parties — can read AND modify traffic in transit. SY0-701 uses the term "on-path attack" instead of "man-in-the-middle."'},
+  {d:3,q:'What is the core principle of Zero Trust?',a:'"Never trust, always verify." Every access request is authenticated and authorized regardless of network location. Identity + device posture + context replace the traditional trusted network perimeter.'},
+  {d:3,q:'IaaS vs PaaS vs SaaS — what does each mean?',a:'IaaS: rent infrastructure (you manage OS up). PaaS: rent platform/runtime (you manage apps and data). SaaS: fully managed software (vendor manages everything). Shared responsibility shifts with each model.'},
+  {d:3,q:'What is an air-gapped system?',a:'A system physically isolated from all external networks — no internet connection, no wireless, no external connections of any kind. The most secure form of network segmentation. Plumber HQ\'s classified DNA database = air-gapped.'},
+  {d:3,q:'Fail-open vs fail-closed — which is more secure? Which is more available?',a:'Fail-closed: denies all traffic on device failure — MORE SECURE, less available. Fail-open: allows all traffic on failure — LESS SECURE, more available. Exam tip: "most secure" = fail-closed.'},
+  {d:3,q:'What is SASE?',a:'Secure Access Service Edge: cloud-delivered architecture that converges SD-WAN networking with security services (CASB, FWaaS, ZTNA). Delivers networking and security together from the cloud edge.'},
+  {d:3,q:'Name the three states of data and a protection method for each.',a:'Data at rest (stored on disk): AES-256 encryption. Data in transit (moving across networks): TLS or IPSec. Data in use (actively being processed): secure enclaves or memory encryption. All three are tested on the exam.'},
+  {d:3,q:'Tokenization vs Masking — how do they differ?',a:'Tokenization: replaces sensitive data with a random token; original stored securely elsewhere — reversible. Masking: obscures data display (e.g., only last 4 digits of SSN shown) — not always reversible.'},
+  {d:3,q:'Define RTO and RPO.',a:'RTO (Recovery Time Objective): maximum tolerated downtime — "how long can we be down?" RPO (Recovery Point Objective): maximum tolerated data loss — "how much data can we lose?" Both defined in the BCP.'},
+  {d:3,q:'What is the difference between hot, warm, and cold DR sites?',a:'Hot: fully operational, real-time data replication, immediate failover. Warm: hardware ready, partial replication, hours to recover. Cold: empty facility, no hardware pre-deployed, days to recover. Cost mirrors readiness.'},
+  {d:4,q:'State the five steps of vulnerability management.',a:'1) Identify (scan/OSINT/pen test/bug bounty), 2) Analyze (CVSS/CVE, false pos/neg, prioritize), 3) Remediate (patch/segment/compensating control), 4) Validate (rescan/audit), 5) Report.'},
+  {d:4,q:'CVE vs CVSS — what is each?',a:'CVE (Common Vulnerabilities and Exposures): standardized identifier for known vulnerabilities (format: CVE-YEAR-NUMBER). CVSS (Common Vulnerability Scoring System): severity score 0.0–10.0. CVE identifies; CVSS scores severity.'},
+  {d:4,q:'False positive vs false negative in scanning — which is more dangerous?',a:'False positive: clean system flagged as vulnerable — wastes time, causes alert fatigue. False negative: real vulnerability MISSED — more dangerous! Attacker exploits what the scanner failed to find.'},
+  {d:4,q:'What is SIEM?',a:'Security Information and Event Management: aggregates and correlates logs from firewalls, endpoints, IDS/IPS, applications, and network devices. Surfaces IoC in real time across all sources. Eye Guy = SIEM.'},
+  {d:4,q:'EDR vs XDR — how do they differ?',a:'EDR (Endpoint Detection and Response): monitors individual endpoints. XDR (Extended Detection and Response): extends EDR across endpoints, networks, cloud, and email for unified cross-domain visibility and response.'},
+  {d:4,q:'MAC vs DAC vs RBAC vs ABAC — key differences?',a:'MAC: mandatory system-enforced labels (military-style). DAC: owner sets permissions discretionarily. RBAC: access determined by job role. ABAC: most granular — based on multiple attributes (user + resource + environment + time).'},
+  {d:4,q:'Name all four MFA authentication factors.',a:'Something you know (password/PIN), something you have (hardware token/phone), something you are (biometrics — fingerprint/retina), somewhere you are (geolocation/IP). Multi-factor = two or more DIFFERENT factor types.'},
+  {d:4,q:'What is JIT access and how does the Omnitrix model it?',a:'Just-in-Time: grant elevated privileges only when needed, auto-revoke after minimum required time. The Omnitrix 10-minute timer = JIT PAM. Access expires automatically — minimizing the privilege exposure window.'},
+  {d:4,q:'What are ephemeral credentials?',a:'Short-lived, auto-expiring credentials generated for a specific session then destroyed. Even if stolen, they expire before an attacker can reuse them — minimizing the risk window dramatically.'},
+  {d:4,q:'What do DMARC, DKIM, and SPF protect against?',a:'SPF: lists authorized sending servers for a domain. DKIM: digitally signs emails to verify integrity in transit. DMARC: ties SPF+DKIM together and specifies what to do with failures. Together they stop BEC and spoofing.'},
+  {d:4,q:'State the incident response phases in order.',a:'Preparation → Detection → Analysis → Containment → Eradication → Recovery → Lessons Learned. Containment preserves forensic evidence. Eradication removes the threat. Recovery restores operations.'},
+  {d:4,q:'What is chain of custody in digital forensics?',a:'Documented, unbroken record of who collected, handled, transferred, and analyzed evidence — when, where, and how. Ensures evidence integrity and legal admissibility in court proceedings.'},
+  {d:4,q:'What is a legal hold?',a:'Directive to preserve all potentially relevant data when litigation is anticipated — overrides normal retention/deletion schedules. Issued by legal counsel. Violating a legal hold can constitute obstruction of justice.'},
+  {d:4,q:'What is SOAR?',a:'Security Orchestration, Automation, and Response: automates repetitive security tasks, integrates disparate tools, and executes response playbooks automatically. Frees analysts for complex decisions.'},
+  {d:5,q:'What is an Acceptable Use Policy (AUP)?',a:'Defines acceptable and prohibited use of organizational systems and resources. Ben\'s AUP: "Omnitrix may only be used for defensive purposes." All users must acknowledge the AUP before access is granted.'},
+  {d:5,q:'Policy vs Procedure — key difference?',a:'Policy: high-level directive stating WHAT must happen ("Omnitrix must never be misused"). Procedure: step-by-step instructions for HOW to do it. Policies set rules; procedures implement them operationally.'},
+  {d:5,q:'Name the four data governance roles from Domain 5.1.',a:'Owner: accountable for classification and access decisions (Azmuth). Controller: determines processing purposes. Processor: handles data operationally on behalf of Owner (Gwen). Custodian/Steward: maintains and protects it (Max).'},
+  {d:5,q:'Define SLE, ARO, and ALE with the formula.',a:'SLE (Single Loss Expectancy) = cost of one incident. ARO (Annualized Rate of Occurrence) = frequency per year. ALE = SLE × ARO = expected annual loss. Example: $100K SLE × 3 ARO = $300K ALE.'},
+  {d:5,q:'What are the four risk response strategies?',a:'Transfer (insurance — shift financial risk to insurer), Accept (acknowledge and tolerate — residual risk), Avoid (eliminate the risky activity), Mitigate (implement controls to reduce likelihood or impact).'},
+  {d:5,q:'Risk appetite vs risk tolerance — how do they differ?',a:'Risk appetite: general level of risk the org is willing to accept (strategic level). Risk tolerance: acceptable variance from that appetite (operational level). Risk threshold: the line at which action MUST be taken.'},
+  {d:5,q:'What is a right-to-audit clause?',a:'A contract provision giving an organization the right to audit its vendor\'s security practices at any time. Azmuth demands the right to inspect any Plumber supplier\'s lab before they build Omnitrix components.'},
+  {d:5,q:'SLA vs MOA vs MOU vs NDA — what are they?',a:'SLA: defines service levels and guarantees. MOA: memorandum of agreement — legally binding. MOU: memorandum of understanding — expresses intent, not legally binding. NDA: non-disclosure, protects confidential information.'},
+  {d:5,q:'What does GDPR require after a personal data breach?',a:'Notify the supervisory authority within 72 hours of becoming aware. Notify affected individuals "without undue delay" if there is high risk to their rights. Applies to any organization processing EU citizen data.'},
+  {d:5,q:'What is Business Impact Analysis (BIA)?',a:'Identifies critical business functions, quantifies the impact of disruption, and establishes RTO and RPO targets. Answers: "If Plumber HQ goes down, what breaks first, what is the cost, how fast must we restore?"'},
+  {d:5,q:'Known vs partially known vs unknown pen test environments?',a:'Known (white-box): tester has full information — most thorough. Partially known (grey-box): some information, like a real employee. Unknown (black-box): no information — simulates an external attacker. Cost increases with less information.'},
+  {d:5,q:'What must security awareness training cover per Domain 5.6?',a:'Phishing recognition (plus simulated campaigns), password management, removable media dangers, social engineering tactics, insider threat indicators, OPSEC, and hybrid/remote work security. Must be recurring, not a one-time event.'}
+];
+
+function _fl(){try{var s=localStorage.getItem(FK);if(s)return JSON.parse(s);}catch(e){}var st={};FC.forEach(function(_,i){st[i]={box:1};});return st;}
+function _fs(){localStorage.setItem(FK,JSON.stringify(FST));}
+function _fd(){var d=[];Object.keys(FST).forEach(function(i){var b=FST[i].box;if(b===5)return;if(b===1||FSN%FI[b]===0)d.push(+i);});for(var i=d.length-1;i>0;i--){var j=~~(Math.random()*(i+1)),t=d[i];d[i]=d[j];d[j]=t;}return d;}
+var _BC=['','#FF4466','#FF8C00','#39FF14','#9370DB','#00CED1'],_BB=['','rgba(255,68,102,.15)','rgba(255,140,0,.15)','rgba(57,255,20,.12)','rgba(147,112,219,.15)','rgba(0,206,209,.15)'];
+function _fr(){
+  if(FP>=FD.length){_fdn();return;}
+  var i=FD[FP],b=FST[i].box,c=FC[i];
+  document.getElementById('fcq').textContent=c.q;document.getElementById('fca').textContent=c.a;
+  var bi=document.getElementById('fcbi');bi.textContent='Box '+b;bi.style.cssText='background:'+_BB[b]+';color:'+_BC[b]+';border:1px solid '+_BC[b]+'66;';
+  var card=document.getElementById('fcard');if(card.classList.contains('flip'))card.classList.remove('flip');
+  FF=false;document.getElementById('fcab').style.display='none';document.getElementById('fcfb').style.display='inline-block';
+  document.getElementById('fcctr').textContent='Card '+(FP+1)+' of '+FD.length;
+  document.getElementById('fcpf').style.width=(FP/FD.length*100)+'%';
+  document.getElementById('fcemp').style.display='none';document.getElementById('fcard').style.display='block';
+  _fst();
+}
+function fcfl(){if(!FF){document.getElementById('fcard').classList.add('flip');FF=true;document.getElementById('fcab').style.display='flex';document.getElementById('fcfb').style.display='none';sfxFl();}}
+function fcgr(g){var i=FD[FP];FTT++;if(g!=='again')FOK++;if(g==='again')FST[i].box=1;else if(g==='good')FST[i].box=Math.min(FST[i].box+1,5);else FST[i].box=Math.min(FST[i].box+2,5);_fs();FP++;_fr();g==='again'?sfxBd():sfxOk();}
+function fcsk(){FP++;_fr();}
+function fcmode(m){FA=m==='all';document.getElementById('bdp').classList.toggle('fa',!FA);document.getElementById('bal').classList.toggle('fa',FA);fcrs();}
+function fcrs(){FOK=0;FTT=0;FP=0;document.getElementById('fcdone').style.display='none';document.getElementById('fcmain').style.display='block';if(FA){FD=[...Array(FC.length).keys()];for(var i=FD.length-1;i>0;i--){var j=~~(Math.random()*(i+1)),t=FD[i];FD[i]=FD[j];FD[j]=t;}}else FD=_fd();if(FD.length===0){document.getElementById('fcctr').textContent='⬡ All caught up! Return tomorrow.';document.getElementById('fcard').style.display='none';document.getElementById('fcfb').style.display='none';document.getElementById('fcemp').style.display='block';}else _fr();}
+function fcrst(){if(!confirm('Reset ALL flashcard progress? This cannot be undone.'))return;localStorage.removeItem(FK);localStorage.removeItem(FS);FSN=1;FST=_fl();FA=false;document.getElementById('bdp').classList.add('fa');document.getElementById('bal').classList.remove('fa');fcrs();}
+function _fdn(){document.getElementById('fcmain').style.display='none';document.getElementById('fcdone').style.display='block';var p=FTT>0?Math.round(FOK/FTT*100):0;document.getElementById('fcsc').textContent=p+'%';document.getElementById('fcsd').textContent=FOK+' correct of '+FTT+' rated';if(p===100&&FTT>=5)cfetti();_fst();}
+function _fst(){var c=[0,0,0,0,0,0];Object.values(FST).forEach(function(s){c[s.box]++;});document.getElementById('fct').textContent=FC.length;document.getElementById('fcl').textContent=c[1]+c[2];document.getElementById('fcr').textContent=c[3]+c[4];document.getElementById('fcm').textContent=c[5];for(var b=1;b<=5;b++){var e=document.getElementById('lb'+b);if(e)e.textContent=c[b];}}
+document.addEventListener('keydown',function(e){var m=document.getElementById('fcmain');if(!m||m.style.display==='none')return;if(e.target.matches('input,textarea,button,select'))return;if(e.key===' '||e.key==='f'){e.preventDefault();fcfl();}if(e.key==='1')fcgr('again');if(e.key==='2')fcgr('good');if(e.key==='3')fcgr('easy');if(e.key==='s')fcsk();});
+FST=_fl();FSN=parseInt(localStorage.getItem(FS)||'0')+1;localStorage.setItem(FS,FSN);FD=_fd();if(FD.length===0)FD=[...Array(FC.length).keys()];_fr();_fst();
+
+/* ════════════════════════════
+   QUIZ — answers distributed: C,D,A,B,C,A,D,B,C,A
+   Correct positions: 2,3,0,1,2,0,3,1,2,0 — all four used
+════════════════════════════ */
+var QZ=[
+  {q:'Ghostfreak hides inside the Omnitrix\'s DNA at kernel level, invisible to standard scans, waiting to take control. What malware type does this model?',
+   ch:['Worm','Logic bomb','Rootkit','Trojan'],ans:2,
+   ex:'Rootkit: embeds at/below OS kernel, hides from AV, maintains persistent stealthy control. Hardest malware to remove — often requires full system reimaging.',tp:'Domain 2 — Malware: Rootkits'},
+  {q:'The Omnitrix auto-revokes alien powers after 10 minutes and requires re-authentication for each use. Which PAM concept does this model?',
+   ch:['Mandatory Access Control','Time-of-day restriction','Discretionary Access Control','Just-in-Time (JIT) permissions'],ans:3,
+   ex:'JIT permissions: grant elevated access for minimum time needed, then auto-revoke. Minimizes the privilege exposure window — the Omnitrix timer IS JIT PAM.',tp:'Domain 4 — PAM: JIT Permissions'},
+  {q:'Vilgax uses unlimited galactic resources, advanced technology, and a decade-long strategic plan targeting the Omnitrix specifically. Which threat actor type is this?',
+   ch:['Nation-state / APT','Hacktivist','Organized crime','Unskilled attacker'],ans:0,
+   ex:'Nation-state / APT: sophisticated, well-funded, highly targeted, long-term patient adversary. Every Vilgax attribute matches the APT definition.',tp:'Domain 2 — Threat Actors: Nation-State / APT'},
+  {q:'Azmuth classifies alien DNA data as "Restricted" and determines who may access it. What data governance role is Azmuth performing?',
+   ch:['Data Processor','Data Owner','Data Custodian','Data Controller'],ans:1,
+   ex:'Data Owner: accountable for data classification and access decisions. Custodian implements controls; Processor handles data operationally; Controller (GDPR) determines processing purposes.',tp:'Domain 5 — Data Governance: Owner Role'},
+  {q:'An attacker registers "plummerbase.com" (extra m) to intercept Plumber agents who mistype the real URL. This is:',
+   ch:['Watering hole','Brand impersonation','Typosquatting','DNS poisoning'],ans:2,
+   ex:'Typosquatting: registering misspelled versions of legitimate domains to intercept users who make common typing errors.',tp:'Domain 2 — Attack Vectors: Typosquatting'},
+  {q:'Plumber HQ\'s firewall fails during a power outage and begins ALLOWING all traffic through. What failure mode is this?',
+   ch:['Fail-open','Fail-closed','Fail-safe','Fail-secure'],ans:0,
+   ex:'Fail-open: allows all traffic when the device fails — prioritizes availability. Fail-closed/fail-secure would DENY all traffic on failure — safer but causes downtime.',tp:'Domain 3 — Architecture: Fail-open vs Fail-closed'},
+  {q:'A Plumber agent logs in from Bellwood at 9:00 AM, then the same account shows a successful login from Tokyo at 9:04 AM. Which IoC is this?',
+   ch:['Out-of-cycle logging','Resource consumption','Account lockout','Impossible travel'],ans:3,
+   ex:'Impossible travel: geographically impossible login timing is a strong indicator of compromised credentials or active account takeover.',tp:'Domain 4 — Detection: Indicators of Compromise'},
+  {q:'The Plumber supplier has SLE = $200,000 and suffers breaches 3 times per year (ARO = 3). What is the ALE?',
+   ch:['$200,000','$600,000','$66,667','$400,000'],ans:1,
+   ex:'ALE = SLE × ARO = $200,000 × 3 = $600,000. This annual expected loss figure justifies how much to spend on controls for this specific vendor risk.',tp:'Domain 5 — Risk: SLE/ALE/ARO Calculation'},
+  {q:'Plumber HQ suffers a breach exposing EU citizen personal data. Under GDPR, within how many hours must they notify the supervisory authority?',
+   ch:['24 hours','48 hours','72 hours','7 days'],ans:2,
+   ex:'GDPR Article 33: notify supervisory authority within 72 hours of becoming aware of a breach. HIPAA\'s window is 60 days for large breaches — these are commonly confused on the exam.',tp:'Domain 5 — Compliance: GDPR Breach Notification'},
+  {q:'Which tool aggregates and correlates logs from firewalls, endpoints, and IDS/IPS to surface Indicators of Compromise in real time?',
+   ch:['SIEM','DLP','EDR','SOAR'],ans:0,
+   ex:'SIEM aggregates multi-source logs and correlates events to surface IoC. DLP = prevents exfiltration. EDR = endpoint only. SOAR = automates responses. SIEM is the "command center" — Eye Guy seeing everything.',tp:'Domain 4 — Monitoring: SIEM'}
+];
+var QC=0,QS=0,QA=false,QW=[];
+function qzrnd(){
+  var q=QZ[QC];
+  document.getElementById('qzpg').textContent='Question '+(QC+1)+' of '+QZ.length;
+  var h='<p style="font-size:.87rem;font-weight:700;color:var(--txt);margin-bottom:10px;line-height:1.56">'+q.q+'</p>';
+  q.ch.forEach(function(c,i){h+='<label class="qzc" id="qzc'+i+'"><input type="radio" name="qzr" value="'+i+'" onchange="document.getElementById(\'qzck\').style.display=\'inline-block\'"> <span>'+c+'</span></label>';});
+  h+='<div class="qex" id="qzex">💡 '+q.ex+'</div>';
+  document.getElementById('qzbd').innerHTML=h;
+  document.getElementById('qzbd').style.display='block';
+  document.getElementById('qzrs').style.display='none';
+  document.getElementById('qznv').style.display='flex';
+  QA=false;document.getElementById('qzck').style.display='none';document.getElementById('qznx').style.display='none';
+}
+function qzcheck(){
+  if(QA)return;var sel=document.querySelector('input[name="qzr"]:checked');if(!sel)return;
+  QA=true;var ch=+sel.value,ok=ch===QZ[QC].ans;
+  if(ok){QS++;sfxOk();}else{sfxBd();QW.push(QZ[QC].tp);}
+  QZ[QC].ch.forEach(function(_,i){var l=document.getElementById('qzc'+i);if(i===QZ[QC].ans)l.classList.add('qcc');else if(i===ch&&!ok)l.classList.add('qcw');var inp=l.querySelector('input');if(inp)inp.disabled=true;});
+  document.getElementById('qzex').style.display='block';document.getElementById('qzck').style.display='none';
+  if(QC<QZ.length-1)document.getElementById('qznx').style.display='inline-block';
+  else qzfin();
+}
+function qznxt(){QC++;qzrnd();}
+function qzfin(){
+  document.getElementById('qzbd').style.display='none';document.getElementById('qznv').style.display='none';document.getElementById('qzrs').style.display='block';
+  var p=Math.round(QS/QZ.length*100);
+  document.getElementById('qzsc').textContent=p+'%';
+  var lb=p===100?'🏆 Perfect — It\'s Hero Time!':p>=80?'💚 Great work, Plumber!':p>=60?'⚡ Keep studying!':'🔄 Review and retry!';
+  document.getElementById('qzdt').textContent=QS+'/'+QZ.length+' correct · '+lb;
+  if(QW.length){var h='<p style="font-size:.76rem;color:var(--mt);margin-bottom:6px;font-weight:700">📚 Review these topics:</p>';QW.forEach(function(t){h+='<span style="background:rgba(255,68,102,.1);border:1px solid rgba(255,68,102,.25);color:#FF7070;font-size:.72rem;padding:3px 9px;border-radius:8px;display:inline-block;margin:2px">'+t+'</span>';});document.getElementById('qzms').innerHTML=h;}
+  if(p===100){cfetti();sfxV();}
+}
+function qzreset(){QC=0;QS=0;QA=false;QW=[];qzrnd();}
+qzrnd();
+</script>
+</body>
+</html>
