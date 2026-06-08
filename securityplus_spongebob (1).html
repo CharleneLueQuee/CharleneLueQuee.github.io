@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>CompTIA Security+ × SpongeBob — Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ocean: #0077b6;
+    --ocean-dark: #023e8a;
+    --ocean-light: #caf0f8;
+    --sand: #ffd166;
+    --sand-dark: #f4a261;
+    --foam: #f0f9ff;
+    --pineapple: #e76f51;
+    --kelp: #2d6a4f;
+    --kelp-light: #d8f3dc;
+    --bubble: rgba(0,119,182,0.08);
+    --text: #1a1a2e;
+    --text-muted: #4a5568;
+    --radius: 14px;
+    --shadow: 0 4px 24px rgba(0,119,182,0.10);
+
+    --prev:  #e0f0ff; --prev-b: #0077b6; --prev-t: #023e8a;
+    --deter: #f0edff; --deter-b: #7c3aed; --deter-t: #3b0764;
+    --detec: #eaffea; --detec-b: #2d6a4f; --detec-t: #1b4332;
+    --corr:  #fff5e0; --corr-b:  #f4a261; --corr-t:  #7c3a00;
+    --comp:  #fff0ec; --comp-b:  #e76f51; --comp-t:  #7c1d00;
+    --dir:   #ffedf5; --dir-b:   #be185d; --dir-t:   #500724;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(160deg, #caf0f8 0%, #90e0ef 30%, #0077b6 100%);
+    min-height: 100vh;
+    color: var(--text);
+  }
+
+  /* Animated bubbles background */
+  .bubbles {
+    position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0;
+  }
+  .bubble {
+    position: absolute; border-radius: 50%;
+    background: rgba(255,255,255,0.18);
+    animation: rise linear infinite;
+  }
+  @keyframes rise {
+    0%   { transform: translateY(0) scale(1); opacity: 0.7; }
+    100% { transform: translateY(-110vh) scale(1.3); opacity: 0; }
+  }
+
+  .page { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+
+  /* Header */
+  header { text-align: center; margin-bottom: 2.5rem; }
+  .header-badge {
+    display: inline-block;
+    background: var(--sand);
+    color: var(--ocean-dark);
+    font-family: 'Fredoka One', cursive;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    padding: 4px 16px;
+    border-radius: 999px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(244,162,97,0.3);
+  }
+  h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: #fff;
+    text-shadow: 0 3px 16px rgba(2,62,138,0.4);
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  h1 span { color: var(--sand); }
+  .subtitle {
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+    max-width: 540px;
+    margin: 0 auto 1.5rem;
+    line-height: 1.6;
+  }
+
+  /* Cheat sheet */
+  .cheatsheet {
+    background: rgba(255,255,255,0.92);
+    border-radius: var(--radius);
+    padding: 1.25rem 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(8px);
+  }
+  .cheatsheet h2 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    color: var(--ocean-dark);
+    margin-bottom: 12px;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; }
+  .legend-item {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 13px; color: var(--text-muted);
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1.5px solid;
+    font-weight: 600;
+  }
+  .legend-item .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .li-prev  { background: var(--prev);  border-color: var(--prev-b);  color: var(--prev-t); }
+  .li-deter { background: var(--deter); border-color: var(--deter-b); color: var(--deter-t); }
+  .li-detec { background: var(--detec); border-color: var(--detec-b); color: var(--detec-t); }
+  .li-corr  { background: var(--corr);  border-color: var(--corr-b);  color: var(--corr-t); }
+  .li-comp  { background: var(--comp);  border-color: var(--comp-b);  color: var(--comp-t); }
+  .li-dir   { background: var(--dir);   border-color: var(--dir-b);   color: var(--dir-t); }
+
+  /* Tabs */
+  .tabs {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    margin-bottom: 1.25rem;
+  }
+  .tab {
+    font-family: 'Fredoka One', cursive;
+    font-size: 16px;
+    padding: 8px 22px;
+    border-radius: 999px;
+    border: 2px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.25);
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.18s;
+    backdrop-filter: blur(4px);
+  }
+  .tab:hover { background: rgba(255,255,255,0.4); }
+  .tab.active {
+    background: #fff;
+    color: var(--ocean-dark);
+    border-color: #fff;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  }
+
+  /* Type filters */
+  .filter-row {
+    display: flex; flex-wrap: wrap; gap: 7px;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  .filter-label { font-size: 13px; color: rgba(255,255,255,0.8); font-weight: 600; }
+  .pill {
+    font-size: 12px; font-weight: 700;
+    padding: 4px 13px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(255,255,255,0.45);
+    background: rgba(255,255,255,0.18);
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .pill:hover { background: rgba(255,255,255,0.35); }
+  .pill.on-prev  { background: var(--prev);  border-color: var(--prev-b);  color: var(--prev-t); }
+  .pill.on-deter { background: var(--deter); border-color: var(--deter-b); color: var(--deter-t); }
+  .pill.on-detec { background: var(--detec); border-color: var(--detec-b); color: var(--detec-t); }
+  .pill.on-corr  { background: var(--corr);  border-color: var(--corr-b);  color: var(--corr-t); }
+  .pill.on-comp  { background: var(--comp);  border-color: var(--comp-b);  color: var(--comp-t); }
+  .pill.on-dir   { background: var(--dir);   border-color: var(--dir-b);   color: var(--dir-t); }
+
+  /* Category label */
+  .cat-label {
+    font-size: 12px; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: rgba(255,255,255,0.7);
+    margin-bottom: 1rem;
+  }
+
+  /* Cards grid */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+  .card {
+    background: rgba(255,255,255,0.95);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.25rem;
+    box-shadow: var(--shadow);
+    border: 1.5px solid rgba(255,255,255,0.6);
+    transition: transform 0.18s, box-shadow 0.18s;
+    backdrop-filter: blur(6px);
+  }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(0,119,182,0.18); }
+  .card-header { display: flex; align-items: center; gap: 9px; margin-bottom: 9px; flex-wrap: wrap; }
+  .badge {
+    font-size: 11px; font-weight: 700;
+    padding: 3px 10px; border-radius: 999px;
+    border: 1.5px solid; letter-spacing: 0.02em;
+  }
+  .b-prev  { background: var(--prev);  border-color: var(--prev-b);  color: var(--prev-t); }
+  .b-deter { background: var(--deter); border-color: var(--deter-b); color: var(--deter-t); }
+  .b-detec { background: var(--detec); border-color: var(--detec-b); color: var(--detec-t); }
+  .b-corr  { background: var(--corr);  border-color: var(--corr-b);  color: var(--corr-t); }
+  .b-comp  { background: var(--comp);  border-color: var(--comp-b);  color: var(--comp-t); }
+  .b-dir   { background: var(--dir);   border-color: var(--dir-b);   color: var(--dir-t); }
+
+  .card-title { font-family: 'Fredoka One', cursive; font-size: 16px; color: var(--ocean-dark); }
+  .card-scenario { font-size: 13px; color: var(--text-muted); line-height: 1.65; margin-bottom: 9px; }
+  .card-real {
+    font-size: 12px; color: var(--text-muted);
+    border-top: 1px solid #e8f4fd;
+    padding-top: 8px; line-height: 1.55;
+  }
+  .card-real strong { color: var(--ocean); font-weight: 700; }
+
+  .none { text-align: center; color: rgba(255,255,255,0.8); padding: 3rem 0; font-size: 15px; }
+
+  /* Tip box */
+  .tip {
+    margin-top: 2.5rem;
+    background: rgba(255,255,255,0.88);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.5rem;
+    border-left: 5px solid var(--sand);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(6px);
+  }
+  .tip h3 { font-family: 'Fredoka One', cursive; color: var(--ocean-dark); margin-bottom: 6px; font-size: 17px; }
+  .tip p  { font-size: 13px; color: var(--text-muted); line-height: 1.7; }
+
+  /* Footer */
+  footer { text-align: center; margin-top: 3rem; color: rgba(255,255,255,0.6); font-size: 12px; }
+  footer a { color: rgba(255,255,255,0.8); text-decoration: underline; }
+
+  @media (max-width: 500px) {
+    .grid { grid-template-columns: 1fr; }
+    .tabs { gap: 6px; }
+    .tab { font-size: 14px; padding: 6px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Animated bubbles -->
+<div class="bubbles" id="bubbles"></div>
+
+<div class="page">
+  <header>
+    <div class="header-badge">CompTIA Security+ Study Guide</div>
+    <h1>Security+ <span>×</span> SpongeBob</h1>
+    <p class="subtitle">Every Security+ control category and type explained through the residents of Bikini Bottom. Are you ready, kids?</p>
+  </header>
+
+  <!-- Legend / Cheat Sheet -->
+  <div class="cheatsheet">
+    <h2>🗂️ Control Types — Quick Reference</h2>
+    <div class="legend">
+      <span class="legend-item li-prev">🔒 Preventive — stops it before it happens</span>
+      <span class="legend-item li-deter">⚠️ Deterrent — makes attackers think twice</span>
+      <span class="legend-item li-detec">🔍 Detective — spots it happening</span>
+      <span class="legend-item li-corr">🔧 Corrective — fixes damage after the fact</span>
+      <span class="legend-item li-comp">🔄 Compensating — workaround when ideal fix isn't available</span>
+      <span class="legend-item li-dir">📋 Directive — rules &amp; policies that guide behaviour</span>
+    </div>
+  </div>
+
+  <!-- Category tabs -->
+  <div class="tabs" id="catTabs"></div>
+
+  <!-- Type filters -->
+  <div class="filter-row">
+    <span class="filter-label">Filter by type:</span>
+    <span id="typeFilters" style="display:flex;flex-wrap:wrap;gap:7px;"></span>
+  </div>
+
+  <p class="cat-label" id="catLabel"></p>
+  <div class="grid" id="cardGrid"></div>
+
+  <!-- Exam tip -->
+  <div class="tip">
+    <h3>🎓 Exam Tip — The Key Trick</h3>
+    <p>One control can map to <strong>multiple types</strong> depending on how it's used. A camera is <strong>Detective</strong>. A sign saying "you're on camera" is a <strong>Deterrent</strong>. The exam loves to test that distinction — always ask <em>"what does it actually do?"</em> not <em>"what is it?"</em></p>
+  </div>
+
+  <footer>
+    <p>Built for CompTIA Security+ SY0-701 study &bull; SpongeBob SquarePants © Nickelodeon (no affiliation) &bull; <a href="https://www.comptia.org/certifications/security" target="_blank" rel="noopener">Official CompTIA Security+ page ↗</a></p>
+  </footer>
+</div>
+
+<script>
+// ── Data ──────────────────────────────────────────────────────────────
+const CONTROLS = [
+  { type:"Preventive",   short:"prev"  },
+  { type:"Deterrent",    short:"deter" },
+  { type:"Detective",    short:"detec" },
+  { type:"Corrective",   short:"corr"  },
+  { type:"Compensating", short:"comp"  },
+  { type:"Directive",    short:"dir"   },
+];
+
+const CATS = ["Technical","Managerial","Operational","Physical"];
+
+const CARDS = [
+  // TECHNICAL
+  { cat:"Technical", type:"Preventive",   item:"Encryption",
+    scenario:"🧽 The Krabby Patty formula is written in a secret code only Mr. Krabs and SpongeBob can read. Even if Plankton steals the paper, he sees gibberish.",
+    real:"Encryption scrambles data so only authorised parties with the key can read it." },
+  { cat:"Technical", type:"Detective",    item:"Security Cameras",
+    scenario:"🧽 Sandy installed cameras throughout Bikini Bottom. When Patrick 'borrowed' SpongeBob's spatula, the footage showed everything.",
+    real:"Security cameras record activity so you can detect and review incidents after they occur." },
+  { cat:"Technical", type:"Detective",    item:"Intrusion Detection Systems",
+    scenario:"🧽 SpongeBob has an alarm jellyfish in his pineapple. The moment an uninvited guest enters, the jellyfish buzzes loudly so SpongeBob knows.",
+    real:"An IDS monitors network traffic and alerts you when suspicious activity is detected." },
+  { cat:"Technical", type:"Corrective",   item:"Backups",
+    scenario:"🧽 Plankton deletes SpongeBob's entire recipe database. No problem — SpongeBob kept a copy in his treasure chest under the sea. Everything is restored.",
+    real:"Backups let you restore systems and data after a destructive incident." },
+  { cat:"Technical", type:"Compensating", item:"Segmentation instead of patching",
+    scenario:"🧽 The old Krusty Krab cash register has a vulnerability Mr. Krabs can't patch. So he walls it off — Plankton can reach the dining room but never the register.",
+    real:"Network segmentation isolates a vulnerable system so a threat can't spread, even without fixing the root flaw." },
+  { cat:"Technical", type:"Directive",    item:"Data Handling Policy",
+    scenario:"🧽 Mr. Krabs posts a notice: 'All recipe scrolls must be stored in the safe, not left on tables.' It doesn't lock anything — it just tells staff the rule.",
+    real:"A data handling policy defines rules for how sensitive information must be stored, shared, and disposed of." },
+
+  // MANAGERIAL
+  { cat:"Managerial", type:"Preventive",  item:"Employee Screening",
+    scenario:"🧽 Before hiring anyone at the Krusty Krab, Mr. Krabs checks whether they've ever worked for the Chum Bucket. Plankton's cousin gets rejected before day one.",
+    real:"Background checks and screening prevent untrustworthy individuals from gaining access in the first place." },
+  { cat:"Managerial", type:"Detective",   item:"Logging & Monitoring",
+    scenario:"🧽 Mr. Krabs keeps a logbook of every time someone opens the safe. When $20 goes missing he checks the log — Squidward's name is on every entry.",
+    real:"Logs record system and user activity; reviewing them reveals suspicious behaviour." },
+  { cat:"Managerial", type:"Directive",   item:"Policy",
+    scenario:"🧽 Mr. Krabs prints the 'Krusty Krab Rules' and posts it in the break room. It doesn't physically stop anyone — it just tells people what's expected.",
+    real:"Policies are authoritative documents that set the rules everyone must follow." },
+  { cat:"Managerial", type:"Detective",   item:"Log Review Policy",
+    scenario:"🧽 Every Friday, Mr. Krabs reads last week's logbook. Without a scheduled review he'd never notice the slow drain on the register.",
+    real:"A log review policy mandates that logs are actually checked on a regular schedule — detection only works if someone looks." },
+  { cat:"Managerial", type:"Directive",   item:"Incident Reporting Policy",
+    scenario:"🧽 The Krusty Krab rulebook says: 'If anything weird happens, tell Mr. Krabs immediately.' SpongeBob now reports every jellyfish sting before it becomes a lawsuit.",
+    real:"Incident reporting policies define who to notify and how, ensuring issues are escalated quickly." },
+  { cat:"Managerial", type:"Preventive",  item:"Separation of Duties",
+    scenario:"🧽 SpongeBob cooks the patties, but only Mr. Krabs can open the register. Neither one alone can steal the whole operation.",
+    real:"Separation of duties splits critical tasks so no single person can commit fraud or make a catastrophic mistake alone." },
+  { cat:"Managerial", type:"Directive",   item:"Compliance Policy",
+    scenario:"🧽 Bikini Bottom law says all restaurants must pass a health inspection. Mr. Krabs writes a policy saying 'We follow all Bikini Bottom health codes.' It's the formal commitment.",
+    real:"Compliance policies document an organisation's commitment to meet external regulatory requirements." },
+
+  // OPERATIONAL
+  { cat:"Operational", type:"Directive",    item:"Awareness Training",
+    scenario:"🧽 Mr. Krabs runs a Monday meeting: 'If Plankton calls pretending to be the health inspector, hang up.' SpongeBob used to fall for it every time — now he doesn't.",
+    real:"Security awareness training teaches employees to recognise and avoid threats like phishing and social engineering." },
+  { cat:"Operational", type:"Deterrent",    item:"Guard Dogs",
+    scenario:"🧽 Mr. Krabs keeps a scary guard jellyfish outside the Krusty Krab at night. Most criminals see it and decide the Chum Bucket is an easier target.",
+    real:"Guard dogs (or animals) deter intruders by making the location look risky to approach." },
+  { cat:"Operational", type:"Detective",    item:"Perimeter Patrol",
+    scenario:"🧽 Larry the Lobster walks the Krusty Krab perimeter every hour. He noticed Plankton's tiny robot hiding behind the dumpster on Tuesday.",
+    real:"Perimeter patrols are regular physical walkthroughs to detect unauthorised activity or presences." },
+  { cat:"Operational", type:"Detective",    item:"Searches",
+    scenario:"🧽 Before every shift, Mr. Krabs checks employees' bags. He found Squidward trying to sneak out three Krabby Patties in his clarinet case.",
+    real:"Searches detect theft or policy violations at entry and exit points." },
+  { cat:"Operational", type:"Corrective",   item:"Law Enforcement",
+    scenario:"🧽 Plankton actually breaks in and steals the formula. Mr. Krabs calls the Bikini Bottom Police. They recover the formula and arrest Plankton.",
+    real:"Engaging law enforcement is a corrective response — it addresses an incident that already occurred." },
+  { cat:"Operational", type:"Compensating", item:"Extra Security Guards",
+    scenario:"🧽 The Krusty Krab's lock is broken and can't be fixed until Wednesday. Until then, Mr. Krabs hires two extra guards to stand at the door.",
+    real:"Additional guards compensate for a security gap when the primary control is unavailable." },
+  { cat:"Operational", type:"Directive",    item:"Acceptable Use Policy",
+    scenario:"🧽 The Krusty Krab notice board says: 'Work phones are for work only. No ordering jellyfish jam on company time.' It doesn't block the app — it just sets the rule.",
+    real:"An AUP defines what employees may and may not do with company resources." },
+
+  // PHYSICAL
+  { cat:"Physical", type:"Preventive",  item:"Locks",
+    scenario:"🧽 The Krusty Krab vault has a padlock. Plankton can stand right in front of it all day and still can't get in.",
+    real:"Locks are a classic preventive physical control — they block unauthorised physical access entirely." },
+  { cat:"Physical", type:"Deterrent",   item:"Electric Fence",
+    scenario:"🧽 Bikini Bottom Bank installed an electric fence. Criminals walk up, see the sparks, and immediately reconsider their life choices.",
+    real:"An electric fence deters intruders — most won't test it, so it reduces attempts without needing to stop every one." },
+  { cat:"Physical", type:"Deterrent",   item:"Warning Sign",
+    scenario:"🧽 'TRESPASSERS WILL BE JELLYFISHED' signs outside the Krusty Krab. Patrick nearly walked in — he saw the sign and turned around.",
+    real:"Warning signs deter casual intruders. They signal consequences without physically stopping anyone." },
+  { cat:"Physical", type:"Detective",   item:"Motion Detectors",
+    scenario:"🧽 The Krusty Krab has motion sensors. At 3 a.m. Plankton tiptoes in — lights flood the room and an alarm sounds. Mr. Krabs is notified instantly.",
+    real:"Motion detectors sense movement and trigger alerts, detecting intrusion as it happens." },
+  { cat:"Physical", type:"Corrective",  item:"Fire Sprinklers and Extinguishers",
+    scenario:"🧽 Sandy's treedome catches fire. The sprinklers activate automatically, limiting the damage. Extinguishers let staff fight what's left.",
+    real:"Fire suppression systems respond to an incident already underway to minimise harm." },
+  { cat:"Physical", type:"Corrective",  item:"Backup Generator",
+    scenario:"🧽 A storm knocks out Bikini Bottom's power grid. The Krusty Krab's backup generator kicks on so the fryers stay hot and the registers keep running.",
+    real:"A backup generator corrects a power failure, restoring operations after an outage occurs." },
+  { cat:"Physical", type:"Preventive",  item:"Authorised Personnel Only",
+    scenario:"🧽 The door to the Krusty Krab kitchen has a sign and a badge reader. Gary the snail can't just wander in — only SpongeBob and Mr. Krabs get through.",
+    real:"Access control systems physically prevent unauthorised people from entering sensitive areas." },
+];
+
+const shortMap = {};
+CONTROLS.forEach(c => { shortMap[c.type] = c.short; });
+
+// ── State ─────────────────────────────────────────────────────────────
+let activeCat   = "Technical";
+let activeTypes = new Set(CONTROLS.map(c => c.short));
+
+// ── Render ────────────────────────────────────────────────────────────
+function render() {
+  const filtered = CARDS.filter(c => c.cat === activeCat && activeTypes.has(shortMap[c.type]));
+  document.getElementById("catLabel").textContent =
+    activeCat + " controls — " + filtered.length + " card" + (filtered.length !== 1 ? "s" : "");
+
+  const grid = document.getElementById("cardGrid");
+  if (!filtered.length) {
+    grid.innerHTML = '<p class="none">No cards match — try enabling more control types above.</p>';
+    return;
+  }
+  grid.innerHTML = filtered.map(c => {
+    const s = shortMap[c.type];
+    return `<div class="card">
+      <div class="card-header">
+        <span class="badge b-${s}">${c.type}</span>
+        <span class="card-title">${c.item}</span>
+      </div>
+      <p class="card-scenario">${c.scenario}</p>
+      <p class="card-real"><strong>Real world:</strong> ${c.real}</p>
+    </div>`;
+  }).join("");
+}
+
+function buildTabs() {
+  document.getElementById("catTabs").innerHTML = CATS.map(c =>
+    `<button class="tab${c === activeCat ? ' active' : ''}" onclick="setTab('${c}')">${c}</button>`
+  ).join("");
+}
+
+function buildPills() {
+  document.getElementById("typeFilters").innerHTML = CONTROLS.map(ct => {
+    const on = activeTypes.has(ct.short);
+    return `<button class="pill${on ? ' on-'+ct.short : ''}" onclick="toggleType('${ct.short}')">${ct.type}</button>`;
+  }).join("");
+}
+
+function setTab(cat) {
+  activeCat = cat;
+  buildTabs();
+  render();
+}
+
+function toggleType(short) {
+  if (activeTypes.has(short)) {
+    if (activeTypes.size > 1) activeTypes.delete(short);
+  } else {
+    activeTypes.add(short);
+  }
+  buildPills();
+  render();
+}
+
+// ── Bubbles ───────────────────────────────────────────────────────────
+(function() {
+  const container = document.getElementById("bubbles");
+  for (let i = 0; i < 18; i++) {
+    const b = document.createElement("div");
+    b.className = "bubble";
+    const size = 20 + Math.random() * 60;
+    b.style.cssText = [
+      `width:${size}px`, `height:${size}px`,
+      `left:${Math.random()*100}%`,
+      `bottom:-${size}px`,
+      `animation-duration:${6 + Math.random()*10}s`,
+      `animation-delay:${Math.random()*8}s`,
+      `opacity:${0.2 + Math.random()*0.3}`
+    ].join(";");
+    container.appendChild(b);
+  }
+})();
+
+// ── Init ──────────────────────────────────────────────────────────────
+buildTabs();
+buildPills();
+render();
+</script>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>POP3 vs IMAP — Bikini Bottom Guide | Security+</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Nunito',sans-serif;background:linear-gradient(160deg,#caf0f8 0%,#90e0ef 35%,#0077b6 100%);min-height:100vh;color:#1a1a2e}
+  .bubbles{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  .bubble{position:absolute;border-radius:50%;background:rgba(255,255,255,.18);animation:rise linear infinite}
+  @keyframes rise{0%{transform:translateY(0) scale(1);opacity:.7}100%{transform:translateY(-110vh) scale(1.3);opacity:0}}
+  .page{position:relative;z-index:1;max-width:880px;margin:0 auto;padding:2rem 1.25rem 4rem}
+  header{text-align:center;margin-bottom:2rem}
+  .back-link{display:inline-block;margin-bottom:1.2rem;color:#023e8a;font-weight:700;text-decoration:none;font-size:.85rem;background:rgba(255,255,255,.6);padding:6px 14px;border-radius:20px;transition:background .2s}
+  .back-link:hover{background:rgba(255,255,255,.9)}
+  .page-title{font-family:'Fredoka One',cursive;font-size:clamp(2rem,6vw,3.2rem);color:#023e8a;text-shadow:2px 2px 0 rgba(255,255,255,.5);margin-bottom:.3rem}
+  .page-sub{font-size:.95rem;color:#023e8a;font-weight:600;opacity:.8;margin-bottom:1.5rem}
+  .exam-badge{display:inline-block;background:#ffd166;color:#7c3a00;font-weight:800;font-size:.78rem;padding:5px 14px;border-radius:20px;letter-spacing:.5px;margin-bottom:1.5rem;border:2px solid #f4a261}
+
+  .compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem;margin-bottom:1.8rem}
+  @media(max-width:600px){.compare-grid{grid-template-columns:1fr}}
+
+  .proto-card{background:rgba(255,255,255,.88);border-radius:16px;padding:1.4rem 1.2rem;box-shadow:0 4px 20px rgba(0,119,182,.15);border-top:5px solid var(--accent)}
+  .proto-card.pop{--accent:#e76f51}
+  .proto-card.imap{--accent:#2d6a4f}
+  .proto-card h2{font-family:'Fredoka One',cursive;font-size:1.5rem;color:var(--accent);margin-bottom:.3rem}
+  .proto-card .full-name{font-size:.75rem;color:#666;margin-bottom:.9rem;font-weight:600;letter-spacing:.3px}
+  .proto-card .analogy-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--accent);margin-bottom:.4rem}
+  .proto-card .analogy-box{background:rgba(255,255,255,.7);border-left:3px solid var(--accent);border-radius:0 10px 10px 0;padding:.7rem .9rem;margin-bottom:1rem;font-size:.88rem;line-height:1.55}
+  .proto-card ul{list-style:none;padding:0}
+  .proto-card ul li{font-size:.85rem;padding:.3rem 0 .3rem 1.4rem;position:relative;line-height:1.45;border-bottom:1px solid rgba(0,0,0,.05)}
+  .proto-card ul li:last-child{border-bottom:none}
+  .proto-card ul li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-weight:700}
+
+  .summary-table{width:100%;border-collapse:collapse;background:rgba(255,255,255,.88);border-radius:14px;overflow:hidden;box-shadow:0 4px 20px rgba(0,119,182,.12);margin-bottom:1.8rem}
+  .summary-table thead tr{background:#023e8a;color:white}
+  .summary-table th{padding:10px 14px;text-align:left;font-size:.8rem;letter-spacing:.5px;text-transform:uppercase}
+  .summary-table td{padding:10px 14px;font-size:.85rem;border-bottom:1px solid rgba(0,119,182,.1)}
+  .summary-table tr:last-child td{border-bottom:none}
+  .summary-table tr:nth-child(even) td{background:rgba(202,240,248,.35)}
+  .tag{display:inline-block;padding:2px 8px;border-radius:10px;font-size:.72rem;font-weight:700}
+  .tag.pop{background:#fff0ec;color:#e76f51;border:1px solid #e76f51}
+  .tag.imap{background:#eaffea;color:#2d6a4f;border:1px solid #2d6a4f}
+
+  .tip-box{background:rgba(255,255,255,.88);border-radius:14px;padding:1.2rem 1.4rem;box-shadow:0 4px 20px rgba(0,119,182,.12);margin-bottom:1.8rem;border-left:5px solid #ffd166}
+  .tip-box h3{font-family:'Fredoka One',cursive;color:#7c3a00;margin-bottom:.7rem;font-size:1.15rem}
+  .tip-box p{font-size:.87rem;line-height:1.6;color:#1a1a2e}
+  .tip-box .quote{font-style:italic;color:#555;margin-top:.6rem;font-size:.83rem;padding:.5rem .9rem;background:rgba(255,209,102,.2);border-radius:8px}
+
+  .port-row{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.8rem}
+  .port-chip{flex:1;min-width:160px;background:rgba(255,255,255,.88);border-radius:12px;padding:.9rem 1.1rem;box-shadow:0 2px 12px rgba(0,119,182,.1);text-align:center}
+  .port-chip .proto-name{font-family:'Fredoka One',cursive;font-size:1.1rem;margin-bottom:.2rem}
+  .port-chip .port-num{font-size:1.8rem;font-weight:900;color:#023e8a}
+  .port-chip .port-label{font-size:.7rem;color:#666;font-weight:600}
+  .port-chip.pop .proto-name{color:#e76f51}
+  .port-chip.imap .proto-name{color:#2d6a4f}
+
+  nav-back{display:block}
+  footer{text-align:center;margin-top:2.5rem;font-size:.75rem;color:rgba(255,255,255,.8)}
+  footer a{color:rgba(255,255,255,.9);text-decoration:none;font-weight:700}
+</style>
+</head>
+<body>
+<div class="bubbles" id="bubbles"></div>
+<div class="page">
+
+  <header>
+    <a href="cartoon-spongebob.html" class="back-link">← Back to SpongeBob Security+</a>
+    <div class="page-title">📬 POP3 vs IMAP</div>
+    <div class="page-sub">The Bikini Bottom Guide to Email Protocols</div>
+    <div class="exam-badge">⚡ CompTIA Security+ SY0-701 — Know Your Ports!</div>
+  </header>
+
+  <!-- Side-by-side protocol cards -->
+  <div class="compare-grid">
+
+    <div class="proto-card pop">
+      <h2>POP3</h2>
+      <div class="full-name">Post Office Protocol v3</div>
+      <div class="analogy-label">🪨 The Patrick's Rock Method</div>
+      <div class="analogy-box">
+        Think of Patrick Star getting a physical letter. He goes to his mailbox, picks it up, and takes it inside his rock. Once it's inside — <strong>it's gone from the mailbox.</strong> If he checks from a different rock, the letter isn't there. If his rock is destroyed, the mail is gone forever.
+      </div>
+      <ul>
+        <li>Downloads email to your device</li>
+        <li>Usually deletes from server after download</li>
+        <li>Works offline once downloaded</li>
+        <li>Best for single-device users</li>
+        <li>Saves server storage space</li>
+        <li>No sync across multiple devices</li>
+      </ul>
+    </div>
+
+    <div class="proto-card imap">
+      <h2>IMAP</h2>
+      <div class="full-name">Internet Message Access Protocol</div>
+      <div class="analogy-label">🦑 The Krusty Krab Menu Method</div>
+      <div class="analogy-box">
+        Think of the menu board at the Krusty Krab. Whether Squidward is at the register, SpongeBob is in the kitchen, or Mr. Krabs is in his office — <strong>they all see the same menu on the wall.</strong> If SpongeBob moves an email to a "Fry Cook" folder, Squidward sees that change too.
+      </div>
+      <ul>
+        <li>Email stays on the server</li>
+        <li>Syncs changes across all devices</li>
+        <li>Folders & read status synced everywhere</li>
+        <li>Modern standard for most users</li>
+        <li>Phone, tablet, and computer all in sync</li>
+        <li>Requires internet connection to access</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Port numbers — exam critical -->
+  <div class="tip-box" style="border-left-color:#023e8a;margin-bottom:1rem">
+    <h3>🔢 Know These Port Numbers — They WILL Be on the Exam</h3>
+  </div>
+  <div class="port-row">
+    <div class="port-chip pop">
+      <div class="proto-name">POP3</div>
+      <div class="port-num">110</div>
+      <div class="port-label">Unencrypted</div>
+    </div>
+    <div class="port-chip pop">
+      <div class="proto-name">POP3S</div>
+      <div class="port-num">995</div>
+      <div class="port-label">Encrypted (SSL/TLS)</div>
+    </div>
+    <div class="port-chip imap">
+      <div class="proto-name">IMAP</div>
+      <div class="port-num">143</div>
+      <div class="port-label">Unencrypted</div>
+    </div>
+    <div class="port-chip imap">
+      <div class="proto-name">IMAPS</div>
+      <div class="port-num">993</div>
+      <div class="port-label">Encrypted (SSL/TLS)</div>
+    </div>
+  </div>
+
+  <!-- Summary table -->
+  <table class="summary-table">
+    <thead>
+      <tr><th>Feature</th><th><span class="tag pop">POP3</span></th><th><span class="tag imap">IMAP</span></th></tr>
+    </thead>
+    <tbody>
+      <tr><td>Email storage</td><td>Local device</td><td>Server</td></tr>
+      <tr><td>Multi-device sync</td><td>❌ No</td><td>✅ Yes</td></tr>
+      <tr><td>Offline access</td><td>✅ After download</td><td>⚠️ Needs connection</td></tr>
+      <tr><td>Server space used</td><td>Minimal (deleted)</td><td>More (stays on server)</td></tr>
+      <tr><td>Default port</td><td>110 / 995 (SSL)</td><td>143 / 993 (SSL)</td></tr>
+      <tr><td>Best for</td><td>Single device, low bandwidth</td><td>Multiple devices, modern use</td></tr>
+      <tr><td>SpongeBob analogy</td><td>Patrick takes letter home 🪨</td><td>Krusty Krab menu board 🦑</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Exam tip -->
+  <div class="tip-box">
+    <h3>🧠 Sandy's Exam Tip</h3>
+    <p>For the Security+ exam, always remember: <strong>POP3 = downloads &amp; deletes</strong>, <strong>IMAP = stays &amp; syncs</strong>. You'll likely see a scenario question asking which protocol to recommend for a user with multiple devices — that's always IMAP. For a user with one device and limited server storage — POP3.</p>
+    <p>Also memorize the <strong>encrypted ports (995 &amp; 993)</strong> — the exam loves to test whether you know the secure versions.</p>
+    <div class="quote">"Just because Patrick downloaded his mail to his rock doesn't mean everyone else should." — Sandy Cheeks, probably 🤠</div>
+  </div>
+
+</div>
+
+<footer>
+  <p>🛡️ <a href="security-notes.html">Study Hub</a> &nbsp;·&nbsp; <a href="cartoon-spongebob.html">SpongeBob Security+</a> &nbsp;·&nbsp; <a href="https://charleneluequee.github.io/">Portfolio</a> &nbsp;·&nbsp; Built by Charlene LueQuee</p>
+  <div style="margin-top:8px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:4px 14px;display:inline-block;font-size:.67rem">&copy; 2025 Charlene LueQuee &nbsp;·&nbsp; All Rights Reserved</div>
+</footer>
+
+<script>
+  // Bubbles
+  var bc=document.getElementById('bubbles');
+  for(var i=0;i<18;i++){
+    var b=document.createElement('div');
+    b.className='bubble';
+    var s=Math.random()*40+10;
+    b.style.cssText='width:'+s+'px;height:'+s+'px;left:'+Math.random()*100+'%;bottom:-60px;animation-duration:'+(Math.random()*18+10)+'s;animation-delay:-'+(Math.random()*20)+'s;';
+    bc.appendChild(b);
+  }
+</script>
+</body>
+</html>
