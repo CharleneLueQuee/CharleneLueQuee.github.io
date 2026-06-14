@@ -1577,7 +1577,7 @@ if(du.length===0)du=[...Array(C.length).keys()];rn();us();
         durBadge.textContent = fmtDur(vid.duration);
         wrap.appendChild(durBadge);
         // Seek to 10% or 5s — whichever is smaller
-        vid.currentTime = Math.min(vid.duration * 0.1, 5);
+        var seekPct = parseFloat(card.getAttribute('data-seek') || '10') / 100; vid.currentTime = Math.min(vid.duration * seekPct, 5);
       });
 
       vid.addEventListener('seeked', function(){
