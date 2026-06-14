@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cartoon Network-ing Security+ | SY0-701 Practice Exam</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@600;700&display=swap">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@700;800;900&family=Nunito+Sans:wght@600;700&display=swap');
+
+/* ─── RESET + ROOT ─── */
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --orange:#FF5500;--yellow:#FFD000;--cyan:#00C8F0;--pink:#FF1F8C;
+  --lime:#7ED800;--purple:#8B00FF;--red:#FF1500;--blue:#0088FF;
+  --black:#1A1A1A;--white:#FFFFFF;
+  --bg:#FFFDF0;
+  --border:4px solid #1A1A1A;--shadow:6px 6px 0 #1A1A1A;--shadow-sm:3px 3px 0 #1A1A1A;
+  --cn-cyan:#00C8F0;--cn-purple:#8B00FF;--cn-yellow:#FFD000;--cn-orange:#FF5500;
+}
+
+body{
+  font-family:'Nunito Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;
+  background-color:var(--bg);
+  background-image:
+    radial-gradient(circle 6px at 20px 24px, #FF1F8C22 99%, transparent 100%),
+    radial-gradient(circle 5px at 95px 64px, #00C8F022 99%, transparent 100%),
+    radial-gradient(circle 7px at 50px 116px, #FFD00030 99%, transparent 100%),
+    radial-gradient(circle 5px at 128px 30px, #7ED80022 99%, transparent 100%),
+    radial-gradient(circle 6px at 74px 138px, #8B00FF1E 99%, transparent 100%),
+    radial-gradient(circle 5px at 12px 96px, #FF550022 99%, transparent 100%);
+  background-size:150px 150px;
+  background-attachment:fixed;
+  color:var(--black);min-height:100vh;overflow-x:hidden;
+}
+
+/* ─── PRINT ─── */
+@media print{
+  .no-print{display:none!important;}
+  body{background:white;font-size:12px;}
+}
+
+/* ─── HEADER ─── bright orange stripe ─── */
+header{
+  background:var(--orange);padding:10px 20px;
+  display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;
+  position:sticky;top:0;z-index:200;
+  border-bottom:5px solid var(--black);
+  box-shadow:0 4px 0 var(--black);
+}
+.logo{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.7rem;color:white;letter-spacing:2px;text-shadow:2px 2px 0 var(--black);line-height:1;}
+.logo span{color:var(--yellow);}
+.logo small{display:block;font-size:0.6rem;letter-spacing:4px;color:rgba(255,255,255,.85);font-family:'Nunito Sans',-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:800;}
+.hdr-btns{display:flex;gap:8px;flex-wrap:wrap;}
+.hbtn{background:white;border:3px solid var(--black);border-radius:50px;padding:6px 16px;font-family:'Nunito',-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:0.8rem;cursor:pointer;box-shadow:var(--shadow-sm);color:var(--black);transition:all .1s;}
+.hbtn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--black);}
+.hbtn.yellow{background:var(--yellow);}
+.hbtn.cyan{background:var(--cyan);}
+.hbtn.lime{background:var(--lime);}
+
+/* ─── SCREENS ─── */
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* ─── CHECKER STRIP ─── */
+.checker-strip{height:18px;background:repeating-linear-gradient(90deg,var(--orange) 0,var(--orange) 20px,var(--yellow) 20px,var(--yellow) 40px,var(--cyan) 40px,var(--cyan) 60px,var(--pink) 60px,var(--pink) 80px,var(--lime) 80px,var(--lime) 100px,var(--purple) 100px,var(--purple) 120px);}
+
+/* ─── MARQUEE ─── bright yellow band ─── */
+.marquee-wrap{background:var(--yellow);overflow:hidden;border-top:4px solid var(--black);border-bottom:4px solid var(--black);padding:10px 0;}
+.marquee-track{display:flex;width:max-content;animation:marq 24s linear infinite;}
+@keyframes marq{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+.m-tag{display:inline-flex;align-items:center;gap:8px;padding:6px 22px;color:var(--black);font-weight:900;font-size:0.88rem;border-right:3px solid rgba(0,0,0,.15);white-space:nowrap;}
+.m-dot{width:10px;height:10px;border-radius:50%;border:2px solid var(--black);flex-shrink:0;}
+
+/* ─── LANDING ─── */
+#landing{min-height:100vh;background:transparent;}
+
+/* HERO – big colourful panels like CN bumpers */
+.hero-wrap{
+  display:grid;grid-template-columns:1fr;
+  background:white;
+}
+.hero-top{
+  background:linear-gradient(135deg,var(--orange) 0%,var(--pink) 55%,var(--purple) 100%);
+  padding:50px 24px 55px;text-align:center;position:relative;overflow:hidden;
+}
+.hero-title{
+  font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:clamp(3rem,10vw,7rem);
+  color:white;text-shadow:4px 4px 0 rgba(0,0,0,.4),6px 6px 0 var(--yellow);
+  line-height:.92;margin-bottom:10px;position:relative;z-index:1;
+}
+.hero-title em{color:var(--yellow);font-style:normal;}
+.hero-sub{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:clamp(1rem,3vw,1.8rem);color:var(--yellow);letter-spacing:4px;text-shadow:2px 2px 0 rgba(0,0,0,.3);position:relative;z-index:1;margin-bottom:20px;}
+.hero-badges{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;position:relative;z-index:1;margin-bottom:10px;}
+.hbadge{background:white;border:3px solid var(--black);border-radius:50px;padding:5px 16px;color:var(--black);font-weight:900;font-size:0.82rem;box-shadow:3px 3px 0 var(--black);}
+
+/* PANEL BLOCKS below hero */
+.panel-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));max-width:960px;margin:30px auto 0;gap:0;padding:0 20px;}
+
+/* Cram banner */
+.cram-banner{
+  background:linear-gradient(90deg,var(--yellow),#FFB300);
+  border:var(--border);border-radius:20px;padding:22px 26px;
+  display:flex;align-items:center;gap:18px;cursor:pointer;
+  box-shadow:var(--shadow);transition:all .15s;
+  max-width:860px;margin:24px auto 0;
+}
+.cram-banner:hover{transform:translate(-4px,-4px);box-shadow:10px 10px 0 var(--black);}
+.cram-icon{font-size:3rem;flex-shrink:0;}
+.cram-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.8rem;color:var(--black);margin-bottom:4px;}
+.cram-desc{font-size:0.88rem;font-weight:700;color:#333;line-height:1.5;}
+
+/* MODE CARDS */
+.mode-section{padding:32px 20px;max-width:960px;margin:0 auto;}
+.mode-sec-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:2.5rem;text-align:center;margin-bottom:6px;color:var(--black);text-shadow:3px 3px 0 var(--orange);}
+.mode-sec-sub{text-align:center;color:#555;font-weight:700;margin-bottom:28px;}
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px;}
+.mode-card{background:white;border:var(--border);border-radius:20px;padding:28px 22px;cursor:pointer;box-shadow:var(--shadow);transition:all .15s;position:relative;overflow:hidden;}
+.mode-card:hover{transform:translate(-5px,-5px);box-shadow:11px 11px 0 var(--black);}
+.mc-bar{position:absolute;top:0;left:0;right:0;height:10px;border-radius:20px 20px 0 0;}
+.mc-emoji{font-size:3.5rem;margin:10px 0 14px;}
+.mc-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:2rem;margin-bottom:8px;}
+.mc-desc{font-size:0.88rem;font-weight:700;color:#555;line-height:1.55;margin-bottom:14px;}
+.mc-badge{display:inline-block;background:var(--yellow);border:2px solid var(--black);border-radius:50px;padding:4px 14px;font-size:0.78rem;font-weight:900;}
+
+/* HOW IT WORKS – bright coloured panels, NO dark background */
+.how-wrap{background:white;border-top:4px solid var(--black);border-bottom:4px solid var(--black);padding:32px 20px;margin-top:32px;}
+.how-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:2rem;text-align:center;margin-bottom:20px;color:var(--black);text-shadow:2px 2px 0 var(--orange);}
+.how-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:960px;margin:0 auto;}
+@media(max-width:700px){.how-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:400px){.how-grid{grid-template-columns:1fr;}}
+.how-card{border:var(--border);border-radius:16px;padding:18px 14px;text-align:center;box-shadow:var(--shadow-sm);}
+.how-card:nth-child(1){background:var(--orange);color:white;}
+.how-card:nth-child(2){background:var(--cyan);}
+.how-card:nth-child(3){background:var(--lime);}
+.how-card:nth-child(4){background:var(--yellow);}
+.how-card:nth-child(5){background:var(--pink);color:white;}
+.how-card:nth-child(6){background:var(--purple);color:white;}
+.how-card:nth-child(7){background:var(--blue);color:white;}
+.how-card:nth-child(8){background:var(--lime);}
+.how-num{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:2.5rem;display:block;line-height:1;margin-bottom:4px;}
+.how-head{font-weight:900;font-size:0.82rem;margin-bottom:4px;}
+.how-body{font-size:0.78rem;font-weight:700;line-height:1.5;opacity:.85;}
+
+/* PORTFOLIO RATIONALE */
+.rationale-wrap{padding:36px 20px 32px;max-width:960px;margin:0 auto;}
+.rationale-eyebrow{text-align:center;font-weight:900;font-size:0.78rem;letter-spacing:3px;color:var(--orange);text-transform:uppercase;margin-bottom:6px;}
+.rationale-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:2.4rem;text-align:center;margin-bottom:12px;text-shadow:3px 3px 0 var(--cyan);}
+.rationale-intro{text-align:center;max-width:700px;margin:0 auto 26px;font-size:0.92rem;font-weight:700;color:#444;line-height:1.7;}
+.rationale-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;margin-bottom:22px;}
+.rationale-card{background:white;border:var(--border);border-radius:18px;padding:22px 20px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;transition:all .15s;}
+.rationale-card:hover{transform:translate(-3px,-3px);box-shadow:8px 8px 0 var(--black);}
+.rationale-bar{position:absolute;top:0;left:0;right:0;height:8px;}
+.rationale-icon{font-size:2.1rem;margin:6px 0 10px;}
+.rationale-card-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.35rem;margin-bottom:8px;}
+.rationale-card-body{font-size:0.85rem;font-weight:700;color:#555;line-height:1.65;}
+.rationale-tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-bottom:22px;}
+.rationale-tag{background:var(--yellow);border:2px solid var(--black);border-radius:50px;padding:5px 14px;font-size:0.76rem;font-weight:900;}
+.rationale-tag:nth-child(2n){background:var(--cyan);}
+.rationale-tag:nth-child(3n){background:#FFD9F0;}
+.rationale-cta{background:white;border:var(--border);border-radius:18px;padding:18px 22px;text-align:center;box-shadow:var(--shadow-sm);font-size:0.88rem;font-weight:700;color:#444;line-height:1.7;margin-bottom:8px;}
+.rationale-cta a{color:var(--orange);font-weight:900;text-decoration:none;}
+.rationale-cta a:hover{text-decoration:underline;}
+
+/* COPYRIGHT – white with coloured border, NO dark bg */
+.copyright-bar{background:white;color:#555;text-align:center;padding:16px 20px;font-size:0.72rem;font-weight:700;line-height:1.9;border-top:5px solid var(--orange);}
+.copyright-bar a{color:var(--orange);text-decoration:none;font-weight:900;}
+
+/* ─── DOMAIN SELECT ─── */
+#domainSelect{min-height:100vh;padding:40px 20px;max-width:680px;margin:0 auto;background:transparent;}
+.screen-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:3rem;text-shadow:3px 3px 0 var(--orange);margin-bottom:6px;}
+.domain-grid{display:flex;flex-direction:column;gap:14px;margin:22px 0;}
+.domain-btn{background:white;border:var(--border);border-radius:16px;padding:18px 20px;cursor:pointer;box-shadow:var(--shadow-sm);text-align:left;font-family:'Nunito',-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:0.95rem;display:flex;align-items:center;gap:16px;transition:all .1s;}
+.domain-btn:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--black);}
+.domain-btn:nth-child(1){border-left:8px solid var(--orange);}
+.domain-btn:nth-child(2){border-left:8px solid var(--red);}
+.domain-btn:nth-child(3){border-left:8px solid var(--cyan);}
+.domain-btn:nth-child(4){border-left:8px solid var(--lime);}
+.domain-btn:nth-child(5){border-left:8px solid var(--purple);}
+.d-icon{font-size:2rem;}
+.d-info{flex:1;}
+.d-name{font-size:0.95rem;}
+.d-weight{font-size:0.78rem;color:#888;font-weight:700;margin-top:2px;}
+.d-pct{background:var(--yellow);border:2px solid var(--black);border-radius:50px;padding:4px 14px;font-size:0.88rem;font-weight:900;flex-shrink:0;}
+.back-btn{background:var(--orange);color:white;border:var(--border);border-radius:50px;padding:12px 28px;font-family:'Nunito',-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:1rem;cursor:pointer;box-shadow:var(--shadow-sm);margin-top:16px;transition:all .1s;}
+.back-btn:hover{transform:translate(-2px,-2px);}
+
+/* ─── CRAM SCREEN ─── */
+#cramScreen{min-height:100vh;padding:30px 20px;max-width:960px;margin:0 auto;background:transparent;}
+
+/* ─── MODAL ─── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(255,150,0,.25);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:20px;}
+.modal-bg.open{display:flex;}
+.modal-card{background:white;border:var(--border);border-radius:20px;padding:28px;max-width:480px;width:100%;box-shadow:var(--shadow);max-height:85vh;overflow-y:auto;}
+.modal-card h3{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:2rem;color:var(--orange);margin-bottom:14px;}
+.modal-close-btn{background:var(--orange);color:white;border:var(--border);border-radius:50px;padding:8px 22px;font-weight:800;cursor:pointer;margin-top:16px;box-shadow:var(--shadow-sm);}
+
+/* ─── QUIZ SCREEN ─── */
+#quiz{padding:16px;max-width:880px;margin:0 auto;min-height:100vh;background:transparent;}
+
+/* Timer setup */
+.timer-setup-box{background:var(--yellow);border:var(--border);border-radius:16px;padding:20px 24px;margin-bottom:16px;box-shadow:var(--shadow-sm);}
+.timer-setup-box h3{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.6rem;margin-bottom:8px;}
+
+/* Quiz top bar */
+.quiz-header{background:white;border:var(--border);border-radius:16px;padding:14px 18px;margin-bottom:14px;box-shadow:var(--shadow-sm);display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.quiz-counter{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.5rem;color:var(--orange);min-width:90px;}
+.quiz-progress-bar-wrap{flex:1;min-width:120px;background:#FFE88A;border:2px solid var(--black);border-radius:50px;height:18px;overflow:hidden;}
+.quiz-progress-bar{height:100%;background:linear-gradient(90deg,var(--orange),var(--yellow));border-radius:50px;transition:width .4s ease;}
+.quiz-domain-badge{background:var(--cyan);border:2px solid var(--black);border-radius:50px;padding:4px 14px;font-size:0.82rem;font-weight:900;}
+.timer-box{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.3rem;background:var(--orange);color:white;border:3px solid var(--black);border-radius:10px;padding:4px 14px;letter-spacing:3px;display:none;}
+.timer-box.warn{background:var(--red)!important;animation:blink .5s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.45}}
+
+/* Flag drawer */
+.flag-drawer{background:#FFF7CC;border:3px solid var(--yellow);border-radius:12px;padding:12px 16px;margin-bottom:12px;display:none;}
+.flag-drawer.open{display:block;}
+.flag-chip{display:inline-block;background:var(--yellow);border:2px solid var(--black);border-radius:50px;padding:3px 12px;font-size:0.78rem;font-weight:900;cursor:pointer;margin:3px;transition:all .1s;}
+.flag-chip:hover{background:var(--orange);color:white;}
+.flag-chip.answered{background:var(--lime);}
+
+/* Question card */
+.question-card{background:white;border:var(--border);border-radius:20px;padding:28px;box-shadow:var(--shadow);margin-bottom:14px;position:relative;overflow:hidden;}
+.q-stripe{position:absolute;top:0;left:0;right:0;height:8px;border-radius:20px 20px 0 0;}
+.question-scenario{background:#E8F8FF;border:3px solid var(--cyan);border-radius:12px;padding:14px 16px;margin-bottom:16px;font-size:0.9rem;font-weight:700;color:#223;line-height:1.6;}
+.question-text{font-family:'Nunito',-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:1.08rem;line-height:1.65;color:var(--black);margin-bottom:22px;}
+.q-cartoon-tag{display:inline-flex;align-items:center;gap:8px;background:var(--yellow);border:2px solid var(--black);border-radius:50px;padding:4px 14px;font-size:0.82rem;font-weight:900;}
+
+/* MCQ answers */
+.answers{display:flex;flex-direction:column;gap:10px;}
+.answer-btn{background:white;border:3px solid var(--black);border-radius:14px;padding:14px 18px;cursor:pointer;font-family:'Nunito',-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:700;font-size:0.92rem;text-align:left;transition:all .12s;box-shadow:var(--shadow-sm);display:flex;gap:12px;align-items:flex-start;line-height:1.45;}
+.answer-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--black);background:#FFF8E0;}
+.answer-btn.selected{background:var(--cyan)!important;border-color:var(--black)!important;transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--black);}
+.ans-letter{background:var(--orange);color:white;border-radius:8px;min-width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.1rem;flex-shrink:0;}
+
+/* PBQ */
+.pbq-instruction{background:var(--purple);color:white;border:2px solid var(--black);border-radius:10px;padding:10px 14px;font-weight:900;font-size:0.85rem;margin-bottom:14px;}
+.drag-items{display:flex;flex-direction:column;gap:8px;}
+.drag-item{background:white;border:3px solid var(--black);border-radius:12px;padding:12px 16px;cursor:grab;font-weight:700;font-size:0.88rem;display:flex;gap:12px;align-items:center;box-shadow:var(--shadow-sm);transition:all .1s;user-select:none;}
+.drag-item:hover{background:#FFFDE0;}
+.drag-item.dragging{opacity:.5;}
+.drag-item.drag-over{background:var(--cyan);transform:scale(1.02);}
+.drag-handle{font-size:1.1rem;opacity:.5;flex-shrink:0;}
+.drag-num{background:var(--orange);color:white;border-radius:50%;min-width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:.95rem;flex-shrink:0;}
+
+/* Match */
+.match-container{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+@media(max-width:560px){.match-container{grid-template-columns:1fr;}}
+.match-col-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.1rem;margin-bottom:8px;}
+.match-item{background:white;border:3px solid var(--black);border-radius:10px;padding:11px 14px;font-weight:700;font-size:0.82rem;margin-bottom:7px;cursor:pointer;transition:all .12s;box-shadow:var(--shadow-sm);line-height:1.4;}
+.match-item:hover{background:#FFF8E0;transform:translate(-1px,-1px);}
+.match-item.matched{background:var(--lime);cursor:default;}
+.match-item.matched-b{background:var(--cyan);cursor:default;}
+
+/* Nav row */
+.nav-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;flex-wrap:wrap;gap:10px;}
+.skip-btn{background:var(--yellow);color:var(--black);border:var(--border);border-radius:50px;padding:11px 20px;font-family:'Nunito',-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:800;font-size:0.88rem;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .1s;}
+.skip-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--black);}
+.next-btn{background:var(--orange);color:white;border:var(--border);border-radius:50px;padding:13px 30px;font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.4rem;letter-spacing:1px;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .1s;}
+.next-btn:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--black);}
+.next-btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--black);}
+.next-btn:disabled{opacity:.35;cursor:not-allowed;transform:none!important;}
+.finish-btn{background:var(--lime);color:var(--black);border:var(--border);border-radius:50px;padding:13px 28px;font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.4rem;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .1s;}
+.finish-btn:hover{transform:translate(-3px,-3px);box-shadow:6px 6px 0 var(--black);}
+
+/* ─── RESULTS ─── */
+#results{padding:28px 20px;max-width:900px;margin:0 auto;min-height:100vh;background:transparent;}
+.result-hero{background:white;border:var(--border);border-radius:24px;padding:36px 28px;box-shadow:var(--shadow);margin-bottom:24px;text-align:center;position:relative;overflow:hidden;}
+.result-stripe{position:absolute;top:0;left:0;right:0;height:10px;border-radius:24px 24px 0 0;}
+.scoreRing{width:150px;height:150px;border-radius:50%;border:8px solid var(--black);display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 16px;}
+.scoreNum{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:3.2rem;line-height:1;}
+.score-label{font-size:0.72rem;font-weight:800;color:#888;}
+.score-900{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1rem;color:#888;margin-top:2px;}
+.status-badge{display:inline-block;border:var(--border);border-radius:50px;padding:10px 28px;font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.5rem;letter-spacing:1px;margin-bottom:12px;box-shadow:var(--shadow-sm);}
+.result-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:clamp(2rem,5vw,3.5rem);margin-bottom:10px;}
+.result-message{font-size:1rem;font-weight:700;color:#444;max-width:500px;margin:0 auto;}
+
+/* Domain scores */
+.domain-scores{background:white;border:var(--border);border-radius:20px;padding:24px;box-shadow:var(--shadow-sm);margin-bottom:22px;}
+.domain-scores-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:2rem;text-align:center;margin-bottom:18px;color:var(--orange);}
+.domain-score-row{margin-bottom:16px;}
+.domain-score-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;flex-wrap:wrap;gap:4px;}
+.domain-score-name{font-weight:800;font-size:0.88rem;}
+.domain-score-pct{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.2rem;}
+.domain-bar-wrap{background:#FFE88A;border:2px solid var(--black);border-radius:50px;height:18px;overflow:hidden;}
+.domain-bar-fill{height:100%;border-radius:50px;transition:width 1.2s ease;}
+.domain-study-note{font-size:0.78rem;font-weight:700;color:#666;margin-top:4px;}
+
+/* Study resources */
+.study-section{background:var(--yellow);border:var(--border);border-radius:20px;padding:22px;box-shadow:var(--shadow-sm);margin-bottom:22px;}
+.study-section-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.8rem;margin-bottom:14px;}
+.resource-link{display:flex;align-items:center;gap:12px;background:white;border:2px solid var(--black);border-radius:12px;padding:12px 16px;margin-bottom:8px;text-decoration:none;color:var(--black);font-weight:700;font-size:0.88rem;box-shadow:2px 2px 0 var(--black);transition:all .1s;}
+.resource-link:hover{transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--black);}
+
+/* Print report */
+.report-box{background:white;border:var(--border);border-radius:20px;padding:24px;box-shadow:var(--shadow-sm);margin-bottom:22px;}
+.report-box-title{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.8rem;margin-bottom:6px;}
+.report-inner{border:3px dashed #FFB300;border-radius:14px;padding:18px;background:#FFFDF5;}
+.pr-domain-row{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee;}
+.pr-domain-name{font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.1rem;}
+.pr-bar-bg{background:#eee;border-radius:4px;height:10px;margin:5px 0;}
+.pr-bar-fill{height:10px;border-radius:4px;}
+.pr-tip-box{border-radius:8px;padding:10px;margin-top:6px;}
+.pr-btn{background:var(--orange);color:white;border:var(--border);border-radius:50px;padding:10px 22px;font-weight:800;cursor:pointer;font-size:0.88rem;box-shadow:var(--shadow-sm);transition:all .1s;margin-right:8px;margin-top:10px;}
+.pr-btn:hover{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--black);}
+.pr-btn.lime{background:var(--lime);color:var(--black);}
+
+/* Result action buttons */
+.result-actions{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:28px;}
+.ra{border:var(--border);border-radius:50px;padding:13px 26px;font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.3rem;letter-spacing:1px;cursor:pointer;box-shadow:var(--shadow-sm);transition:all .1s;}
+.ra:hover{transform:translate(-3px,-3px);box-shadow:7px 7px 0 var(--black);}
+.ra.orange{background:var(--orange);color:white;}
+.ra.white{background:white;color:var(--black);}
+.ra.lime{background:var(--lime);color:var(--black);}
+
+/* Confetti / fireworks */
+#confetti-canvas,#fw-canvas,#balloon-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:999;display:none;}
+
+/* Footer */
+footer{background:var(--orange);color:white;text-align:center;padding:14px 20px;font-size:0.72rem;font-weight:700;line-height:1.9;border-top:4px solid var(--black);}
+footer a{color:var(--yellow);text-decoration:none;font-weight:900;}
+
+/* Responsive */
+@media(max-width:600px){
+  .mode-grid{grid-template-columns:1fr;}
+  .question-card{padding:18px 14px;}
+  .hero-title{font-size:3rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- SCORING MODAL -->
+<div class="modal-bg" id="scoreModal">
+  <div class="modal-card">
+    <h3>📊 How CompTIA Scoring Works</h3>
+    <div style="font-weight:700;font-size:0.88rem;line-height:1.8;color:#444;">
+      <strong>Passing score:</strong> 750 out of 900 (≈83%)<br><br>
+      <strong>MCQ questions:</strong> All-or-nothing. No partial credit.<br><br>
+      <strong>PBQ (drag-drop/matching):</strong> May award partial credit — this quiz gives 0.5 pts for ≥50% correct.<br><br>
+      <strong>❌ The "name credit" myth:</strong> 100% FALSE. CompTIA does NOT give points for writing your name. Ignore that rumor completely!<br><br>
+      <strong>Unanswered = wrong.</strong> Always attempt every question — no penalty for guessing.<br><br>
+      <strong>Strategy:</strong> Eliminate 2 wrong answers first — odds jump from 25% → 50%.
+    </div>
+    <button class="modal-close-btn" onclick="document.getElementById('scoreModal').classList.remove('open')">✓ Got It!</button>
+  </div>
+</div>
+
+<!-- HEADER -->
+<header class="no-print">
+  <div class="logo">📺 CARTOON NETWORK-ING<span> SEC+</span><small>SY0-701 PRACTICE EXAM</small></div>
+  <div class="hdr-btns">
+    <a class="hbtn" href="https://charleneluequee.github.io/#index" target="_blank" style="text-decoration:none;">🏠 Portfolio</a>
+    <a class="hbtn cyan" href="https://charleneluequee.github.io/security-notes.html" target="_blank" style="text-decoration:none;">📚 Study Hub</a>
+    <button class="hbtn" onclick="document.getElementById('scoreModal').classList.add('open')">📊 Scoring</button>
+    <button class="hbtn yellow" id="soundToggle" onclick="toggleSound()">🔊 Sound ON</button>
+    <button class="hbtn lime" onclick="showScreen('landing')">🎮 Menu</button>
+  </div>
+</header>
+
+<!-- ==================== LANDING SCREEN ==================== -->
+<div id="landing" class="screen active">
+
+  <!-- BIG COLOURFUL HERO -->
+  <div class="hero-top no-print">
+    <div class="hero-title">CARTOON<br><em>NETWORK-ING</em></div>
+    <div class="hero-sub">⚡ SECURITY+ SY0-701 EXAM ENGINE ⚡</div>
+    <div class="hero-badges">
+      <span class="hbadge">🎯 150 Questions</span>
+      <span class="hbadge">📺 15 Cartoons — CN &amp; Nick</span>
+      <span class="hbadge">🏆 All 5 Domains</span>
+      <span class="hbadge">🔤 Acronym Blitz + 🧩 PBQ Arena</span>
+      <span class="hbadge">⏱️ Optional 90-Min Timer</span>
+      <span class="hbadge">🖨️ Printable Report</span>
+      <span class="hbadge">🏅 750/900 Scoring</span>
+    </div>
+  </div>
+
+  <!-- COLOURFUL CHECKER STRIP -->
+  <div class="checker-strip no-print"></div>
+
+  <!-- BRIGHT YELLOW MARQUEE -->
+  <div class="marquee-wrap no-print">
+    <div class="marquee-track">
+      <span class="m-tag"><span class="m-dot" style="background:#FF5500;"></span>🧽 SpongeBob — CIA Triad &amp; PKI</span>
+      <span class="m-tag"><span class="m-dot" style="background:#00C8F0;"></span>⚡ Ben 10 — Malware Types</span>
+      <span class="m-tag"><span class="m-dot" style="background:#FF1F8C;"></span>🐕 Scooby-Doo — Incident Response</span>
+      <span class="m-tag"><span class="m-dot" style="background:#8B00FF;"></span>🌪️ Avatar — Secure Architecture</span>
+      <span class="m-tag"><span class="m-dot" style="background:#7ED800;"></span>🏠 KND — Social Engineering</span>
+      <span class="m-tag"><span class="m-dot" style="background:#0088FF;"></span>⚡ X-Men '97 — Nation-State Threats</span>
+      <span class="m-tag"><span class="m-dot" style="background:#FF5500;"></span>🍩 Simpsons — Vuln Management</span>
+      <span class="m-tag"><span class="m-dot" style="background:#00C8F0;"></span>🚀 Futurama — Cloud Security</span>
+      <span class="m-tag"><span class="m-dot" style="background:#FF1F8C;"></span>👻 Danny Phantom — Digital Forensics</span>
+      <span class="m-tag"><span class="m-dot" style="background:#8B00FF;"></span>⭐ Fairly OddParents — IAM &amp; SSO</span>
+      <span class="m-tag"><span class="m-dot" style="background:#7ED800;"></span>🚌 Magic School Bus — Crypto &amp; PKI</span>
+      <span class="m-tag"><span class="m-dot" style="background:#0088FF;"></span>🍼 Rugrats — Risk Management</span>
+      <span class="m-tag"><span class="m-dot" style="background:#FF5500;"></span>🌲 Gravity Falls — Defense-in-Depth</span>
+      <span class="m-tag"><span class="m-dot" style="background:#00C8F0;"></span>🍺 Family Guy — Governance</span>
+      <span class="m-tag"><span class="m-dot" style="background:#FF1F8C;"></span>🇺🇸 American Dad — Compliance &amp; CIA</span>
+      <!-- duplicate for loop -->
+      <span class="m-tag"><span class="m-dot" style="background:#FF5500;"></span>🧽 SpongeBob — CIA Triad &amp; PKI</span>
+      <span class="m-tag"><span class="m-dot" style="background:#00C8F0;"></span>⚡ Ben 10 — Malware Types</span>
+      <span class="m-tag"><span class="m-dot" style="background:#FF1F8C;"></span>🐕 Scooby-Doo — Incident Response</span>
+      <span class="m-tag"><span class="m-dot" style="background:#8B00FF;"></span>🌪️ Avatar — Secure Architecture</span>
+      <span class="m-tag"><span class="m-dot" style="background:#7ED800;"></span>🏠 KND — Social Engineering</span>
+    </div>
+  </div>
+
+  <!-- CRAM BANNER -->
+  <div style="max-width:900px;margin:0 auto;padding:0 20px;">
+    <div class="cram-banner" onclick="showCram()">
+      <div class="cram-icon">⚡</div>
+      <div>
+        <div class="cram-title">QUICK EXAM PREP — Cram Before You Test!</div>
+        <div class="cram-desc">Rapid-fire overview of EVERY domain's highest-frequency concepts — cartoon-mapped. Spend 5 minutes here before your attempt for a serious memory boost!</div>
+      </div>
+      <div style="font-size:2.5rem;flex-shrink:0;">→</div>
+    </div>
+  </div>
+
+  <!-- MODE CARDS -->
+  <div class="mode-section">
+    <div class="mode-sec-title">🎮 CHOOSE YOUR MODE</div>
+    <div class="mode-sec-sub">All modes use cartoon analogies — because learning should be FUN and LOUD!</div>
+    <div class="mode-grid">
+
+      <!-- FULL EXAM -->
+      <div class="mode-card" onclick="startMode('full')" style="background:#FFF3E8;">
+        <div class="mc-bar" style="background:var(--orange);"></div>
+        <div class="mc-emoji">🎓</div>
+        <div class="mc-title" style="color:var(--orange);">FULL EXAM</div>
+        <div class="mc-desc">100 questions across all 5 domains, weighted exactly like CompTIA SY0-701. PBQs included! Optional 90-minute timer. Skip queue for flagged questions.</div>
+        <div class="mc-badge" style="background:var(--orange);color:white;border-color:var(--black);">🎯 100 Q • Full Weight • Timer Option</div>
+      </div>
+
+      <!-- QUICK QUIZ -->
+      <div class="mode-card" onclick="startMode('short')" style="background:#E8FAFF;">
+        <div class="mc-bar" style="background:var(--cyan);"></div>
+        <div class="mc-emoji">⏱️</div>
+        <div class="mc-title" style="color:var(--cyan);">QUICK QUIZ</div>
+        <div class="mc-desc">35 questions across all 5 domains in proper CompTIA proportions. Perfect for a daily review session or when you're crunched for time!</div>
+        <div class="mc-badge" style="background:var(--cyan);border-color:var(--black);">🚀 35 Q • ~30 Min • All Domains</div>
+      </div>
+
+      <!-- BY DOMAIN -->
+      <div class="mode-card" onclick="showDomainSelect()" style="background:#F3E8FF;">
+        <div class="mc-bar" style="background:var(--purple);"></div>
+        <div class="mc-emoji">🎯</div>
+        <div class="mc-title" style="color:var(--purple);">BY DOMAIN</div>
+        <div class="mc-desc">Zero in on ONE domain with 20 focused questions. Perfect for drilling weak spots with targeted cartoon analogies and detailed feedback.</div>
+        <div class="mc-badge" style="background:var(--purple);color:white;border-color:var(--black);">📚 20 Q • Domain Deep Dive</div>
+      </div>
+
+      <!-- ACRONYM BLITZ -->
+      <div class="mode-card" onclick="startMode('acronym')" style="background:#FFE8F5;">
+        <div class="mc-bar" style="background:var(--pink);"></div>
+        <div class="mc-emoji">🔤</div>
+        <div class="mc-title" style="color:var(--pink);">ACRONYM BLITZ</div>
+        <div class="mc-desc">30 cartoon-themed MCQs drilling the acronyms CompTIA uses CONSTANTLY — CIA, AAA, CVE/CVSS, RTO/RPO, SIEM/SOAR, GRC and more. Each one is wrapped in a memorable cartoon scenario so it STICKS.</div>
+        <div class="mc-badge" style="background:var(--pink);color:white;border-color:var(--black);">🔤 30 Q • Acronym Mastery</div>
+      </div>
+
+      <!-- PBQ ARENA -->
+      <div class="mode-card" onclick="startMode('pbq')" style="background:#EAFFE0;">
+        <div class="mc-bar" style="background:var(--lime);"></div>
+        <div class="mc-emoji">🧩</div>
+        <div class="mc-title" style="color:var(--lime);">PBQ ARENA</div>
+        <div class="mc-desc">10 Performance-Based Questions pulled from a rotating pool of 20 — network builds, log/terminal analysis, malware host ID, port &amp; protocol matching, IR ordering, and more. A fresh mix every time you play!</div>
+        <div class="mc-badge" style="background:var(--lime);color:#111;border-color:var(--black);">🧩 10 PBQs • Rotates Each Time</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- HOW IT WORKS — bright coloured cards, NO dark backgrounds -->
+  <div class="how-wrap no-print">
+    <div class="how-title">🎓 HOW IT WORKS</div>
+    <p style="text-align:center;max-width:720px;margin:-8px auto 22px;font-size:0.95rem;font-weight:700;color:#555;line-height:1.7;">
+      Every quiz delivers an <strong>enhanced personalized study report</strong> — domain-by-domain scoring with color-coded performance tiers,
+      every missed question with your answer vs. the correct one, and a concise <em>why-it's-right</em> explanation for each miss.
+      So instead of just knowing your score, you leave every practice session knowing <em>exactly what to study next</em>.
+    </p>
+    <div class="how-grid">
+      <div class="how-card">
+        <span class="how-num">01</span>
+        <div class="how-head">NO SPOILERS</div>
+        <div class="how-body">Click any answer — zero right/wrong hints until the very END. Just like the real CompTIA exam.</div>
+      </div>
+      <div class="how-card">
+        <span class="how-num">02</span>
+        <div class="how-head">FLAG &amp; RETURN</div>
+        <div class="how-body">Flag tricky questions and skip them. See your flag queue anytime and jump back before submitting.</div>
+      </div>
+      <div class="how-card">
+        <span class="how-num">03</span>
+        <div class="how-head">REAL SCORING</div>
+        <div class="how-body">MCQs: all-or-nothing. PBQs: partial credit. Scaled to CompTIA's 750/900 passing system.</div>
+      </div>
+      <div class="how-card">
+        <span class="how-num">04</span>
+        <div class="how-head">PRINT REPORT</div>
+        <div class="how-body">Get a personalized printable feedback sheet with domain scores and custom study tips!</div>
+      </div>
+      <div class="how-card">
+        <span class="how-num">05</span>
+        <div class="how-head">TIMER OPTION</div>
+        <div class="how-body">Full Exam includes optional 90-minute countdown — exactly like the real CompTIA experience.</div>
+      </div>
+      <div class="how-card">
+        <span class="how-num">06</span>
+        <div class="how-head">CARTOON CONTEXT</div>
+        <div class="how-body">Every question ties to a cartoon character or show — SpongeBob, Avatar, X-Men, and more — to build lasting memory hooks.</div>
+      </div>
+      <div class="how-card">
+        <span class="how-num">07</span>
+        <div class="how-head">PBQ PRACTICE</div>
+        <div class="how-body">Drag-and-drop and matching performance-based questions mirror the real exam format — not just multiple choice.</div>
+      </div>
+      <div class="how-card">
+        <span class="how-num">08</span>
+        <div class="how-head">CRAM MODE</div>
+        <div class="how-body">Hit the ⚡ Quick Exam Prep banner first — a rapid-fire domain overview to prime your brain before any attempt.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COPYRIGHT — white background, coloured border -->
+  <div class="copyright-bar no-print">
+    <strong>© 2024–2026 Charlene LueQuee — All Rights Reserved.</strong> |
+    Educational &amp; non-commercial use only under <em>Fair Use (17 U.S.C. § 107)</em>.<br>
+    Cartoon characters referenced as instructional analogies only — not affiliated with Cartoon Network, Nickelodeon, Warner Bros., Viacom, or any associated studios.<br>
+    CompTIA Security+ is a registered trademark of CompTIA, Inc. This is an independent study tool — NOT an official CompTIA product.<br>
+    Built by <a href="https://charleneluequee.github.io" target="_blank">Charlene LueQuee</a> |
+    <a href="https://charleneluequee.github.io/security-notes.html" target="_blank">Cartoon Network-ing Study Hub</a>
+  </div>
+
+  <!-- PORTFOLIO RATIONALE -->
+  <div class="rationale-wrap no-print">
+    <div class="rationale-eyebrow">📺 Portfolio Rationale</div>
+    <div class="rationale-title">More Than a Practice Exam</div>
+    <p class="rationale-intro">This exam engine was intentionally built to demonstrate applied competencies in instructional design, assessment development, and human-centered learning — not just CompTIA trivia.</p>
+    <div class="rationale-grid">
+      <div class="rationale-card">
+        <div class="rationale-bar" style="background:var(--orange);"></div>
+        <div class="rationale-icon">🎓</div>
+        <div class="rationale-card-title">ADDIE Framework</div>
+        <div class="rationale-card-body">Every mode follows the <strong>ADDIE instructional design model</strong>. The question bank was Analyzed against the official SY0-701 exam objectives and domain weightings; Designed around cartoon analogies for schema activation; Developed into Full Exam, Quick Quiz, and By-Domain modes with MCQs and PBQs; Implemented as a self-contained, deployable HTML app; and continuously Evaluated through score reports that drive the next study cycle.</div>
+      </div>
+      <div class="rationale-card">
+        <div class="rationale-bar" style="background:var(--yellow);"></div>
+        <div class="rationale-icon">📚</div>
+        <div class="rationale-card-title">Curriculum Design</div>
+        <div class="rationale-card-body">This project is a <strong>fully sequenced curriculum</strong>, not just a question bank. Content is scaffolded from foundational concepts (Domain 1) to governance and compliance (Domain 5), mirroring how a formal course map is structured. The Cram Mode serves as a pre-assessment primer; mode selection enables differentiated learning paths; and the domain-specific feedback loop mirrors the remediation cycles used in corporate training programs and academic course redesign. Every design decision is grounded in <strong>backwards design</strong> — the SY0-701 exam objectives define the terminal learning outcomes, and every question, analogy, and report traces back to them.</div>
+      </div>
+      <div class="rationale-card">
+        <div class="rationale-bar" style="background:var(--cyan);"></div>
+        <div class="rationale-icon">🛡️</div>
+        <div class="rationale-card-title">GRC-Aligned Assessment</div>
+        <div class="rationale-card-body">Scoring mirrors CompTIA's real 750/900 passing threshold, weights each domain to match the actual SY0-701 blueprint, and produces a personalized domain-by-domain study plan. This reflects how security awareness training and competency assessments are structured in enterprise GRC programs — measure the gap, then target remediation.</div>
+      </div>
+      <div class="rationale-card">
+        <div class="rationale-bar" style="background:var(--purple);"></div>
+        <div class="rationale-icon">🤖</div>
+        <div class="rationale-card-title">AI-Assisted Development</div>
+        <div class="rationale-card-body">Built entirely through <strong>human-led, AI-assisted development</strong> — using Claude to generate, iterate, and refine the exam engine's logic, grading, theming, and accessibility from the ground up. This demonstrates fluency in leveraging modern AI tools to ship professional-grade interactive applications at speed.</div>
+      </div>
+    </div>
+    <div class="rationale-tags">
+      <span class="rationale-tag">Instructional Design</span>
+      <span class="rationale-tag">Curriculum Design</span>
+      <span class="rationale-tag">Backwards Design</span>
+      <span class="rationale-tag">Scaffolded Learning</span>
+      <span class="rationale-tag">Differentiated Instruction</span>
+      <span class="rationale-tag">Assessment Development</span>
+      <span class="rationale-tag">Curriculum Mapping</span>
+      <span class="rationale-tag">GRC Frameworks</span>
+      <span class="rationale-tag">Retrieval Practice</span>
+      <span class="rationale-tag">UDL Principles</span>
+      <span class="rationale-tag">Exam Simulation Design</span>
+      <span class="rationale-tag">AI-Assisted Development</span>
+    </div>
+    <div class="rationale-cta">
+      Curious how this exam engine fits into the bigger picture? The full Cartoon Network-ing Study Hub — flashcards, games, and the ADDIE/GRC instructional design rationale — lives on the main study page.<br>
+      <a href="https://charleneluequee.github.io/security-notes.html" target="_blank">Explore the Study Hub →</a>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== CRAM SCREEN ==================== -->
+<div id="cramScreen" class="screen">
+<div class="checker-strip no-print" style="margin-bottom:16px;border-radius:8px;"></div>
+  <div style="max-width:920px;margin:0 auto;padding:30px 20px;">
+    <div style="font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:3rem;text-shadow:3px 3px 0 #FF6600;margin-bottom:6px;">⚡ QUICK EXAM PREP</div>
+    <p style="font-weight:700;color:#666;margin-bottom:24px;">Key concepts per domain — read FAST, then go test! These are the highest-frequency exam topics.</p>
+    <div id="cramContent" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-bottom:24px;"></div>
+    <div style="background:#FFCC00;border:4px solid #111;border-radius:16px;padding:18px;box-shadow:4px 4px 0 #111;margin-bottom:24px;">
+      <div style="font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.5rem;margin-bottom:10px;">🧠 EXAM DAY MINDSET</div>
+      <div style="font-size:0.85rem;font-weight:700;color:#333;line-height:1.9;">
+        ✅ <strong>BEST / MOST / FIRST / ONLY</strong> — qualifier words change the answer. Read carefully!<br>
+        ✅ <strong>PBQs strategy:</strong> Flag them if stumped — answer MCQs first to lock in points<br>
+        ✅ <strong>Eliminate 2 wrong answers:</strong> Jumps your odds from 25% to 50%<br>
+        ✅ <strong>Trust your first instinct</strong> unless a later question gives you concrete reason to change<br>
+        ✅ <strong>Always answer everything</strong> — no penalty for guessing on CompTIA<br>
+        ✅ <strong>Pass = 750/900 (≈83%)</strong> — you do NOT need perfection!
+      </div>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <button style="background:#FF6600;color:white;border:4px solid #111;border-radius:50px;padding:13px 28px;font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.4rem;cursor:pointer;box-shadow:4px 4px 0 #111;" onclick="startMode('full')">⚡ Full Exam (100Q)</button>
+      <button style="background:#00BBEE;color:#111;border:4px solid #111;border-radius:50px;padding:13px 28px;font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.4rem;cursor:pointer;box-shadow:4px 4px 0 #111;" onclick="startMode('short')">⏱️ Quick Quiz (35Q)</button>
+      <button style="background:var(--orange);color:white;border:4px solid #111;border-radius:50px;padding:13px 24px;font-family:'Nunito',-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:800;cursor:pointer;" onclick="showScreen('landing')">← Back</button>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== DOMAIN SELECT ==================== -->
+<div id="domainSelect" class="screen">
+<div class="checker-strip no-print" style="margin-bottom:16px;border-radius:8px;"></div>
+  <div style="max-width:600px;margin:0 auto;padding:40px 20px;">
+    <div class="screen-title">🎯 PICK A DOMAIN</div>
+    <p style="font-weight:700;color:#666;margin-bottom:24px;">Choose a domain to drill — 20 focused questions!</p>
+    <div class="domain-grid">
+      <button class="domain-btn" onclick="startMode('domain',1)">
+        <span class="d-icon">🧽</span>
+        <div class="d-info">
+          <div class="d-name">Domain 1: General Security Concepts</div>
+          <div class="d-weight">SpongeBob, Magic School Bus, Gravity Falls</div>
+        </div>
+        <span class="d-pct">12%</span>
+      </button>
+      <button class="domain-btn" onclick="startMode('domain',2)">
+        <span class="d-icon">⚔️</span>
+        <div class="d-info">
+          <div class="d-name">Domain 2: Threats, Vulnerabilities & Mitigations</div>
+          <div class="d-weight">KND, X-Men, Ben 10, Danny Phantom</div>
+        </div>
+        <span class="d-pct">22%</span>
+      </button>
+      <button class="domain-btn" onclick="startMode('domain',3)">
+        <span class="d-icon">🏗️</span>
+        <div class="d-info">
+          <div class="d-name">Domain 3: Security Architecture</div>
+          <div class="d-weight">Futurama, American Dad, Avatar</div>
+        </div>
+        <span class="d-pct">18%</span>
+      </button>
+      <button class="domain-btn" onclick="startMode('domain',4)">
+        <span class="d-icon">🔍</span>
+        <div class="d-info">
+          <div class="d-name">Domain 4: Security Operations</div>
+          <div class="d-weight">Scooby-Doo, Simpsons, Family Guy, Fairly OddParents</div>
+        </div>
+        <span class="d-pct">28%</span>
+      </button>
+      <button class="domain-btn" onclick="startMode('domain',5)">
+        <span class="d-icon">📋</span>
+        <div class="d-info">
+          <div class="d-name">Domain 5: Security Program Management</div>
+          <div class="d-weight">Rugrats, American Dad, Simpsons</div>
+        </div>
+        <span class="d-pct">20%</span>
+      </button>
+    </div>
+    <button class="back-btn" onclick="showScreen('landing')">← Back</button>
+  </div>
+</div>
+
+<!-- ==================== QUIZ SCREEN ==================== -->
+<div id="quiz" class="screen">
+<div class="checker-strip no-print" style="margin-bottom:16px;border-radius:8px;"></div>
+  <!-- TIMER SETUP (full exam only) -->
+  <div id="timerSetup" style="display:none;" class="timer-setup-box no-print">
+    <h3>⏱️ FULL EXAM TIMER</h3>
+    <p style="font-size:0.9rem;font-weight:700;color:#444;margin-bottom:14px;">The real CompTIA SY0-701 is 90 minutes for up to 90 questions. Practice with the timer for realistic experience!</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;">
+      <button onclick="beginExam(true)" style="background:#FF6600;color:white;border:3px solid #111;border-radius:50px;padding:12px 24px;font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.3rem;cursor:pointer;box-shadow:3px 3px 0 #111;">⏱️ START WITH 90-MIN TIMER</button>
+      <button onclick="beginExam(false)" style="background:var(--orange);color:white;border:3px solid #111;border-radius:50px;padding:12px 24px;font-family:'Nunito',-apple-system,'Helvetica Neue',Arial,sans-serif;font-weight:800;cursor:pointer;">📚 No Timer — Untimed Practice</button>
+    </div>
+  </div>
+
+  <div id="quizMain" style="display:none;">
+    <!-- QUIZ TOPBAR -->
+    <div class="quiz-header no-print">
+      <div class="quiz-counter" id="qCounter">Q 1 / 100</div>
+      <div class="quiz-progress-bar-wrap">
+        <div class="quiz-progress-bar" id="progressBar" style="width:1%"></div>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <div class="timer-box" id="timerBox">90:00</div>
+        <div class="quiz-domain-badge" id="domainBadge">D1</div>
+      </div>
+    </div>
+
+    <!-- FLAG DRAWER -->
+    <div class="flag-drawer no-print" id="flagDrawer">
+      <div style="font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.1rem;margin-bottom:8px;">🚩 Flagged Questions — Click to Jump Back:</div>
+      <div id="flagChips"></div>
+    </div>
+
+    <div id="questionContainer"></div>
+
+    <div class="nav-row no-print">
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <button class="skip-btn" id="skipBtn" onclick="flagAndSkip()">🚩 Flag &amp; Skip</button>
+        <button class="skip-btn" id="showFlagBtn" onclick="toggleFlagDrawer()" style="display:none;background:#FFCC00;">📋 Flags (<span id="flagCount">0</span>)</button>
+      </div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <button class="next-btn" id="finishBtn" onclick="confirmFinish()" style="display:none;background:#88CC00;color:#111;">✅ FINISH</button>
+        <button class="next-btn" id="nextBtn" onclick="nextQuestion()" disabled>NEXT →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== RESULTS SCREEN ==================== -->
+<div id="results" class="screen">
+<div class="checker-strip no-print" style="margin-bottom:16px;border-radius:8px;"></div>
+  <div class="result-hero">
+    <div class="result-stripe" id="resultStripe"></div>
+    <div id="resultEmoji" style="font-size:4rem;margin-bottom:10px;"></div>
+    <div class="result-score-ring scoreRing" id="scoreRing">
+      <div class="result-score-num scoreNum" id="scoreNum">0%</div>
+      <div class="score-900" id="score900">≈0/900</div>
+      <div class="result-score-label score-label">SCORE</div>
+    </div>
+    <div class="result-status-badge status-badge" id="statusBadge">Loading...</div>
+    <div class="result-title" id="resultTitle"></div>
+    <div class="result-message" id="resultMessage"></div>
+  </div>
+
+  <div class="domain-scores"><div class="domain-scores-title">📊 DOMAIN BREAKDOWN</div>
+    <div id="domainBreakdown"></div>
+  </div>
+
+  <div class="study-resources">
+    <div class="study-resources-title">📚 STUDY RESOURCES</div>
+    <a class="resource-link" href="https://charleneluequee.github.io/security-notes.html" target="_blank">
+      🎮 Cartoon Security+ Study Hub — All 15 Cartoon Pages, Flashcards & More
+    </a>
+    <a class="resource-link" href="https://charleneluequee.github.io" target="_blank">
+      🌐 Charlene's Portfolio & GRC Projects
+    </a>
+    <a class="resource-link" href="https://amzn.to/4nVi25Y" target="_blank">
+      📖 CompTIA Security+ Study Guide (Recommended)
+    </a>
+    <a class="resource-link" href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-video/sy0-701-comptia-security-plus-course/" target="_blank">
+      🎥 Professor Messer SY0-701 Free Course
+    </a>
+  </div>
+
+  <!-- PRINTABLE REPORT -->
+  <div class="report-box no-print">
+    <div style="font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.8rem;margin-bottom:6px;">🖨️ YOUR PERSONALIZED STUDY REPORT</div>
+    <p style="font-size:0.85rem;font-weight:700;color:#666;margin-bottom:14px;">Custom feedback based on YOUR answers — print it or download it!</p>
+    <div class="report-inner" id="reportInner"><em style="color:#aaa;">Results will appear here after you complete the exam.</em></div>
+    <div class="pr-actions">
+      <button class="pr-dl-btn" onclick="doPrint()">🖨️ Print / Save as PDF</button>
+      <button class="pr-dl-btn green" onclick="doDownload()">⬇️ Download HTML Report</button>
+    </div>
+  </div>
+
+  <!-- STUDY RESOURCES -->
+  <div style="background:#FFCC00;border:4px solid #111;border-radius:20px;padding:24px;box-shadow:5px 5px 0 #111;margin-bottom:24px;" class="no-print">
+    <div style="font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.8rem;margin-bottom:14px;">📚 STUDY RESOURCES</div>
+    <a class="resource-link" href="https://charleneluequee.github.io/security-notes.html" target="_blank">🎮 Cartoon Network-ing Study Hub — All 15 Cartoon Pages, Flashcards, Millionaire Game &amp; More</a>
+    <a class="resource-link" href="https://charleneluequee.github.io" target="_blank">🌐 Charlene LueQuee Portfolio — GRC Projects &amp; Instructional Design</a>
+    <a class="resource-link" href="https://amzn.to/4nVi25Y" target="_blank">📖 CompTIA Security+ Study Guide (Recommended Book)</a>
+    <a class="resource-link" href="https://www.professormesser.com/security-plus/sy0-701/sy0-701-video/sy0-701-comptia-security-plus-course/" target="_blank">🎥 Professor Messer SY0-701 Free Video Course</a>
+    <a class="resource-link" href="https://artempolynko.com/wp-content/uploads/2025/05/CompTIA-Security-Refresher.pdf" target="_blank">⚡ CompTIA Security+ Refresher PDF (Quick Cram Reference)</a>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="result-actions-row no-print">
+    <button class="ra orange" onclick="retakeTest()">🔄 RETAKE</button>
+    <button class="ra white" onclick="showScreen('landing')">🏠 MENU</button>
+    <button class="ra green" onclick="doPrint()">🖨️ PRINT REPORT</button>
+  </div>
+
+  <!-- PRINT-ONLY HEADER -->
+  <div id="printOnlyHeader" style="display:none;">
+    <h1 style="font-size:1.8rem;margin-bottom:4px;">🎮 Cartoon Network-ing Security+ — My Study Report</h1>
+    <p style="font-size:0.8rem;color:#888;">Generated: <span id="reportDate"></span> | charleneluequee.github.io/security-notes.html</p>
+    <hr style="margin:10px 0;">
+  </div>
+
+  <!-- Copyright in results -->
+  <div class="copyright-bar no-print" style="border-radius:14px;border:2px solid #333;margin-bottom:20px;">
+    © 2024–2026 Charlene LueQuee. Educational use only — Fair Use (17 U.S.C. § 107). Cartoon references are instructional analogies — not affiliated with Cartoon Network, Nickelodeon, or associated studios. CompTIA Security+ is a trademark of CompTIA, Inc.
+  </div>
+</div>
+
+<footer class="no-print">
+  Made with 💛 by <a href="https://charleneluequee.github.io" target="_blank">Charlene LueQuee</a> |
+  <a href="https://charleneluequee.github.io/security-notes.html" target="_blank">Cartoon Network-ing Study Hub</a> |
+  CompTIA Security+ SY0-701 | Cartoon Analogy Methodology™<br>
+  © 2024–2026 Charlene LueQuee. Educational use only — Fair Use 17 U.S.C. § 107. Not affiliated with Cartoon Network, Nickelodeon, or CompTIA, Inc.
+</footer>
+
+<!-- CELEBRATION CANVASES — full-screen overlays for results celebrations -->
+<canvas id="confetti-canvas" class="no-print"></canvas>
+<canvas id="fw-canvas" class="no-print"></canvas>
+<canvas id="balloon-canvas" class="no-print"></canvas>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// QUESTION BANK — 100 questions with cartoon analogies
+// ═══════════════════════════════════════════════════════
+const QUESTIONS=[
+// D1 General Security Concepts (12q)
+{id:1,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",text:"Mr. Krabs stores the Krabby Patty formula in a vault ONLY he can open — Plankton is denied every time. Which CIA Triad component does this vault BEST represent?",answers:["A. Availability","B. Non-repudiation","C. Integrity","D. Confidentiality"],correct:3,rationale:'Confidentiality = keeping data secret/restricted. The vault denies Plankton access — that\'s restricting who can see the formula.'},
+{id:2,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",text:"SpongeBob places a tamper-evident seal on each order box. The seal proves nobody changed the contents during delivery. Which CIA principle does this MOST directly support?",answers:["A. Confidentiality","B. Availability","C. Integrity","D. Authentication"],correct:2,rationale:'Integrity = ensuring data hasn\'t been altered. The tamper-evident seal proves the order contents were unchanged during delivery.'},
+{id:3,domain:1,cartoon:"Magic School Bus",type:"mcq",text:"Ms. Frizzle's digital signature on lesson plans proves a parent received the field trip waiver — the parent CANNOT deny it. This BEST demonstrates which security concept?",answers:["A. Integrity","B. Availability","C. Confidentiality","D. Non-repudiation"],correct:3,rationale:'Non-repudiation = proof you can\'t deny an action. A digital signature proves the signer sent it — they cannot later claim otherwise.'},
+{id:4,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",text:"Squidward checks IDs (Authentication), SpongeBob is kitchen-only while Patrick is dining-only (Authorization), and Mr. Krabs reviews the ledger nightly (Accounting). These BEST map to which framework?",answers:["A. CIA Triad","B. Defense-in-Depth","C. Zero Trust","D. AAA (Authentication, Authorization, Accounting)"],correct:3,rationale:'AAA = Authentication (who are you?), Authorization (what can you do?), Accounting (log what you did). All three are present here.'},
+{id:5,domain:1,cartoon:"Gravity Falls",type:"mcq",text:"The Mystery Shack uses warning signs, cameras in hallways, a door lock, AND trained staff — each layer compensating if another fails. This BEST describes which concept?",answers:["A. Zero Trust","B. Least Privilege","C. Defense-in-Depth","D. Compensating Control"],correct:2,rationale:'Defense-in-Depth = multiple overlapping security layers. If one fails, others compensate. Signs + cameras + locks + staff = layered defense.'},
+{id:6,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",text:"Sandy's air lock requires a face scan AND voice command — someone with only one factor is denied entry. This control is BEST classified as which category AND type combination?",answers:["A. Managerial — Corrective","B. Physical — Detective","C. Technical — Preventive","D. Operational — Deterrent"],correct:2,rationale:'Technical + Preventive: the airlock is a technology (technical), and requiring both factors PREVENTS unauthorized entry before it happens.'},
+{id:7,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",text:"Mrs. Puff keeps a printed revoked-licenses list (CRL) AND a real-time radio hotline (OCSP). What is the MOST significant operational difference between CRL and OCSP?",answers:["A. CRL is for encryption; OCSP is for authentication","B. CRL is a periodic batch list; OCSP provides real-time certificate status","C. CRL requires an HSM; OCSP requires a TPM","D. They are functionally identical"],correct:1,rationale:'CRL = periodic batch list updated on a schedule. OCSP = real-time, per-certificate status check. The key difference is timing: batch vs. instant.'},
+{id:8,domain:1,cartoon:"Gravity Falls",type:"mcq",text:"Grunkle Stan's 'TRESPASSERS WILL BE PROSECUTED' sign discourages intruders but does NOT physically stop them. This BEST represents which control type?",answers:["A. Preventive","B. Detective","C. Corrective","D. Deterrent"],correct:3,rationale:'Deterrent controls discourage attackers but don\'t stop them. A \'TRESPASSERS WILL BE PROSECUTED\' sign warns but doesn\'t physically block entry.'},
+{id:9,domain:1,cartoon:"Magic School Bus",type:"mcq",text:"The Magic School Bus has a chip permanently embedded in its dashboard that stores its cryptographic keys and cannot be removed. This MOST closely describes which technology?",answers:["A. HSM (Hardware Security Module)","B. Key Escrow","C. TPM (Trusted Platform Module)","D. Secure Enclave Software"],correct:2,rationale:'TPM = a chip permanently embedded (soldered) into a device\'s motherboard. It stores cryptographic keys and can\'t be removed. HSM is a separate, removable appliance.'},
+{id:10,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",text:"In Zero Trust, Mr. Krabs (Policy Engine) decides if Patrick is legitimate BEFORE Squidward (Policy Enforcement Point) allows entry. Mr. Krabs' decision layer BEST represents which Zero Trust component?",answers:["A. Data Plane","B. Implicit Trust Zone","C. Control Plane","D. Subject/System Layer"],correct:2,rationale:'In Zero Trust, the Control Plane contains the Policy Engine (makes decisions). The Data Plane contains the Policy Enforcement Point (enforces them). Mr. Krabs decides = Control Plane.'},
+{id:11,domain:1,cartoon:"Magic School Bus",type:"mcq",text:"Ms. Frizzle's class stores files on laptops (State A), sends them over Wi-Fi (State B), and displays live results on a projector (State C). Which state requires encryption-in-transit controls?",answers:["A. State A — data at rest on laptops","B. State C — data in use on the display","C. Both A and C equally","D. State B — data in transit over Wi-Fi"],correct:3,rationale:'Data in Transit = data moving across a network. The Wi-Fi transmission between laptops and the projector is actively in motion — that\'s the state requiring transit encryption.'},
+{id:12,domain:1,cartoon:"SpongeBob SquarePants",type:"pbq-order",text:"ORDER the security control types from FIRST (acts before a threat) to LAST (responds after damage):",scenario:"Plankton is plotting to steal the formula. Drag control types in correct order — FIRST at top, LAST at bottom.",items:["Deterrent — 'Keep Out' sign discourages Plankton before he tries","Preventive — Vault lock physically blocks unauthorized access","Detective — Gary meows alerting the crew mid-intrusion","Corrective — Restoring the formula from encrypted backup after breach"],correctOrder:[0,1,2,3],rationale:'Security controls ordered: Deterrent (discourage before attempt) → Preventive (block attempt) → Detective (detect during/after) → Corrective (fix after breach).'},
+// D2 Threats (22q)
+{id:13,domain:2,cartoon:"Codename: Kids Next Door",type:"mcq",text:"The Delightful Children blast a mass email to all KND operatives — pretending to be Global Command — asking them to click a link and 'verify' treehouse passwords. This MOST accurately describes which attack?",answers:["A. Whaling","B. Vishing","C. Phishing","D. Smishing"],correct:2,rationale:'Phishing = mass, untargeted email attack pretending to be a trusted source. Sending to ALL KND operatives at once is the mass/untargeted hallmark.'},
+{id:14,domain:2,cartoon:"Codename: Kids Next Door",type:"mcq",text:"Instead of blasting all operatives, the Delightful Children craft a highly targeted, personalized attack aimed ONLY at Numbuh 1 (Supreme Commander). This MOST accurately describes:",answers:["A. General Phishing","B. Smishing","C. Brand Impersonation","D. Spear Phishing / Whaling"],correct:3,rationale:'Spear Phishing = targeted at a specific individual. Whaling = spear phishing aimed at a high-value executive/leader. Numbuh 1 is the Supreme Commander — that\'s whaling.'},
+{id:15,domain:2,cartoon:"X-Men '97",type:"mcq",text:"The Brotherhood — government-funded — infiltrates Xavier's systems over months using zero-day exploits, maintains persistent access, and slowly exfiltrates mutant registry data. Which threat actor BEST describes this?",answers:["A. Hacktivist","B. Organized Crime","C. Nation-State Actor (APT)","D. Unskilled Attacker"],correct:2,rationale:'Nation-State APT = government-funded, long-term, stealthy, uses zero-days. Months of persistence + zero-days + data exfiltration = classic APT signature.'},
+{id:16,domain:2,cartoon:"Ben 10",type:"mcq",text:"Malware disguised as a legitimate Omnitrix firmware update installs a backdoor only AFTER Ben clicks and executes the file. Which malware type MOST accurately describes this?",answers:["A. Worm","B. Rootkit","C. Trojan","D. Virus"],correct:3,rationale:'Trojan = malware disguised as legitimate software that requires user execution. The fake firmware update looks legit but installs a backdoor when Ben runs it.'},
+{id:17,domain:2,cartoon:"Ben 10",type:"mcq",text:"Vilgax releases code that — once it infects ONE device — automatically spreads to ALL connected Plumber devices WITHOUT any user interaction. Which malware type is this?",answers:["A. Virus","B. Worm","C. Trojan","D. Logic Bomb"],correct:1,rationale:'Worm = self-propagating malware that spreads WITHOUT user interaction. One infection automatically spreads to all connected devices — no clicks needed.'},
+{id:18,domain:2,cartoon:"Danny Phantom",type:"mcq",text:"Vlad Masters uses his legitimate, authorized access to Amity Park's security systems to sabotage Danny — unknown to anyone. Which threat actor type MOST accurately describes Vlad?",answers:["A. Nation-State","B. Hacktivist","C. Shadow IT User","D. Insider Threat"],correct:3,rationale:'Insider Threat = a trusted person with authorized access who misuses it. Vlad has legitimate access and uses it maliciously — that\'s an insider threat.'},
+{id:19,domain:2,cartoon:"X-Men '97",type:"mcq",text:"An attacker injects ' OR '1'='1 into the Xavier Institute's database login field, returning ALL student records. Which attack MOST accurately describes this?",answers:["A. Cross-Site Scripting (XSS)","B. Buffer Overflow","C. SQL Injection (SQLi)","D. Directory Traversal"],correct:2,rationale:'SQL Injection = inserting SQL code into an input field to manipulate the database. \' OR \'1\'=\'1 is the classic SQLi payload that returns all records.'},
+{id:20,domain:2,cartoon:"X-Men '97",type:"mcq",text:"To BEST prevent SQL injection against the Xavier Institute database, Cyclops' team should primarily implement:",answers:["A. Output Encoding","B. Boundary Checking","C. Input Obfuscation","D. Parameterized Queries / Prepared Statements"],correct:3,rationale:'Parameterized queries separate SQL code from user input, so injected code can\'t be executed as SQL. It\'s the primary defense against SQLi attacks.'},
+{id:21,domain:2,cartoon:"Codename: Kids Next Door",type:"mcq",text:"A 'gift' gadget delivered to Sector V contains a hidden backdoor that secretly phones home to the Delightful Children. Which malware type does this gift MOST represent?",answers:["A. Ransomware","B. Rootkit","C. Trojan","D. Keylogger"],correct:2,rationale:'Trojan = malware disguised as a legitimate/desirable item (a gift) that contains a hidden malicious payload (backdoor). The gift wrapping hides the malware.'},
+{id:22,domain:2,cartoon:"Danny Phantom",type:"mcq",text:"A logic bomb in Amity Park's power grid stays dormant until a specific date. Which indicator would MOST likely reveal it BEFORE it triggers?",answers:["A. Account Lockout","B. Impossible Travel","C. Out-of-Cycle Logging","D. Concurrent Session Usage"],correct:2,rationale:'Out-of-cycle logging = log entries appearing at unusual times (like 3 AM when no one should be active). Logic bombs often write test entries before triggering.'},
+{id:23,domain:2,cartoon:"Ben 10",type:"mcq",text:"An attacker exploits a Plumber network vulnerability disclosed YESTERDAY — no vendor patch exists yet. Which vulnerability type BEST describes this?",answers:["A. End-of-Life Vulnerability","B. Misconfiguration","C. Supply Chain Vulnerability","D. Zero-Day Vulnerability"],correct:3,rationale:'Zero-Day = a vulnerability exploited BEFORE a patch exists. Disclosed yesterday with no vendor patch yet = zero-day by definition.'},
+{id:24,domain:2,cartoon:"X-Men '97",type:"mcq",text:"Magneto spoofs a source IP and bounces traffic off hundreds of open DNS resolvers — amplifying his original request 100x before flooding the X-Mansion. This MOST specifically describes:",answers:["A. On-Path Attack","B. DNS Cache Poisoning","C. DDoS — Amplified and Reflected","D. Credential Replay"],correct:2,rationale:'Amplified + Reflected DDoS = attacker sends small request to open resolvers, which send large responses to the victim. DNS amplification is the classic example.'},
+{id:25,domain:2,cartoon:"Codename: Kids Next Door",type:"mcq",text:"KND already uses segmentation. Applying Least Privilege to all accounts would MOST directly mitigate which risk?",answers:["A. DDoS amplification attacks","B. An attacker's lateral movement and damage scope after compromising an account","C. Data exfiltration via encrypted tunnels","D. Malware signature evasion"],correct:1,rationale:'Least Privilege limits what a compromised account can access. If the attacker gets in, they can only go where that account can go — limiting lateral movement.'},
+{id:26,domain:2,cartoon:"Danny Phantom",type:"mcq",text:"Ember McLain's malware silently records every keystroke Danny types — including his portal passwords. Which malware category BEST describes this tool?",answers:["A. Ransomware","B. Logic Bomb","C. Bloatware","D. Keylogger / Spyware"],correct:3,rationale:'Keylogger = malware that silently records every keystroke. Spyware = broadly collects data without consent. Ember\'s tool captures passwords by recording typing.'},
+{id:27,domain:2,cartoon:"X-Men '97",type:"mcq",text:"The Sentinels capture authenticated tokens from Cyclops and Jean Grey, then replay them hours later to gain unauthorized X-Mansion access. Which attack BEST describes this?",answers:["A. On-Path Attack","B. Downgrade Attack","C. Credential Replay Attack","D. Birthday Attack"],correct:2,rationale:'Credential Replay = capturing valid authentication tokens and reusing them later to gain access. The Sentinels didn\'t crack the credentials — they replayed captured ones.'},
+{id:28,domain:2,cartoon:"Ben 10",type:"mcq",text:"Malware embeds itself at the KERNEL LEVEL of the Omnitrix OS — completely invisible to standard antivirus scans. Which malware type MOST accurately describes this?",answers:["A. Worm","B. Trojan","C. Rootkit","D. Logic Bomb"],correct:2,rationale:'Rootkit = malware that embeds at the kernel/OS level, making it invisible to standard tools. Kernel-level = rootkit by definition.'},
+{id:29,domain:2,cartoon:"Codename: Kids Next Door",type:"mcq",text:"The Delightful Children try ONE common password across THOUSANDS of different operative accounts simultaneously — staying below lockout thresholds. This MOST specifically describes:",answers:["A. Brute Force","B. Dictionary Attack","C. Rainbow Table Attack","D. Password Spraying"],correct:3,rationale:'Password Spraying = trying ONE common password against MANY accounts to stay below lockout thresholds. The opposite of brute force (many passwords against one account).'},
+{id:30,domain:2,cartoon:"Danny Phantom",type:"pbq-match",text:"MATCH each attack/vulnerability in Amity Park to its correct technical category:",scenario:"Vlad's team runs various attacks. Match each scenario to the correct category.",leftItems:["A. Vlad injects script tags into the city website's contact form","B. Sam's app ships with debug mode ON in production, exposing credentials","C. Tucker's VM breaks out of its container and accesses the host OS","D. Danny's ghost shield uses 2010 firmware with known unpatched vulnerabilities"],rightItems:["1. VM Escape — Virtualization Vulnerability","2. Misconfiguration","3. Cross-Site Scripting (XSS)","4. Firmware / Legacy Vulnerability"],correctMatches:[[0,2],[1,1],[2,0],[3,3]],rationale:'XSS = injecting script tags into web input. Misconfiguration = debug mode left on. VM Escape = breaking out of virtualization to the host. Firmware = unpatched old firmware.'},
+{id:31,domain:2,cartoon:"X-Men '97",type:"mcq",text:"An attacker forces TLS 1.3 between Cyclops and Cerebro to fall back to SSL 3.0, exploiting known weaknesses. Which cryptographic attack MOST accurately describes this?",answers:["A. Birthday Attack","B. Collision Attack","C. Replay Attack","D. Downgrade Attack"],correct:3,rationale:'Downgrade Attack = forcing a connection to use an older, weaker protocol (SSL 3.0) instead of the modern one (TLS 1.3). The attacker exploits the weaker protocol.'},
+{id:32,domain:2,cartoon:"Ben 10",type:"mcq",text:"A loosely organized criminal group is motivated PURELY by financial gain and uses commercial hacking tools. Which threat actor type BEST describes this group?",answers:["A. Nation-State","B. Hacktivist","C. Organized Crime","D. Shadow IT"],correct:2,rationale:'Organized Crime = financially motivated, uses commercial hacking tools, operates as a business. Nation-States are government-funded; Hacktivists are ideology-driven.'},
+{id:33,domain:2,cartoon:"Codename: Kids Next Door",type:"mcq",text:"KND operatives are accessing secret treehouse files via personal devices and unapproved cloud apps — completely outside official channels. This is MOST accurately known as:",answers:["A. BYOD Policy Violation","B. Watering Hole Attack","C. Shadow IT","D. Supply Chain Risk"],correct:2,rationale:'Shadow IT = employees using unauthorized apps/devices outside official IT channels. Personal devices + unapproved cloud apps = Shadow IT by definition.'},
+{id:34,domain:2,cartoon:"Danny Phantom",type:"mcq",text:"An alert fires: one account authenticated from Amity Park at 9:00 AM AND from Tokyo at 9:01 AM simultaneously. Which indicator MOST accurately describes this?",answers:["A. Account Lockout","B. Resource Consumption","C. Concurrent Session Usage","D. Impossible Travel"],correct:3,rationale:'Impossible Travel = the same account authenticated from two geographically distant locations within a timeframe physically impossible to travel between.'},
+// D3 Security Architecture (18q)
+{id:35,domain:3,cartoon:"Futurama",type:"mcq",text:"Planet Express rents a spaceship. The hangar company manages the hangar, fuel, and maintenance; Planet Express manages cargo and navigation. This MOST closely maps to which cloud model?",answers:["A. SaaS","B. PaaS","C. IaaS","D. FaaS"],correct:2,rationale:'IaaS = you rent the infrastructure (hardware, virtualization) but manage everything above it — OS, runtime, apps, data. Like renting a hangar but flying your own plane.'},
+{id:36,domain:3,cartoon:"Futurama",type:"mcq",text:"Mom's Robot Company provides a fully managed delivery APP. Employees only configure their account settings — OS, patches, and hardware are all Mom's responsibility. This BEST represents:",answers:["A. IaaS","B. PaaS","C. Hybrid Cloud","D. SaaS"],correct:3,rationale:'SaaS = provider manages everything; you only configure your account and manage data. Mom handles OS, patches, servers — Planet Express just uses the app.'},
+{id:37,domain:3,cartoon:"Avatar: The Last Airbender",type:"mcq",text:"The White Lotus places the most sensitive intelligence on a physically separate network with ZERO external connection — not even wireless. This architecture MOST directly represents:",answers:["A. VLAN Isolation","B. Network Segmentation","C. Software-Defined Networking","D. Air-Gapping"],correct:3,rationale:'Air-gapping = physically isolating a network with NO external connections whatsoever — not even wireless. It\'s the most extreme form of network isolation.'},
+{id:38,domain:3,cartoon:"American Dad",type:"mcq",text:"The CIA installs a device in the Smith household network that sits DIRECTLY IN the traffic path and inspects every packet in real time — capable of blocking threats immediately. This device operates in which mode?",answers:["A. Tap/Monitor (Passive) Mode","B. Agentless Mode","C. Inline (Active) Mode","D. Proxy Mode"],correct:2,rationale:'Inline (Active) Mode = sits directly IN the traffic path and can block/drop packets in real time. Tap/Monitor mode only observes a copy — it can\'t block.'},
+{id:39,domain:3,cartoon:"Futurama",type:"mcq",text:"When the Planet Express airlock fails, it stays OPEN so crew don't get trapped — prioritizing survival over security. This design philosophy is called:",answers:["A. Fail-Closed","B. Fail-Secure","C. High Availability","D. Fail-Open"],correct:3,rationale:'Fail-Open = when the security mechanism fails, access is GRANTED (stays open). Prioritizes availability over security. Used when being locked out would be dangerous.'},
+{id:40,domain:3,cartoon:"American Dad",type:"mcq",text:"When the CIA vault lock fails, it automatically LOCKS DOWN — nobody in or out until a supervisor overrides — prioritizing security over access. This is called:",answers:["A. Fail-Open","B. High Availability Mode","C. Fail-Closed (Fail-Secure)","D. Compensating Control"],correct:2,rationale:'Fail-Closed (Fail-Secure) = when the security mechanism fails, access is DENIED (locks down). Prioritizes security over availability.'},
+{id:41,domain:3,cartoon:"Futurama",type:"mcq",text:"New New York law requires ALL citizen data to remain within Earth's atmosphere — it CANNOT be stored on Martian servers. This MOST accurately describes which data governance concept?",answers:["A. Data Classification","B. Data Masking","C. Data Sovereignty / Geolocation Restriction","D. Right to be Forgotten"],correct:2,rationale:'Data Sovereignty = data must reside within a specific geographic/legal jurisdiction. Laws of the country where data is stored apply — can\'t move it to Martian servers.'},
+{id:42,domain:3,cartoon:"Avatar: The Last Airbender",type:"mcq",text:"The Air Nation uses IPSec to protect all Layer 3 communications between two temple networks over a site-to-site VPN. When would IPSec be preferred OVER TLS for this scenario?",answers:["A. Encrypting HTTPS web traffic for the temple website","B. Encrypting a single application's API calls","C. Site-to-site VPN protecting all network traffic between two temple networks","D. Remote user accessing temple email via webmail"],correct:2,rationale:'IPSec operates at Layer 3 (network) and protects ALL traffic between two networks, making it ideal for site-to-site VPNs. TLS works at the application layer for specific apps.'},
+{id:43,domain:3,cartoon:"Futurama",type:"mcq",text:"Planet Express deploys a WAF on their delivery portal. Which attack does a WAF MOST specifically address that a standard NGFW would NOT handle as effectively?",answers:["A. DDoS Amplification","B. Port Scanning","C. Application-Layer Attacks (SQLi, XSS) at Layer 7","D. ARP Spoofing"],correct:2,rationale:'WAF = Web Application Firewall, specifically designed to inspect HTTP/S traffic and block Layer 7 attacks like SQLi and XSS. A standard NGFW doesn\'t do deep Layer 7 inspection.'},
+{id:44,domain:3,cartoon:"American Dad",type:"mcq",text:"The CIA needs a secondary site ALWAYS running in parallel — instantly ready to take over with no startup delay if the primary fails. Which site type BEST describes this?",answers:["A. Cold Site","B. Warm Site","C. Mobile Site","D. Hot Site"],correct:3,rationale:'Hot Site = a fully operational duplicate that runs in parallel and can take over INSTANTLY with no startup time. Warm needs setup time; Cold needs hardware setup.'},
+{id:45,domain:3,cartoon:"Avatar: The Last Airbender",type:"mcq",text:"Aang's network uses BOTH Republic City cloud infrastructure AND private Fire Nation on-premises servers. Sensitive records stay on-premises; general data lives in the cloud. This MOST accurately describes:",answers:["A. Multi-Cloud","B. Community Cloud","C. Hybrid Cloud","D. Private Cloud Only"],correct:2,rationale:'Hybrid Cloud = combination of private on-premises infrastructure AND public cloud services. Sensitive data stays on-premises; general data uses the cloud.'},
+{id:46,domain:3,cartoon:"Futurama",type:"mcq",text:"RTO=4hrs, RPO=1hr. Disaster at 3:00 PM. Systems restored by 6:30 PM. Last backup was 2:30 PM. Which statement MOST accurately evaluates SLA compliance?",answers:["A. RTO met (3.5hrs<4hrs); RPO met (30min data loss<1hr)","B. RTO breached; RPO met","C. Both RTO and RPO breached","D. RPO cannot be measured without knowing backup frequency"],correct:0,rationale:'RTO=4hrs, actual restore=3.5hrs (MET). RPO=1hr data loss allowed, actual loss=30min since 2:30PM backup (MET). Both objectives were achieved.'},
+{id:47,domain:3,cartoon:"American Dad",type:"mcq",text:"Stan needs servers that automatically distribute incoming requests across multiple nodes so no single server is overwhelmed. Which technology MOST directly solves this?",answers:["A. RAID Array","B. UPS","C. IDS","D. Load Balancer"],correct:3,rationale:'Load Balancer = distributes incoming requests across multiple servers so no single server is overwhelmed. RAID handles storage redundancy; UPS provides power backup.'},
+{id:48,domain:3,cartoon:"Avatar: The Last Airbender",type:"mcq",text:"Katara's medical records system classifies data as 'Sensitive,' 'Confidential,' or 'Public.' The PRIMARY reason to classify data is to:",answers:["A. Comply with audit requirements exclusively","B. Enable automatic encryption on all records","C. Assign appropriate security controls based on sensitivity level","D. Prevent any access without manager approval"],correct:2,rationale:'Data classification assigns sensitivity labels so appropriate security controls can be applied to each level. You protect what you\'ve labeled — classification drives control selection.'},
+{id:49,domain:3,cartoon:"Futurama",type:"mcq",text:"Planet Express must protect data WHILE it is actively being processed by their algorithm (in RAM). Which data state is this, and WHY is it the most challenging to protect?",answers:["A. Data at Rest — storage is always exposed","B. Data in Transit — networks are untrusted","C. Data in Use — data must be decrypted to process, limiting encryption options","D. Data in Archive — old formats lack modern encryption"],correct:2,rationale:'Data in Use = data actively being processed in RAM/CPU. It must be decrypted to be processed, which means encryption can\'t fully protect it during computation.'},
+{id:50,domain:3,cartoon:"American Dad",type:"mcq",text:"The CIA runs full backups every Sunday and incrementals nightly. A breach on Thursday destroys all data. To MINIMIZE data loss, the team restores Sunday's full backup PLUS which additional tapes?",answers:["A. Sunday full backup only","B. Monday, Tuesday, Wednesday incrementals only","C. Sunday full + Monday, Tuesday, Wednesday incrementals","D. Every incremental since inception, merged into a differential"],correct:2,rationale:'Incremental backups only capture changes since the LAST backup (not the last full). So to restore to Thursday, you need: Sunday full + Monday + Tuesday + Wednesday incrementals.'},
+{id:51,domain:3,cartoon:"Avatar: The Last Airbender",type:"pbq-order",text:"ORDER recovery strategies from FASTEST (most current data, least effort) to SLOWEST (most effort, most potential data loss):",scenario:"The White Lotus must restore intelligence data. Order strategies from FASTEST with most current data, to SLOWEST with most effort.",items:["Hot Site with Real-Time Replication — secondary site always running with live data","Warm Site with Daily Backups — pre-configured systems, restore yesterday's backup","Full Backup + Incrementals Restore — restore full, then apply each incremental","Cold Site with Offsite Tape Backups — rack hardware, restore from tapes manually"],correctOrder:[0,1,2,3],rationale:'Fastest recovery = Hot Site (live data, no restore needed) → Warm Site (restore recent backup) → Incremental restore (apply each change) → Cold Site (rebuild from scratch).'},
+{id:52,domain:3,cartoon:"Futurama",type:"mcq",text:"A sensor receives a mirrored COPY of all Planet Express traffic for analysis — it does NOT sit in the traffic path and cannot affect live data flow. This device mode is MOST accurately called:",answers:["A. Inline (Active) Mode","B. Proxy Mode","C. Tap/Monitor (Passive) Mode","D. Gateway Mode"],correct:2,rationale:'Tap/Monitor (Passive) Mode = receives a mirrored COPY of traffic for analysis without being in the actual traffic path. Cannot block or alter live traffic.'},
+// D4 Security Operations (28q)
+{id:53,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"BEFORE entering the mansion, Fred creates response plans, assigns team roles, and ensures everyone has equipment. In the NIST IR lifecycle, this MOST directly represents which phase?",answers:["A. Detection and Analysis","B. Recovery","C. Preparation","D. Containment"],correct:2,rationale:'Preparation = the FIRST phase of NIST IR — done BEFORE any incident occurs. Creating plans, assigning roles, and staging equipment all happen during preparation.'},
+{id:54,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"After detecting a ghost in the ballroom, Fred immediately seals off that wing to prevent spread. Which NIST IR phase does this MOST directly represent?",answers:["A. Eradication","B. Preparation","C. Recovery","D. Containment"],correct:3,rationale:'Containment = immediately isolating/limiting the spread of a threat AFTER detection. Sealing off the ballroom stops the ghost from spreading to other areas.'},
+{id:55,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"After trapping the ghost, Velma unmasks it — finding Old Man Jenkins — and removes the ROOT CAUSE from the premises. Which NIST IR phase does this MOST represent?",answers:["A. Containment","B. Recovery","C. Eradication","D. Lessons Learned"],correct:2,rationale:'Eradication = removing the ROOT CAUSE of the incident (the threat itself) after containment. Unmasking and removing Old Man Jenkins = removing the root cause.'},
+{id:56,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"Mystery Inc. holds a team meeting to review what worked, what failed, and updates their playbook. This is which NIST IR phase?",answers:["A. Recovery","B. Eradication","C. Detection","D. Post-Incident Review / Lessons Learned"],correct:3,rationale:'Post-Incident Review (Lessons Learned) = the FINAL phase, where the team documents what happened, what worked, what didn\'t, and updates plans accordingly.'},
+{id:57,domain:4,cartoon:"Danny Phantom",type:"mcq",text:"Jack Fenton must capture ghost data from portal RAM before powering it down — that data vanishes when power is cut. Per the Order of Volatility, what should be captured FIRST?",answers:["A. Hard Drive / SSD contents","B. Network traffic in-flight","C. External backup tapes","D. RAM (volatile memory)"],correct:3,rationale:'Order of Volatility: RAM (most volatile — lost when power is cut) must be captured FIRST. Hard drives, logs, and backups are less volatile and can be captured later.'},
+{id:58,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"The sheriff orders Mystery Inc.: 'Do NOT touch ANY evidence in the Old Mill — it's a crime scene!' In digital forensics, this order is called:",answers:["A. Chain of Custody","B. E-Discovery","C. Legal Hold","D. Acquisition"],correct:2,rationale:'Legal Hold = a formal directive to preserve ALL potentially relevant evidence and stop the normal deletion cycle. It precedes and enables e-discovery.'},
+{id:59,domain:4,cartoon:"The Simpsons",type:"mcq",text:"Homer's SIEM generates 500 alerts/hour, most false positives from a misconfigured sensor. The MOST appropriate remediation is to:",answers:["A. Disable all alerting to reduce noise","B. Escalate all 500 alerts to management","C. Perform alert tuning to reduce false positive rate","D. Replace the SIEM with manual log review"],correct:2,rationale:'Alert tuning = adjusting SIEM rules to reduce false positives (usually by fixing the misconfigured sensor or refining correlation rules). Disabling alerts defeats the purpose.'},
+{id:60,domain:4,cartoon:"Fairly OddParents",type:"mcq",text:"The fairy godparent system logs EVERY wish — what, when, and who granted it — so future disputes can be resolved using logs. This MOST directly supports which security principle?",answers:["A. Authentication","B. Authorization","C. Non-repudiation and Accounting","D. Integrity"],correct:2,rationale:'Non-repudiation = proof that an action occurred and was performed by a specific party. Detailed logs create an audit trail that neither side can deny.'},
+{id:61,domain:4,cartoon:"The Simpsons",type:"mcq",text:"Vulnerability scan returns CVSS 9.8 on a public-facing web server and 4.2 on an internal printer. Using CVSS as the PRIMARY prioritization method, which should be patched FIRST?",answers:["A. Printer (4.2) — internal systems are higher priority","B. Both simultaneously — all vulnerabilities equal","C. Wait for the next scheduled patch window","D. Web server (9.8) — higher CVSS indicates greater severity"],correct:3,rationale:'CVSS 9.8 = Critical severity on a public-facing server = highest risk. CVSS score directly reflects severity and exploitability. Higher CVSS = patch first.'},
+{id:62,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"Velma must search 10 years of police digital communications to find evidence for an active civil lawsuit — a broad court-ordered digital search. This MOST directly describes:",answers:["A. Legal Hold","B. Digital Forensics Investigation","C. Chain of Custody","D. E-Discovery"],correct:3,rationale:'E-Discovery = a court-ordered, broad search of digital records for legal proceedings. It\'s broader than forensics (which is a security investigation, not a legal search).'},
+{id:63,domain:4,cartoon:"The Simpsons",type:"mcq",text:"Mr. Burns wants ONLY approved, vetted applications to run on Springfield Nuclear servers — unapproved software is automatically blocked. This BEST describes which control?",answers:["A. Deny List (Blacklist)","B. Host-Based IPS Signature Rule","C. DLP Policy","D. Application Allow List (Whitelist)"],correct:3,rationale:'Application Allow List (Whitelist) = ONLY approved software can run; everything else is blocked by default. Deny List blocks specific bad things but allows everything else.'},
+{id:64,domain:4,cartoon:"Fairly OddParents",type:"mcq",text:"Dimmsdale School automatically creates, modifies, and deactivates user accounts based on HR system records. This MOST directly describes which IAM process?",answers:["A. Federation","B. Single Sign-On","C. Privileged Access Management","D. Automated User Provisioning and De-provisioning"],correct:3,rationale:'Automated Provisioning/De-provisioning = using an authoritative system (like HR) to automatically create, modify, and remove accounts without manual intervention.'},
+{id:65,domain:4,cartoon:"Danny Phantom",type:"mcq",text:"Fenton Works deploys a tool monitoring ALL endpoints in real time that can AUTOMATICALLY isolate compromised devices. This MOST accurately describes:",answers:["A. SIEM","B. DLP","C. SOAR","D. EDR (Endpoint Detection and Response)"],correct:3,rationale:'EDR = Endpoint Detection and Response — monitors endpoints in real time and can automatically isolate compromised devices. SIEM is for log aggregation, not endpoint isolation.'},
+{id:66,domain:4,cartoon:"The Simpsons",type:"mcq",text:"Springfield's mail server uses SPF, DKIM, and DMARC together to reject a phishing email. What does each protocol contribute?",answers:["A. SPF verifies sender IP is authorized; DKIM provides cryptographic email signature; DMARC sets policy for failures","B. SPF encrypts the email body; DKIM compresses attachments; DMARC archives messages","C. All three require S/MIME certificates to function","D. SPF checks passwords; DKIM verifies headers; DMARC logs emails"],correct:0,rationale:'SPF verifies the sending IP is authorized for the domain. DKIM adds a cryptographic signature to verify message integrity. DMARC sets the policy for what to do when SPF/DKIM fail.'},
+{id:67,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"Mystery Inc. deploys a fake server designed to LOOK real but is actually a trap to attract attackers and study their methods. This is MOST accurately called:",answers:["A. Honeyfile","B. Honeytoken","C. Honeynet","D. Honeypot"],correct:3,rationale:'Honeypot = a deliberately fake system designed to attract and study attackers. Honeynet = a network of honeypots. Honeyfile/token = fake file or data, not a full system.'},
+{id:68,domain:4,cartoon:"Fairly OddParents",type:"mcq",text:"Timmy uses a SINGLE login with fairy godparent credentials to access his school portal, the park system, AND the wishing website — without re-authenticating for each. This is called:",answers:["A. Federation","B. Multifactor Authentication","C. Single Sign-On (SSO)","D. Privileged Access Management"],correct:2,rationale:'SSO = Single Sign-On — authenticate ONCE, access MULTIPLE systems without re-entering credentials. Federation enables SSO across organizational boundaries.'},
+{id:69,domain:4,cartoon:"The Simpsons",type:"mcq",text:"Bart is locked out after 5 failed login attempts in 90 seconds. Which indicator MOST directly suggests malicious activity?",answers:["A. Impossible Travel","B. Resource Consumption","C. Out-of-Cycle Logging","D. Account Lockout — possible brute force or credential stuffing"],correct:3,rationale:'Account Lockout after repeated failures = strong indicator of brute force or credential stuffing attack. One wrong password isn\'t suspicious; 5 in 90 seconds is.'},
+{id:70,domain:4,cartoon:"Danny Phantom",type:"mcq",text:"Sam must provide: password (something she KNOWS), hardware token code (something she HAS), and retinal scan (something she IS). This authentication scheme is:",answers:["A. Two-Factor Authentication — three factors is redundant","B. Single Sign-On with biometric binding","C. Multifactor Authentication using all three factor categories","D. Privileged Access Management with JIT provisioning"],correct:2,rationale:'MFA = Multifactor Authentication using 2+ DIFFERENT factor CATEGORIES. Password (know) + token (have) + retina (are) = 3 different categories = MFA (specifically 3FA).'},
+{id:71,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"Mystery Inc.'s SOAR system auto-investigates and auto-responds to routine ghost sightings without human involvement — freeing Velma for complex cases. The MOST significant operational benefit of SOAR is:",answers:["A. Eliminates need for human analysts entirely","B. Removes need for a SIEM platform","C. Reduces network bandwidth consumption","D. Improved reaction time and workforce multiplication"],correct:3,rationale:'SOAR\'s biggest benefit is automation — it handles routine alerts automatically, freeing human analysts for complex cases and dramatically improving response times.'},
+{id:72,domain:4,cartoon:"Fairly OddParents",type:"mcq",text:"Timmy's laptop runs BOTH a host-based firewall AND a Host-based IPS. What is the KEY functional difference?",answers:["A. Firewall detects intrusions; HIPS prevents them","B. HIPS is for servers only; firewalls are for workstations","C. Firewall controls traffic by port/protocol rules; HIPS monitors behavioral anomalies and blocks threats","D. Both perform the same function — only one is needed"],correct:2,rationale:'Host-based Firewall = controls traffic by port/protocol rules (allow/block). HIPS = monitors behavior patterns and blocks anomalous activity. Different functions, complementary tools.'},
+{id:73,domain:4,cartoon:"The Simpsons",type:"mcq",text:"Homer discovers Lenny has FULL admin rights to Springfield Nuclear's SCADA system — far beyond his meter-reading role. The MOST appropriate corrective action is to implement:",answers:["A. Mandatory Access Control (MAC)","B. Time-of-Day Restrictions","C. Principle of Least Privilege — reduce Lenny's access to role requirements","D. Discretionary Access Control (DAC) for all users"],correct:2,rationale:'Least Privilege = users get only the minimum access needed for their specific role. Full admin rights for a meter reader far exceeds what his job requires.'},
+{id:74,domain:4,cartoon:"Danny Phantom",type:"pbq-order",text:"ORDER the NIST SP 800-61 IR lifecycle steps for this ghost containment scenario from FIRST to LAST:",scenario:"A ghost breached the Fenton Portal and is spreading through Amity Park's power grid. Order IR steps in correct NIST sequence.",items:["Post-Incident Lessons Learned — debrief team, update containment playbook","Preparation — train team, pre-position Fenton Thermoses and monitoring tools","Containment — isolate ghost to the power grid sector, prevent further spread","Detection and Analysis — confirm ghost breach of portal, assess scope","Recovery — restore power grid to normal operations, verify clean state","Eradication — use Fenton Thermos to capture ghost (root cause removal)"],correctOrder:[1,3,2,5,4,0],rationale:'NIST IR order: Preparation → Detection & Analysis → Containment → Eradication → Recovery → Post-Incident/Lessons Learned. Remember: Prepare, Detect, Contain, Eradicate, Recover, Learn.'},
+{id:75,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"Daphne implements RBAC for the Mystery Machine portal. Under RBAC, access permissions are MOST accurately determined by:",answers:["A. Individual user's personal identity","B. Time-of-day restrictions","C. Job function or role assignment","D. Data classification label on the resource"],correct:2,rationale:'RBAC = Role-Based Access Control. Access is determined by JOB FUNCTION (role), not by individual identity or data labels. Same role = same access regardless of who holds it.'},
+{id:76,domain:4,cartoon:"The Simpsons",type:"mcq",text:"Springfield Nuclear's security team proactively SEARCHES for threats that may ALREADY be inside the network — rather than waiting for alerts to fire. This is MOST accurately called:",answers:["A. Vulnerability Scanning","B. Penetration Testing","C. Log Aggregation","D. Threat Hunting"],correct:3,rationale:'Threat Hunting = PROACTIVE search for threats already inside the network without waiting for alerts. Vulnerability scanning finds weaknesses; threat hunting finds active intruders.'},
+{id:77,domain:4,cartoon:"Fairly OddParents",type:"mcq",text:"Wanda runs a simulated major breach — the team role-plays through the IR plan at a conference table without touching real systems. This exercise is MOST accurately called:",answers:["A. Parallel Processing Test","B. Failover Test","C. Full Simulation Exercise","D. Tabletop Exercise"],correct:3,rationale:'Tabletop Exercise = discussion-based simulation at a conference table, no real systems touched. Full simulation involves actual system failover. Tabletop tests the PLAN, not the tech.'},
+{id:78,domain:4,cartoon:"Scooby-Doo",type:"mcq",text:"Mystery Inc. discovers a threat actor maintained persistent undetected network access for 8 months. Which log source would MOST likely evidence this prolonged access?",answers:["A. Application error logs showing crash codes","B. DHCP logs only","C. Physical badge access logs","D. Firewall and endpoint logs showing low-volume unusual outbound connections over months"],correct:3,rationale:'Low-volume, unusual outbound connections sustained over months is the signature of APT/C2 beaconing. Firewall + endpoint logs over time would capture this pattern.'},
+{id:79,domain:4,cartoon:"Danny Phantom",type:"mcq",text:"Tucker's sensor analyzes NetFlow data — traffic patterns (volume, duration, source/destination) — without inspecting packet contents. NetFlow is MOST effective for detecting:",answers:["A. Malware signatures in attachments","B. SQL injection patterns in web traffic","C. Anomalous traffic patterns suggesting data exfiltration or C2 beaconing","D. Encrypted malware payloads inside TLS"],correct:2,rationale:'NetFlow analyzes traffic metadata (volume, duration, endpoints) without inspecting content. Ideal for detecting anomalous patterns like data exfiltration or C2 beaconing.'},
+{id:80,domain:4,cartoon:"The Simpsons",type:"mcq",text:"Springfield Nuclear HR reports show SSNs as '***-**-6789' — sensitive digits hidden but record remains usable. Which data protection technique is MOST accurately being used?",answers:["A. Encryption","B. Tokenization","C. Hashing","D. Data Masking"],correct:3,rationale:'Data Masking = partially hiding sensitive data with substitute characters (***-**-6789) while keeping the record usable. Tokenization replaces with a token; encryption makes unreadable.'},
+// D5 Security Program Management (20q)
+{id:81,domain:5,cartoon:"Rugrats",type:"mcq",text:"Tommy escapes the playpen BEFORE any locks are installed. This raw, uncontrolled risk level BEFORE any controls exist is called:",answers:["A. Residual Risk","B. Risk Appetite","C. Risk Tolerance","D. Inherent Risk"],correct:3,rationale:'Inherent Risk = the raw risk level BEFORE any security controls are applied. It\'s the baseline risk that exists simply because the asset/activity exists.'},
+{id:82,domain:5,cartoon:"Rugrats",type:"mcq",text:"After Chuckie's dad installs baby gates and corner padding, a small risk of Tommy getting a bruise still remains. The risk that PERSISTS after controls are implemented is called:",answers:["A. Inherent Risk","B. Risk Avoidance","C. Residual Risk","D. Risk Transfer"],correct:2,rationale:'Residual Risk = the risk that REMAINS after controls have been implemented. Controls reduce risk but rarely eliminate it entirely — what\'s left is residual.'},
+{id:83,domain:5,cartoon:"Rugrats",type:"mcq",text:"The Pickles family buys homeowner's liability insurance to cover injury costs if Tommy gets hurt despite all safety measures. This risk strategy is MOST accurately described as:",answers:["A. Risk Mitigation","B. Risk Acceptance","C. Risk Avoidance","D. Risk Transfer"],correct:3,rationale:'Risk Transfer = shifting financial impact to a third party (insurance). The Pickles still face the risk but someone else bears the financial consequences if it occurs.'},
+{id:84,domain:5,cartoon:"Rugrats",type:"mcq",text:"Each Reptar incident costs $100 (Asset Value), 50% value is lost per incident (EF=0.5), and it happens 3 times per year (ARO=3). Using ALE = SLE × ARO, the ALE is:",answers:["A. $50","B. $100","C. $300","D. $150"],correct:3,rationale:'SLE = AV × EF = $100 × 0.5 = $50. ALE = SLE × ARO = $50 × 3 = $150. The annual expected loss from Reptar incidents is $150.'},
+{id:85,domain:5,cartoon:"American Dad",type:"mcq",text:"The CIA processes millions of credit card transactions annually. Which compliance framework MOST directly governs protection of this payment card data?",answers:["A. HIPAA","B. GDPR","C. FISMA","D. PCI DSS"],correct:3,rationale:'PCI DSS = Payment Card Industry Data Security Standard. It specifically governs the protection of credit/debit card transaction data. HIPAA is medical; GDPR is EU privacy.'},
+{id:86,domain:5,cartoon:"The Simpsons",type:"mcq",text:"Springfield Hospital stores patient medical records, billing data, and treatment histories. Which U.S. regulation MOST directly governs protection of this data?",answers:["A. GDPR","B. PCI DSS","C. FERPA","D. HIPAA"],correct:3,rationale:'HIPAA = Health Insurance Portability and Accountability Act. It\'s the U.S. federal law governing protection of patient health information (PHI).'},
+{id:87,domain:5,cartoon:"American Dad",type:"mcq",text:"Before contracting with a new cloud vendor, Stan reviews their SOC 2 audit reports, performs background checks, and evaluates security controls. This pre-contract process is called:",answers:["A. Right-to-Audit Clause Execution","B. SLA Negotiation","C. Vendor Due Diligence","D. MOA Drafting"],correct:2,rationale:'Vendor Due Diligence = the pre-contract review process to assess a vendor\'s security posture, audit reports, and controls BEFORE signing an agreement.'},
+{id:88,domain:5,cartoon:"Rugrats",type:"mcq",text:"A Business Impact Analysis helps identify WHICH systems are MOST critical and quantifies the impact of their unavailability. In cybersecurity, the PRIMARY purpose of a BIA is to:",answers:["A. Identify all threat actors in the environment","B. Create the incident response playbook","C. Assign CVSS scores to vulnerabilities","D. Determine critical systems and quantify the business impact of their failure"],correct:3,rationale:'BIA = Business Impact Analysis. Its PRIMARY purpose is identifying WHICH systems are most critical to operations and quantifying the impact if they\'re unavailable.'},
+{id:89,domain:5,cartoon:"American Dad",type:"mcq",text:"The CIA signs an agreement with a partner agency outlining mutual cooperation goals and shared responsibilities — but it is NOT legally binding or enforceable. This is MOST accurately called:",answers:["A. Service Level Agreement (SLA)","B. Non-Disclosure Agreement (NDA)","C. Master Service Agreement (MSA)","D. Memorandum of Understanding (MOU)"],correct:3,rationale:'MOU = Memorandum of Understanding — documents mutual cooperation goals between parties but is NOT legally binding or enforceable. SLAs and NDAs are legally binding.'},
+{id:90,domain:5,cartoon:"The Simpsons",type:"mcq",text:"Fixing a SCADA vulnerability costs $2M but the maximum annual loss from exploitation is $400K. Mr. Burns formally documents the decision to leave it unpatched. This is MOST accurately called:",answers:["A. Risk Mitigation","B. Risk Transfer","C. Risk Exception / Risk Acceptance","D. Risk Avoidance"],correct:2,rationale:'Risk Exception/Acceptance = formally documenting a decision to accept a known risk, typically because the cost to fix it exceeds the potential loss.'},
+{id:91,domain:5,cartoon:"Rugrats",type:"mcq",text:"An auditor finds a safety violation at the daycare. Beyond regulatory fines, which consequence MOST directly affects the daycare's ability to continue operating and its business relationships?",answers:["A. Mandatory network segmentation requirements","B. Required encryption of all communications","C. Loss of license and contractual impacts with partner daycares","D. Fines only — no operational impact"],correct:2,rationale:'Non-compliance consequences include: fines, but also loss of operating license, contractual penalties, loss of business partners, and reputational damage — all operational impacts.'},
+{id:92,domain:5,cartoon:"American Dad",type:"mcq",text:"After 3 employees clicked phishing links in 30 days, Stan launches a campaign teaching staff to recognize, avoid, and REPORT suspicious emails. This MOST directly supports which security program objective?",answers:["A. Threat Hunting","B. Vulnerability Management","C. Penetration Testing Preparation","D. Security Awareness Training — Phishing Recognition"],correct:3,rationale:'Security Awareness Training = educating users to recognize, avoid, and report threats. After phishing clicks, the priority response is training, not technical controls alone.'},
+{id:93,domain:5,cartoon:"The Simpsons",type:"mcq",text:"Springfield Nuclear requires Homer's admin account to be formally reviewed every 90 days to confirm he still needs those privileges — access revoked if he doesn't. This process is MOST accurately called:",answers:["A. Vulnerability Scanning","B. Penetration Testing","C. Attestation and Access Recertification","D. Security Baseline Enforcement"],correct:2,rationale:'Attestation/Access Recertification = periodic formal review confirming users still need their current access level. Access is revoked if they no longer need it.'},
+{id:94,domain:5,cartoon:"Rugrats",type:"mcq",text:"Which set of formulas CORRECTLY expresses CompTIA's quantitative risk calculations?",answers:["A. SLE = ARO × ALE; ALE = Asset Value × EF","B. SLE = Asset Value × ARO; ALE = SLE × EF","C. SLE = Asset Value × EF; ALE = SLE × ARO","D. ALE = Asset Value × ARO; SLE = ALE × EF"],correct:2,rationale:'SLE = Asset Value × EF (exposure factor). ALE = SLE × ARO (annualized rate of occurrence). Both formulas are defined by CompTIA for quantitative risk analysis.'},
+{id:95,domain:5,cartoon:"American Dad",type:"mcq",text:"A CIA contractor needs classified file access for exactly 30 days — access automatically expires after 30 days with no manual revocation. This MOST directly represents which PAM concept?",answers:["A. Password Vaulting","B. Role-Based Access Control","C. Mandatory Access Control","D. Just-in-Time (JIT) Permissions / Ephemeral Credentials"],correct:3,rationale:'JIT (Just-in-Time) Permissions = temporary, time-limited access that auto-expires. Eliminates standing privileges. Also called ephemeral credentials.'},
+{id:96,domain:5,cartoon:"The Simpsons",type:"mcq",text:"An independent CPA firm tests Springfield Nuclear's security controls, evaluates regulatory compliance, and delivers a formal report to the Nuclear Regulatory Commission. This MOST accurately describes:",answers:["A. Internal Self-Assessment","B. Tabletop Exercise","C. Penetration Test","D. External Regulatory Audit / Third-Party Assessment"],correct:3,rationale:'External Regulatory Audit = an INDEPENDENT third party evaluates controls and compliance for a regulatory body. Self-assessments are internal; pen tests test technical defenses.'},
+{id:97,domain:5,cartoon:"Rugrats",type:"mcq",text:"Under GDPR, a resident submits a formal request demanding the city permanently delete ALL personal data collected about them from every system. This specific right is called:",answers:["A. Data Portability","B. Data Sovereignty","C. Right to be Forgotten (Right to Erasure)","D. Controller Exemption"],correct:2,rationale:'Right to be Forgotten (Right to Erasure) = a GDPR right allowing EU residents to request permanent deletion of all personal data an organization holds about them.'},
+{id:98,domain:5,cartoon:"American Dad",type:"pbq-match",text:"MATCH each CIA vendor agreement type to its correct description:",scenario:"Stan formalizes several vendor and partner relationships. Match each agreement to its correct purpose.",leftItems:["A. Defines uptime guarantees, response times, and performance metrics with a cloud vendor","B. Prevents a CIA vendor from disclosing proprietary intelligence methods to competitors","C. Documents mutual cooperation goals between two federal agencies — not legally enforceable","D. Specifies exact deliverables, timelines, and milestones for a short-term consulting engagement"],rightItems:["1. NDA (Non-Disclosure Agreement)","2. SLA (Service-Level Agreement)","3. MOU (Memorandum of Understanding)","4. SOW (Statement of Work)"],correctMatches:[[0,1],[1,0],[2,2],[3,3]],rationale:'SLA=performance metrics. NDA=confidentiality. MOU=non-binding cooperation. SOW=specific deliverables/timeline. Match by purpose: uptime=SLA, secrets=NDA, cooperation=MOU, project=SOW.'},
+{id:99,domain:5,cartoon:"The Simpsons",type:"mcq",text:"Marge is formally designated 'Data Owner' for the Community Center's member records. As Data Owner, her PRIMARY governance responsibility is to:",answers:["A. Physically configure and back up the database servers","B. Write firewall rules protecting the database","C. Classify the data and make access approval decisions","D. Perform annual penetration testing on the database"],correct:2,rationale:'Data Owner = the person responsible for classifying data and making access approval decisions. They don\'t maintain the servers (Custodian does) or write firewall rules.'},
+{id:100,domain:5,cartoon:"Rugrats",type:"mcq",text:"A new regulation requires formal change management: every change must be reviewed, approved, tested in staging, and include a BACKOUT PLAN before going live. The backout plan MOST directly addresses which concern?",answers:["A. Ensuring all changes are encrypted before deployment","B. Meeting PCI DSS payment card requirements","C. Documenting asset ownership for insurance purposes","D. Providing a documented procedure to reverse a change if it causes unintended failures"],correct:3,rationale:'Backout Plan = a documented procedure to REVERSE a change if it causes problems. The safety net that allows rollback without data loss or extended downtime.'}
+];
+
+// ═══════════════════════════════════════════════════════
+// CRAM DATA
+// ═══════════════════════════════════════════════════════
+const CRAM=[
+{d:1,color:"#FF6600",icon:"🧽",title:"Domain 1: General Security Concepts (12%)",tips:["<strong>CIA Triad:</strong> Confidentiality=Encryption | Integrity=Hashing | Availability=Redundancy","<strong>AAA:</strong> Authentication(who?) → Authorization(what can you do?) → Accounting(log it)","<strong>Control categories:</strong> Technical | Managerial | Operational | Physical","<strong>Control types:</strong> Preventive→Deterrent→Detective→Corrective→Compensating→Directive","<strong>Zero Trust:</strong> Control Plane=Policy Engine decides | Data Plane=PEP enforces","<strong>PKI:</strong> CA issues certs | CRL=periodic list | OCSP=real-time | TPM=chip in device | HSM=hardware vault","<strong>Non-repudiation:</strong> Digital signatures prove you can't deny your actions"]},
+{d:2,color:"#E8001C",icon:"⚔️",title:"Domain 2: Threats, Vulnerabilities & Mitigations (22%)",tips:["<strong>Social engineering:</strong> Phishing(mass email) | Whaling(execs) | Vishing(voice) | Smishing(SMS) | Spear Phishing(targeted)","<strong>Malware:</strong> Virus(user executes) | Worm(self-propagates) | Trojan(disguised gift) | Rootkit(kernel-hidden) | Keylogger(records input)","<strong>Threat actors:</strong> Nation-State(APT,gov-funded) | Hacktivist(ideology) | Insider Threat(trusted access) | Organized Crime($$)","<strong>Attack mitigations:</strong> SQLi→parameterized queries | XSS→output encoding | Buffer overflow→boundary checking","<strong>IoC flags:</strong> Account lockout | Impossible travel | Out-of-cycle logging | Resource consumption spikes","<strong>Mitigations:</strong> Segmentation | Least Privilege | Patching | Allow lists | Hardening | Decommissioning","<strong>Zero-day:</strong> Exploit for a vulnerability with NO patch yet — highest urgency risk"]},
+{d:3,color:"#00BBEE",icon:"🏗️",title:"Domain 3: Security Architecture (18%)",tips:["<strong>Cloud models:</strong> IaaS(rent infra) | PaaS(rent platform) | SaaS(rent software) | Hybrid=both cloud+on-prem","<strong>Fail modes:</strong> Fail-Open=stays open(prioritizes availability) | Fail-Closed=locks down(prioritizes security)","<strong>Device modes:</strong> Inline=in traffic path,can BLOCK | Tap/Monitor=passive copy,analysis only","<strong>Disaster recovery sites:</strong> Hot=always running | Warm=ready not live | Cold=hardware only","<strong>RTO:</strong> How FAST you must restore | <strong>RPO:</strong> How much DATA LOSS is acceptable","<strong>Data states:</strong> At Rest | In Transit | In Use(hardest — must decrypt to process)","<strong>VPN:</strong> IPSec=network layer,site-to-site | TLS=application layer,user sessions"]},
+{d:4,color:"#88CC00",icon:"🔍",title:"Domain 4: Security Operations (28%) ← HEAVIEST",tips:["<strong>NIST IR lifecycle:</strong> Preparation→Detection/Analysis→Containment→Eradication→Recovery→Lessons Learned","<strong>Order of Volatility:</strong> RAM FIRST(most volatile) → Network → Processes → Disk → Backups","<strong>Forensics:</strong> Legal Hold(preserve) | Chain of Custody(track) | E-Discovery(legal search)","<strong>Auth factors:</strong> Know | Have | Are | Somewhere you Are — MFA uses 2+ different factor types","<strong>Access controls:</strong> RBAC(job role) | MAC(labels) | DAC(owner-set) | Least Privilege | ABAC(attributes)","<strong>Tools:</strong> SIEM(aggregate+correlate) | SOAR(automate response) | EDR(endpoint detect+respond) | DLP(prevent data loss)","<strong>Email security:</strong> SPF(sender IP authorized) + DKIM(cryptographic sig) + DMARC(policy on failures)","<strong>Threat hunting:</strong> PROACTIVE search for existing threats — NOT reactive to alerts"]},
+{d:5,color:"#9933FF",icon:"📋",title:"Domain 5: Security Program Management (20%)",tips:["<strong>Risk formulas:</strong> SLE = Asset Value × EF | ALE = SLE × ARO — higher ALE = higher priority","<strong>Risk strategies:</strong> Mitigate(reduce) | Transfer(insure) | Avoid(stop activity) | Accept(document it)","<strong>Inherent risk:</strong> Before controls | <strong>Residual risk:</strong> After controls","<strong>Compliance:</strong> PCI DSS(credit cards) | HIPAA(US medical) | GDPR(EU privacy) | FERPA(education)","<strong>Agreements:</strong> SLA(performance levels) | NDA(confidentiality) | MOU(cooperation,non-binding) | SOW(specific deliverables)","<strong>Data roles:</strong> Owner(classifies+approves access) | Controller(determines purpose) | Processor(processes data) | Custodian(maintains)","<strong>Governance:</strong> BIA→identify critical systems | Attestation→periodic access review | Classification→assign controls"]}
+];
+
+// ═══════════════════════════════════════════════════════
+// DOMAIN INFO
+// ═══════════════════════════════════════════════════════
+const DI={
+  1:{name:"General Security Concepts",short:"D1",color:"#FF6600",cartoon:"SpongeBob, Magic School Bus, Gravity Falls"},
+  2:{name:"Threats, Vulnerabilities & Mitigations",short:"D2",color:"#E8001C",cartoon:"KND, X-Men, Ben 10, Danny Phantom"},
+  3:{name:"Security Architecture",short:"D3",color:"#00BBEE",cartoon:"Futurama, American Dad, Avatar"},
+  4:{name:"Security Operations",short:"D4",color:"#88CC00",cartoon:"Scooby-Doo, Simpsons, Danny Phantom, Fairly OddParents"},
+  5:{name:"Security Program Management",short:"D5",color:"#9933FF",cartoon:"Rugrats, American Dad, Simpsons"}
+};
+
+const STUDY_TIPS={
+  1:["Review CIA Triad — know which technology addresses each principle (Encryption/Hashing/Redundancy)","Study AAA and Zero Trust components — Policy Engine vs Policy Enforcement Point","Master PKI: CA, CRL vs OCSP, TPM vs HSM, Key Escrow","Memorize ALL security control categories AND types with examples","Know the difference between Corrective and Compensating controls"],
+  2:["Drill every social engineering type — phishing vs spear-phishing vs whaling vs vishing vs smishing","Know your malware cold: Virus(execute) vs Worm(self-prop) vs Trojan(disguised) vs Rootkit(kernel)","Practice recognizing IoCs: impossible travel, account lockout, out-of-cycle logging","Study attack-to-mitigation pairs: SQLi→parameterized queries, XSS→output encoding","Review threat actor motivations and sophistication levels"],
+  3:["Memorize cloud service models and shared responsibility for each (IaaS/PaaS/SaaS)","Know fail modes: Fail-Open prioritizes availability; Fail-Closed prioritizes security","Study device modes: Inline (active, blocks) vs Tap/Monitor (passive, observes)","Practice disaster recovery site types: Hot > Warm > Cold and their tradeoffs","Drill RTO and RPO — know what each measures and how to calculate compliance"],
+  4:["This is the HEAVIEST domain (28%) — master the NIST IR lifecycle order COLD","Order of Volatility: RAM is FIRST, disk is LAST — this appears on exams frequently","Study IAM deeply: RBAC, MAC, DAC, ABAC, Least Privilege, MFA factor types","Know your tools: SIEM vs SOAR vs EDR vs DLP — what each one actually DOES","Practice email security: SPF + DKIM + DMARC — each component's specific role"],
+  5:["Memorize risk formulas: SLE=AV×EF | ALE=SLE×ARO — practice calculations","Know when to use each risk strategy: Mitigate, Transfer, Avoid, Accept","Study compliance frameworks: PCI DSS(payments) HIPAA(US medical) GDPR(EU privacy)","Memorize agreement types: SLA, NDA, MOU, SOW — the KEY differences","Know data governance roles: Owner classifies and approves; Custodian maintains"]
+};
+
+// ═══════════════════════════════════════════════════════
+// ACRONYM BLITZ BANK — frequently-tested SY0-701 acronyms
+// ═══════════════════════════════════════════════════════
+const ACRONYMS=[
+// D1 — General Security Concepts
+{id:201,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",tag:"🔤 ACRONYM",text:"Mr. Krabs locks the formula in a vault (nobody unauthorized can see it), seals delivery boxes so nobody can change them in transit, and keeps the Krusty Krab open 24/7 for customers. Which 3-letter acronym names this ENTIRE security model?",answers:["A. AAA — Authentication, Authorization, Accounting","B. CIA — Confidentiality, Integrity, Availability","C. PKI — Public Key Infrastructure","D. SOC — Security Operations Center"],correct:1,rationale:'CIA Triad = Confidentiality (secret vault), Integrity (unchanged in transit), Availability (always open). All three are present in the Krusty Krab scenario.'},
+{id:202,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",tag:"🔤 ACRONYM",text:"Squidward checks every visitor's ID before letting them in (who are you?), then decides whether they're allowed in the kitchen or only the dining room (what can you do?), and finally writes down everything they did in the shift log (what DID you do?). Which acronym names this 3-part process — like a 3-legged stool, it needs ALL three legs?",answers:["A. AAA — Authentication, Authorization, Accounting","B. CIA — Confidentiality, Integrity, Availability","C. MFA — Multifactor Authentication","D. RBAC — Role-Based Access Control"],correct:0,rationale:'AAA = Authentication (prove identity) + Authorization (grant/deny access) + Accounting (log actions). The 3-legged stool analogy: remove one leg and it falls.'},
+{id:203,domain:1,cartoon:"Magic School Bus",type:"mcq",tag:"🔤 ACRONYM",text:"Ms. Frizzle's bus has a small chip permanently soldered to the dashboard — it can't be removed, and it securely stores the bus's encryption keys. Which acronym names this PERMANENTLY-EMBEDDED chip? Remember: 'T' is for 'Tied to the motherboard.'",answers:["A. HSM — Hardware Security Module","B. CA — Certificate Authority","C. TPM — Trusted Platform Module","D. CRL — Certificate Revocation List"],correct:2,rationale:'TPM = Trusted Platform Module — a chip PERMANENTLY embedded (soldered) into the motherboard. Cannot be removed. Stores cryptographic keys securely at the hardware level.'},
+{id:204,domain:1,cartoon:"Gravity Falls",type:"mcq",tag:"🔤 ACRONYM",text:"Grunkle Stan's whole system of stamping 'trusted' wax seals on visitor passes, keeping a master list of every seal he's ever issued, and being able to revoke a seal if a visitor turns out to be a con artist — this entire trust system is named by which acronym?",answers:["A. TPM — Trusted Platform Module","B. PKI — Public Key Infrastructure","C. SSO — Single Sign-On","D. HSM — Hardware Security Module"],correct:1,rationale:'PKI = Public Key Infrastructure — the entire system of issuing, managing, distributing, and revoking digital certificates. CA + keys + CRL/OCSP = PKI.'},
+{id:205,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",tag:"🔤 ACRONYM",text:"Mrs. Puff keeps TWO ways to check if a boating license is still valid: a printed list of revoked licenses updated once a week, and a phone hotline that gives a real-time YES/NO instantly. Which TWO acronyms (in that order — printed list, then hotline) describe these?",answers:["A. CA, then TPM","B. SSO, then SAML","C. CRL, then OCSP","D. IDS, then IPS"],correct:2,rationale:'CRL = Certificate Revocation List (printed/periodic batch). OCSP = Online Certificate Status Protocol (real-time hotline). Know both acronyms and the key timing difference.'},
+{id:206,domain:1,cartoon:"SpongeBob SquarePants",type:"mcq",tag:"🔤 ACRONYM",text:"Sandy's airlock won't open unless you provide a password AND a face scan — two DIFFERENT proof types together. Which acronym names 'using 2 or more different factor categories'?",answers:["A. SSO — Single Sign-On","B. MFA — Multifactor Authentication","C. SAML — Security Assertion Markup Language","D. PAM — Privileged Access Management"],correct:1,rationale:'MFA = Multifactor Authentication — requires 2+ factors from DIFFERENT categories (Know + Have, or Know + Are, etc.). A password alone is single-factor.'},
+// D2 — Threats, Vulnerabilities & Mitigations
+{id:207,domain:2,cartoon:"The Simpsons",type:"mcq",tag:"🔤 ACRONYM",text:"Every newly discovered software flaw gets a unique catalog number, like 'CVE-2024-12345' — think of it as a library call-number for security flaws so everyone refers to the SAME bug. Which acronym names this catalog?",answers:["A. CVE — Common Vulnerabilities and Exposures","B. CVSS — Common Vulnerability Scoring System","C. IoC — Indicator of Compromise","D. TTP — Tactics, Techniques, and Procedures"],correct:0,rationale:'CVE = Common Vulnerabilities and Exposures — the standardized catalog/library of known vulnerabilities. Each gets a unique ID (CVE-YEAR-NUMBER) for universal reference.'},
+{id:208,domain:2,cartoon:"The Simpsons",type:"mcq",tag:"🔤 ACRONYM",text:"That catalog entry also comes with a 0.0–10.0 'report card grade' — a 9.8 means 'drop everything and patch NOW,' while a 2.1 can wait. Which acronym names this SCORE (think: the GRADE on the catalog entry's report card)?",answers:["A. CVE — Common Vulnerabilities and Exposures","B. CVSS — Common Vulnerability Scoring System","C. CRL — Certificate Revocation List","D. SLE — Single Loss Expectancy"],correct:1,rationale:'CVSS = Common Vulnerability Scoring System — the 0.0–10.0 numeric severity rating assigned to a CVE. High CVSS = urgent patch priority. CVE names it; CVSS scores it.'},
+{id:209,domain:2,cartoon:"X-Men '97",type:"mcq",tag:"🔤 ACRONYM",text:"A government-funded group infiltrates the X-Mansion's network, stays hidden for MONTHS using zero-days, and slowly steals data — patient, well-funded, and persistent. Which acronym BEST labels this kind of threat actor?",answers:["A. APT — Advanced Persistent Threat","B. DDoS — Distributed Denial of Service","C. RAT — Remote Access Trojan","D. IoC — Indicator of Compromise"],correct:0,rationale:'APT = Advanced Persistent Threat — government-funded, long-term, stealthy intrusion using sophisticated tools. Months of persistence + zero-days = APT hallmarks.'},
+{id:210,domain:2,cartoon:"The Simpsons",type:"mcq",tag:"🔤 ACRONYM",text:"Bart's account logs in from Springfield at 9:00 AM and from Tokyo at 9:01 AM — physically impossible for one person. Analysts call this red flag a(n) ___ — a SIGN that something bad might be happening, even before you know exactly what.",answers:["A. APT — Advanced Persistent Threat","B. CVE — Common Vulnerabilities and Exposures","C. IoC — Indicator of Compromise","D. ARO — Annualized Rate of Occurrence"],correct:2,rationale:'IoC = Indicator of Compromise — a clue or artifact that suggests a breach may have occurred. Impossible travel, unusual login times, and strange outbound traffic are all IoCs.'},
+{id:211,domain:2,cartoon:"X-Men '97",type:"mcq",tag:"🔤 ACRONYM",text:"Magneto floods the X-Mansion's servers with garbage traffic from THOUSANDS of bots at once, until the website crashes for EVERYONE — an attack on AVAILABILITY, not confidentiality. Which acronym names this?",answers:["A. XSS — Cross-Site Scripting","B. SQLi — SQL Injection","C. DDoS — Distributed Denial of Service","D. APT — Advanced Persistent Threat"],correct:2,rationale:'DDoS = Distributed Denial of Service — flooding a target from MANY sources simultaneously to overwhelm it and deny service to legitimate users. The \'Distributed\' part = many bots.'},
+// D3 — Security Architecture
+{id:212,domain:3,cartoon:"Avatar: The Last Airbender",type:"mcq",tag:"🔤 ACRONYM",text:"Aang's temples connect over a private, encrypted tunnel that runs across the regular internet — protecting EVERY bit of traffic between two sites, like a secret underground passage between two forts. Which TWO acronyms together name this setup (the TUNNEL, then the LAYER-3 protocol securing it)?",answers:["A. TLS, then SSL","B. VPN, then IPSec","C. NAT, then VLAN","D. WAF, then IDS"],correct:1,rationale:'VPN (Virtual Private Network) creates the encrypted tunnel. IPSec (Internet Protocol Security) is the Layer 3 protocol that secures it. Together = site-to-site VPN.'},
+{id:213,domain:3,cartoon:"Futurama",type:"mcq",tag:"🔤 ACRONYM",text:"Planet Express's delivery portal shows a padlock icon and 'https' — your browser and the server encrypt their session. Everyone still calls this 'the SSL certificate' out of habit, but the MODERN protocol actually doing the work today is:",answers:["A. SSL — Secure Sockets Layer (the current standard)","B. IPSec — Internet Protocol Security","C. TLS — Transport Layer Security (SSL's modern replacement)","D. SSH — Secure Shell"],correct:2,rationale:'TLS = Transport Layer Security — the CURRENT standard replacing the deprecated SSL. Everyone says \'SSL certificate\' out of habit, but TLS 1.2/1.3 is what actually runs.'},
+{id:214,domain:3,cartoon:"Futurama",type:"mcq",tag:"🔤 ACRONYM",text:"Planet Express installs a specialized filter directly in front of their web app that's specifically tuned to catch SQL injection and XSS — attacks happening at the APPLICATION layer (Layer 7) that a regular firewall would miss. Which acronym names this device?",answers:["A. NGFW — Next-Generation Firewall","B. WAF — Web Application Firewall","C. IDS — Intrusion Detection System","D. VPN — Virtual Private Network"],correct:1,rationale:'WAF = Web Application Firewall — inspects HTTP/HTTPS traffic specifically for Layer 7 application attacks (SQLi, XSS, CSRF). A standard NGFW doesn\'t do this depth.'},
+{id:215,domain:3,cartoon:"Futurama",type:"mcq",tag:"🔤 ACRONYM",text:"Mom's Robot Company rents Planet Express a fully-managed delivery app — Planet Express only configures their OWN account settings; Mom's company handles the OS, patches, servers, and everything underneath. Which acronym describes 'renting the finished SOFTWARE, ready to use'?",answers:["A. IaaS — Infrastructure as a Service","B. PaaS — Platform as a Service","C. SaaS — Software as a Service","D. FaaS — Functions as a Service"],correct:2,rationale:'SaaS = Software as a Service — the provider manages everything (OS, runtime, hardware); you only configure your account settings and manage your own data.'},
+{id:216,domain:3,cartoon:"American Dad",type:"mcq",tag:"🔤 ACRONYM",text:"The CIA places its public-facing web server on its OWN isolated network segment — reachable from the internet, but walled off from the sensitive internal LAN, so even if it's hacked the attacker can't easily reach anything else. Which acronym names this 'buffer zone' segment?",answers:["A. VLAN — Virtual Local Area Network","B. NAT — Network Address Translation","C. DMZ — Demilitarized Zone","D. VPC — Virtual Private Cloud"],correct:2,rationale:'DMZ = Demilitarized Zone — a network segment exposed to the internet but isolated from the internal LAN. Public-facing servers go here; internal systems stay protected behind it.'},
+// D4 — Security Operations
+{id:217,domain:4,cartoon:"The Simpsons",type:"mcq",tag:"🔤 ACRONYM",text:"Homer's platform pulls in logs from EVERY system in Springfield Nuclear — firewalls, servers, badge readers — into ONE dashboard, correlates them, and fires alerts when patterns look suspicious. Which acronym names this central 'big picture' platform?",answers:["A. SOAR — Security Orchestration, Automation, and Response","B. SIEM — Security Information and Event Management","C. EDR — Endpoint Detection and Response","D. DLP — Data Loss Prevention"],correct:1,rationale:'SIEM = Security Information and Event Management — aggregates and correlates logs from ALL sources into one platform and generates alerts. The \'big picture\' security dashboard.'},
+{id:218,domain:4,cartoon:"Scooby-Doo",type:"mcq",tag:"🔤 ACRONYM",text:"Mystery Inc.'s system AUTOMATICALLY investigates routine 'ghost sighting' alerts and even takes action on its own — like blocking an IP — WITHOUT Velma lifting a finger, freeing her up for the truly weird cases. Which acronym describes this AUTOMATION layer that sits on top of the SIEM?",answers:["A. SIEM — Security Information and Event Management","B. SOAR — Security Orchestration, Automation, and Response","C. XDR — Extended Detection and Response","D. NAC — Network Access Control"],correct:1,rationale:'SOAR = Security Orchestration, Automation, and Response — sits on top of the SIEM and AUTOMATES response to routine alerts, freeing analysts for complex investigations.'},
+{id:219,domain:4,cartoon:"Danny Phantom",type:"mcq",tag:"🔤 ACRONYM",text:"Fenton Works installs an agent on EVERY laptop and desktop that watches process behavior in real time and can AUTOMATICALLY isolate a device the instant it starts acting like a ghost-infected zombie. Which acronym names this ENDPOINT-focused tool?",answers:["A. DLP — Data Loss Prevention","B. SIEM — Security Information and Event Management","C. EDR — Endpoint Detection and Response","D. WAF — Web Application Firewall"],correct:2,rationale:'EDR = Endpoint Detection and Response — an agent on each endpoint that monitors behavior in real time and can automatically isolate a compromised device.'},
+{id:220,domain:4,cartoon:"The Simpsons",type:"mcq",tag:"🔤 ACRONYM",text:"Springfield Nuclear's system automatically blocks any employee from emailing a file containing what LOOKS like a Social Security Number outside the company — even if the employee didn't mean to. Which acronym names this control, which exists to stop sensitive data from LEAVING?",answers:["A. EDR — Endpoint Detection and Response","B. NAC — Network Access Control","C. IPS — Intrusion Prevention System","D. DLP — Data Loss Prevention"],correct:3,rationale:'DLP = Data Loss Prevention — monitors and blocks unauthorized transmission of sensitive data outside the organization. Stops accidental or malicious data exfiltration.'},
+{id:221,domain:4,cartoon:"Scooby-Doo",type:"mcq",tag:"🔤 ACRONYM",text:"Daphne's new portal grants access based purely on JOB TITLE — anyone with the 'Detective' role automatically gets the case files, anyone with the 'Driver' role automatically gets the Mystery Machine keys, regardless of WHO specifically holds that title. Which acronym names this model?",answers:["A. DAC — Discretionary Access Control","B. MAC — Mandatory Access Control","C. RBAC — Role-Based Access Control","D. ABAC — Attribute-Based Access Control"],correct:2,rationale:'RBAC = Role-Based Access Control — access is granted based on JOB ROLE, not individual identity. Everyone with the \'Detective\' role gets the same access automatically.'},
+{id:222,domain:4,cartoon:"Fairly OddParents",type:"mcq",tag:"🔤 ACRONYM",text:"Timmy logs in to his fairy-godparent account ONCE in the morning, and that SAME login carries him into the school portal, the city park system, AND the wish-granting site — no re-typing a password each time. Which acronym names this 'log in once, access everything' experience?",answers:["A. MFA — Multifactor Authentication","B. SAML — Security Assertion Markup Language","C. SSO — Single Sign-On","D. PAM — Privileged Access Management"],correct:2,rationale:'SSO = Single Sign-On — authenticate once, access multiple systems. The key benefit is users don\'t re-authenticate for each system after the initial login.'},
+{id:223,domain:4,cartoon:"The Simpsons",type:"mcq",tag:"🔤 ACRONYM",text:"Springfield's mail server checks THREE things on an incoming email claiming to be from 'admin@springfieldnuclear.com': is the SENDING SERVER's IP authorized? does the message have a valid CRYPTOGRAPHIC SIGNATURE? and what POLICY (reject/quarantine/allow) applies if either check fails? Which acronym is the FINAL policy layer that ties the other two checks together?",answers:["A. SPF — Sender Policy Framework","B. DKIM — DomainKeys Identified Mail","C. DMARC — Domain-based Message Authentication, Reporting, and Conformance","D. S/MIME — Secure/Multipurpose Internet Mail Extensions"],correct:2,rationale:'DMARC = Domain-based Message Authentication, Reporting & Conformance — the POLICY layer that tells receiving servers what to do (reject/quarantine/allow) when SPF or DKIM fail.'},
+{id:224,domain:4,cartoon:"Scooby-Doo",type:"mcq",tag:"🔤 ACRONYM",text:"After every mystery, Velma tracks two stopwatch numbers: 'how long until we NOTICED the ghost was real' and 'how long until we CAPTURED it.' Which acronym PAIR (in that order — notice, then capture) describes these two metrics?",answers:["A. RTO and RPO — Recovery Time/Point Objective","B. MTTD and MTTR — Mean Time to Detect / Mean Time to Respond","C. SLA and SOW — Service-Level Agreement / Statement of Work","D. ARO and ALE — Annualized Rate of Occurrence / Annualized Loss Expectancy"],correct:1,rationale:'MTTD = Mean Time to Detect (how long to notice). MTTR = Mean Time to Respond/Resolve (how long to fix). Both are key SOC performance metrics.'},
+// D5 — Security Program Management
+{id:225,domain:5,cartoon:"American Dad",type:"mcq",tag:"🔤 ACRONYM",text:"The CIA's disaster plan says: 'systems MUST be back online within 4 hours, and we can tolerate losing at most 1 hour of data.' Which acronym PAIR (in order — the TIME target, then the DATA-LOSS target) names these two numbers?",answers:["A. MTTD and MTTR — Mean Time to Detect / Mean Time to Respond","B. RTO and RPO — Recovery Time Objective / Recovery Point Objective","C. SLE and ALE — Single Loss / Annualized Loss Expectancy","D. BIA and COOP — Business Impact Analysis / Continuity of Operations Plan"],correct:1,rationale:'RTO = Recovery Time Objective (how quickly systems must be back online). RPO = Recovery Point Objective (maximum acceptable data loss, measured in time).'},
+{id:226,domain:5,cartoon:"Rugrats",type:"mcq",tag:"🔤 ACRONYM",text:"Each time Tommy escapes the playpen, it costs $100 in 'damages' (one incident's loss). It happens 3 times per YEAR. Multiplying $100 × 3 gives the YEARLY expected loss — the number Stu uses to decide if buying a $50 better latch is worth it. Which acronym names THIS YEARLY number?",answers:["A. SLE — Single Loss Expectancy","B. ARO — Annualized Rate of Occurrence","C. ALE — Annualized Loss Expectancy","D. EF — Exposure Factor"],correct:2,rationale:'ALE = Annualized Loss Expectancy = SLE × ARO = the total expected loss PER YEAR. SLE is the loss per incident; multiply by how often it happens per year.'},
+{id:227,domain:5,cartoon:"American Dad",type:"mcq",tag:"🔤 ACRONYM",text:"The CIA hires an outside contractor for a 6-week project and signs a document spelling out EXACTLY what will be delivered, by when, and the milestones along the way — but it's a one-time project document, not an ongoing performance guarantee. Which acronym names THIS document?",answers:["A. SLA — Service-Level Agreement","B. NDA — Non-Disclosure Agreement","C. MOU — Memorandum of Understanding","D. SOW — Statement of Work"],correct:3,rationale:'SOW = Statement of Work — a specific, detailed project document listing exact deliverables, milestones, and timelines for a one-time engagement. Not a performance guarantee.'},
+{id:228,domain:5,cartoon:"The Simpsons",type:"mcq",tag:"🔤 ACRONYM",text:"Springfield Hospital's patient diagnoses, prescriptions, and billing records are protected under a specific U.S. federal law focused entirely on MEDICAL information. Which acronym names this law?",answers:["A. GDPR — General Data Protection Regulation","B. PCI DSS — Payment Card Industry Data Security Standard","C. HIPAA — Health Insurance Portability and Accountability Act","D. FERPA — Family Educational Rights and Privacy Act"],correct:2,rationale:'HIPAA = Health Insurance Portability and Accountability Act — U.S. federal law protecting patient health information (PHI). Medical data = HIPAA, not GDPR (that\'s EU).'},
+{id:229,domain:5,cartoon:"Scooby-Doo",type:"mcq",tag:"🔤 ACRONYM",text:"Before redesigning the Mystery Machine's IT systems, Fred's team ranks WHICH systems are most critical to the business and calculates the dollar impact if each one goes down for a day. Which acronym names THIS analysis — the foundation that later feeds into RTO/RPO targets?",answers:["A. SOC — Security Operations Center","B. BIA — Business Impact Analysis","C. GRC — Governance, Risk, and Compliance","D. COOP — Continuity of Operations Plan"],correct:1,rationale:'BIA = Business Impact Analysis — identifies critical systems and quantifies the business impact of their failure. It\'s the foundation that feeds RTO/RPO targets.'},
+{id:230,domain:5,cartoon:"The Simpsons",type:"mcq",tag:"🔤 ACRONYM",text:"Springfield Nuclear bundles its high-level POLICIES (governance), its process for identifying and prioritizing RISK, and its checklist for meeting legal/regulatory requirements (compliance) into ONE unified program. Which umbrella acronym names this combined program?",answers:["A. SOC — Security Operations Center","B. NOC — Network Operations Center","C. GRC — Governance, Risk, and Compliance","D. CIA — Confidentiality, Integrity, Availability"],correct:2,rationale:'GRC = Governance, Risk, and Compliance - the umbrella framework combining policy governance, risk management, and regulatory compliance into one unified program.'}
+];
+
+// ═══════════════════════════════════════════════════════
+// PBQ ARENA BANK — common Security+ PBQ formats, 10 rotate per attempt
+// ═══════════════════════════════════════════════════════
+const PBQ_BANK=[
+// #1 — Malware-infected host identification (pbq-match) — D2
+{id:301,domain:2,cartoon:"Danny Phantom",type:"pbq-match",text:"MATCH each device's log behavior to its CORRECT classification:",scenario:"Fenton Works' SOC dashboard shows overnight logs for 4 devices after a ghost-malware alert. Match each device to its classification.",leftItems:["A. Sam's laptop — opened a malicious attachment at 9:02 AM, then began contacting an external IP every 60 seconds","B. Tucker's PDA — received an unusual file transfer FROM Sam's laptop at 9:05 AM, then started scanning the internal subnet for open ports","C. Jazz's tablet — normal login at 8:45 AM, no unusual traffic, matches baseline behavior","D. Danny's phone — the malicious attachment was blocked by EDR before it could execute"],rightItems:["1. Patient Zero — initial point of infection","2. Secondary Infection — spread from Patient Zero","3. Clean / Unaffected — normal baseline activity","4. Attempted Infection — blocked before execution"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'Patient Zero = first infected host (Sam\'s laptop originated the infection). Secondary = spread FROM patient zero (Tucker\'s PDA). Clean = no suspicious activity (Jazz\'s tablet). Attempted = blocked before execution (Danny\'s phone).'},
+// #2 — Network architecture build ordering (pbq-order) — D3
+{id:302,domain:3,cartoon:"Futurama",type:"pbq-order",text:"ORDER these network components from the INTERNET edge (FIRST) to the protected internal server (LAST):",scenario:"Planet Express is wiring a new branch office. Drag the components into the correct placement order, starting at the internet connection and ending at the protected internal server.",items:["ISP Connection / Modem — provides the internet circuit entering the building","Edge Firewall — first line of defense, filters traffic entering/leaving the network","Router — directs traffic between the WAN and internal network segments","IPS — inline inspection that blocks malicious traffic before it reaches the LAN","Core Switch — connects all internal devices and segments on the LAN","Internal Application Server — final destination, most protected segment"],correctOrder:[0,1,2,3,4,5],rationale:'Network traffic flows: ISP → Edge Firewall (first defense) → Router (directs traffic) → IPS (inspects/blocks) → Core Switch (internal distribution) → Server (destination). Each layer adds protection.'},
+// #3 — Terminal/log analysis → remediation command matching (pbq-match) — D4
+{id:303,domain:4,cartoon:"Scooby-Doo",type:"pbq-match",text:"MATCH each suspicious finding to the command that CORRECTLY remediates it:",scenario:"Velma found these entries while reviewing the Mystery Inc. server's logs and filesystem. Match each finding to its remediation.",leftItems:["A. A new admin account 'wnkles_jenkins' was created at 2:14 AM and is NOT on the approved user list","B. An unknown script '/tmp/.hidden_ghost.sh' is running with root privileges, launched via a cron job","C. World-writable (777) permissions were found on '/etc/shadow'","D. Five failed SSH login attempts per second are arriving from a single external IP, non-stop for an hour"],rightItems:["1. userdel -r wnkles_jenkins — remove the unauthorized account and its home directory","2. kill the process, delete /tmp/.hidden_ghost.sh, and remove the malicious cron entry","3. chmod 600 /etc/shadow — restore secure file permissions","4. Block the source IP at the firewall (or enable fail2ban) to stop the brute-force attempts"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'userdel removes unauthorized accounts. Kill + delete removes malicious running processes/cron jobs. chmod 600 /etc/shadow restores proper restrictive file permissions. Firewall block stops brute-force source IPs.'},
+// #4 — Port/protocol matching (pbq-match) — D3
+{id:304,domain:3,cartoon:"X-Men '97",type:"pbq-match",text:"MATCH each port number to its CORRECT protocol or service:",scenario:"Cerebro's network monitor flagged traffic on several ports leaving the X-Mansion. Match each port to the correct protocol/service.",leftItems:["A. Port 22","B. Port 443","C. Port 3389","D. Port 53"],rightItems:["1. SSH — Secure Shell remote administration","2. HTTPS — encrypted web traffic (TLS)","3. RDP — Remote Desktop Protocol","4. DNS — domain name resolution"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'Port 22=SSH (remote admin), 443=HTTPS (encrypted web/TLS), 3389=RDP (Remote Desktop Protocol), 53=DNS (domain name resolution). These are the most commonly tested ports on CompTIA.'},
+// #5 — Attack-to-mitigation matching (pbq-match) — D2
+{id:305,domain:2,cartoon:"Ben 10",type:"pbq-match",text:"MATCH each attack technique to its BEST mitigation:",scenario:"Plumber HQ's security team must pair each attack with its best defense.",leftItems:["A. SQL injection against the Omnitrix database login form","B. Cross-Site Scripting (XSS) on the Plumber web portal","C. Brute-force password attempts against Ben's account","D. On-path (man-in-the-middle) attack on Plumber Wi-Fi traffic"],rightItems:["1. Parameterized queries / prepared statements","2. Output encoding and input sanitization","3. Account lockout policy combined with MFA","4. Enforce TLS/HTTPS with certificate validation"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'SQLi→parameterized queries (separates code from input). XSS→output encoding (renders input as text, not code). Brute force→lockout+MFA (limits attempts + requires second factor). On-path→enforce TLS (encrypts traffic).'},
+// #6 — Access control model matching (pbq-match) — D4
+{id:306,domain:4,cartoon:"Fairly OddParents",type:"pbq-match",text:"MATCH each described approach to the CORRECT access control model:",scenario:"Dimmsdale School is redesigning how access is granted across its systems. Match each description to its model.",leftItems:["A. A document's OWNER decides who else can read or edit it, and can grant access to anyone they personally choose","B. Access is based on classified labels (e.g., 'Top Secret') — only users with matching clearance, set centrally by admins, can view it","C. Access is granted purely based on job title — the 'Teacher' role automatically gets gradebook access","D. Access decisions weigh MULTIPLE attributes together — department, time of day, AND device type"],rightItems:["1. DAC — Discretionary Access Control","2. MAC — Mandatory Access Control","3. RBAC — Role-Based Access Control","4. ABAC — Attribute-Based Access Control"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'DAC=owner decides who gets access. MAC=centrally-set labels/clearances (need matching clearance). RBAC=job title/role determines access. ABAC=multiple attributes combined (dept+time+device).'},
+// #7 — PKI component matching (pbq-match) — D1
+{id:307,domain:1,cartoon:"Magic School Bus",type:"pbq-match",text:"MATCH each component to its CORRECT role in the PKI:",scenario:"Ms. Frizzle's class is building a mini PKI for the school network. Match each component to its role.",leftItems:["A. Issues and digitally signs certificates, establishing the root of trust","B. A periodically published list of ALL revoked certificates","C. Allows checking a SINGLE certificate's revocation status in real time","D. A removable hardware device that securely stores and manages an organization's master cryptographic keys"],rightItems:["1. CA — Certificate Authority","2. CRL — Certificate Revocation List","3. OCSP — Online Certificate Status Protocol","4. HSM — Hardware Security Module"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'CA issues and signs certificates (root of trust). CRL is the periodic batch list of revoked certs. OCSP provides real-time single-cert revocation status. HSM is the hardware vault for master cryptographic keys.'},
+// #8 — Hardening steps ordering (pbq-order) — D4
+{id:308,domain:4,cartoon:"The Simpsons",type:"pbq-order",text:"ORDER these hardening steps for a brand-new server, from FIRST to LAST:",scenario:"Homer just racked a brand-new server at Springfield Nuclear. Drag the hardening tasks into the correct sequence before it goes live.",items:["Change all default administrator passwords and disable/rename default accounts","Remove or disable unnecessary services, ports, and protocols","Apply the latest OS and security patches","Configure the host-based firewall and enable logging/auditing","Run a vulnerability scan to validate the hardened baseline before deployment"],correctOrder:[0,1,2,3,4],rationale:'Server hardening sequence: 1) Change defaults (passwords/accounts), 2) Remove unnecessary services/ports, 3) Patch OS, 4) Configure firewall+logging, 5) Validate with vulnerability scan before going live.'},
+// #9 — Incident response lifecycle ordering, ransomware scenario (pbq-order) — D4
+{id:309,domain:4,cartoon:"Danny Phantom",type:"pbq-order",text:"ORDER the incident response steps from FIRST to LAST for this scenario:",scenario:"Fenton Works detects ransomware encrypting files on the finance server. Drag the steps into the correct NIST IR order.",items:["Preparation — IR plan, contact list, and backup tools already in place BEFORE the incident","Detection and Analysis — confirm ransomware activity and identify affected systems","Containment — disconnect the finance server from the network to stop the spread","Eradication — remove the ransomware and any backdoors from the system","Recovery — restore files from clean backups and bring the server back online","Lessons Learned — document the incident and update the IR playbook"],correctOrder:[0,1,2,3,4,5],rationale:'NIST IR: Preparation (pre-incident) → Detection & Analysis (confirm threat) → Containment (limit spread) → Eradication (remove root cause) → Recovery (restore operations) → Lessons Learned (improve).'},
+// #10 — Backup/recovery ordering (pbq-order) — D3
+{id:310,domain:3,cartoon:"Avatar: The Last Airbender",type:"pbq-order",text:"ORDER these disaster recovery actions from FIRST (right after the disaster) to LAST:",scenario:"A fire destroys the White Lotus's primary data center on a Tuesday. They take a full backup every Sunday and incrementals Monday–Saturday. Drag the recovery steps into the correct order.",items:["Declare a disaster and activate the warm site per the DR plan","Restore Sunday's full backup to the warm site servers","Apply Monday's incremental backup on top of the restored full backup","Validate restored data integrity and system functionality","Redirect users and traffic to the recovered warm site"],correctOrder:[0,1,2,3,4],rationale:'DR recovery order: Declare disaster → Restore full backup (Sunday) → Apply incrementals (Monday) → Validate data integrity → Redirect users. Always restore full backup FIRST, then layer incrementals.'},
+// #11 — Risk response strategy matching (pbq-match) — D5
+{id:311,domain:5,cartoon:"Rugrats",type:"pbq-match",text:"MATCH each decision to the CORRECT risk response strategy:",scenario:"The Pickles family's home-safety risk register lists several decisions. Match each to its risk response strategy.",leftItems:["A. They buy liability insurance in case Tommy gets hurt despite all the safety gates","B. They install baby gates and outlet covers to REDUCE the chance of injury","C. They decide NOT to let Tommy near the backyard pool at all this summer","D. They formally document that a small risk of minor bumps remains acceptable, given the gates already installed"],rightItems:["1. Risk Transfer","2. Risk Mitigation","3. Risk Avoidance","4. Risk Acceptance"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'Risk Transfer=insurance (financial impact shifts to insurer). Mitigation=controls that REDUCE likelihood/impact. Avoidance=stop the risky activity entirely. Acceptance=formally document \'we\'ll live with this risk.\''},
+// #12 — Authentication factor matching (pbq-match) — D1
+{id:312,domain:1,cartoon:"Gravity Falls",type:"pbq-match",text:"MATCH each credential to its CORRECT authentication factor category:",scenario:"The Mystery Shack's new vault requires multiple proofs of identity. Match each credential to its factor category.",leftItems:["A. A PIN code Dipper memorizes","B. A keycard Mabel carries in her bag","C. Stan's fingerprint scan","D. The vault only unlocks when accessed from inside the Mystery Shack building"],rightItems:["1. Something you KNOW","2. Something you HAVE","3. Something you ARE","4. Somewhere you ARE"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'Authentication factors: Something you KNOW (PIN/password), Something you HAVE (card/token), Something you ARE (biometric/fingerprint), Somewhere you ARE (geolocation/physical location).'},
+// #13 — Email authentication ordering (pbq-order) — D4
+{id:313,domain:4,cartoon:"The Simpsons",type:"pbq-order",text:"ORDER the email authentication checks from FIRST check to FINAL policy decision:",scenario:"A phishing email claiming to be from 'admin@springfieldnuclear.com' arrives. Drag the checks into the order the mail server performs them.",items:["SPF — verify the sending server's IP is authorized for the domain","DKIM — verify the cryptographic signature confirms the message wasn't altered","DMARC — apply the domain's policy (reject/quarantine/allow) based on the SPF/DKIM results","Deliver to inbox, quarantine, or reject based on the DMARC outcome"],correctOrder:[0,1,2,3],rationale:'Email auth order: SPF first (is this IP allowed to send?), DKIM second (is the message signature valid?), DMARC third (what policy applies based on SPF/DKIM results?), then deliver/quarantine/reject.'},
+// #14 — Vulnerability management workflow ordering (pbq-order) — D4
+{id:314,domain:4,cartoon:"Codename: Kids Next Door",type:"pbq-order",text:"ORDER the vulnerability management workflow steps from FIRST to LAST:",scenario:"Numbuh 2 runs the KND treehouse's vulnerability management program. Drag the steps into the correct workflow order.",items:["Scan all treehouse systems for known vulnerabilities","Review scan results and assign CVSS-based severity ratings","Prioritize remediation — patch the highest-CVSS vulnerabilities first","Apply patches or compensating controls to remediate","Re-scan to validate the vulnerabilities are resolved"],correctOrder:[0,1,2,3,4],rationale:'Vuln management cycle: Scan → Rate/Score (CVSS) → Prioritize (highest CVSS first) → Remediate (patch or compensate) → Re-scan (verify fixed). It\'s a continuous loop, not a one-time task.'},
+// #15 — Identity lifecycle ordering (pbq-order) — D4
+{id:315,domain:4,cartoon:"American Dad",type:"pbq-order",text:"ORDER these identity lifecycle steps for a new analyst, from FIRST to LAST:",scenario:"Stan is onboarding a new CIA analyst. Drag the IAM lifecycle steps into the correct order.",items:["HR creates the new-hire record, triggering automated account provisioning","Account is created with default Least-Privilege access based on role (RBAC)","Manager requests additional access; the request goes through an approval workflow","Access is periodically reviewed during attestation / recertification","Account is automatically de-provisioned when HR marks the employee as terminated"],correctOrder:[0,1,2,3,4],rationale:'IAM lifecycle: HR triggers provisioning → Account created with least privilege (RBAC) → Additional access via approval workflow → Periodic attestation review → Auto de-provision on termination.'},
+// #16 — Cloud shared responsibility matching (pbq-match) — D3
+{id:316,domain:3,cartoon:"Futurama",type:"pbq-match",text:"MATCH each cloud service model to what the CUSTOMER is responsible for under the shared responsibility model:",scenario:"Planet Express uses different cloud services from Mom's Robot Company. Match each model to the customer's responsibilities.",leftItems:["A. IaaS — Infrastructure as a Service","B. PaaS — Platform as a Service","C. SaaS — Software as a Service","D. On-Premises (no cloud)"],rightItems:["1. Customer manages OS, runtime, applications, and data — provider manages hardware/virtualization only","2. Customer manages only application code and data — provider manages OS, runtime, and infrastructure","3. Customer manages only account configuration and data — provider manages everything else","4. Customer is responsible for EVERYTHING — hardware, OS, applications, and data"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'IaaS: you manage OS up. PaaS: you manage app+data only. SaaS: you manage account+data only. On-Prem: you manage EVERYTHING. As you go up the stack, the provider takes more responsibility.'},
+// #17 — Wireless security term matching (pbq-match) — D3
+{id:317,domain:3,cartoon:"X-Men '97",type:"pbq-match",text:"MATCH each wireless security term to its CORRECT description:",scenario:"The X-Mansion is upgrading its Wi-Fi security. Match each term to its description.",leftItems:["A. WPA3","B. EAP","C. RADIUS","D. PSK"],rightItems:["1. The current strongest Wi-Fi encryption/authentication standard","2. A framework supporting multiple authentication methods for network access (e.g., certificates, tokens)","3. A centralized AAA server that authenticates users before granting network access","4. A single shared password used by ALL devices to join the wireless network"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'WPA3=current strongest Wi-Fi standard. EAP=extensible authentication framework (supports many methods). RADIUS=centralized AAA server for network auth. PSK=single shared password for all devices.'},
+// #18 — Data classification matching (pbq-match) — D5
+{id:318,domain:5,cartoon:"Magic School Bus",type:"pbq-match",text:"MATCH each data type to its CORRECT classification level and handling requirement:",scenario:"Ms. Frizzle's school district is classifying student data. Match each data type to its classification.",leftItems:["A. Student directory info already published on the public school website","B. Individual student grades and attendance records","C. Students' Social Security Numbers and medical records","D. Internal staff meeting notes about budget planning"],rightItems:["1. Public — no special handling required","2. Confidential — access limited to authorized staff, encryption recommended","3. Restricted/Highly Sensitive — strict access controls and encryption required, regulated by law","4. Internal — limited to employees, not for public release"],correctMatches:[[0,0],[1,1],[2,2],[3,3]],rationale:'Data classification: Public (already published, no restrictions). Confidential (staff-only, encryption recommended). Restricted/Highly Sensitive (regulated by law, SSNs/medical). Internal (employees only, not public).'},
+// #19 — Physical security layering ordering (pbq-order) — D1
+{id:319,domain:1,cartoon:"SpongeBob SquarePants",type:"pbq-order",text:"ORDER these physical security controls from OUTERMOST (a thief encounters first) to INNERMOST:",scenario:"Mr. Krabs is layering physical defenses around the secret formula safe. Drag from OUTERMOST to INNERMOST.",items:["Perimeter fencing and 'No Trespassing' signage around the property","Locked front door with Squidward checking IDs","Motion-sensor cameras covering the kitchen and back office","Locked office door requiring a keycard","The safe itself, secured with a combination lock and biometric scanner"],correctOrder:[0,1,2,3,4],rationale:'Physical security defense-in-depth from outside in: Perimeter fence → Front door ID check → Interior cameras → Interior locked door → Safe with biometric. Each layer is progressively more restrictive.'},
+// #20 — SOC alert triage prioritization (pbq-order) — D4
+{id:320,domain:4,cartoon:"Scooby-Doo",type:"pbq-order",text:"ORDER these SOC alerts from HIGHEST priority (investigate FIRST) to LOWEST priority (LAST):",scenario:"Velma's SIEM generated four alerts overnight. Drag them from HIGHEST priority to LOWEST.",items:["Critical CVE (CVSS 9.8) actively being exploited on the public-facing web server","Admin account logging in from two countries within one minute (impossible travel)","Multiple failed login attempts on a low-privilege account, followed by a successful login","A single low-severity informational alert about a routine configuration change"],correctOrder:[0,1,2,3],rationale:'SOC triage: Active critical exploit (CVSS 9.8, public-facing) first. Impossible travel second (active account compromise). Lockout then successful login third. Low-severity informational alert last.'}
+];
+
+// ═══════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════
+let S={mode:null,domain:null,questions:[],current:0,answers:{},flagged:new Set(),
+  soundOn:true,audioCtx:null,timerOn:false,timeLeft:5400,timerInterval:null,
+  matchState:{selectedLeft:null,matched:{}}};
+
+// ═══════════════════════════════════════════════════════
+// AUDIO
+// ═══════════════════════════════════════════════════════
+function getACtx(){if(!S.audioCtx)S.audioCtx=new(window.AudioContext||window.webkitAudioContext)();return S.audioCtx;}
+function tone(f,d,t='sine',v=0.12){if(!S.soundOn)return;try{const c=getACtx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type=t;o.frequency.value=f;g.gain.setValueAtTime(v,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+d);o.start();o.stop(c.currentTime+d);}catch(e){}}
+function clickSound(){tone(440,.07,'square',.1);setTimeout(()=>tone(550,.05,'square',.08),40);}
+function nextSound(){tone(660,.12,'sine',.12);}
+function womp(){if(!S.soundOn)return;try{const c=getACtx();[280,230,185,140].forEach((f,i)=>setTimeout(()=>{const o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.type='sawtooth';o.frequency.value=f;g.gain.setValueAtTime(.18,c.currentTime);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+.45);o.start();o.stop(c.currentTime+.45);},i*200));}catch(e){}}
+function fanfare(){if(!S.soundOn)return;[[523,.15],[659,.15],[784,.15],[1047,.4]].forEach(([f,d],i)=>setTimeout(()=>tone(f,d,'sine',.15),i*150));}
+function toggleSound(){S.soundOn=!S.soundOn;document.getElementById('soundToggle').textContent=S.soundOn?'🔊 Sound ON':'🔇 Sound OFF';if(S.soundOn)clickSound();}
+
+// ═══════════════════════════════════════════════════════
+// SCREENS + CRAM
+// ═══════════════════════════════════════════════════════
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function showDomainSelect(){clickSound();showScreen('domainSelect');}
+function showCram(){
+  clickSound();
+  document.getElementById('cramContent').innerHTML=CRAM.map(cd=>`
+    <div style="background:white;border:3px solid #111;border-radius:16px;padding:18px;box-shadow:3px 3px 0 #111;">
+      <div style="font-family:'Bangers','Impact','Arial Narrow Bold','Arial Black',sans-serif;font-size:1.2rem;color:${cd.color};margin-bottom:10px;">${cd.icon} ${cd.title}</div>
+      ${cd.tips.map(t=>`<div style="font-size:0.82rem;font-weight:700;color:#444;padding:4px 0;border-bottom:1px solid #eee;line-height:1.5;">▸ ${t}</div>`).join('')}
+    </div>`).join('');
+  showScreen('cramScreen');
+}
+
+// ═══════════════════════════════════════════════════════
+// START MODES
+// ═══════════════════════════════════════════════════════
+function shuffle(a){const r=[...a];for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];}return r;}
+
+function scramblePBQs(qs){
+  qs.forEach(q=>{
+    if(q.type==='pbq-order'){
+      // Build a display permutation (shuffle the item indices)
+      const n=q.items.length;
+      let perm=[...Array(n).keys()];
+      for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[perm[i],perm[j]]=[perm[j],perm[i]];}
+      // Re-map items to shuffled order; re-map correctOrder accordingly
+      const newItems=perm.map(i=>q.items[i]);
+      // correctOrder[pos]=originalIdx → find where each originalIdx ended up
+      const invPerm=Array(n);perm.forEach((orig,newPos)=>invPerm[orig]=newPos);
+      q.items=newItems;
+      q.correctOrder=q.correctOrder.map(orig=>invPerm[orig]);
+      q._scrambled=true;
+    }
+    if(q.type==='pbq-match'){
+      // Shuffle rightItems and update correctMatches
+      const n=q.rightItems.length;
+      let perm=[...Array(n).keys()];
+      for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[perm[i],perm[j]]=[perm[j],perm[i]];}
+      const newRight=perm.map(i=>q.rightItems[i]);
+      const invPerm=Array(n);perm.forEach((orig,newPos)=>invPerm[orig]=newPos);
+      q.rightItems=newRight;
+      q.correctMatches=q.correctMatches.map(([l,r])=>[l,invPerm[r]]);
+      q._scrambled=true;
+    }
+  });
+  return qs;
+}
+
+function startMode(mode,domain=null){
+  clickSound();
+  if(S.timerInterval){clearInterval(S.timerInterval);S.timerInterval=null;}
+  S={...S,mode,domain,questions:[],current:0,answers:{},flagged:new Set(),timerOn:false,timeLeft:5400,matchState:{selectedLeft:null,matched:{}}};
+  if(mode==='full'){S.questions=shuffle([...QUESTIONS]);}
+  else if(mode==='short'){
+    const picks=[];
+    [{d:1,n:4},{d:2,n:8},{d:3,n:6},{d:4,n:10},{d:5,n:7}].forEach(({d,n})=>{picks.push(...shuffle(QUESTIONS.filter(q=>q.domain===d)).slice(0,n));});
+    S.questions=shuffle(picks);
+  } else if(mode==='domain'){
+    S.questions=shuffle(QUESTIONS.filter(q=>q.domain===domain)).slice(0,20);
+  } else if(mode==='acronym'){
+    S.questions=shuffle([...ACRONYMS]).slice(0,25);
+  } else if(mode==='pbq'){
+    S.questions=shuffle([...PBQ_BANK]).slice(0,10);
+  }
+  scramblePBQs(S.questions);
+  showScreen('quiz');
+  const ts=document.getElementById('timerSetup'),qm=document.getElementById('quizMain');
+  if(mode==='full'){ts.style.display='block';qm.style.display='none';}
+  else{ts.style.display='none';qm.style.display='block';beginExam(false);}
+}
+function beginExam(useTimer){
+  S.timerOn=useTimer;
+  document.getElementById('timerSetup').style.display='none';
+  document.getElementById('quizMain').style.display='block';
+  const tb=document.getElementById('timerBox');
+  if(useTimer){tb.style.display='block';startTimer();}else{tb.style.display='none';}
+  renderQuestion();
+}
+function startTimer(){
+  S.timeLeft=5400;
+  S.timerInterval=setInterval(()=>{
+    S.timeLeft--;
+    const m=Math.floor(S.timeLeft/60),s=S.timeLeft%60;
+    const tb=document.getElementById('timerBox');
+    if(tb){tb.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;tb.classList.toggle('warn',S.timeLeft<=300);}
+    if(S.timeLeft<=0){clearInterval(S.timerInterval);showResults();}
+  },1000);
+}
+
+// ═══════════════════════════════════════════════════════
+// RENDER QUESTION
+// ═══════════════════════════════════════════════════════
+const EMOJI={
+  "SpongeBob SquarePants":"🧽","Ben 10":"⚡","Scooby-Doo":"🐕","Avatar: The Last Airbender":"🌪️",
+  "Codename: Kids Next Door":"🏠","X-Men '97":"⚡","The Simpsons":"🍩","Futurama":"🚀",
+  "Danny Phantom":"👻","Fairly OddParents":"⭐","Magic School Bus":"🚌","The Magic School Bus":"🚌",
+  "Rugrats":"🍼","Gravity Falls":"🌲","Family Guy":"🍺","American Dad":"🇺🇸"
+};
+function renderQuestion(){
+  const q=S.questions[S.current];const tot=S.questions.length;
+  const pct=Math.round((S.current+1)/tot*100);
+  document.getElementById('qCounter').textContent=`Q ${S.current+1} / ${tot}`;
+  document.getElementById('progressBar').style.width=pct+'%';
+  const db=document.getElementById('domainBadge');db.textContent=DI[q.domain].short;db.style.background=DI[q.domain].color;
+  const hasAns=S.answers[S.current]!==undefined;
+  const isLast=S.current===tot-1;
+  const nb=document.getElementById('nextBtn'),fb=document.getElementById('finishBtn');
+  nb.disabled=!hasAns&&!S.flagged.has(S.current);
+  nb.style.display=isLast?'none':'inline-block';
+  fb.style.display=isLast?'inline-block':'none';
+  // Flag drawer
+  const fc=S.flagged.size;
+  document.getElementById('flagCount').textContent=fc;
+  const sfb=document.getElementById('showFlagBtn');sfb.style.display=fc>0?'inline-block':'none';
+  if(fc>0){document.getElementById('flagChips').innerHTML=[...S.flagged].map(i=>`<span class="flag-chip${S.answers[i]!==undefined?' answered':''}" onclick="jumpTo(${i})">Q${i+1}${S.answers[i]!==undefined?' ✓':' ?'}</span>`).join('');}
+  const isFlagged=S.flagged.has(S.current);
+  let h=`<div class="question-card"><div class="q-stripe" style="background:${DI[q.domain].color}"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin:8px 0 16px;">
+      <span class="q-cartoon-tag">${EMOJI[q.cartoon]||'🎮'} ${q.cartoon}<span style="display:inline-block;background:${q.type==='mcq'?'var(--cn-cyan)':'var(--cn-purple)'};color:${q.type==='mcq'?'#111':'white'};border:2px solid #111;border-radius:6px;padding:1px 8px;font-size:0.72rem;font-weight:900;margin-left:6px;">${q.tag||(q.type==='mcq'?'MCQ':'PBQ')}</span></span>
+      <button onclick="toggleFlag()" style="background:${isFlagged?'var(--cn-yellow)':'white'};border:2px solid #${isFlagged?'111':'ddd'};border-radius:8px;padding:4px 12px;font-weight:800;font-size:0.82rem;cursor:pointer;">🚩 ${isFlagged?'Flagged':'Flag'}</button>
+    </div>`;
+  if(q.scenario)h+=`<div class="question-scenario">📋 ${q.scenario}</div>`;
+  h+=`<div class="question-text">${q.text}</div>`;
+  if(q.type==='mcq')h+=renderMCQ(q);
+  else if(q.type==='pbq-order')h+=renderOrder(q);
+  else if(q.type==='pbq-match')h+=renderMatch(q);
+  h+=`</div>`;
+  document.getElementById('questionContainer').innerHTML=h;
+  if(q.type==='pbq-order')initDrag(q);
+  if(q.type==='pbq-match'){S.matchState={selectedLeft:null,matched:{...S.answers[S.current]||{}}};}
+}
+function renderMCQ(q){const sa=S.answers[S.current];return`<div class="answers">${q.answers.map((a,i)=>`<button class="answer-btn${sa===i?' selected':''}" onclick="selectAns(${i})"><span class="ans-letter">${String.fromCharCode(65+i)}</span><span>${a.substring(3)}</span></button>`).join('')}</div>`;}
+function selectAns(i){clickSound();S.answers[S.current]=i;document.querySelectorAll('.answer-btn').forEach((b,j)=>b.classList.toggle('selected',j===i));document.getElementById('nextBtn').disabled=false;document.getElementById('finishBtn').disabled=false;}
+function renderOrder(q){const saved=S.answers[S.current];const order=saved||[...Array(q.items.length).keys()];return`<div><div class="pbq-instruction">☝️ DRAG to reorder — FIRST (top) to LAST (bottom)</div><div class="drag-items" id="dragList">${order.map((idx,pos)=>`<div class="drag-item" draggable="true" data-idx="${idx}" data-pos="${pos}"><span class="drag-handle">⠿</span><span class="drag-num">${pos+1}</span><span>${q.items[idx]}</span></div>`).join('')}</div></div>`;}
+function initDrag(q){let src=null;const list=document.getElementById('dragList');if(!list)return;list.querySelectorAll('.drag-item').forEach(item=>{item.addEventListener('dragstart',()=>{src=item;item.classList.add('dragging');});item.addEventListener('dragend',()=>{item.classList.remove('dragging');saveDrag();});item.addEventListener('dragover',e=>{e.preventDefault();item.classList.add('drag-over');});item.addEventListener('dragleave',()=>item.classList.remove('drag-over'));item.addEventListener('drop',e=>{e.preventDefault();item.classList.remove('drag-over');if(src!==item){const items=[...list.querySelectorAll('.drag-item')];if(items.indexOf(src)<items.indexOf(item))list.insertBefore(src,item.nextSibling);else list.insertBefore(src,item);updNums();saveDrag();}});let ti=null,tc=null,ox=0,oy=0;item.addEventListener('touchstart',e=>{ti=item;const t=e.touches[0],r=item.getBoundingClientRect();ox=t.clientX-r.left;oy=t.clientY-r.top;tc=item.cloneNode(true);tc.style.cssText=`position:fixed;opacity:.8;pointer-events:none;z-index:9999;width:${r.width}px;left:${t.clientX-ox}px;top:${t.clientY-oy}px;`;document.body.appendChild(tc);item.style.opacity='.3';},{passive:true});item.addEventListener('touchmove',e=>{if(!tc)return;const t=e.touches[0];tc.style.left=(t.clientX-ox)+'px';tc.style.top=(t.clientY-oy)+'px';},{passive:true});item.addEventListener('touchend',e=>{if(!tc)return;const t=e.changedTouches[0];document.body.removeChild(tc);tc=null;ti.style.opacity='';const tgt=document.elementFromPoint(t.clientX,t.clientY)?.closest('.drag-item');if(tgt&&tgt!==ti){const items=[...list.querySelectorAll('.drag-item')];if(items.indexOf(ti)<items.indexOf(tgt))list.insertBefore(ti,tgt.nextSibling);else list.insertBefore(ti,tgt);updNums();saveDrag();}});});}
+function updNums(){document.querySelectorAll('#dragList .drag-item').forEach((it,i)=>{it.querySelector('.drag-num').textContent=i+1;it.dataset.pos=i;});}
+function saveDrag(){const order=[...document.querySelectorAll('#dragList .drag-item')].map(i=>parseInt(i.dataset.idx));S.answers[S.current]=order;document.getElementById('nextBtn').disabled=false;document.getElementById('finishBtn').disabled=false;}
+function renderMatch(q){const saved=S.answers[S.current]||{};const usedR=new Set(Object.values(saved));return`<div><div class="pbq-instruction" style="background:var(--cn-purple);color:white;">👆 Click a SCENARIO (left) then its matching DEFINITION (right)</div><div class="match-container"><div><div class="match-col-title">🔷 SCENARIOS</div>${q.leftItems.map((it,i)=>`<div class="match-item${saved[i]!==undefined?' matched':''}" id="ml-${i}" onclick="mLeft(${i})">${it}</div>`).join('')}</div><div><div class="match-col-title">🔶 DEFINITIONS</div>${q.rightItems.map((it,i)=>`<div class="match-item${usedR.has(i)?' matched-b':''}" id="mr-${i}" onclick="mRight(${i})">${it}</div>`).join('')}</div></div></div>`;}
+function mLeft(i){if(S.matchState.matched[i]!==undefined)return;clickSound();S.matchState.selectedLeft=i;document.querySelectorAll('[id^="ml-"]').forEach(el=>el.style.outline='');const el=document.getElementById(`ml-${i}`);if(el)el.style.outline='3px solid var(--cn-orange)';}
+function mRight(i){if(S.matchState.selectedLeft===null)return;if(Object.values(S.matchState.matched).includes(i))return;clickSound();const li=S.matchState.selectedLeft;S.matchState.matched[li]=i;S.answers[S.current]={...S.matchState.matched};const lel=document.getElementById(`ml-${li}`),rel=document.getElementById(`mr-${i}`);if(lel){lel.classList.add('matched');lel.style.outline='';}if(rel)rel.classList.add('matched-b');S.matchState.selectedLeft=null;const q=S.questions[S.current];if(Object.keys(S.matchState.matched).length>=q.leftItems.length){document.getElementById('nextBtn').disabled=false;document.getElementById('finishBtn').disabled=false;}}
+
+// ═══════════════════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════════════════
+function toggleFlag(){clickSound();if(S.flagged.has(S.current))S.flagged.delete(S.current);else S.flagged.add(S.current);renderQuestion();}
+function flagAndSkip(){clickSound();S.flagged.add(S.current);if(S.current<S.questions.length-1){S.current++;renderQuestion();window.scrollTo(0,0);}else{renderQuestion();}}
+function jumpTo(i){clickSound();S.current=i;renderQuestion();window.scrollTo(0,0);}
+function toggleFlagDrawer(){document.getElementById('flagDrawer').classList.toggle('open');}
+function nextQuestion(){nextSound();S.current++;if(S.current>=S.questions.length)showResults();else{renderQuestion();window.scrollTo(0,0);}}
+function confirmFinish(){
+  const unanswered=S.questions.filter((_,i)=>S.answers[i]===undefined&&!S.flagged.has(i)).length;
+  const flaggedUnanswered=[...S.flagged].filter(i=>S.answers[i]===undefined).length;
+  if(unanswered+flaggedUnanswered>0){if(!confirm(`⚠️ You have ${unanswered+flaggedUnanswered} unanswered question(s). Unanswered questions count as WRONG on CompTIA. Submit anyway?`))return;}
+  showResults();
+}
+
+// ═══════════════════════════════════════════════════════
+// GRADING — CompTIA accurate
+// ═══════════════════════════════════════════════════════
+function grade(q,ans){
+  if(ans===undefined||ans===null)return 0;
+  if(q.type==='mcq')return ans===q.correct?1:0;
+  if(q.type==='pbq-order'){if(!Array.isArray(ans))return 0;let c=0;q.correctOrder.forEach((ex,p)=>{if(ans[p]===ex)c++;});const r=c/q.correctOrder.length;return r>=1?1:r>=.5?.5:0;}
+  if(q.type==='pbq-match'){if(typeof ans!=='object')return 0;let c=0;q.correctMatches.forEach(([l,r])=>{if(ans[l]===r)c++;});const r=c/q.correctMatches.length;return r>=1?1:r>=.5?.5:0;}
+  return 0;
+}
+
+// ═══════════════════════════════════════════════════════
+// RESULTS
+// ═══════════════════════════════════════════════════════
+function showResults(){
+  if(S.timerInterval){clearInterval(S.timerInterval);S.timerInterval=null;}
+  const dStats={};[1,2,3,4,5].forEach(d=>{dStats[d]={pts:0,max:0,q:0};});
+  S.questions.forEach((q,i)=>{const pts=grade(q,S.answers[i]);dStats[q.domain].pts+=pts;dStats[q.domain].max+=1;dStats[q.domain].q++;});
+  const totalPts=Object.values(dStats).reduce((a,b)=>a+b.pts,0);
+  const totalMax=S.questions.length;
+  const pct=Math.round(totalPts/totalMax*100);
+  const scaled=Math.round(100+(pct/100)*800);
+  const passed=pct>=83;
+  const ringColor=pct>=83?'#88CC00':pct>=65?'#FFCC00':'#FF2200';
+  const ring=document.getElementById('scoreRing');ring.style.borderColor=ringColor;ring.style.background=ringColor+'22';
+  const rs=document.getElementById('resultStripe');if(rs)rs.style.background=ringColor;
+  document.getElementById('scoreNum').style.color=ringColor;
+  document.getElementById('scoreNum').textContent=pct+'%';
+  document.getElementById('score900').textContent=`≈${scaled}/900`;
+  let emoji,title,msg,badge,bcolor;
+  if(pct>=90){emoji='🏆';title='CARTOON SECURITY MASTER!';badge='✅ EXAM READY';bcolor='#88CC00';msg='Zoinks! You CRUSHED it! Schedule your CompTIA Security+ exam — you are READY! 🎉';fanfare();launchConfetti();launchFireworks();launchBalloons();}
+  else if(pct>=83){emoji='🎉';title="YOU'VE PASSED!";badge='✅ PASSING SCORE';bcolor='#88CC00';msg="Jinkies! That's a passing score! Review your weak domains and schedule that exam. You've GOT this!";fanfare();launchConfetti();launchBalloons();}
+  else if(pct>=70){emoji='😤';title='SO CLOSE — KEEP GRINDING!';badge='📚 ALMOST THERE';bcolor='#FFCC00';msg='Almost there! Focus on the red domains below. A few focused study sessions and you will be passing!';}
+  else if(pct>=50){emoji='💪';title='YOU GOT THIS — STUDY UP!';badge='📖 NEEDS STUDY';bcolor='#FF6600';msg="Don't sweat it! Even the X-Men trained for years. Hit the study resources below and come back stronger!";womp();}
+  else{emoji='🎮';title='ROUND 1... TRY AGAIN!';badge='🔄 KEEP TRAINING';bcolor='#FF2200';msg="Every superhero starts somewhere! Use the Cartoon Network-ing Study Hub. Start with your weakest domain!";womp();}
+  document.getElementById('resultEmoji').textContent=emoji;
+  document.getElementById('resultTitle').textContent=title;
+  document.getElementById('resultMessage').textContent=msg;
+  const sb=document.getElementById('statusBadge');sb.textContent=badge;sb.style.background=bcolor;sb.style.color=bcolor==='#FFCC00'?'#111':'white';
+  // Domain breakdown
+  let dbH='';
+  [1,2,3,4,5].forEach(d=>{
+    const s=dStats[d];if(s.q===0)return;
+    const dpct=s.max>0?Math.round(s.pts/s.max*100):0;
+    const dc=dpct>=85?'#22AA44':dpct>=70?'#E8A000':'#DD2200';
+    const lnk=`<a href='https://charleneluequee.github.io/security-notes.html' target='_blank' style='color:inherit;font-weight:900;'>Cartoon Network-ing Study Hub</a>`;const note=dpct>=85?`✅ Strong — great work! Keep it sharp with ${DI[d].cartoon} pages on the ${lnk}`:dpct>=70?`📘 Good — you\'re passing this domain, but there\'s room to improve. Review ${DI[d].cartoon} on the ${lnk}`:`⚠️ Needs Practice — focus on Domain ${d} now. Drill ${DI[d].cartoon} on the ${lnk} before your exam!`;
+    dbH+=`<div class="domain-score-row"><div class="domain-score-header"><div class="domain-score-name">D${d}: ${DI[d].name}</div><div class="domain-score-pct" style="color:${dc}">${s.pts}/${s.max} pts (${dpct}%)</div></div><div class="domain-bar-wrap"><div class="domain-bar-fill" style="width:${dpct}%;background:${dc}"></div></div><div class="domain-study-note">${note}</div></div>`;
+  });
+  document.getElementById('domainBreakdown').innerHTML=dbH;
+  // Build print report
+  buildReport(dStats,pct,scaled,passed);
+  const rd=document.getElementById('reportDate');if(rd)rd.textContent=new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+  showScreen('results');
+}
+
+// ═══════════════════════════════════════════════════════
+// PRINTABLE REPORT
+// ═══════════════════════════════════════════════════════
+
+function buildMissedSection(questions, answers){
+  const missed=[];
+  questions.forEach((q,i)=>{
+    const g=grade(q,answers[i]);
+    if(g<1) missed.push({q,i,ans:answers[i],g});
+  });
+  if(missed.length===0) return `<div style="background:#E8F5E9;border:2px solid #1B7A3A;border-radius:10px;padding:14px;margin-top:14px;font-weight:800;color:#1B5E20;text-align:center;">🎯 Perfect score on all questions! Nothing to review!</div>`;
+
+  const domainColors={1:'#FF5500',2:'#00BBEE',3:'#FFD000',4:'#9933FF',5:'#22AA44'};
+  let h=`<div style="margin-top:16px;"><div style="font-weight:900;font-size:1rem;margin-bottom:10px;color:#B71C1C;">❌ MISSED QUESTIONS — Targeted Review (${missed.length} question${missed.length>1?'s':''})</div>`;
+
+  missed.forEach(({q,i,ans,g},idx)=>{
+    const dc=domainColors[q.domain]||'#888';
+    const partialNote=g>0?` <span style="color:#E65100;">(partial credit: ${g} pts)</span>`:'';
+    h+=`<div style="border:2px solid #ddd;border-left:5px solid ${dc};border-radius:8px;padding:12px;margin-bottom:12px;background:#fafafa;">`;
+    h+=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">`;
+    h+=`<span style="background:${dc};color:${q.domain===3?'#111':'white'};border-radius:4px;padding:2px 8px;font-size:0.7rem;font-weight:900;">D${q.domain}: ${DI[q.domain].name}</span>`;
+    h+=`<span style="font-size:0.7rem;font-weight:800;color:#999;">#${idx+1} of ${missed.length}${partialNote}</span>`;
+    h+=`</div>`;
+    h+=`<div style="font-weight:800;font-size:0.8rem;margin-bottom:8px;color:#222;">${q.text}</div>`;
+
+    if(q.type==='mcq'){
+      const correctLetter=String.fromCharCode(65+q.correct);
+      const correctText=q.answers[q.correct];
+      const userAns=ans!==undefined&&ans!==null?q.answers[ans]:null;
+      const userLetter=ans!==undefined&&ans!==null?String.fromCharCode(65+ans):null;
+      if(userAns) h+=`<div style="background:#FFEBEE;border-radius:5px;padding:5px 8px;font-size:0.76rem;font-weight:700;color:#C62828;margin-bottom:4px;">❌ Your answer: ${userLetter}. ${userAns.substring(3)}</div>`;
+      else h+=`<div style="background:#FFF3E0;border-radius:5px;padding:5px 8px;font-size:0.76rem;font-weight:700;color:#E65100;margin-bottom:4px;">⚠️ Not answered</div>`;
+      h+=`<div style="background:#E8F5E9;border-radius:5px;padding:5px 8px;font-size:0.76rem;font-weight:700;color:#1B5E20;margin-bottom:6px;">✅ Correct answer: ${correctLetter}. ${correctText.substring(3)}</div>`;
+    } else if(q.type==='pbq-order'){
+      h+=`<div style="background:#E8F5E9;border-radius:5px;padding:5px 8px;font-size:0.75rem;font-weight:700;color:#1B5E20;margin-bottom:6px;">✅ Correct order: ${q.correctOrder.map((orig,pos)=>`${pos+1}. ${q.items[orig]}`).join(' → ')}</div>`;
+    } else if(q.type==='pbq-match'){
+      h+=`<div style="background:#E8F5E9;border-radius:5px;padding:5px 8px;font-size:0.75rem;font-weight:700;color:#1B5E20;margin-bottom:6px;">✅ Correct matches: ${q.correctMatches.map(([l,r])=>`${q.leftItems[l]} ↔ ${q.rightItems[r]}`).join('; ')}</div>`;
+    }
+
+    if(q.rationale) h+=`<div style="background:#E3F2FD;border-radius:5px;padding:6px 9px;font-size:0.75rem;font-weight:700;color:#1565C0;margin-bottom:2px;">💡 <strong>Why:</strong> ${q.rationale}</div>`;
+    h+=`</div>`;
+  });
+
+  h+=`</div>`;
+  return h;
+}
+
+function buildReport(dStats,pct,scaled,passed){
+  const modeLabel=S.mode==='full'?'Full Exam (100Q)':S.mode==='short'?'Quick Quiz (35Q)':S.mode==='acronym'?'Acronym Blitz (30Q)':S.mode==='pbq'?'PBQ Arena (10 PBQs)':`Domain ${S.domain} Focus (20Q)`;
+  let h=`<h2>🎮 Cartoon Network-ing Security+</h2>
+  <div class="pr-sub">SY0-701 Practice Exam · ${modeLabel} · ${new Date().toLocaleDateString()} · charleneluequee.github.io/security-notes.html</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+    <div style="background:${passed?'#E8F5E9':'#FFEBEE'};border:2px solid #111;border-radius:10px;padding:12px;text-align:center;">
+      <div style="font-size:2rem;font-weight:900;color:${passed?'#2E7D32':'#C62828'};">${pct}%</div>
+      <div style="font-size:0.75rem;font-weight:800;color:#777;">SCORE</div>
+    </div>
+    <div style="background:${passed?'#E8F5E9':'#FFEBEE'};border:2px solid #111;border-radius:10px;padding:12px;text-align:center;">
+      <div style="font-size:2rem;font-weight:900;color:${passed?'#2E7D32':'#C62828'};">≈${scaled}/900</div>
+      <div style="font-size:0.75rem;font-weight:800;color:#777;">SCALED (Pass=750)</div>
+    </div>
+  </div>
+  <div style="background:${passed?'#E8F5E9':'#FFEBEE'};border:2px solid #111;border-radius:10px;padding:12px;margin-bottom:14px;font-weight:800;text-align:center;color:${passed?'#1B5E20':'#B71C1C'};">
+    ${passed?'✅ PASSING SCORE — You are on track for the real exam!':'❌ NOT PASSING YET — Focus on the red domains below and try again!'}
+  </div>
+  <div style="font-weight:900;font-size:1rem;margin-bottom:10px;">📊 DOMAIN SCORES & PERSONALIZED STUDY PLAN</div>`;
+  [1,2,3,4,5].forEach(d=>{
+    const s=dStats[d];if(s.q===0)return;
+    const dpct=s.max>0?Math.round(s.pts/s.max*100):0;
+    const dc=dpct>=85?'#1B7A3A':dpct>=70?'#B8700A':'#B71C1C';
+    const bgc=dpct>=85?'#E8F5E9':dpct>=70?'#FFF8E1':'#FFEBEE';
+    const status=dpct>=85?'✅ STRONG (85%+)':dpct>=70?'📘 GOOD (70–84%) — passing but room to grow':'⚠️ NEEDS PRACTICE (<70%) — prioritize before exam!';
+    h+=`<div class="pr-domain-row">
+      <div class="pr-domain-name" style="color:${dc}">Domain ${d}: ${DI[d].name} — ${status} (${dpct}%)</div>
+      <div class="pr-bar-bg"><div class="pr-bar-fill" style="width:${dpct}%;background:${dc}"></div></div>
+      <div style="font-size:0.75rem;font-weight:700;color:#666;margin-top:2px;">Score: ${s.pts}/${s.max} pts | Cartoon study pages: ${DI[d].cartoon}</div>
+      ${dpct<70?`<div class="pr-tip-box" style="background:${bgc};border:1px solid ${dc};margin-top:6px;">
+        <div style="font-weight:900;font-size:0.78rem;color:${dc};margin-bottom:4px;">📌 STUDY THESE for Domain ${d}:</div>
+        ${STUDY_TIPS[d].map(t=>`<div style="font-size:0.75rem;font-weight:700;color:#444;padding:2px 0;">▸ ${t}</div>`).join('')}
+      </div>`:'<div style="font-size:0.75rem;font-weight:700;color:#555;margin-top:4px;">Keep it up! Review cartoon pages to maintain retention and reinforce analogies.</div>'}
+    </div>`;
+  });
+  h+=`<div style="background:#E3F2FD;border:2px solid #1565C0;border-radius:10px;padding:12px;margin-top:12px;">
+    <div style="font-weight:900;font-size:0.85rem;color:#1565C0;margin-bottom:6px;">⚡ EXAM DAY REMINDERS</div>
+    <div style="font-size:0.75rem;font-weight:700;color:#333;line-height:1.9;">
+      ▸ Passing score = 750/900 (≈83%) — you do NOT need perfection<br>
+      ▸ Flag PBQs if stumped — answer MCQs first to lock in points<br>
+      ▸ Watch qualifier words: BEST, MOST, FIRST, ONLY — they change the answer<br>
+      ▸ Eliminate 2 wrong answers first — odds jump from 25% to 50%<br>
+      ▸ Trust your first instinct unless a later question proves you wrong<br>
+      ▸ ALWAYS attempt every question — no penalty for guessing on CompTIA<br>
+      ▸ The "name credit" rumor is 100% FALSE — ignore it completely
+    </div>
+  </div>
+  <div style="margin-top:10px;font-size:0.7rem;color:#999;text-align:center;line-height:1.7;">
+    Study Hub: charleneluequee.github.io/security-notes.html | Prof. Messer SY0-701: professormesser.com<br>
+    Refresher PDF: artempolynko.com/wp-content/uploads/2025/05/CompTIA-Security-Refresher.pdf<br>
+    © 2024–2026 Charlene LueQuee — Educational use only (Fair Use 17 U.S.C. § 107)
+  </div>`;
+  // MISSED QUESTIONS section — always last in the printable report
+  h += buildMissedSection(S.questions, S.answers);
+  const ri=document.getElementById('reportInner');if(ri)ri.innerHTML=h;
+}
+function doPrint(){clickSound();window.print();}
+function doDownload(){
+  clickSound();
+  const inner=document.getElementById('reportInner')?.innerHTML||'';
+  const html=`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Security+ Study Report — ${new Date().toLocaleDateString()}</title>
+<style>body{font-family:Arial,sans-serif;max-width:800px;margin:40px auto;padding:20px;font-size:12px;color:#111;}h2{color:#FF6600;font-size:1.6rem;margin-bottom:4px;}.pr-sub{color:#888;font-size:0.8rem;margin-bottom:14px;}.pr-domain-row{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee;}.pr-domain-name{font-weight:900;font-size:1rem;margin-bottom:4px;}.pr-bar-bg{background:#eee;border-radius:4px;height:10px;margin:5px 0;}.pr-bar-fill{height:10px;border-radius:4px;}.pr-tip-box{border-radius:8px;padding:10px;margin-top:6px;}</style>
+</head><body>${inner}</body></html>`;
+  const blob=new Blob([html],{type:'text/html'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download=`SecPlus-StudyReport-${new Date().toISOString().slice(0,10)}.html`;a.click();URL.revokeObjectURL(a.href);
+}
+function retakeTest(){clickSound();if(S.mode==='domain')startMode('domain',S.domain);else startMode(S.mode);}
+
+// ═══════════════════════════════════════════════════════
+// CONFETTI + FIREWORKS
+// ═══════════════════════════════════════════════════════
+function launchConfetti(){const cv=document.getElementById('confetti-canvas');cv.style.display='block';const cx=cv.getContext('2d');cv.width=window.innerWidth;cv.height=window.innerHeight;const cols=['#FF6600','#FFCC00','#00BBEE','#FF3399','#88CC00','#9933FF','#FF2200'];const ps=Array.from({length:220},()=>({x:Math.random()*cv.width,y:Math.random()*cv.height-cv.height,w:Math.random()*10+4,h:Math.random()*6+2,c:cols[Math.floor(Math.random()*cols.length)],vx:(Math.random()-.5)*4,vy:Math.random()*4+2,r:Math.random()*360,rv:(Math.random()-.5)*10,op:1}));let fr=0;(function anim(){cx.clearRect(0,0,cv.width,cv.height);ps.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.r+=p.rv;if(fr>100)p.op-=.012;cx.save();cx.globalAlpha=Math.max(0,p.op);cx.translate(p.x+p.w/2,p.y+p.h/2);cx.rotate(p.r*Math.PI/180);cx.fillStyle=p.c;cx.fillRect(-p.w/2,-p.h/2,p.w,p.h);cx.restore();});fr++;if(fr<220)requestAnimationFrame(anim);else{cx.clearRect(0,0,cv.width,cv.height);cv.style.display='none';}})();}
+function launchFireworks(){const cv=document.getElementById('fw-canvas');cv.style.display='block';const cx=cv.getContext('2d');cv.width=window.innerWidth;cv.height=window.innerHeight;const cols=['#FF6600','#FFCC00','#00BBEE','#FF3399','#9933FF'];let ps=[],fr=0;const burst=(x,y)=>{const c=cols[Math.floor(Math.random()*cols.length)];for(let i=0;i<70;i++){const a=(i/70)*Math.PI*2,sp=Math.random()*4+2;ps.push({x,y,vx:Math.cos(a)*sp,vy:Math.sin(a)*sp,c,life:1,sz:Math.random()*3+1.5});}};const iv=setInterval(()=>burst(Math.random()*cv.width,Math.random()*cv.height*.55),350);(function anim(){cx.fillStyle='rgba(0,0,0,.13)';cx.fillRect(0,0,cv.width,cv.height);for(let i=ps.length-1;i>=0;i--){const p=ps[i];p.x+=p.vx;p.y+=p.vy;p.vy+=.05;p.life-=.022;if(p.life<=0){ps.splice(i,1);continue;}cx.globalAlpha=p.life;cx.fillStyle=p.c;cx.beginPath();cx.arc(p.x,p.y,p.sz,0,Math.PI*2);cx.fill();}cx.globalAlpha=1;fr++;if(fr<160)requestAnimationFrame(anim);else{clearInterval(iv);cx.clearRect(0,0,cv.width,cv.height);cv.style.display='none';}})();}
+function launchBalloons(){const cv=document.getElementById('balloon-canvas');if(!cv)return;cv.style.display='block';const cx=cv.getContext('2d');cv.width=window.innerWidth;cv.height=window.innerHeight;const cols=['#FF6600','#FFCC00','#00BBEE','#FF3399','#88CC00','#9933FF','#FF2200'];const balloons=Array.from({length:18},()=>({x:Math.random()*cv.width,y:cv.height+Math.random()*250+40,r:Math.random()*24+26,c:cols[Math.floor(Math.random()*cols.length)],vy:Math.random()*1.4+1.2,sway:Math.random()*2+1,swayOff:Math.random()*Math.PI*2,op:1}));let fr=0;(function anim(){cx.clearRect(0,0,cv.width,cv.height);balloons.forEach(b=>{b.y-=b.vy;const x=b.x+Math.sin(fr*0.03+b.swayOff)*b.sway*8;if(fr>160)b.op-=.018;cx.save();cx.globalAlpha=Math.max(0,b.op);cx.strokeStyle='rgba(80,80,80,.6)';cx.lineWidth=1.5;cx.beginPath();cx.moveTo(x,b.y+b.r);cx.lineTo(x,b.y+b.r+34);cx.stroke();cx.fillStyle=b.c;cx.beginPath();cx.ellipse(x,b.y,b.r*0.82,b.r,0,0,Math.PI*2);cx.fill();cx.beginPath();cx.moveTo(x-5,b.y+b.r-1);cx.lineTo(x+5,b.y+b.r-1);cx.lineTo(x,b.y+b.r+9);cx.closePath();cx.fill();cx.fillStyle='rgba(255,255,255,.35)';cx.beginPath();cx.ellipse(x-b.r*0.28,b.y-b.r*0.35,b.r*0.18,b.r*0.28,0,0,Math.PI*2);cx.fill();cx.restore();});fr++;if(fr<260)requestAnimationFrame(anim);else{cx.clearRect(0,0,cv.width,cv.height);cv.style.display='none';}})();}
+
+// ═══════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  showScreen('landing');
+  document.addEventListener('click',()=>{if(S.audioCtx?.state==='suspended')S.audioCtx.resume();},{once:true});
+});
+</script>
+</body>
+</html>
